@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>NightCandle&#39;s Blog</title>
+  
+  <subtitle>一条咸鱼的技术文章</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://night-candle.github.io/"/>
+  <updated>2020-08-28T12:17:48.187Z</updated>
+  <id>http://night-candle.github.io/</id>
+  
+  <author>
+    <name>宵烛</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基于Hexo的GitHub博客搭建</title>
+    <link href="http://night-candle.github.io/2020/08/28/github-blog-for-hexo/"/>
+    <id>http://night-candle.github.io/2020/08/28/github-blog-for-hexo/</id>
+    <published>2020-08-28T09:24:54.000Z</published>
+    <updated>2020-08-28T12:17:48.187Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;/medias/contact.jpg&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;0-前言&quot;&gt;&lt;a href=&quot;#0-前言&quot; class=&quot;headerlink&quot; title=&quot;0.前言&quot;&gt;&lt;/a&gt;0.前言&lt;/h2&gt;&lt;h4 id=&quot;Github-Pages&quot;&gt;&lt;a href=&quot;#Github-Pages&quot; class=&quot;headerlink&quot; title=&quot;Github Pages&quot;&gt;&lt;/a&gt;Github Pages&lt;/h4&gt;&lt;p&gt;Github Pages允许用户的任何一个Repo的gh-pages分支上的代码可以经由HTTP访问到，类似提供了静态文件服务。不仅可以方便的为项目建立介绍站点，也可以用来建立个人博客。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;轻量级的博客系统，没有麻烦的配置&lt;/li&gt;
+&lt;li&gt;无需自己搭建服务器&lt;/li&gt;
+&lt;li&gt;博客内容可以轻松打包、转移、发布到其它平台；&lt;/li&gt;
+&lt;li&gt;可以绑定自己的域名&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;缺点：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;使用&lt;a href=&quot;https://github.com/mojombo/jekyll&quot;&gt;Jekyll&lt;/a&gt;模板系统，相当于静态页发布，适合博客，文档介绍等，动态程序的部分受限&lt;/li&gt;
+&lt;li&gt;基于Git，很多东西需要动手，不像Wordpress有强大的后台&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;Hexo&quot;&gt;&lt;a href=&quot;#Hexo&quot; class=&quot;headerlink&quot; title=&quot;Hexo&quot;&gt;&lt;/a&gt;Hexo&lt;/h4&gt;&lt;p&gt;Hexo是一款基于Node.js的高效静态站点生成框架，可以通过Hexo直接使用Markdown语法来撰写博客而无需关心网页源代码的具体细节，只需要用心写好你的博客内容就好了。&lt;/p&gt;
+&lt;p&gt;参考：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/hexojs/hexo&quot;&gt;Hexo-Github地址&lt;/a&gt;        &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://hexo.io/zh-cn/docs/&quot;&gt;Hexo帮助文档&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-环境准备&quot;&gt;&lt;a href=&quot;#1-环境准备&quot; class=&quot;headerlink&quot; title=&quot;1.环境准备&quot;&gt;&lt;/a&gt;1.环境准备&lt;/h2&gt;&lt;h4 id=&quot;安装Node-js&quot;&gt;&lt;a href=&quot;#安装Node-js&quot; class=&quot;headerlink&quot; title=&quot;安装Node.js&quot;&gt;&lt;/a&gt;安装&lt;a href=&quot;https://nodejs.org/dist/v9.11.1/node-v9.11.1-x64.msi&quot;&gt;Node.js&lt;/a&gt;&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;安装了Node.js会自动安装npm&lt;/li&gt;
+&lt;li&gt;cmd窗口输入&lt;code&gt;node -v&lt;/code&gt;和&lt;code&gt;npm -v&lt;/code&gt;验证是否安装成功&lt;/li&gt;
+&lt;li&gt;可以使用阿里的国内镜像进行加速&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;npm config set registry https://registry.npm.taobao.org&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;安装Git。&quot;&gt;&lt;a href=&quot;#安装Git。&quot; class=&quot;headerlink&quot; title=&quot;安装Git。&quot;&gt;&lt;/a&gt;安装&lt;a href=&quot;https://git-scm.com/download/win&quot;&gt;Git&lt;/a&gt;。&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;为了把本地的网页文件上传到github上面去，我们需要用到分布式版本控制工具Git&lt;/li&gt;
+&lt;li&gt;最后一步添加路径时选择Use Git from the Windows Command Prompt，这样能直接在命令提示符里打开&lt;/li&gt;
+&lt;li&gt;安装完成后在命令提示符中输入git –version验证是否安装成功&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;安装Hexo&quot;&gt;&lt;a href=&quot;#安装Hexo&quot; class=&quot;headerlink&quot; title=&quot;安装Hexo&quot;&gt;&lt;/a&gt;安装Hexo&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;cmd窗口输入&lt;code&gt;npm install -g hexo&lt;/code&gt; &lt;/li&gt;
+&lt;li&gt;安装完后输入hexo -v验证是否安装成功&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;2-本地部署Hexo&quot;&gt;&lt;a href=&quot;#2-本地部署Hexo&quot; class=&quot;headerlink&quot; title=&quot;2.本地部署Hexo&quot;&gt;&lt;/a&gt;2.本地部署Hexo&lt;/h2&gt;&lt;h4 id=&quot;初始化博客目录&quot;&gt;&lt;a href=&quot;#初始化博客目录&quot; class=&quot;headerlink&quot; title=&quot;初始化博客目录&quot;&gt;&lt;/a&gt;初始化博客目录&lt;/h4&gt;&lt;p&gt;在你想创建的目录下执行&lt;code&gt;hexo init&lt;/code&gt;，这个命令会初始化博客的目录&lt;/p&gt;
+&lt;img src=&quot;clip_image002.gif&quot; alt=&quot;1&quot; style=&quot;zoom:80%;&quot; /&gt;
+
+&lt;h4 id=&quot;全局配置&quot;&gt;&lt;a href=&quot;#全局配置&quot; class=&quot;headerlink&quot; title=&quot;全局配置&quot;&gt;&lt;/a&gt;全局配置&lt;/h4&gt;&lt;p&gt;在根目录_config.yml里进行全局配置&lt;/p&gt;
+&lt;h4 id=&quot;本地启动博客&quot;&gt;&lt;a href=&quot;#本地启动博客&quot; class=&quot;headerlink&quot; title=&quot;本地启动博客&quot;&gt;&lt;/a&gt;本地启动博客&lt;/h4&gt;&lt;pre&gt;&lt;code class=&quot;shell&quot;&gt;hexo g #生成本地public静态文件
+
+hexo s #启动本地服务器&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;进入&lt;a href=&quot;http://localhost:4000/&quot;&gt;http://localhost:4000/&lt;/a&gt; 已经可以看到一篇helleworld的博客&lt;/p&gt;
+&lt;h2 id=&quot;3-个性化主题&quot;&gt;&lt;a href=&quot;#3-个性化主题&quot; class=&quot;headerlink&quot; title=&quot;3.个性化主题&quot;&gt;&lt;/a&gt;3.个性化主题&lt;/h2&gt;&lt;h4 id=&quot;推荐主题&quot;&gt;&lt;a href=&quot;#推荐主题&quot; class=&quot;headerlink&quot; title=&quot;推荐主题&quot;&gt;&lt;/a&gt;推荐主题&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/litten/hexo-theme-yilia%EF%BC%88%E4%B8%80%E4%B8%AA%E7%AE%80%E6%B4%81%E4%BC%98%E9%9B%85%E7%9A%84%E4%B8%BB%E9%A2%98%EF%BC%89&quot;&gt;https://github.com/litten/hexo-theme-yilia（一个简洁优雅的主题）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/TryGhost/Casper%EF%BC%88%E5%B9%BD%E7%81%B5%E4%B8%BB%E9%A2%98%EF%BC%89&quot;&gt;https://github.com/TryGhost/Casper（幽灵主题）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/blinkfox/hexo-theme-matery%EF%BC%88%E7%82%AB%E9%85%B7%EF%BC%8C%E5%93%8D%E5%BA%94%E5%BC%8F%E6%9B%B4%E5%8F%8B%E5%A5%BD%EF%BC%89&quot;&gt;https://github.com/blinkfox/hexo-theme-matery（炫酷，响应式更友好）&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;安装主题(以yilia为例)&lt;/p&gt;
+&lt;p&gt;在根目录下运行Git Bash&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;hexo clean
+
+git clone https://github.com/litten/hexo-theme-yilia.git themes/yilia&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;启用主题&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修改根目录的_config.yml配置文件中的theme属性，将其设置为yilia（默认是landscape）&lt;/p&gt;
+&lt;img src=&quot;image-20200828183406777.png&quot; alt=&quot;image-20200828183406777&quot; style=&quot;zoom:80%;&quot; /&gt;
+
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;&lt;p&gt;本地启动&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;hexo g&lt;/code&gt;&lt;br&gt;&lt;code&gt;hexo s&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;4-部署到GitHub&quot;&gt;&lt;a href=&quot;#4-部署到GitHub&quot; class=&quot;headerlink&quot; title=&quot;4.部署到GitHub&quot;&gt;&lt;/a&gt;4.部署到GitHub&lt;/h2&gt;&lt;h4 id=&quot;创建远程仓库&quot;&gt;&lt;a href=&quot;#创建远程仓库&quot; class=&quot;headerlink&quot; title=&quot;创建远程仓库&quot;&gt;&lt;/a&gt;创建远程仓库&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;GitHub新建一个仓库,仓库名为    &lt;code&gt;用户名.github.io&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;名称一定要和github用户名完全一样，比如你github用户名叫&lt;code&gt;abc&lt;/code&gt;，那么仓库名为&lt;code&gt;abc.github.io&lt;/code&gt;。&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;修改根目录下的_config.yml配置文件&lt;/p&gt;
+&lt;p&gt;url：GitHub Pages网址&lt;code&gt;https://GitHub用户名.github.io&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;连接Github与本地&quot;&gt;&lt;a href=&quot;#连接Github与本地&quot; class=&quot;headerlink&quot; title=&quot;连接Github与本地&quot;&gt;&lt;/a&gt;连接Github与本地&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;右键打开git bash，输入命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;shell&quot;&gt;git config --global user.name &amp;quot;&amp;quot; #用户名和邮箱根据注册github的信息修改
+git config --global user.email &amp;quot;&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;生成密钥SSH key：&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&quot;shell&quot;&gt;ssh-keygen -t rsa -C &amp;quot;&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;​    将生成的公钥添加到github中（头像下面点击&lt;code&gt;settings&lt;/code&gt;，再点击&lt;code&gt;SSH and GPG keys&lt;/code&gt;，新建一个SSH进行添加）&lt;/p&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;测试，输入命令，如果如下图所示，出现用户名则成功&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&quot;shell&quot;&gt;ssh -T git@github.com&lt;/code&gt;&lt;/pre&gt;
+   &lt;img src=&quot;image-20200828192040358.png&quot; alt=&quot;image-20200828192040358&quot; style=&quot;zoom:80%;&quot; /&gt;
+
+&lt;ol start=&quot;4&quot;&gt;
+&lt;li&gt;打开根目录下的_config.yml文件，修改最后一行的配置：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&quot;shell&quot;&gt;deploy:
+- type: git
+  repository:
+    github: git@github.com:night-candle/night-candle.github.io.git
+    # coding: git@e.coding.net:godweiyang/godweiyang.git
+  branch: master&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;​    repository修改为你自己的github项目地址&lt;/p&gt;
+&lt;ol start=&quot;5&quot;&gt;
+&lt;li&gt;将本地推送到GitHub远程仓库&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在git bash输入以下指令&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;shell&quot;&gt;hexo clean
+hexo g
+hexo d&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;4-补充&quot;&gt;&lt;a href=&quot;#4-补充&quot; class=&quot;headerlink&quot; title=&quot;4.补充&quot;&gt;&lt;/a&gt;4.补充&lt;/h2&gt;&lt;h4 id=&quot;添加文章&quot;&gt;&lt;a href=&quot;#添加文章&quot; class=&quot;headerlink&quot; title=&quot;添加文章&quot;&gt;&lt;/a&gt;添加文章&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;git bash安装扩展&lt;code&gt;npm i hexo-deployer-git&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;然后输入&lt;code&gt;hexo new post &amp;quot;article title&amp;quot;&lt;/code&gt;，新建一篇文章&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;然后打开&lt;code&gt;\source\_posts&lt;/code&gt;的目录，多了一个文件夹和一个&lt;code&gt;.md&lt;/code&gt;文件，一个用来存放图片等数据，另一个是文章&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;编写完markdown文件后，根目录下输入&lt;code&gt;hexo g&lt;/code&gt;生成静态网页，最后输入&lt;code&gt;hexo d&lt;/code&gt;上传到github上&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;文件头如下&lt;/p&gt;
+&lt;p&gt; -–&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;toc: true    # 是否有目录
+reward: true  # 是否有打赏
+title: vuex   # 标题名称
+tags:     # 小标签
+\- 随笔
+\- vue
+\- vuex&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt; -–&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;绑定域名&quot;&gt;&lt;a href=&quot;#绑定域名&quot; class=&quot;headerlink&quot; title=&quot;绑定域名&quot;&gt;&lt;/a&gt;绑定域名&lt;/h4&gt;&lt;p&gt;打开github项目，点击&lt;code&gt;settings&lt;/code&gt;，拉到下面&lt;code&gt;Custom domain&lt;/code&gt;处，填上你自己的域名，保存&lt;/p&gt;
+&lt;p&gt;项目根目录会出现一个名为&lt;code&gt;CNAME&lt;/code&gt;的文件。（如果没有，手动创建&lt;code&gt;CNAME&lt;/code&gt;文件，注意没有后缀，然后在里面写上域名保存）&lt;/p&gt;
+&lt;h4 id=&quot;添加评论功能&quot;&gt;&lt;a href=&quot;#添加评论功能&quot; class=&quot;headerlink&quot; title=&quot;添加评论功能&quot;&gt;&lt;/a&gt;添加评论功能&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;获取Client ID和Client Secret&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/settings/applications/new%E6%B3%A8%E5%86%8C&quot;&gt;https://github.com/settings/applications/new注册&lt;/a&gt;&lt;/p&gt;
+&lt;img src=&quot;clip_image018.jpg&quot; alt=&quot;img&quot; style=&quot;zoom:80%;&quot; /&gt;
+
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;在Settings/Developer settings/OAuth Apps中可以找到Client ID和Client Secret&lt;/li&gt;
+&lt;/ol&gt;
+&lt;img src=&quot;clip_image020.jpg&quot; alt=&quot;img&quot; style=&quot;zoom:80%;&quot; /&gt;
+
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;修改配置文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;备份博客源文件&quot;&gt;&lt;a href=&quot;#备份博客源文件&quot; class=&quot;headerlink&quot; title=&quot;备份博客源文件&quot;&gt;&lt;/a&gt;备份博客源文件&lt;/h4&gt;&lt;p&gt;略&lt;/p&gt;
+&lt;h2 id=&quot;5-常见问题及解答&quot;&gt;&lt;a href=&quot;#5-常见问题及解答&quot; class=&quot;headerlink&quot; title=&quot;5.常见问题及解答&quot;&gt;&lt;/a&gt;5.常见问题及解答&lt;/h2&gt;&lt;h4 id=&quot;解决文章预览显示过长&quot;&gt;&lt;a href=&quot;#解决文章预览显示过长&quot; class=&quot;headerlink&quot; title=&quot;解决文章预览显示过长&quot;&gt;&lt;/a&gt;解决文章预览显示过长&lt;/h4&gt;&lt;p&gt;手动在文章内部加上
+    
+    </summary>
+    
+      <category term="教程" scheme="http://night-candle.github.io/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="github" scheme="http://night-candle.github.io/tags/github/"/>
+    
+      <category term="前端" scheme="http://night-candle.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://night-candle.github.io/2020/08/26/hello-world/"/>
+    <id>http://night-candle.github.io/2020/08/26/hello-world/</id>
+    <published>2020-08-26T09:46:22.688Z</published>
+    <updated>2020-08-26T09:46:22.688Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>十大经典排序算法整理汇总</title>
+    <link href="http://night-candle.github.io/2020/02/16/sort-algorithms/"/>
+    <id>http://night-candle.github.io/2020/02/16/sort-algorithms/</id>
+    <published>2020-02-16T07:09:23.000Z</published>
+    <updated>2020-08-28T11:52:07.170Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/medias/contact.jpg&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="编程算法" scheme="http://night-candle.github.io/categories/%E7%BC%96%E7%A8%8B%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="leetcode" scheme="http://night-candle.github.io/tags/leetcode/"/>
+    
+      <category term="算法" scheme="http://night-candle.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+</feed>
