@@ -274,7 +274,7 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right, #7288a1 0%, #414f81 100%);
+    background-image: linear-gradient(to right, #7288a100 0%, #3b4c8bc9 100%);
     opacity: 0.7;
 }
 
@@ -416,8 +416,8 @@ header .side-nav .social-link {
 }
 
 .cover-btns a:hover {
-    border: 1px solid #f44336;
-    background-color: #f44336;
+    border: 1px solid #ef6c007e;
+    background-color: #ef6c007e;
     box-shadow: 0 14px 26px -12px rgba(233, 30, 99, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(233, 30, 99, 0.2);
 }
 
@@ -513,7 +513,7 @@ header .go-back i {
 }
 
 .bg-cover .post-title {
-    font-size: 1.9rem;
+    font-size: 2.0rem;
 }
 
 @-webkit-keyframes rainbow {
@@ -1182,7 +1182,7 @@ table tr:nth-child(2n), thead {
 
 .chip-container .chip-active {
     color: #FFF !important;
-    background: linear-gradient(to bottom right, #FF5E3A 0%, #FF2A68 100%) !important;
+    background: linear-gradient(to bottom right, #4d7392 0%, #525f7f 100%) !important;
     box-shadow: 2px 5px 10px #aaa !important;
 }
 
@@ -1203,7 +1203,7 @@ table tr:nth-child(2n), thead {
 
 .chip-container .chip:hover {
     color: #fff;
-    background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%) !important;
+    background: linear-gradient(to right, #69a6a9 0%, #7288a1 100%) !important;
 }
 
 .chip .tag-length {
@@ -1278,7 +1278,7 @@ table tr:nth-child(2n), thead {
     left: 18px;
     height: 100%;
     width: 4px;
-    background: #0f9d58;
+    background: #76a99e;
 }
 
 @media only screen and (min-width: 900px) {
@@ -1441,7 +1441,7 @@ table tr:nth-child(2n), thead {
         top: 24px;
         left: auto;
         right: 100%;
-        border-color: #ffa726;
+        border-color: #ffbd2e;
     }
 
     .cd-timeline-block:nth-child(even) .cd-timeline-content .cd-read-more {
@@ -1505,7 +1505,7 @@ table tr:nth-child(2n), thead {
 }
 
 .post-statis .statis .count a {
-    color: #42b983;
+    color: #69a6a9;
 }
 
 .post-statis .statis .name {
@@ -1526,8 +1526,8 @@ table tr:nth-child(2n), thead {
     margin: 0 0.5rem;
     padding: 0;
     color: #fff;
-    border: 1px solid #0f9d58;
-    background: radial-gradient(#4cbf30, #0f9d58);;
+    border: 1px solid #525f7f;
+    background: radial-gradient(#4d7392,#525f7f);;
     font-size: 0.9rem;
     border-radius: 50%;
     box-shadow: 0 4px 6px rgba(50, 50, 93, .21), 0 2px 3px rgba(0, 0, 0, .1);
@@ -1702,8 +1702,8 @@ table tr:nth-child(2n), thead {
 
 .other-skills .chip:hover {
     color: #fff;
-    background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);;
-    border: 1px solid #4cbf30;
+    background: linear-gradient(to right, #4d7392 0%, #525f7f 100%);;
+    border: 1px solid #76a99e;
     box-shadow: 0 5px 5px rgba(0, 0, 0, .25)
 }
 
@@ -1782,7 +1782,7 @@ footer .copy-right {
     padding: 1px 5px 1px 4px;
     border-radius: 2px;
     background-color: #f2f2f2;
-    color: #e96900;
+    color: #4d7392;
     font-size: .9rem;
     white-space: pre-wrap;
 }
@@ -1799,7 +1799,7 @@ footer .copy-right {
 }
 
 .top-scroll .btn-floating {
-    background: linear-gradient(to bottom right, #FF5E3A 0%, #FF2A68 100%);
+    background: linear-gradient(to bottom right, #7288a1bd 0%, #414f81 100%);
     width: 48px;
     height: 48px;
 }

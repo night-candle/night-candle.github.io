@@ -1,1 +1,7 @@
 /* Here is your custom css styles. */
+.github-corner svg {
+    color: #525f7f;
+    fill: #fff;
+    height: 64px;
+    width: 64px;
+}
