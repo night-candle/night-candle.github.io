@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>NightCandle&#39;s Blog</title>
+  <title>宵烛 Blog</title>
   
   <subtitle>一条咸鱼的技术文章</subtitle>
   <link href="/atom.xml" rel="self"/>
@@ -69,7 +69,7 @@
     <link href="http://night-candle.github.io/2020/09/23/socket/"/>
     <id>http://night-candle.github.io/2020/09/23/socket/</id>
     <published>2020-09-23T00:53:02.000Z</published>
-    <updated>2020-09-23T00:55:24.015Z</updated>
+    <updated>2021-01-24T13:33:05.660Z</updated>
     
     <summary type="html">
     
@@ -83,15 +83,21 @@
     
     </summary>
     
+      <category term="笔记" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="计算机网络" scheme="http://night-candle.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+      <category term="通信协议" scheme="http://night-candle.github.io/tags/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/"/>
     
   </entry>
   
   <entry>
-    <title>http协议原理</title>
+    <title>http协议原理和实践</title>
     <link href="http://night-candle.github.io/2020/09/23/http/"/>
     <id>http://night-candle.github.io/2020/09/23/http/</id>
     <published>2020-09-23T00:47:53.000Z</published>
-    <updated>2021-01-24T13:28:39.256Z</updated>
+    <updated>2021-01-24T13:31:28.208Z</updated>
     
     <summary type="html">
     
@@ -99,7 +105,7 @@
       
         
         
-          &lt;h1 id=&quot;HTTP协议原理和实践&quot;&gt;&lt;a href=&quot;#HTTP协议原理和实践&quot; class=&quot;headerlink&quot; title=&quot;HTTP协议原理和实践&quot;&gt;&lt;/a&gt;HTTP协议原理和实践&lt;/h1&gt;&lt;img src=&quot;\http\http.png&quot;
+          &lt;h1 id=&quot;HTTP协议原理和实践&quot;&gt;&lt;a href=&quot;#HTTP协议原理和实践&quot; class=&quot;headerlink&quot; title=&quot;HTTP协议原理和实践&quot;&gt;&lt;/a&gt;HTTP协议原理和实践&lt;/h1&gt;&lt;img src=&quot;http.png&quot;
         
       
     
@@ -228,7 +234,7 @@
     <link href="http://night-candle.github.io/2020/08/24/spring-study/"/>
     <id>http://night-candle.github.io/2020/08/24/spring-study/</id>
     <published>2020-08-24T12:28:29.000Z</published>
-    <updated>2021-01-21T14:28:10.898Z</updated>
+    <updated>2021-01-24T13:34:21.154Z</updated>
     
     <summary type="html">
     
@@ -258,7 +264,7 @@
     <link href="http://night-candle.github.io/2020/02/16/sort-algorithms/"/>
     <id>http://night-candle.github.io/2020/02/16/sort-algorithms/</id>
     <published>2020-02-16T07:09:23.000Z</published>
-    <updated>2021-01-24T04:13:52.526Z</updated>
+    <updated>2021-01-24T13:35:17.140Z</updated>
     
     <summary type="html">
     
@@ -272,10 +278,8 @@
     
     </summary>
     
-      <category term="算法" scheme="http://night-candle.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+      <category term="笔记" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
     
-    
-      <category term="leetcode" scheme="http://night-candle.github.io/tags/leetcode/"/>
     
       <category term="算法" scheme="http://night-candle.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
