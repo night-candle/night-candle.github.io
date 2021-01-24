@@ -8,11 +8,11 @@
     <meta name="baidu-site-verification" content="fmlEuI34ir" />
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
-    <meta name="description" content="HTTP协议原理+实践
+    <meta name="description" content="HTTP协议原理和实践
+
+
+
 1. HTTP协议基础1.1 经典五层模型
-
-
-
 
 
 物理层：主要作用是定义物理设备如何传输数据
@@ -521,12 +521,12 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="HTTP协议原理-实践"><a href="#HTTP协议原理-实践" class="headerlink" title="HTTP协议原理+实践"></a>HTTP协议原理+实践</h1><p><img src="%5Chttp%5Cimage-20200902103603911.png"></p>
+                <h1 id="HTTP协议原理和实践"><a href="#HTTP协议原理和实践" class="headerlink" title="HTTP协议原理和实践"></a>HTTP协议原理和实践</h1><img src="\http\http.png" alt="浏览器输入URL后HTTP请求返回的过程" style="zoom:120%;" />
+
+
+
 <h2 id="1-HTTP协议基础"><a href="#1-HTTP协议基础" class="headerlink" title="1. HTTP协议基础"></a>1. HTTP协议基础</h2><h3 id="1-1-经典五层模型"><a href="#1-1-经典五层模型" class="headerlink" title="1.1 经典五层模型"></a>1.1 经典五层模型</h3><p><img src="331769-20181124200628267-282150559.png" alt="TCP/IP五层模型"></p>
-<p><img src="D:\Git-repo\hexo\source_posts\http\705728-20160424234824085-667046040.png" alt="img"></p>
-<p><img src="D:\Git-repo\hexo\source_posts\http\705728-20160424234825491-384470376.png" alt="img"></p>
-<p><img src="D:\Git-repo\hexo\source_posts\http\705728-20160424234826351-1957282396.png" alt="img"></p>
-<p><img src="D:\Git-repo\hexo\source_posts\http\705728-20160424234827195-1493107425.png" alt="img"></p>
+<p><img src="705728-20160424234827195-1493107425.png"></p>
 <ul>
 <li><p>物理层：主要作用是定义物理设备如何传输数据</p>
 </li>
@@ -601,12 +601,14 @@
 <h3 id="1-3-三次握手"><a href="#1-3-三次握手" class="headerlink" title="1.3 三次握手"></a>1.3 三次握手</h3><blockquote>
 <p>在 TCP/IP 协议中，TCP 协议提供可靠的连接服务，采用三次握手建立一个连接</p>
 </blockquote>
-<img src="https://img-blog.csdn.net/20150511164615901" alt="img" style="zoom:140%;" />
+<img src="image-20210124205302363.png" alt="三次握手" style="zoom:80%;" />
+
+
 
 <blockquote>
 <p>四次挥手：由于 TCP 连接是全双工的，因此每个方向都必须单独进行关闭</p>
 </blockquote>
-<img src="https://img-blog.csdn.net/20150511172829813" alt="img" style="zoom:140%;" />
+<img src="image-20210124205518763.png" alt="四次挥手" style="zoom:80%;" />
 
 <h3 id="1-4-HTTP报文格式"><a href="#1-4-HTTP报文格式" class="headerlink" title="1.4 HTTP报文格式"></a>1.4 HTTP报文格式</h3><img src="image-20210122210132790.png" alt="HTTP报文" style="zoom: 50%;" />
 
@@ -758,7 +760,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 </li>
 <li><p>允许<code>Content-Type</code>：<code>text/plain</code>、<code>multipart/form-data</code>、<code>application/x-www-form-urlencoded</code>,其他的也需要预请求</p>
 </li>
-<li><p>其他限制：==请求头限制==(<a target="_blank" rel="noopener" href="https://fetch.spec.whatwg.org/#cors-safelisted-request-header">Fetch</a>)、XMLHttpRequestUpload对象均没有注册任何事件监听器、请求中没有使用ReadableStream对象</p>
+<li><p>其他限制：请求头限制(<a target="_blank" rel="noopener" href="https://fetch.spec.whatwg.org/#cors-safelisted-request-header">Fetch</a>)、XMLHttpRequestUpload对象均没有注册任何事件监听器、请求中没有使用ReadableStream对象</p>
 </li>
 </ul>
 <p>解决方法：修改<code>server2.js</code>文件的请求头信息</p>
@@ -770,7 +772,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>浏览器比之前多了一个请求，即预请求</p>
 <p><img src="image-20210123181435164.png"></p>
-<h3 id="2-3-缓存Cache-Control"><a href="#2-3-缓存Cache-Control" class="headerlink" title="2.3 缓存Cache-Control"></a>2.3 缓存Cache-Control</h3><h4 id="2-3-1-可缓存性"><a href="#2-3-1-可缓存性" class="headerlink" title="2.3.1 ==可缓存性=="></a>2.3.1 ==可缓存性==</h4><ul>
+<h3 id="2-3-缓存Cache-Control"><a href="#2-3-缓存Cache-Control" class="headerlink" title="2.3 缓存Cache-Control"></a>2.3 缓存Cache-Control</h3><h4 id="2-3-1-可缓存性"><a href="#2-3-1-可缓存性" class="headerlink" title="2.3.1 可缓存性"></a>2.3.1 可缓存性</h4><ul>
 <li>public：http请求返回的过程中，在Cache-Control中设置了public的值，代表在这个http请求中返回的内容所经过的任何路径（包括中间的一些http的代理服务器以及发出这个请求的客户端浏览器）都可以对返回内容进行缓存的操作</li>
 <li>private：只有发起请求的浏览器才可以进行缓存</li>
 <li>no-cache：不可以直接使用缓存</li>
@@ -778,7 +780,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <blockquote>
 <p>no-cache可以在本地、proxy服务器进行缓存，但是每次发起请求都要去服务器验证(2.5 资源验证)；如果服务器返回允许使用这部分缓存，才可以使用缓存</p>
 </blockquote>
-<h4 id="2-3-2-到期"><a href="#2-3-2-到期" class="headerlink" title="2.3.2 ==到期=="></a>2.3.2 ==到期==</h4><ul>
+<h4 id="2-3-2-到期"><a href="#2-3-2-到期" class="headerlink" title="2.3.2 到期"></a>2.3.2 到期</h4><ul>
 <li>max-age=<seconds>：设置这个缓存到多少秒过期</li>
 <li>s-maxage=<seconds>：s-maxage代替max-age，在代理服务器里才会生效，在客户端浏览器不会读取这个属性</li>
 <li>ma-stale=<seconds>：在max-age过期之后，如果我们返回的资源有这个max-stale的设置，发起请求的一方主动带的一个头，即便max-age过期了，只要在max-stale这个时间内依然可以使用这个过期的缓存，而不需要去原服务器请求（注意：只有在发起端设置才有用）</li>
@@ -832,12 +834,12 @@ http<span class="token punctuation">.</span><span class="token function">createS
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
 
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="D:\Git-repo\hexo\source_posts\http\image-20210124193709754.png"></p>
-<p><img src="%5Chttp%5Cimage-20210124191947363.png" alt="script.js从服务器获取"></p>
-<p><img src="D:\Git-repo\hexo\source_posts\http\image-20210124192758176.png" alt="再次刷新后从缓存读取"></p>
+<p><img src="image-20210124193709754.png"></p>
+<p><img src="image-20210124191947363.png" alt="script.js从服务器获取"></p>
+<p><img src="image-20210124192758176.png" alt="再次刷新后从缓存读取"></p>
 <p>问题：我们希望服务端更新了内容之后，客户端也能更新而不是读取的客户端的缓存</p>
 <p>解决方法：在打包完成后会在js文件名上根据打包完成的js文件以及其他的静态资源文件的内容加上一段hash码，如果js文件或者静态资源文件内容不变，hash码就不会变。也就是当url没有变就会使用本地的静态资源缓存，如果所有js文件或者静态资源文件内容变化了，那么嵌入到这些资源的url路径的hash码就会发生变化，这样客户端就会发起新的请求。</p>
-<h3 id="2-4-资源验证"><a href="#2-4-资源验证" class="headerlink" title="2.4 资源验证"></a>2.4 资源验证</h3><img src="\http\image-20210124195304725.jpg" alt="image-20210124195304725" style="zoom:130%;" />
+<h3 id="2-4-资源验证"><a href="#2-4-资源验证" class="headerlink" title="2.4 资源验证"></a>2.4 资源验证</h3><img src="image-20210124195304725.jpg" alt="浏览器资源验证流程" style="zoom:130%;" />
 
 <p><strong>验证头：</strong></p>
 <ul>
@@ -888,9 +890,9 @@ http<span class="token punctuation">.</span><span class="token function">createS
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
 
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="%5Chttp%5Cimage-20210124201729755.png" alt="设置了资源验证"></p>
-<p><img src="%5Chttp%5Cimage-20210124202044063.png" alt="返回304"></p>
-<p><img src="%5Chttp%5Cimage-20210124202633019.png" alt="从缓存读取"></p>
+<p><img src="image-20210124201729755.png" alt="设置资源验证"></p>
+<p><img src="image-20210124202044063.png" alt="返回304"></p>
+<p><img src="image-20210124202633019.png" alt="从缓存读取"></p>
 <h3 id="2-5-Cookie和Session"><a href="#2-5-Cookie和Session" class="headerlink" title="2.5 Cookie和Session"></a>2.5 Cookie和Session</h3><h4 id="2-5-1-cookie"><a href="#2-5-1-cookie" class="headerlink" title="2.5.1 cookie"></a>2.5.1 cookie</h4><p>​        在服务端返回数据额时候，通过Set-Cookie这个header设置在浏览器里面，它保存在浏览器里面的内容，这个内容就叫它cookie；浏览保存了这个cookie之后，它在下次同域的请求当中，它就会带上这个cookie，通过这样来保证这个内容就是这个用户的</p>
 <p>特点：</p>
 <ul>
