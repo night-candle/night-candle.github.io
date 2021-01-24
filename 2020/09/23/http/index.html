@@ -522,7 +522,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="HTTP协议原理-实践"><a href="#HTTP协议原理-实践" class="headerlink" title="HTTP协议原理+实践"></a>HTTP协议原理+实践</h1><p><img src="%5Chttp%5Cimage-20200902103603911.png"></p>
-<h2 id="1-HTTP协议基础"><a href="#1-HTTP协议基础" class="headerlink" title="1. HTTP协议基础"></a>1. HTTP协议基础</h2><h3 id="1-1-经典五层模型"><a href="#1-1-经典五层模型" class="headerlink" title="1.1 经典五层模型"></a>1.1 经典五层模型</h3><p><img src="%5Chttp%5C331769-20181124200628267-282150559.png" alt="TCP/IP五层模型"></p>
+<h2 id="1-HTTP协议基础"><a href="#1-HTTP协议基础" class="headerlink" title="1. HTTP协议基础"></a>1. HTTP协议基础</h2><h3 id="1-1-经典五层模型"><a href="#1-1-经典五层模型" class="headerlink" title="1.1 经典五层模型"></a>1.1 经典五层模型</h3><p><img src="331769-20181124200628267-282150559.png" alt="TCP/IP五层模型"></p>
 <p><img src="D:\Git-repo\hexo\source_posts\http\705728-20160424234824085-667046040.png" alt="img"></p>
 <p><img src="D:\Git-repo\hexo\source_posts\http\705728-20160424234825491-384470376.png" alt="img"></p>
 <p><img src="D:\Git-repo\hexo\source_posts\http\705728-20160424234826351-1957282396.png" alt="img"></p>
@@ -608,7 +608,7 @@
 </blockquote>
 <img src="https://img-blog.csdn.net/20150511172829813" alt="img" style="zoom:140%;" />
 
-<h3 id="1-4-HTTP报文格式"><a href="#1-4-HTTP报文格式" class="headerlink" title="1.4 HTTP报文格式"></a>1.4 HTTP报文格式</h3><img src="\http\image-20210122210132790.png" alt="HTTP报文" style="zoom: 50%;" />
+<h3 id="1-4-HTTP报文格式"><a href="#1-4-HTTP报文格式" class="headerlink" title="1.4 HTTP报文格式"></a>1.4 HTTP报文格式</h3><img src="image-20210122210132790.png" alt="HTTP报文" style="zoom: 50%;" />
 
 <p>HTTP方法：</p>
 <ul>
@@ -638,17 +638,17 @@ http<span class="token punctuation">.</span><span class="token function">createS
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8000</span><span class="token punctuation">)</span>
 
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8000'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<img src="\http\image-20210122212153947.png" alt="" style="zoom: 90%;" />
+<img src="image-20210122212153947.png" alt="" style="zoom: 90%;" />
 
-<img src="\http\image-20210122212317288.png" alt="" style="zoom: 80%;" />
+<img src="image-20210122212317288.png" alt="" style="zoom: 80%;" />
 
 <h2 id="2-HTTP的特性"><a href="#2-HTTP的特性" class="headerlink" title="2. HTTP的特性"></a>2. HTTP的特性</h2><h3 id="2-1-HTTP客户端"><a href="#2-1-HTTP客户端" class="headerlink" title="2.1 HTTP客户端"></a>2.1 HTTP客户端</h3><p>​        浏览器：浏览器地址输入baidu.com，就会返回响应内容。General就是http的首行，它并不属于http报文，它不仅返回内容，还处理了返回内容，如Response</p>
-<img src="\http\331769-20181129064014294-1238237602.png" alt="Google浏览器" style="zoom: 50%;" />
+<img src="331769-20181129064014294-1238237602.png" alt="Google浏览器" style="zoom: 50%;" />
 
 <p>​        curl：直接请求baidu.com，返回如下，而浏览器会去识别这个标签，然后重定向到<a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
-<img src="\http\image-20210122215211846.png" alt=""  />
+<img src="image-20210122215211846.png" alt=""  />
 
-<p><img src="D:\Git-repo\hexo\source_posts\http\image-20210122220156659.png" alt="image-20210122220156659"></p>
+<p><img src="image-20210122220156659.png"></p>
 <h3 id="2-2-CORS-跨域请求"><a href="#2-2-CORS-跨域请求" class="headerlink" title="2.2 CORS 跨域请求"></a>2.2 CORS 跨域请求</h3><h4 id="2-2-1-同域限制"><a href="#2-2-1-同域限制" class="headerlink" title="2.2.1 同域限制"></a>2.2.1 同域限制</h4><p><code>server1.js</code>：8880端口服务，返回<code>test.html</code>页面</p>
 <pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
 <span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
@@ -697,7 +697,7 @@ http<span class="token punctuation">.</span><span class="token function">createS
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
 
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="D:\Git-repo\hexo\source_posts\http\image-20210123164813202.png" alt="跨域请求报错"></p>
+<p><img src="image-20210123164813202.png" alt="跨域请求报错"></p>
 <p>解决方法：在添加<code>server2.js</code>中添加代码如下（浏览器在解析请求返回的内容时发现没有Access-Control-Allow-Origin设置为允许，会将返回内容忽略掉并报错）</p>
 <pre class="line-numbers language-javascript"><code class="language-javascript">response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token string">'Access-Control-Allow-Origin'</span><span class="token punctuation">:</span> <span class="token string">'*'</span>
@@ -742,7 +742,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span>
 </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="D:\Git-repo\hexo\source_posts\http\image-20210123180145542.png"></p>
+<p><img src="image-20210123180145542.png"></p>
 <p>报错原因：</p>
 <p>​    跨域资源共享标准（ cross-origin sharing standard ）允许在下列场景中使用跨域 HTTP 请求：</p>
 <ul>
@@ -769,7 +769,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
     <span class="token string">'Access-Control-Max-Age'</span><span class="token punctuation">:</span> <span class="token string">'1000'</span>
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>浏览器比之前多了一个请求，即预请求</p>
-<p><img src="D:\Git-repo\hexo\source_posts\http\image-20210123181435164.png"></p>
+<p><img src="image-20210123181435164.png"></p>
 <h3 id="2-3-缓存Cache-Control"><a href="#2-3-缓存Cache-Control" class="headerlink" title="2.3 缓存Cache-Control"></a>2.3 缓存Cache-Control</h3><h4 id="2-3-1-可缓存性"><a href="#2-3-1-可缓存性" class="headerlink" title="2.3.1 ==可缓存性=="></a>2.3.1 ==可缓存性==</h4><ul>
 <li>public：http请求返回的过程中，在Cache-Control中设置了public的值，代表在这个http请求中返回的内容所经过的任何路径（包括中间的一些http的代理服务器以及发出这个请求的客户端浏览器）都可以对返回内容进行缓存的操作</li>
 <li>private：只有发起请求的浏览器才可以进行缓存</li>
