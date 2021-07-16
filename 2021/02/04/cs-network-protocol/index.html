@@ -1,0 +1,1977 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="网络协议基础入门, CS 宵烛 xiaozhu NightCandle 计算机 网络安全">
+    <meta name="baidu-site-verification" content="fmlEuI34ir" />
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
+    <meta name="description" content="前言看似最枯燥、最基础的东西往往具有最长久的生命力
+​    
+​    
+协议三要素public class HelloWorld {
+  public static void main(String[] args){
+    Syste">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>网络协议基础入门 | 宵烛 Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">宵烛 Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">宵烛 Blog</div>
+        <div class="logo-desc">
+            
+            学生 | 虚假CTF选手 | 计算机菜鸟
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/32.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        网络协议基础入门
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/%E5%AE%B9%E5%99%A8/" target="_blank">
+                            <span class="chip bg-color">容器</span>
+                        </a>
+                        
+                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" target="_blank">
+                            <span class="chip bg-color">计算机网络</span>
+                        </a>
+                        
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" target="_blank">
+                            <span class="chip bg-color">网络协议</span>
+                        </a>
+                        
+                        <a href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/" target="_blank">
+                            <span class="chip bg-color">云计算</span>
+                        </a>
+                        
+                        <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" target="_blank">
+                            <span class="chip bg-color">微服务</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
+                            计科
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-02-04
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    宵烛
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    17.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    65 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>看似最枯燥、最基础的东西往往具有最长久的生命力</strong></p>
+<p>​    </p>
+<p>​    </p>
+<h2 id="协议三要素"><a href="#协议三要素" class="headerlink" title="协议三要素"></a>协议三要素</h2><pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello World!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&emsp;&emsp;这是程序员向计算机世界说你好的方式。这段文字也是一种协议，是人类和计算机沟通的协议，<strong>只有通过这种协议，计算机才知道想让它做什么</strong>。会了计算机语言，就能够教给一台计算机完成工作了。计算机语言作为程序员控制一台计算机工作的协议，具备了协议的三要素。</p>
+<ul>
+<li><strong>语法</strong>：就是这一段内容要符合一定的规则和格式（如括号要成对，结束要使用分号等）</li>
+<li><strong>语义</strong>：就是这一段内容要代表某种意义。（如数字减去数字是有意义的，数字减去文本一般来说没有意义）</li>
+<li><strong>顺序</strong>：就是先做什么，后做什么（如可以先加上某个数值然后再减去某个数值）</li>
+</ul>
+<p>&emsp;&emsp;但是要想学会教给一大片机器做什么，这就需要网络协议。<strong>只有通过网络协议，才能使一大片机器互相协作、共同完成一件事。</strong></p>
+<p>​    </p>
+<p>​    </p>
+<h2 id="网络分层"><a href="#网络分层" class="headerlink" title="网络分层"></a>网络分层</h2><ul>
+<li><p><a href="https://night-candle.github.io/2021/02/04/cs-network-socket/#toc-heading-20">OSI 概念模型</a></p>
+</li>
+<li><p>OSI与TCP/IP模型对照</p>
+</li>
+</ul>
+<img src="image-20210522175545296.png" style="zoom: 70%;" />
+
+<ul>
+<li><p>网络分层的优点：</p>
+<ul>
+<li><p>各层之间是独立的。<strong>某一层并不需要知道它下一层是如何实现的，而仅仅需要知道该层通过层间的接口所提供的服务</strong></p>
+</li>
+<li><p>灵活性好。当任何一层发生变化时，只要<strong>层间接口关系保持不变，则在这层以上或以下各层均不受影响</strong></p>
+</li>
+<li><p>结构上可分割开、易于实现和维护、能促进标准化工作</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>传输层是<strong>IPv4</strong>或<strong>IPv6</strong>、链路层是否仍使用1500字节的<strong>MTU</strong>对应用层没有影响</p>
+</blockquote>
+<blockquote>
+<p><strong>Intel DPDK</strong>无网络协议栈，提供了更好的网络性能，但一些调试工具也因此无法使用</p>
+</blockquote>
+<p>​    </p>
+<p>​    </p>
+<ul>
+<li><p><strong>层与层的关系</strong></p>
+<ul>
+<li><p><strong>只要是在网络上跑的包都是完整的。可以有下层没上层，绝对不可能有上层没下层。</strong>所以，<strong>对 TCP 协议来说，三次握手也好，重试也好，只要想发出去包，就要有 IP 层和 MAC 层，不然是发不出去的。</strong>无论这个包经过哪些设备，它都是完整的。</p>
+</li>
+<li><p>所谓二层设备、三层设备，都是这些设备上跑的程序不同而已。一个 HTTP 协议的包经过一个二层设备，二层设备收进去的是整个网络包。这里面 HTTP、TCP、 IP、 MAC 都有。二层设备就是只把 MAC 头摘下来，看看是丢弃、转发，还是自己留着。三层设备就是把 MAC 头摘下来之后，再把 IP 头摘下来，看看是丢弃、转发，还是自己留着。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h1 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h1><h2 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h2><p>HTTP 协议（<code>Hypertext Transfer Protocol</code> ）</p>
+<p>&emsp;&emsp;<em>a stateless application-level request/response protocol that uses extensible semantics and self-descriptive message payloads for flexible interaction with network-based hypertext information systems</em>（RFC7230 2014.6）</p>
+<p>&emsp;&emsp;一种<strong>无状态</strong>的、应用层的、以<strong>请求/应答方式</strong>运行的协议，它使用<strong>可扩展的语义和自描述消息格式</strong>，与基于网络的<strong>超文本</strong>信息系统灵活的互动。</p>
+<p>​    </p>
+<h3 id="消息格式"><a href="#消息格式" class="headerlink" title="消息格式"></a>消息格式</h3><img src="消息格式.jpg" style="zoom:70%;" />
+
+<p>基于<strong>ABNF</strong>语义定义的HTTP消息格式：</p>
+<p><strong>HTTP-message =<code>start-line</code> * (<code>header-field</code>CRLF ) CRLF [<code>message-body</code>]</strong></p>
+<ul>
+<li><p><strong><code>start-line</code></strong> = request-line / status-line </p>
+<ul>
+<li><p><strong>request-line</strong> = method SP request-target SP HTTP-version CRLF </p>
+</li>
+<li><p><strong>status-line</strong> = HTTP-version SP status-code SP reason-phrase CRLF </p>
+</li>
+</ul>
+</li>
+<li><p><strong><code>header-field</code></strong> = field-name “:” OWS field-value OWS</p>
+<ul>
+<li><p>OWS = * (SP / HTAB）</p>
+</li>
+<li><p>field-name = token </p>
+</li>
+<li><p>field-value =  * (field-content /obs-fold）</p>
+</li>
+</ul>
+</li>
+<li><p><strong><code>message-body</code></strong> = * OCTET</p>
+</li>
+</ul>
+<p>​    <img src="image-20210522172607096.png" alt="报文实例"></p>
+<blockquote>
+<p><code>ABNF</code> <strong>扩充巴科斯 - 瑙尔范式</strong>：定义语法的元语言</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>操作符</li>
+</ul>
+<p><strong>空白字符：</strong>用来分隔定义中的各个元素</p>
+<p>e.g.method SP request-target SP HTTP-version CRLF</p>
+<p><strong>选择 /：</strong>表示多个规则都是可供选择的规则</p>
+<p>e.g.start-line = request-line / status-line</p>
+<p><strong>值范围</strong> <strong>%c##-##</strong></p>
+<p>e.g.OCTAL = “0” / “1” / “2” / “3” / “4” / “5” / “6” / “7” 与 OCTAL = %x30-37 等价</p>
+<p><strong>序列组合()：</strong>将规则组合起来，视为单个元素</p>
+<p><strong>不定量重复m*n</strong> </p>
+<p>e.g.*元素表示零个或更多元素： *（header-field CRLF）</p>
+<p>e.g.1* 元素表示一个或更多元素，2*4 元素表示两个至四个元素 </p>
+<p><strong>可选序列 []：</strong> </p>
+<p>e.g.[ message-body ]</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>核心规则</li>
+</ul>
+<p><img src="image-20210522162855573.png"></p>
+</blockquote>
+<p>​    </p>
+<p>​    </p>
+<h4 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h4><p><strong>request-line = method SP <code>request-target</code> SP HTTP-version CRLF</strong></p>
+<img src="image-20210526214115747.png" alt="" style="zoom:80%;" />
+
+<p>​    </p>
+<h5 id="URI"><a href="#URI" class="headerlink" title="URI"></a>URI</h5><p>​    </p>
+<p><strong>什么是URI ？</strong></p>
+<p><strong>URL</strong>：<code>Uniform Resource Locator</code>，表示资源的位置， 期望提供查找资源的方法  （RFC1738 1994.12）</p>
+<p><strong>URN</strong>：<code>Uniform Resource Name</code>，期望为资源提供持久的、位置无关的标识方式，并允许简单地将多个命名空间映射到单个URN命名空间 （RFC2141 1997.5）</p>
+<p>​    e.g. <strong>磁力链接</strong> magnet:?xt=urn:sha1:YNCKHTQC5C</p>
+<p><strong>URI</strong>：<code>Uniform Resource Identifier</code>，用以区分资源，<strong>是 URL 和 URN 的超集</strong>，用以取代 URL 和 URN 概念 （RFC1630 1994.6）（RFC3986 2005.1 取代 RFC2396 和 RFC2732）</p>
+<ul>
+<li><p>Resource 资源</p>
+<ul>
+<li>可以是图片、文档，也可以是不能通过互联网访问的实体，例如人、公司，也可以是抽象的概念，例如亲属关系或者数字符号</li>
+<li>一个资源可以有多个 URI </li>
+</ul>
+</li>
+<li><p>Identifier 标识符 </p>
+<ul>
+<li>将当前资源与其他资源区分开的名称 </li>
+</ul>
+</li>
+<li><p>Uniform 统一 </p>
+<ul>
+<li>允许不同种类的资源在同一上下文中出现 </li>
+<li>对不同种类的资源标识符可以使用同一种语义进行解读 </li>
+<li>引入新标识符时，不会对已有标识符产生影响 </li>
+<li>允许同一资源标识符在不同的、internet 规模下的上下文中出现</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<p><strong>URI 组成：schema, user information, host, port, path, query, fragment</strong></p>
+<p><img src="image-20210526200303845.png"></p>
+<p>​    </p>
+<p><strong>URI 的格式</strong></p>
+<p><strong>URI = <code>scheme</code> “:” <code>hier-part</code> [ “?” <code>query</code> ] [ “#” <code>fragment</code> ]</strong> </p>
+<ul>
+<li><p><strong><code>scheme</code></strong> = ALPHA *( ALPHA / DIGIT / “+” / “-“ / “.” )<br>e.g. http, https, ftp, mailto, rtsp, file, telnet </p>
+</li>
+<li><p><strong><code>query</code></strong> = *( pchar / “/“ / “?” ) </p>
+</li>
+<li><p><strong><code>fragment</code></strong> = *( pchar / “/“ / “?” ) </p>
+</li>
+</ul>
+<ul>
+<li><p><strong><code>hier-part</code></strong> = “//“ <strong><code>authority</code></strong> path-abempty / path-absolute / path-rootless / path-empty </p>
+<ul>
+<li><p><strong>authority</strong> = [ userinfo “@” ] host [ “:” port ] </p>
+<p>userinfo = *( unreserved / pct-encoded / sub-delims / “:” ) </p>
+<p>host = IP-literal / IPv4address / reg-name </p>
+<p>port = *DIGIT </p>
+</li>
+<li><p><strong>path</strong> = path-abempty/ path-absolute/ path-noscheme / path-rootless / path-empty </p>
+<p>path-abempty = *( “/” segment ) ：以/开头的路径或者空路径 </p>
+<p>path-absolute = “/” [ segment-nz *( “/” segment ) ] ：以/开头的路径，但不能以//开头 </p>
+<p>path-noscheme = segment-nz-nc *( “/” segment ) ：以非:号开头的路径 </p>
+<p>path-rootless = segment-nz *( “/” segment ) ：相对path-noscheme，增加允许以:号开头的路径 </p>
+<p>path-empty = 0&lt;pchar&gt; ：空路径</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<p><strong>相对URI</strong></p>
+<p><strong>URI-reference = <code>URI</code>/<code>relative-ref</code></strong> </p>
+<ul>
+<li><strong><code>relative-ref</code></strong> = relative-part [ “?” query ] [ “#” fragment ] <ul>
+<li>relative-part = “//“ authority path-abempty / path-absolute / path-noscheme / path-empty</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h5 id="URI-编码"><a href="#URI-编码" class="headerlink" title="URI 编码"></a>URI 编码</h5><p>​    </p>
+<p>​    </p>
+<h5 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h5><p><strong>常见方法（RFC7231）</strong></p>
+<ul>
+<li><p><strong>GET</strong>：主要的获取信息方法，大量的性能优化都针对该方法，幂等方法 </p>
+</li>
+<li><p>HEAD：类似 GET 方法，但服务器不发送 BODY，用以获取 HEAD 元数据，幂等方法 </p>
+</li>
+<li><p><strong>POST</strong>：常用于提交 HTML FORM 表单、新增资源等 </p>
+</li>
+<li><p>PUT：更新资源，带条件时是幂等方法 </p>
+</li>
+<li><p>DELETE：删除资源，幂等方法 </p>
+</li>
+<li><p>CONNECT：建立 tunnel 隧道 </p>
+</li>
+<li><p>OPTIONS：显示服务器对访问资源支持的方法，幂等方法 </p>
+</li>
+<li><p>TRACE：回显服务器收到的请求，用于定位问题。有安全风险 </p>
+</li>
+</ul>
+<p>​    </p>
+<p><strong>用于文档管理的 WEBDAV 方法（RFC2518）</strong></p>
+<ul>
+<li><p>PROPFIND：从 Web 资源中检索以 XML 格式存储的属性。它也被重载，以允许一个检索远程系统的集合结构（也叫目录层次结构） </p>
+</li>
+<li><p>PROPPATCH：在单个原子性动作中更改和删除资源的多个属性 </p>
+</li>
+<li><p>MKCOL：创建集合或者目录 </p>
+</li>
+<li><p>COPY：将资源从一个 URI 复制到另一个 URI </p>
+</li>
+<li><p>MOVE：将资源从一个 URI 移动到另一个 URI </p>
+</li>
+<li><p>LOCK：锁定一个资源。WebDAV 支持共享锁和互斥锁。 </p>
+</li>
+<li><p>UNLOCK：解除资源的锁定</p>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="响应行"><a href="#响应行" class="headerlink" title="响应行"></a>响应行</h4><p><strong>status-line = HTTP-version SP <code>status-code</code> SP <code>reason-phrase</code> CRLF</strong> </p>
+<ul>
+<li><p><strong><code>status-code</code></strong> = 3DIGIT </p>
+</li>
+<li><p><strong><code>reason-phrase</code></strong> = *( HTAB / SP / VCHAR / obs-text )</p>
+</li>
+</ul>
+<img src="image-20210526214141809.png" alt="" style="zoom:80%;" />
+
+<p>​    </p>
+<p>​    </p>
+<h5 id="响应码"><a href="#响应码" class="headerlink" title="响应码"></a>响应码</h5><p>​    </p>
+<p>响应码规范：（RFC6585 2012.4）（RFC7231 2014.6）</p>
+<p><code>1xx</code>：信息性状态码，请求已接收到，需要进一步处理才能完成，HTTP1.0 不支持 </p>
+<ul>
+<li><p>100 Continue：上传大文件前使用 </p>
+<ul>
+<li>由客户端发起请求中携带 Expect: 100-continue 头部触发 </li>
+</ul>
+</li>
+<li><p>101 Switch Protocols：协议升级使用 </p>
+<ul>
+<li>由客户端发起请求中携带 Upgrade: 头部触发，如升级 websocket 或者 http/2.0 </li>
+</ul>
+</li>
+<li><p>102 Processing：WebDAV 请求可能包含许多涉及文件操作的子请求，需要很长时间才能完成请求。该代码表示服务器已经收到并正在处理请求，但无响应可用。这样可以防止客户端超时，并假设请求丢失</p>
+</li>
+</ul>
+<p>​    </p>
+<p><code>2xx</code>：成功处理请求 </p>
+<ul>
+<li><p>200 OK: 成功返回响应。 </p>
+</li>
+<li><p>201 Created: 有新资源在服务器端被成功创建。 </p>
+</li>
+<li><p>202 Accepted: 服务器接收并开始处理请求，但请求未处理完成。这样一个模糊的概念是有意如此设计，可以覆盖更多的场景。例如异步、需要长时间处理的任务。 </p>
+</li>
+<li><p>203 Non-Authoritative Information：当代理服务器修改了 origin server 的原始响应包体时（例如更换了HTML中的元素值），代理服务器可以通过修改200为203的方式告知客户端这一事实，方便客户端为这一行为作出相应的处理。 203响应可以被缓存。</p>
+</li>
+<li><p>204 No Content：成功执行了请求且不携带响应包体，并暗示客户端无需更新当前的页面视图。 </p>
+</li>
+<li><p>205 Reset Content：成功执行了请求且不携带响应包体，同时指明客户端需要更新当前页面视图。 </p>
+</li>
+<li><p>206 Partial Content：使用 range 协议时返回部分响应内容时的响应码 </p>
+</li>
+<li><p>207 Multi-Status：RFC4918 ，在 WEBDAV 协议中以 XML 返回多个资源的状态。 </p>
+</li>
+<li><p>208 Already Reported：RFC5842 ，为避免相同集合下资源在207响应码下重复上报，使用 208 可以使用父集合的响应码。</p>
+</li>
+</ul>
+<p>​    </p>
+<p><code>3xx</code>：<strong>重定向</strong>使用 Location 指向的资源或者缓存中的资源。在 RFC2068 中规定客户端重定向次数不应超过 5 次，以防止死循环。 </p>
+<ul>
+<li><p>300 Multiple Choices：资源有多种表述，通过 300 返回给客户端后由其自行选择访问哪一种表述。由于缺乏明确的细节，300 很少使用。 </p>
+</li>
+<li><p>301 Moved Permanently：资源永久性的重定向到另一个 URI 中。 </p>
+</li>
+<li><p>302 Found：资源临时的重定向到另一个 URI 中。</p>
+</li>
+<li><p>303 See Other：重定向到其他资源，常用于 POST/PUT 等方法的响应中。 </p>
+</li>
+<li><p>304 Not Modified：当客户端拥有可能过期的缓存时，会携带缓存的标识 etag、时间等信息询问服务器缓存是否仍可复用，而304是告诉客户端可以复用缓存。 </p>
+</li>
+<li><p>307 Temporary Redirect：类似302，但明确重定向后请求方法必须与原请求方法相同，不得改变。 </p>
+</li>
+<li><p>308 Permanent Redirect：类似301，但明确重定向后请求方法必须与原请求方法相同，不得改变。</p>
+</li>
+</ul>
+<p>​    </p>
+<p><code>4xx</code>：<strong>客户端出现错误</strong>，服务器无法处理请求</p>
+<ul>
+<li><p>400 Bad Request：服务器认为客户端出现了错误，但不能明确判断为以下哪种错误时使用此错误码。例如HTTP请求格式错误。 </p>
+</li>
+<li><p>401 Unauthorized：用户认证信息缺失或者不正确，导致服务器无法处理请求。 </p>
+</li>
+<li><p>407 Proxy Authentication Required：对需要经由代理的请求，认证信息未通过代理服务器的验证 </p>
+</li>
+<li><p>403 Forbidden：服务器理解请求的含义，但没有权限执行此请求 </p>
+</li>
+<li><p>404 Not Found：服务器没有找到对应的资源 </p>
+</li>
+<li><p>410 Gone：服务器没有找到对应的资源，且明确的知道该位置永久性找不到该资源响应码分类： 4xx（二） </p>
+</li>
+<li><p>405 Method Not Allowed：服务器不支持请求行中的 method 方法 </p>
+</li>
+<li><p>406 Not Acceptable：对客户端指定的资源表述不存在（例如对语言或者编码有要求），服务器返回表述列表供客户端选择。 </p>
+</li>
+<li><p>408 Request Timeout：服务器接收请求超时 </p>
+</li>
+<li><p>409 Conflict：资源冲突，例如上传文件时目标位置已经存在版本更新的资源 </p>
+</li>
+<li><p>411 Length Required：如果请求含有包体且未携带 Content-Length 头部，且不属于chunk类请求时，返回 411响应码分类： 4xx（三） </p>
+</li>
+<li><p>412 Precondition Failed：复用缓存时传递的 If-Unmodified-Since 或 If-None-Match 头部不被满足 </p>
+</li>
+<li><p>413 Payload Too Large/Request Entity Too Large：请求的包体超出服务器能处理的最大长度 </p>
+</li>
+<li><p>414 URI Too Long：请求的 URI 超出服务器能接受的最大长度 </p>
+</li>
+<li><p>415 Unsupported Media Type：上传的文件类型不被服务器支持 </p>
+</li>
+<li><p>416 Range Not Satisfiable：无法提供 Range 请求中指定的那段包体 </p>
+</li>
+<li><p>417 Expectation Failed：对于 Expect 请求头部期待的情况无法满足时的 </p>
+</li>
+<li><p>421 Misdirected Request：服务器认为这个请求不该发给它，因为它没有能力处理。 </p>
+</li>
+<li><p>426 Upgrade Required：服务器拒绝基于当前 HTTP 协议提供服务，通过Upgrade 头部告知客户端必须升级协议才能继续处理。 </p>
+</li>
+<li><p>428 Precondition Required：用户请求中缺失了条件类头部，例如 If-Match </p>
+</li>
+<li><p>429 Too Many Requests：客户端发送请求的速率过快 </p>
+</li>
+<li><p>431 Request Header Fields Too Large：请求的 HEADER 头部大小超过限制 </p>
+</li>
+<li><p>451 Unavailable For Legal Reasons：RFC7725 ，由于法律原因资源不可访问响应码分类： 5xx（一） </p>
+</li>
+</ul>
+<p>​     </p>
+<p><code>5xx</code>：<strong>服务器端出现错误</strong>，服务器处理请求出错 </p>
+<ul>
+<li><p>500 Internal Server Error：服务器内部错误，且不属于以下错误类型 </p>
+</li>
+<li><p>501 Not Implemented：服务器不支持实现请求所需要的功能 </p>
+</li>
+<li><p>502 Bad Gateway：代理服务器无法获取到合法响应 </p>
+</li>
+<li><p>503 Service Unavailable：服务器资源尚未准备好处理当前请求</p>
+</li>
+<li><p>504 Gateway Timeout：代理服务器无法及时的从上游获得响应 </p>
+</li>
+<li><p>505 HTTP Version Not Supported：请求使用的 HTTP 协议版本不支持 </p>
+</li>
+<li><p>507 Insufficient Storage：服务器没有足够的空间处理请求 </p>
+</li>
+<li><p>508 Loop Detected：访问资源时检测到循环 </p>
+</li>
+<li><p>511 Network Authentication Required：代理服务器发现客户端需要进行身份验证才能获得网络访问权限</p>
+</li>
+</ul>
+<h4 id="首部字段"><a href="#首部字段" class="headerlink" title="首部字段"></a>首部字段</h4><p>首部字段名：字段值</p>
+<p>单个HTTP首部字段可以有多个值</p>
+<h5 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a>请求首部字段</h5><p><img src="D:\Git-repo\hexo\source_posts\cs-network-protocol\image-20210529211824419.png" alt="image-20210529211824419"></p>
+<p><img src="D:\Git-repo\hexo\source_posts\cs-network-protocol\image-20210529211839057.png" alt="image-20210529211839057"></p>
+<p><img src="D:\Git-repo\hexo\source_posts\cs-network-protocol\image-20210529212037624.png" alt="image-20210529212037624"></p>
+<h5 id="响应首部字段"><a href="#响应首部字段" class="headerlink" title="响应首部字段"></a>响应首部字段</h5><p><img src="D:\Git-repo\hexo\source_posts\cs-network-protocol\image-20210529212109514.png" alt="image-20210529212109514"></p>
+<p><img src="D:\Git-repo\hexo\source_posts\cs-network-protocol\image-20210529212121189.png" alt="image-20210529212121189"></p>
+<h5 id="通用首部字段-General-Header-Fields"><a href="#通用首部字段-General-Header-Fields" class="headerlink" title="通用首部字段    General Header Fields"></a>通用首部字段    General Header Fields</h5><p>请求和响应报文两方都会使用的首部字段</p>
+<table>
+<thead>
+<tr>
+<th>首部字段名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Cache-Control</strong></td>
+<td>控制缓存</td>
+</tr>
+<tr>
+<td><strong>Connection</strong></td>
+<td>连接管理、逐条首部</td>
+</tr>
+<tr>
+<td>Upgrade</td>
+<td>升级为其他协议</td>
+</tr>
+<tr>
+<td><strong>via</strong></td>
+<td>代理服务器的相关信息</td>
+</tr>
+<tr>
+<td>Wraning</td>
+<td>错误和警告通知</td>
+</tr>
+<tr>
+<td>Transfor-Encoding</td>
+<td>报文主体的传输编码格式</td>
+</tr>
+<tr>
+<td>Trailer</td>
+<td>报文末端的首部一览</td>
+</tr>
+<tr>
+<td>Pragma</td>
+<td>报文指令</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td>创建报文的日期</td>
+</tr>
+</tbody></table>
+<p><img src="D:\Git-repo\hexo\source_posts\cs-network-protocol\image-20210529211513608.png" alt="image-20210529211513608"></p>
+<p><img src="D:\Git-repo\hexo\source_posts\cs-network-protocol\image-20210529211746384.png" alt="image-20210529211746384"></p>
+<h5 id="实体首部字段"><a href="#实体首部字段" class="headerlink" title="实体首部字段"></a>实体首部字段</h5><table>
+<thead>
+<tr>
+<th>首部字段名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Allow</strong></td>
+<td>资源可支持的HTTP方法</td>
+</tr>
+<tr>
+<td>Content-Language</td>
+<td>实体的资源语言</td>
+</tr>
+<tr>
+<td>Content-Encoding</td>
+<td>实体的编码格式</td>
+</tr>
+<tr>
+<td><strong>Content-Length</strong></td>
+<td>实体的大小（字节）</td>
+</tr>
+<tr>
+<td><strong>Content-Type</strong></td>
+<td>实体媒体类型</td>
+</tr>
+<tr>
+<td>Content-MD5</td>
+<td>实体报文的摘要</td>
+</tr>
+<tr>
+<td>Content-Location</td>
+<td>代替资源的URI</td>
+</tr>
+<tr>
+<td>Content-Rnages</td>
+<td>实体主体的位置范围</td>
+</tr>
+<tr>
+<td>Last-Modified</td>
+<td>资源最后的修改时间</td>
+</tr>
+<tr>
+<td>Expires</td>
+<td>实体主体的过期时间</td>
+</tr>
+</tbody></table>
+<p><img src="D:\Git-repo\hexo\source_posts\cs-network-protocol\image-20210529212151372.png" alt="image-20210529212151372"></p>
+<p><img src="D:\Git-repo\hexo\source_posts\cs-network-protocol\image-20210529212200529.png" alt="image-20210529212200529"></p>
+<h3 id="REST-架构"><a href="#REST-架构" class="headerlink" title="REST 架构"></a>REST 架构</h3><blockquote>
+<p><strong>Form Follows Function</strong>：HTTP 协议为什么是现在这个样子？ </p>
+</blockquote>
+<p>​    </p>
+<h4 id="HTTP-解决了什么问题？"><a href="#HTTP-解决了什么问题？" class="headerlink" title="HTTP 解决了什么问题？"></a>HTTP 解决了什么问题？</h4><p><em>Web’s major goal was to be a shared information space through which people and machines could communicate. ——Tim Berners Lee</em></p>
+<p>​    </p>
+<p><strong>解决 WWW 信息交互必须面对的需求：</strong></p>
+<ul>
+<li><p>低门槛</p>
+</li>
+<li><p>可扩展性：巨大的用户群体，超长的寿命 </p>
+</li>
+<li><p>分布式系统下的 Hypermedia：大粒度数据的网络传输 </p>
+</li>
+<li><p>Internet 规模 </p>
+<ul>
+<li><p>无法控制的 scalability</p>
+<p>不可预测的负载、非法格式的数据、恶意消息</p>
+<p>客户端不能保持所有服务器信息，服务器不能保持多个请求间的状态信息 </p>
+</li>
+<li><p>独立的组件部署：新老组件并存 </p>
+</li>
+</ul>
+</li>
+<li><p>向前兼容：自 1993 年起 HTTP0.9\1.0（1996）已经被广泛使用</p>
+</li>
+</ul>
+<p>​    </p>
+<h4 id="架构设计原则"><a href="#架构设计原则" class="headerlink" title="架构设计原则"></a>架构设计原则</h4><p>​    </p>
+<ul>
+<li><p>评估 Web 架构的关键属性（<strong>HTTP 协议应当在以下属性中取得可接受的均衡</strong> ）</p>
+<p><strong>1. 性能 Performance：</strong>影响高可用的关键因素</p>
+<p><strong>2. 可伸缩性 Scalability：</strong>支持部署可以互相交互的大量组件 </p>
+<p><strong>3. 简单性 Simplicity：</strong>易理解、易实现、易验证 </p>
+<p><strong>4. 可见性 Visiable：</strong>对两个组件间的交互进行监视或者仲裁的能力。如缓存、分层设计等 </p>
+<p><strong>5. 可移植性 Portability：</strong>在不同的环境下运行的能力 </p>
+<p><strong>6. 可靠性 Reliability：</strong>出现部分故障时，对整体影响的程度 </p>
+<p><strong>7. 可修改性 Modifiability：</strong>对系统作出修改的难易程度，由可进化性、可定制性、可扩展 </p>
+<p>性、可配置性、可重用性构成</p>
+</li>
+</ul>
+<p>​    </p>
+<ul>
+<li><p>架构属性：<strong>性能</strong></p>
+<ul>
+<li><p>网络性能 <code>Network Performance</code> </p>
+<p><strong><code>Throughput</code> 吞吐量</strong>：小于等于带宽 bandwidth </p>
+<p><strong><code>Overhead</code> 开销</strong>：首次开销，每次开销 </p>
+</li>
+<li><p>用户感知到的性能 <code>User-perceived Performance</code> </p>
+<p><code>Latency</code> 延迟：发起请求到接收到响应的时间 </p>
+<p><code>Completion</code> 完成时间：完成一个应用动作所花费的时间 </p>
+</li>
+<li><p>网络效率 <code>Network Efficiency</code> </p>
+<p>重用缓存、减少交互次数、数据传输距离更近、COD</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<ul>
+<li><p>架构属性：<strong>可修改性</strong> </p>
+<ul>
+<li><p><strong>可进化性 Evolvability：</strong>一个组件独立升级而不影响其他组件 </p>
+</li>
+<li><p><strong>可扩展性 Extensibility ：</strong>向系统添加功能，而不会影响到系统的其他部分 </p>
+</li>
+<li><p><strong>可定制性 Customizability ：</strong>临时性、定制性地更改某一要素来提供服务，不对常规客户产生影响 </p>
+</li>
+<li><p><strong>可配置性 Configurability ：</strong>应用部署后可通过修改配置提供新的功能 </p>
+</li>
+<li><p><strong>可重用性 Reusabilit ：</strong>组件可以不做修改在其他应用在使用</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<img src="image-20210522184657315.png" alt="REST架构下的Web" style="zoom:70%;" />
+
+<h4 id="架构风格"><a href="#架构风格" class="headerlink" title="架构风格"></a>架构风格</h4><blockquote>
+<p>从5种架构风格推导出HTTP的REST架构 </p>
+</blockquote>
+<ul>
+<li><p>5种架构风格</p>
+<ul>
+<li><p><strong>数据流风格 <code>Data-flow Styles</code></strong></p>
+<p>优点：简单性、可进化性、可扩展性、可配置性、可重用性 </p>
+</li>
+<li><p><strong>复制风格 <code>Replication Styles</code></strong></p>
+<p>优点：用户可察觉的性能、可伸缩性，网络效率、可靠性也可以提到提升 </p>
+</li>
+<li><p><strong>分层风格 <code>Hierarchical Styles</code></strong> </p>
+<p>优点：简单性、可进化性、可伸缩性 </p>
+</li>
+<li><p><strong>移动代码风格 <code>Mobile Code Styles</code></strong> </p>
+<p>优点：可移植性、可扩展性、网络效率 </p>
+</li>
+<li><p><strong>点对点风格 <code>Peer-to-Peer Styles</code></strong> </p>
+<p>优点：可进化性、可重用性、可扩展性、可配置性</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>数据流风格</strong></p>
+</li>
+<li><p><strong>复制风格</strong></p>
+</li>
+<li><p><strong>分层风格</strong></p>
+</li>
+<li><p><strong>移动代码风格</strong></p>
+</li>
+<li><p><strong>点对点风格</strong></p>
+</li>
+</ul>
+<h4 id="风格演化"><a href="#风格演化" class="headerlink" title="风格演化"></a>风格演化</h4><img src="image-20210522191814125.png" style="zoom:90%;" />
+
+<p>​    </p>
+<h3 id="协议的通用规则"><a href="#协议的通用规则" class="headerlink" title="协议的通用规则"></a>协议的通用规则</h3><h3 id="连接与消息的路由"><a href="#连接与消息的路由" class="headerlink" title="连接与消息的路由"></a>连接与消息的路由</h3><h3 id="内容协商与传输"><a href="#内容协商与传输" class="headerlink" title="内容协商与传输"></a>内容协商与传输</h3><p>每个 URI 指向的资源可以是任何事物，可以有多种不同的表述，例如一份文档可以有不同语言的翻译、不同的媒体格式、可以针对不同的浏览器提供不同的压缩编码等。</p>
+<h3 id="Cookie-的设计与问题"><a href="#Cookie-的设计与问题" class="headerlink" title="Cookie 的设计与问题"></a>Cookie 的设计与问题</h3><h3 id="缓存的控制"><a href="#缓存的控制" class="headerlink" title="缓存的控制"></a>缓存的控制</h3><p>​    </p>
+<p>​    </p>
+<p>​    </p>
+<h2 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h2><blockquote>
+<p>支持服务器推送消息</p>
+</blockquote>
+<p>WebSocket是基于TCP的应用层协议，用于在C/S架构的应用中实现<strong>双向通信</strong>。RFC6455（2011.12） </p>
+<p>• 双向通讯的优劣？ </p>
+<p>• 如何管理会话？ </p>
+<p>• 如何维持长连接？ </p>
+<p>• 兼容 HTTP 协议 </p>
+<p>• 端口复用 </p>
+<p>• 支持扩展 </p>
+<p>• 如 permessage-deflate 扩展</p>
+<p>建立会话<br>• 消息传输<br>• 心跳<br>• 关闭会话</p>
+<p>​    </p>
+<p>​    </p>
+<p>​    </p>
+<h2 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP/2.0"></a>HTTP/2.0</h2><p>​    </p>
+<p>​    </p>
+<p>​    </p>
+<h2 id="TLS-SSL"><a href="#TLS-SSL" class="headerlink" title="TLS/SSL"></a>TLS/SSL</h2><blockquote>
+<p>应用层的安全基础设施</p>
+</blockquote>
+<p>​    </p>
+<p>​    </p>
+<p>​    </p>
+<h1 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h1><h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p>传输层的 TCP 协议<br>• 建立连接<br>• 传输数据<br>• 拥塞控制<br>• 关闭连接</p>
+<p><img src="image-20210127183621073.png" alt="发展历史"></p>
+<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p>​    </p>
+<p>​    </p>
+<h1 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h1><p>​    </p>
+<h2 id="IP-协议"><a href="#IP-协议" class="headerlink" title="IP 协议"></a>IP 协议</h2><blockquote>
+<p><strong>IP 地址是一个网卡在网络世界的通讯地址</strong>，相当于我们现实世界的门牌号码。IP 是地址，有定位功能，MAC 是身份证，无定位功能。</p>
+</blockquote>
+<p>​    </p>
+<h3 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h3><h4 id="查看-IP-地址"><a href="#查看-IP-地址" class="headerlink" title="查看 IP 地址"></a>查看 IP 地址</h4><p>Windows： <code>ipconfig</code></p>
+<p>Linux： <code>ifconfig</code>、 <code>ip addr</code></p>
+<blockquote>
+<p>大多数时候这两个命令系统自带。如果登录进入一个被裁剪过的非常小的 Linux 系统中，既没有 ifconfig 命令，也没有 ip addr 命令，可以自行安装 <strong>net-tools</strong> 和 <strong>iproute2</strong> 两个工具</p>
+</blockquote>
+<p><strong>net-tools</strong>起源于BSD，自2001年起，Linux社区已经对其停止维护，而<strong>iproute2</strong>旨在取代<strong>net-tools</strong>，并提供了一些新功能。一些Linux发行版已经停止支持<strong>net-tools</strong>，只支持<strong>iproute2</strong>。</p>
+<p><strong>net-tools</strong>通过<code>procfs(/proc)</code>和<code>ioctl</code>系统调用去访问和改变内核网络配置，而<strong>iproute2</strong>则通过<code>netlink</code>套接字接口与内核通讯。</p>
+<p><img src="image-20210208174338316.png" alt="运行ip addr"></p>
+<hr>
+<p><strong>lo</strong> 全称是 <code>loopback</code> ，又称<strong>环回接口</strong>，往往会被分配到 <strong>127.0.0.1</strong> 这个地址。这个地址用于本机通信，经过内核处理后直接返回，不会在任何网络中出现。</p>
+<p><strong>10.0.2.15</strong> 就是一个 IP 地址。这个地址被 <code>.</code> 分隔为四个部分，每个部分 8 个 bit，总共 32 位。这样产生的 IP 地址的数量很快就不够用了，于是就有了 IPv6，也就是上面输出结果里面 <strong>fe80::8680:6dc5:6ac2:c92b/64</strong> ，有 128 位。</p>
+<p><strong>scope</strong>在 IP 地址的后面， <code>global</code>说明这张网卡是可以对外的，可以接收来自各个地方的包。 <code>host</code> 说明这张网卡仅仅可以供本机相互通信。</p>
+<p><strong>link/ether fa:16:3e:c7:79:75 brd ff:ff:ff:ff:ff:ff</strong> 被称为<strong>MAC 地址</strong><code>Media Access Control</code>，是一个网卡的物理地址，用十六进制，6 个 byte 表示。MAC 地址的通信范围比较小，局限在一个子网里面。</p>
+<p><strong>&lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;</strong> 叫作<strong>网络设备的状态标识</strong> <code>net_device flags</code></p>
+<ul>
+<li><code>UP</code> 表示网卡处于启动的状态 </li>
+<li><code>BROADCAST</code> 表示这个网卡有广播地址，可以发送广播</li>
+<li><code>MULTICAST</code> 表示网卡可以发送多播包</li>
+<li><code>LOWER_UP</code> 表示 L1 是启动的，即插着网线</li>
+<li><code>MTU1500</code> 指最大传输单元 <code>MTU</code> 为 1500，表示的是链路层包的大小，这是以太网的默认值，规定连 MAC 头带正文合起来，不允许超过 1500 个<strong>字节</strong>。<strong>如果放不下就需要分片来传输。</strong></li>
+</ul>
+<p><strong>qdisc</strong> 是<strong>排队规则</strong><code>queueing discipline</code>。内核如果需要通过某个网络接口发送数据包，它都需要按照为这个接口配置的排队规则把数据包加入队列。</p>
+<ul>
+<li><p><code>pfifo</code> 是最简单的规则，它不对进入的数据包做任何的处理，数据包采用先入先出的方式通过队列</p>
+</li>
+<li><p><code>pfifo_fast</code> 稍微复杂一些，它的队列包括三个<strong>波段</strong> <code>band</code> 。在每个波段里面，使用先进先出规则。三个波段的优先级也不相同。<code>band 0</code> 的优先级最高，<code>band 2</code> 的最低。如果 <code>band 0</code> 里面有数据包，系统就不会处理 <code>band 1</code> 里面的数据包。</p>
+<p>数据包是按照<strong>服务类型</strong> <code>Type of Service</code> （<code>TOS</code>）被分配到三个波段里的。TOS 是 IP 头里面的一个字段，代表了当前的包是高优先级的，还是低优先级的</p>
+</li>
+</ul>
+<hr>
+<p>​    </p>
+<p>​        </p>
+<h4 id="配置-IP-地址"><a href="#配置-IP-地址" class="headerlink" title="配置 IP 地址"></a>配置 IP 地址</h4><p><strong>net-tools：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ sudo ifconfig eth1 10.0.0.1/24
+$ sudo ifconfig eth1 up<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><strong>iproute2：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ sudo ip addr add 10.0.0.1/24 dev eth1
+$ sudo ip link set up eth1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>​    </p>
+<p>&emsp;&emsp;Linux 首先会判断要去的地址是一个网段的吗，或者和一个网卡是同一网段的吗？只有是一个网段的，它才会发送 ARP 请求，获取 MAC 地址。如果发现不是，<strong>Linux 默认的逻辑是，如果这是一个跨网段的调用，便不会直接将包发送到网络上，而是企图将包发送到网关。</strong>如果配置了网关，Linux 会获取网关的 MAC 地址，然后将包发出去。（网关要和当前的网络至少一个网卡是同一个网段的）</p>
+<p>​    </p>
+<p>​    </p>
+<h4 id="IP-地址分类"><a href="#IP-地址分类" class="headerlink" title="IP 地址分类"></a>IP 地址分类</h4><p>32 位的 IP 地址被分成了 5 类</p>
+<p><img src="image-20210208175314831.png"></p>
+<p>在网络地址中，对于 A、B、 C 类主要分两部分，<strong>前面一部分是网络号，后面一部分是主机号</strong>。</p>
+<p>下面这个表格展示了 A、B、C 三类地址能包含的主机数量</p>
+<p><img src="image-20210208180327902.png"></p>
+<p><strong>问题</strong>： C 类地址能包含的最大主机数量实在太少了，只有 254 个，而 B 类地址能包含的最大主机数量又太多了，6 万多台机器放在一个网络下面，一般的企业基本达不到这个规模，闲着的地址就是浪费。</p>
+<p>一个折中的方式叫作<strong>无类型域间选路</strong></p>
+<p>​    </p>
+<p>​    </p>
+<h4 id="公有-私有-IP-地址"><a href="#公有-私有-IP-地址" class="headerlink" title="公有/私有 IP 地址"></a>公有/私有 IP 地址</h4><p>&emsp;&emsp;上面的表格最右列是私有 IP 地址段。平时看到的数据中心里，办公室、家里或学校的 IP 地址，一般都是私有 IP 地址段。因为这些地址允许组织内部的 IT 人员自己管理、自己分配，而且可以重复。但是出了内网就需要使用公有 IP 地址。</p>
+<p>&emsp;&emsp;表格中的 <strong>192.168.0.x</strong> 是最常用的私有 IP 地址。家里有 Wi-Fi，对应就会有一个 IP 地址。一般家中上网设备不会超过 256 个，所以 /24 基本就够了。 <strong>192.168.0</strong> 是网络号，后面是主机号。而整个网络里面的第一个地址 <strong>192.168.0.1</strong> 往往就是私有网络的出口地址。例如家里的电脑连接 Wi-Fi，Wi-Fi 路由器的地址就是 <strong>192.168.0.1</strong>，而 <strong>192.168.0.255</strong> 就是广播地址。一旦发送这个地址，整个 <strong>192.168.0</strong> 网络里面的所有机器都能收到。</p>
+<p>​    </p>
+<p>​    </p>
+<h4 id="无类型域间选路-CIDR"><a href="#无类型域间选路-CIDR" class="headerlink" title="无类型域间选路 CIDR"></a>无类型域间选路 <code>CIDR</code></h4><p>&emsp;&emsp;CIDR打破了原来设计的几类地址的做法，将 32 位的 IP 地址一分为二，前面是<strong>网络号</strong>，后面是<strong>主机号</strong>。如 IP地址 <strong>10.100.122.2/24</strong>，这种地址表示形式就是 CIDR。 24 的意思是：32 位中前 24 位是网络号，后 8 位是主机号。</p>
+<p>&emsp;&emsp;伴随 CIDR 存在的，一个是<strong>广播地址</strong>，如果发送地址<strong>10.100.122.255</strong>，所有 <strong>10.100.122</strong> 网络里面的机器都可以收到。另一个是<strong>子网掩码</strong>，<strong>将子网掩码和 IP 地址按位计算 AND，就可得到网络号。</strong>将子网掩码 <strong>255.255.255.0</strong> 和 IP 地址进行 AND 计算为 <strong>10.100.122.0</strong></p>
+<p>​    </p>
+<p>​    </p>
+<h4 id="动态主机配置协议-DHCP"><a href="#动态主机配置协议-DHCP" class="headerlink" title="动态主机配置协议 DHCP"></a>动态主机配置协议 <code>DHCP</code></h4><p>&emsp;&emsp;客户端的机器每次使用都要配置 IP 地址怎么办？因此需要有一个自动配置的协议。</p>
+<p>&emsp;&emsp;<strong>动态主机配置协议</strong>（<code>Dynamic Host Configuration Protocol，DHCP</code>）主要是用来给客户租用 IP 地址，网络管理员只需要配置一段共享的 IP 地址。每一台新接入的机器都通过 DHCP 协议，来这个共享的 IP 地址里申请，然后自动配置好，用完了还回去。DHCP 协议能给客户推荐<code>PXE</code>帮助安装操作系统，在云计算领域大有用处。</p>
+<p>​    </p>
+<p>​    </p>
+<h2 id="ICMP"><a href="#ICMP" class="headerlink" title="ICMP"></a>ICMP</h2><p>&emsp;&emsp;<strong>ICMP</strong>全称是 <code>Internet Control Message Protocol</code> ，就是<strong>互联网控制报文协议</strong>。是一种基于 IP 协议的控制协议。网络包在异常复杂的网络环境中传输时，常常会遇到各种各样的问题。当遇到问题的时候，要传出消息来报告情况，调整传输策略。</p>
+<p>&emsp;&emsp;<strong>ICMP 报文封装在 IP 包里面</strong>。因为传输指令的时候需要源地址和目标地址。</p>
+<p><img src="image-20210405175650430.png" alt="ICMP 报文"></p>
+<p>ICMP 在 IP 报文后加入了新的内容，这些内容包括：</p>
+<ul>
+<li>类型：ICMP 报文有很多的类型，不同的类型有不同的代码，其中 ping 的请求类型为 8（主动请求），应答为 0</li>
+<li>代码：进一步划分 ICMP 的类型, 用来查找产生错误的原因</li>
+<li>校验和：用于检查错误的数据</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h3 id="查询报文类型"><a href="#查询报文类型" class="headerlink" title="查询报文类型"></a>查询报文类型</h3><p>&emsp;&emsp;例如，<strong>ping 就是查询报文，是一种主动请求，并且获得主动应答的 ICMP 协议。</strong></p>
+<p>&emsp;&emsp;对 ping 的主动请求进行网络抓包，称为<strong>ICMP ECHO REQUEST。</strong>同理主动请求的回复称为<strong>ICMP ECHO REPLY</strong>。比起原生的 ICMP，这里面多了两个字段：<strong>标识符、顺序号</strong>。<strong>顺序号</strong>主要用于区分连续 ping 的时候发出的多个数据包。每发出一个请求数据包，顺序号会自动加 1。为了能够计算往返时间 RTT，它会在报文的数据部分插入发送时间。</p>
+<p>&emsp;&emsp;在选项数据中，ping 还会在报文的数据部分插入发送时间，来计算往返时间，说明路程的长短。</p>
+<p>​    </p>
+<p>​    </p>
+<h3 id="差错报文类型"><a href="#差错报文类型" class="headerlink" title="差错报文类型"></a>差错报文类型</h3><p>&emsp;&emsp;异常情况发起的，来报告发生了不好的事情，对应 ICMP 的<strong>差错报文类型</strong>。<strong>终点不可达为 3，源抑制为 4，超时为 11，重定向为 5</strong>。</p>
+<ul>
+<li><p><strong>源站抑制</strong>，也就是让源站放慢发送速度。</p>
+</li>
+<li><p><strong>时间超时</strong>，也就是超过网络包的生存时间还是没到。</p>
+</li>
+<li><p><strong>路由重定向</strong>，也就是让下次发给另一个路由器。</p>
+</li>
+</ul>
+<p>&emsp;&emsp;差错报文的结构前面还是 IP，ICMP 的前 8 字节不变，后面则跟上出错的那个 IP 包的 IP 头和 IP 正文的前 8 个字节。</p>
+<p>​    </p>
+<p>​    </p>
+<h3 id="ping：查询报文类型的使用"><a href="#ping：查询报文类型的使用" class="headerlink" title="ping：查询报文类型的使用"></a>ping：查询报文类型的使用</h3><p><img src="image-20210405185245423.png"></p>
+<p>&emsp;&emsp;ping 命令执行的时候，源主机首先会构建一个 <strong>ICMP 请求数据包</strong>，ICMP 数据包内包含多个字段。然后，由 ICMP 协议将这个数据包连同地址 <strong>192.168.1.2</strong> 一起交给 IP 层构建一个 IP 数据包。</p>
+<p>&emsp;&emsp;IP 报文通过 ARP 协议，源地址和目的地址被翻译成 MAC 地址，由数据链路层构建一个数据帧后（目的地址是 IP 层传过来的 MAC 地址，源地址则是本机的 MAC 地址），依据以太网的介质访问规则，报文被传输出去。</p>
+<p>&emsp;&emsp;当报文到达目的地址之后，目的地址所在的主机也按照 ICMP 协议进行应答。主机 B 会构建一个 <strong>ICMP 应答包</strong>，应答数据包的类型字段为 0，顺序号为接收到的请求数据包中的顺序号，然后再发送出去给主机 A。</p>
+<p>&emsp;&emsp;应答数据到达源地址之后，ping 命令可以通过再次<strong>解析 ICMP 报文，对比序列号，计算时间戳等</strong>来完成每个发送 - 应答的显示。</p>
+<hr>
+<p>&emsp;&emsp;如果跨网段的话，还会涉及网关的转发、路由器的转发等等。但是对于 ICMP 的头来讲是没什么影响的。</p>
+<p>&emsp;&emsp;如果在自己的可控范围之内，遇到网络不通时，除了直接 ping 目标的 IP 地址之外，应该要清楚地知道一个网络包从源地址到目标地址都经过了哪些设备，然后逐个 ping 中间的这些设备。如果可能的话，在关键点通过 <strong>tcpdump</strong> 查看包有没有到达某个点，回复的包到达了哪个点。</p>
+<p>&emsp;&emsp;如果不在我们的控制范围内，很多中间设备都是禁止 ping 的。这个时候就要使用 <strong>telnet</strong>，或其他协议来测试网络是否通。</p>
+<p>​    </p>
+<p>​    </p>
+<h3 id="Traceroute：差错报文类型的使用"><a href="#Traceroute：差错报文类型的使用" class="headerlink" title="Traceroute：差错报文类型的使用"></a>Traceroute：差错报文类型的使用</h3><p>&emsp;&emsp;Traceroute会使用 ICMP 的规则，故意制造一些能够产生错误的场景。</p>
+<ul>
+<li><p><strong>故意设置特殊的 TTL ，来追踪去往目的地时沿途经过的路由器</strong>。发送一份<strong>TTL字段为1</strong>的 UDP 数据包给目的主机，处理这个数据包的第一个路由器将TTL值减1，然后丢弃该数据包，并给源主机发送一个ICMP报文（<strong>时间超时</strong>，这个报文包含了路由器的IP地址，这样就得到了第一个路由器的地址），然后发送一个TTL为2的数据报来得到第二个路由器的IP地址，继续这个过程，直至这个数据报到达目的主机。（有的路由器不会回 ICMP，这也是 Traceroute 一个公网的地址看不到中间路由的原因）</p>
+<blockquote>
+<p>怎么知道 UDP 到达了目的主机？</p>
+<p>发送一份 UDP 数据报给目的主机，但选择一个大于 30000的值作为 UDP 端口号。当该数据报到达时，将使目的主机的 UDP 模块产生一份<strong>端口不可达</strong>错误 ICMP 报文。如果数据报没有到达，则可能是超时。</p>
+</blockquote>
+</li>
+<li><p><strong>故意设置不分片，从而确定路径的 MTU。</strong>首先发送分组，并设置“不分片”标志。发送的第一个分组的长度正好与出口 MTU 相等。如果中间遇到窄的关口会被卡住，会发送 ICMP 网络差错包，类型为<strong>需要进行分片但设置了不分片位</strong>。每次收到 ICMP不能分片差错时就减小分组的长度，直到到达目标主机。</p>
+</li>
+</ul>
+<p>​    </p>
+<blockquote>
+<p>当发送的报文出问题的时候，会发送一个 ICMP 的差错报文来报告错误，但是如果 ICMP 的差错报文也出问题了呢？</p>
+</blockquote>
+<p>​    </p>
+<p>​    </p>
+<h2 id="路由协议"><a href="#路由协议" class="headerlink" title="路由协议"></a>路由协议</h2><p>​    </p>
+<p>​    </p>
+<h1 id="链路层"><a href="#链路层" class="headerlink" title="链路层"></a>链路层</h1><p>&emsp;&emsp;几台电脑可以通过集线器连接成一个小的局域网。集线器完全在物理层工作，它会将自己收到的每一个字节，都复制到其他端口上去。</p>
+<p>如果每一台电脑发出的包，每个电脑都能收到，这需要解决几个问题：</p>
+<ol>
+<li>这个包是发给谁的？谁应该接收？</li>
+<li>会不会产生混乱？有没有先后规则？</li>
+<li>如果发送的时候出现了错误怎么办？</li>
+</ol>
+<hr>
+<p>&emsp;&emsp;MAC层要控制在往媒体上发数据时的先后问题，防止发生混乱，解决了媒体接入控制的问题。这个问题中的规则叫<strong>多路访问</strong>。有很多算法可以解决这个问题，比如<strong>信道划分</strong>、<strong>轮流协议</strong>、<strong>随机接入协议</strong>。</p>
+<p>&emsp;&emsp;解决第一个问题要用到一个物理地址，叫作<strong>链路层地址。</strong>但是因为第二层主要解决媒体接入控制的问题，所以它常被称为<strong>MAC 地址</strong>。</p>
+<p><img src="image-20210208214737970.png" alt="第二层的网络包格式"></p>
+<p>&emsp;&emsp;有了目标 MAC 地址，数据包在链路上广播，MAC 的网卡才能发现这个包是给它的。返回的时候，源 MAC 就变成了目标 MAC，再返给请求的机器。</p>
+<p>&emsp;&emsp;对于以太网，第二层的最后面是<strong>CRC</strong>，也就是<strong>循环冗余检测</strong>。通过 XOR 异或的算法，来计算整个包是否在发送的过程中出现了错误，主要解决第三个问题。</p>
+<p>&emsp;&emsp;如果源机器不知道目标机器的地址，就会用到<strong>ARP 协议</strong></p>
+<p>​    </p>
+<p>​        </p>
+<h2 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h2><blockquote>
+<p>已知 IP 地址，求 MAC 地址的协议</p>
+</blockquote>
+<p><img src="image-20210208215910970.png"></p>
+<p>在一个局域网里面，当知道了 IP 地址，不知道 MAC 怎么办呢？靠广播</p>
+<p><img src="image-20210208220005626.png"></p>
+<p>广而告之，发送一个广播包，谁是这个 IP 谁来回答。具体询问和回答的报文就像下面这样：</p>
+<p><img src="image-20210208220045779.png"></p>
+<p>为了避免每次都用 ARP 请求，机器本地也会进行 ARP 缓存。机器会不断地上线下线，IP 也可能会变，所以 ARP 的 MAC 地址缓存过一段时间会过期。</p>
+<p>​    </p>
+<blockquote>
+<p>&emsp;&emsp;RARP 协议：已知 MAC 求 IP</p>
+<ul>
+<li><p>无盘工作站无法持久化IP地址到本地，但有网卡，所以可以用RARP协议来获取IP地址</p>
+</li>
+<li><p>RARP可以用于局域网管理员想指定机器IP，又不想每台机器去设置静态IP的情况，可以在RARP服务器上配置MAC和IP对应的ARP表</p>
+</li>
+</ul>
+</blockquote>
+<p>​    </p>
+<p>​    </p>
+<h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><blockquote>
+<p><strong>检查目标 MAC 地址</strong>，然后根据策略转发的设备。</p>
+</blockquote>
+<p>&emsp;&emsp;一台 MAC1 电脑将一个包发送给另一台 MAC2 电脑，当这个包到达交换机的时候，一开始交换机也不知道 MAC2 的电脑在哪个口，它只能将包转发给除了来的那个口之外的其他所有的口。但是，这时交换机会记住，MAC1 是来自一个明确的口。</p>
+<p>&emsp;&emsp;过了一段时间之后，就有了整个网络的一个结构了，这个时候，基本上不用广播了，全部可以准确转发。每个机器的 IP 地址会变，所在的口也会变，因而交换机上的学习的结果，称为<strong>转发表</strong>，是有一个过期时间的。</p>
+<p>​    </p>
+<h3 id="拓扑结构"><a href="#拓扑结构" class="headerlink" title="拓扑结构"></a>拓扑结构</h3><p>&emsp;&emsp;在复杂的场景下如办公室，一个交换机不够用，需要多台交换机，交换机之间连接起来，这就形成一个<strong>拓扑结构</strong></p>
+<hr>
+<p><img src="image-20210208230459151.png" alt="两台交换机"></p>
+<p>&emsp;&emsp;上图中两台交换机连接三个局域网，每个局域网上有多台机器</p>
+<p>&emsp;&emsp;如果机器 1 只知道机器 4 的 IP 地址，当它想要访问机器 4 把包发出去的时候，必须要知道机器 4 的 MAC 地址，于是机器 1 发起广播。交换机 A 一开始不知道任何拓扑信息，在收到广播后采取的策略是：<strong>除了广播包来的方向外，它还要转发给其他所有的网口。</strong>交换机 B 同理，将包转发到 LAN3 。机器 4 收到了广播信息，主动响应 MAC 地址，<strong>一个 ARP 请求完成</strong>。</p>
+<p>&emsp;&emsp;交换机了解到拓扑信息后，情况就好转起来。</p>
+<p>&emsp;&emsp;当机器 3 要访问机器 1 时也需要发起一个广播的 ARP 请求。交换机 A 和 B 都能够收到这个请求。交换机 A 知道主机 1 是在左边网口，所以会把广播消息转发到 LAN1 。交换机 B 则不会将消息广播到 LAN3 。</p>
+<hr>
+<p>&emsp;&emsp;当交换机的数目越来越多时，交换机之间为了冗余、带宽提升、或错误连接难免会产生一个封闭的物理环路，遭遇<strong>环路问题</strong>，产生广播风暴（网络包迷路，一个包转来转去，每台机器都会发广播包，交换机转发也会复制广播包，当广播包越来越多的时候，路会越来越堵）这就需要使用 <strong>STP 协议，将有环路的图变成没有环路的树</strong>。将物理上存在环路的网络，通过算法在逻辑上阻塞一些端口。</p>
+<p><img src="image-20210405164240615.png"></p>
+<blockquote>
+<p>STP缺点：一个是某个交换机状态发生变化的时候，整个树需要重新构建；被破开的环的链路被浪费了</p>
+</blockquote>
+<p>​    </p>
+<p>​    </p>
+<h3 id="VLAN"><a href="#VLAN" class="headerlink" title="VLAN"></a>VLAN</h3><p>&emsp;&emsp;交换机数目多会面临<strong>隔离问题</strong>，可以通过 VLAN 形成<strong>虚拟局域网</strong>，从而解决<strong>广播问题和安全问题</strong>。</p>
+<p>&emsp;&emsp;交换机可以设置交换机每个口所属的 VLAN，且可以重新设置。交换机区分局域网只需要在原来的二层的头上加一个 <code>TAG</code>，其中有一个12 位的 <code>VLAN ID</code>（<strong>可以划分 4096 个 VLAN</strong>）。如果交换机支持 VLAN ，取下二层的头时，就能够识别 VLAN ID 。只有<strong>相同 VLAN 的包，才会互相转发</strong>，不同 VLAN 的包是看不到的。</p>
+<p><img src="image-20210208225008078.png"></p>
+<p>&emsp;&emsp;对于支持 VLAN 的交换机，交换机之间可以使用<strong>Trunk 口</strong>连接。它可以转发属于任何 VLAN 的口。</p>
+<p><img src="image-20210208225350460.png"></p>
+<p>​    </p>
+<p>​    </p>
+<h2 id="STP"><a href="#STP" class="headerlink" title="STP"></a>STP</h2><blockquote>
+<p>概念：</p>
+<ul>
+<li><strong>Root Bridge</strong>，<strong>根交换机</strong>。是某棵树的老大。</li>
+<li><strong>Designated Bridges</strong>，<strong>指定交换机</strong>。就是一棵树的树枝。</li>
+<li><strong>Bridge Protocol Data Units （BPDU）</strong> ，<strong>网桥协议数据单元</strong>。交换机相连的时候，就需要“相互比较实力”。BPDU 只有根交换机能发。</li>
+<li><strong>Priority Vector</strong>，<strong>优先级向量</strong>。[Root Bridge ID, Root Path Cost, Bridge ID, and Port ID]。先看 Root Bridge ID，再比 Root Path Cost，也即距离老大的距离，最后比 Bridge ID，拿自己的本事比。</li>
+</ul>
+</blockquote>
+<p>生成树协议运行生成树算法过程可以归纳为以下三个步骤：</p>
+<ol>
+<li>选择根交换机</li>
+<li>选择根端口</li>
+<li>选择指定端口</li>
+</ol>
+<p>​    </p>
+<p>​    </p>
+<h1 id="移动网络"><a href="#移动网络" class="headerlink" title="移动网络"></a>移动网络</h1><h2 id="2G-网络"><a href="#2G-网络" class="headerlink" title="2G 网络"></a>2G 网络</h2><p>手机本来是用来打电话的而不是用来上网的，在 2G 时代上网使用的不是 IP 网络而是<strong>电话网络</strong>，走模拟信号，专业名称为公共交换电话网<code>Public Switched Telephone Network</code>（<code>PSTN</code>）</p>
+<p>手机是通过收发无线信号来通信的，专业名称是 Mobile Station，简称 MS，需要嵌入 SIM。手机是客户端，而无线信号的服务端，就是基站子系统（BSS，Base Station SubsystemBSS）。至于什么是基站，你可以回想一下，你在爬山的时候，是不是看到过信号塔？我们平时城市里面的基站比较隐蔽，不容易看到，所以只有在山里才会注意到。正是这个信号塔，通过无线信号，让你的手机可以进行通信。</p>
+<p><strong>无论无线通信如何无线，最终还是要连接到有线的网络里</strong>。前面讲数据中心的时候我也讲过，电商的应用是放在数据中心的，数据中心的电脑都是插着网线的。</p>
+<p>因而，基站子系统分两部分，一部分对外提供无线通信，叫作基站收发信台（BTS，Base Transceiver Station），另一部分对内连接有线网络，叫作基站控制器（BSC，Base Station Controller）。基站收发信台通过无线收到数据后，转发给基站控制器。</p>
+<p>这部分属于无线的部分，统称为无线接入网（RAN，Radio Access Network）。</p>
+<p>基站控制器通过有线网络，连接到提供手机业务的运营商的数据中心，这部分称为核心网（CN，Core Network）。核心网还没有真的进入互联网，这部分还是主要提供手机业务，是手机业务的有线部分。</p>
+<p>首先接待基站来的数据的是移动业务交换中心（MSC，Mobile Service Switching Center），它是进入核心网的入口，但是它不会让你直接连接到互联网上。</p>
+<p>因为在让你的手机真正进入互联网之前，提供手机业务的运营商，需要认证是不是合法的手机接入。别你自己造了一张手机卡，就连接上来。鉴权中心（AUC，Authentication Center）和设备识别寄存器（EIR，Equipment Identity Register）主要是负责安全性的。</p>
+<p>另外，需要看你是本地的号，还是外地的号，这个牵扯到计费的问题，异地收费还是很贵的。访问位置寄存器（VLR，Visit Location Register）是看你目前在的地方，归属位置寄存器（HLR，Home Location Register）是看你的号码归属地。</p>
+<p>当你的手机卡既合法又有钱的时候，才允许你上网，这个时候需要一个网关，连接核心网和真正的互联网。网关移动交换中心（GMSC ，Gateway Mobile Switching Center）就是干这个的，然后是真正的互连网。在 2G 时代，还是电话网络 PSTN。</p>
+<p>数据中心里面的这些模块统称为网络子系统（NSS，Network and Switching Subsystem）。</p>
+<h3 id="2-5G-网络"><a href="#2-5G-网络" class="headerlink" title="2.5G 网络"></a>2.5G 网络</h3><p>后来从 2G 到了 2.5G，也即在原来电路交换的基础上，加入了分组交换业务，支持 Packet 的转发，从而支持 IP 网络。</p>
+<p>在上述网络的基础上，基站一面朝前接无线，一面朝后接核心网。在朝后的组件中，多了一个分组控制单元（PCU，Packet Control Unit），用以提供分组交换通道。</p>
+<p>在核心网里面，有个朝前的接待员（SGSN，Service GPRS Supported Node）和朝后连接 IP 网络的网关型 GPRS 支持节点（GGSN，Gateway GPRS Supported Node）。3G 网络</p>
+<p>到了 3G 时代，主要是无线通信技术有了改进，大大增加了无线的带宽。</p>
+<p>以 W-CDMA 为例，理论最高 2M 的下行速度，因而基站改变了，一面朝外的是 Node B，一面朝内连接核心网的是无线网络控制器（RNC，Radio Network Controller）。核心网以及连接的 IP 网络没有什么变化。</p>
+<h3 id="4G-网络"><a href="#4G-网络" class="headerlink" title="4G 网络"></a>4G 网络</h3><p>然后就到了今天的 4G 网络，基站为 eNodeB，包含了原来 Node B 和 RNC 的功能，下行速度向百兆级别迈进。另外，核心网实现了控制面和数据面的分离，这个怎么理解呢？</p>
+<p>在前面的核心网里面，有接待员 MSC 或者 SGSN，你会发现检查是否合法是它负责，转发数据也是它负责，也即控制面和数据面是合二为一的，这样灵活性比较差，因为控制面主要是指令，多是小包，往往需要高的及时性；数据面主要是流量，多是大包，往往需要吞吐量。</p>
+<p>于是有了下面这个架构。HSS 用于存储用户签约信息的数据库，其实就是你这个号码归属地是哪里的，以及一些认证信息。</p>
+<p>MME 是核心控制网元，是控制面的核心，当手机通过 eNodeB 连上的时候，MME 会根据 HSS 的信息，判断你是否合法。如果允许连上来，MME 不负责具体的数据的流量，而是 MME 会选择数据面的 SGW 和 PGW，然后告诉 eNodeB，我允许你连上来了，你连接它们吧。</p>
+<p>于是手机直接通过 eNodeB 连接 SGW，连上核心网，SGW 相当于数据面的接待员，并通过 PGW 连到 IP 网络。PGW 就是出口网关。在出口网关，有一个组件 PCRF，称为策略和计费控制单元，用来控制上网策略和流量的计费。</p>
+<h2 id="4G-网络协议解析"><a href="#4G-网络协议解析" class="headerlink" title="4G 网络协议解析"></a>4G 网络协议解析</h2><p>我们来仔细看一下 4G 网络的协议，真的非常复杂。我们将几个关键组件放大来看。</p>
+<h3 id="控制面协议"><a href="#控制面协议" class="headerlink" title="控制面协议"></a>控制面协议</h3><p>其中虚线部分是控制面的协议。当一个手机想上网的时候，先要连接 eNodeB，并通过 S1-MME 接口，请求 MME 对这个手机进行认证和鉴权。S1-MME 协议栈如下图所示。</p>
+<p>UE 就是你的手机，eNodeB 还是两面派，朝前对接无线网络，朝后对接核心网络，在控制面对接的是 MME。</p>
+<p>eNodeB 和 MME 之间的连接就是很正常的 IP 网络，但是这里面在 IP 层之上，却既不是 TCP，也不是 UDP，而是 SCTP。这也是传输层的协议，也是面向连接的，但是更加适合移动网络。 它继承了 TCP 较为完善的拥塞控制并改进 TCP 的一些不足之处。</p>
+<p>SCTP 的第一个特点是<strong>多宿主</strong>。一台机器可以有多个网卡，而对于 TCP 连接来讲，虽然服务端可以监听 0.0.0.0，也就是从哪个网卡来的连接都能接受，但是一旦建立了连接，就建立了四元组，也就选定了某个网卡。</p>
+<p>SCTP 引入了联合（association）的概念，将多个接口、多条路径放到一个联合中来。当检测到一条路径失效时，协议就会通过另外一条路径来发送通信数据。应用程序甚至都不必知道发生了故障、恢复，从而提供更高的可用性和可靠性。</p>
+<p>SCTP 的第二个特点是<strong>将一个联合分成多个流</strong>。一个联合中的所有流都是独立的，但均与该联合相关。每个流都给定了一个流编号，它被编码到 SCTP 报文中，通过联合在网络上传送。在 TCP 的机制中，由于强制顺序，导致前一个不到达，后一个就得等待，SCTP 的多个流不会相互阻塞。</p>
+<p>SCTP 的第三个特点是<strong>四次握手，防止 SYN 攻击</strong>。在 TCP 中是三次握手，当服务端收到客户的 SYN 之后，返回一个 SYN-ACK 之前，就建立数据结构，并记录下状态，等待客户端发送 ACK 的 ACK。当恶意客户端使用虚假的源地址来伪造大量 SYN 报文时，服务端需要分配大量的资源，最终耗尽资源，无法处理新的请求。</p>
+<p>SCTP 可以通过四次握手引入 Cookie 的概念，来有效地防止这种攻击的产生。在 SCTP 中，客户机使用一个 INIT 报文发起一个连接。服务器使用一个 INIT-ACK 报文进行响应，其中就包括了 Cookie。然后客户端就使用一个 COOKIE-ECHO 报文进行响应，其中包含了服务器所发送的 Cookie。这个时候，服务器为这个连接分配资源，并通过向客户机发送一个 COOKIE-ACK 报文对其进行响应。</p>
+<p>SCTP 的第四个特点是<strong>将消息分帧</strong>。TCP 是面向流的，也即发送的数据没头没尾，没有明显的界限。这对于发送数据没有问题，但是对于发送一个个消息类型的数据，就不太方便。有可能客户端写入 10 个字节，然后再写入 20 个字节。服务端不是读出 10 个字节的一个消息，再读出 20 个字节的一个消息，而有可能读入 25 个字节，再读入 5 个字节，需要业务层去组合成消息。</p>
+<p>SCTP 借鉴了 UDP 的机制，在数据传输中提供了消息分帧功能。当一端对一个套接字执行写操作时，可确保对等端读出的数据大小与此相同。</p>
+<p>SCTP 的第五个特点是<strong>断开连接是三次挥手</strong>。在 TCP 里面，断开连接是四次挥手，允许另一端处于半关闭的状态。SCTP 选择放弃这种状态，当一端关闭自己的套接字时，对等的两端全部需要关闭，将来任何一端都不允许再进行数据的移动了。</p>
+<p>当 MME 通过认证鉴权，同意这个手机上网的时候，需要建立一个数据面的数据通路。建立通路的过程还是控制面的事情，因而使用的是控制面的协议 GTP-C。</p>
+<p>建设的数据通路分两段路，其实是两个隧道。一段是从 eNodeB 到 SGW，这个数据通路由 MME 通过 S1-MME 协议告诉 eNodeB，它是隧道的一端，通过 S11 告诉 SGW，它是隧道的另一端。第二端是从 SGW 到 PGW，SGW 通过 S11 协议知道自己是其中一端，并主动通过 S5 协议，告诉 PGW 它是隧道的另一端。</p>
+<p>GTP-C 协议是基于 UDP 的，这是<a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/8924">UDP 的“城会玩”</a>中的一个例子。如果看 GTP 头，我们可以看到，这里面有隧道的 ID，还有序列号。</p>
+<p>通过序列号，不用 TCP，GTP-C 自己就可以实现可靠性，为每个输出信令消息分配一个依次递增的序列号，以确保信令消息的按序传递，并便于检测重复包。对于每个输出信令消息启动定时器，在定时器超时前未接收到响应消息则进行重发。</p>
+<h4 id="数据面协议"><a href="#数据面协议" class="headerlink" title="数据面协议"></a>数据面协议</h4><p>当两个隧道都打通，接在一起的时候，PGW 会给手机分配一个 IP 地址，这个 IP 地址是隧道内部的 IP 地址，可以类比为 IPsec 协议里面的 IP 地址。这个 IP 地址是归手机运营商管理的。然后，手机可以使用这个 IP 地址，连接 eNodeB，从 eNodeB 经过 S1-U 协议，通过第一段隧道到达 SGW，再从 SGW 经过 S8 协议，通过第二段隧道到达 PGW，然后通过 PGW 连接到互联网。</p>
+<p>数据面的协议都是通过 GTP-U，如图所示。</p>
+<p>手机每发出的一个包，都由 GTP-U 隧道协议封装起来，格式如下。</p>
+<p>和 IPsec 协议很类似，分为乘客协议、隧道协议、承载协议。其中乘客协议是手机发出来的包，IP 是手机的 IP，隧道协议里面有隧道 ID，不同的手机上线会建立不同的隧道，因而需要隧道 ID 来标识。承载协议的 IP 地址是 SGW 和 PGW 的 IP 地址。</p>
+<h4 id="手机上网流程"><a href="#手机上网流程" class="headerlink" title="手机上网流程"></a>手机上网流程</h4><p>接下来，我们来看一个手机开机之后上网的流程，这个过程称为<strong>Attach</strong>。可以看出来，移动网络还是很复杂的。因为这个过程要建立很多的隧道，分配很多的隧道 ID，所以我画了一个图来详细说明这个过程。</p>
+<ol>
+<li>手机开机以后，在附近寻找基站 eNodeB，找到后给 eNodeB 发送 Attach Request，说“我来啦，我要上网”。</li>
+<li>eNodeB 将请求发给 MME，说“有个手机要上网”。</li>
+<li>MME 去请求手机，一是认证，二是鉴权，还会请求 HSS 看看有没有钱，看看是在哪里上网。</li>
+<li>当 MME 通过了手机的认证之后，开始分配隧道，先告诉 SGW，说要创建一个会话（Create Session）。在这里面，会给 SGW 分配一个隧道 ID t1，并且请求 SGW 给自己也分配一个隧道 ID。</li>
+<li>SGW 转头向 PGW 请求建立一个会话，为 PGW 的控制面分配一个隧道 ID t2，也给 PGW 的数据面分配一个隧道 ID t3，并且请求 PGW 给自己的控制面和数据面分配隧道 ID。</li>
+<li>PGW 回复 SGW 说“创建会话成功”，使用自己的控制面隧道 ID t2，回复里面携带着给 SGW 控制面分配的隧道 ID t4 和控制面的隧道 ID t5，至此 SGW 和 PGW 直接的隧道建设完成。双方请求对方，都要带着对方给自己分配的隧道 ID，从而标志是这个手机的请求。</li>
+<li>接下来 SGW 回复 MME 说“创建会话成功”，使用自己的隧道 ID t1 访问 MME，回复里面有给 MME 分配隧道 ID t6，也有 SGW 给 eNodeB 分配的隧道 ID t7。</li>
+<li>当 MME 发现后面的隧道都建设成功之后，就告诉 eNodeB，“后面的隧道已经建设完毕，SGW 给你分配的隧道 ID 是 t7，你可以开始连上来了，但是你也要给 SGW 分配一个隧道 ID”。</li>
+<li>eNodeB 告诉 MME 自己给 SGW 分配一个隧道，ID 为 t8。</li>
+<li>MME 将 eNodeB 给 SGW 分配的隧道 ID t8 告知 SGW，从而前面的隧道也建设完毕。</li>
+</ol>
+<p>这样，手机就可以通过建立的隧道成功上网了。</p>
+<h4 id="异地上网问题"><a href="#异地上网问题" class="headerlink" title="异地上网问题"></a>异地上网问题</h4><p>接下来我们考虑异地上网的事情。</p>
+<p>为什么要分 SGW 和 PGW 呢，一个 GW 不可以吗？SGW 是你本地的运营商的设备，而 PGW 是你所属的运营商的设备。</p>
+<p>如果你在巴塞罗那，一下飞机，手机开机，周围搜寻到的肯定是巴塞罗那的 eNodeB。通过 MME 去查寻国内运营商的 HSS，看你是否合法，是否还有钱。如果允许上网，你的手机和巴塞罗那的 SGW 会建立一个隧道，然后巴塞罗那的 SGW 和国内运营商的 PGW 建立一个隧道，然后通过国内运营商的 PGW 上网。这样判断你是否能上网的在国内运营商的 HSS，控制你上网策略的是国内运营商的 PCRF，给手机分配的 IP 地址也是国内运营商的 PGW 负责的，给手机分配的 IP 地址也是国内运营商里统计的。运营商由于是在 PGW 里面统计的，这样你的上网流量全部通过国内运营商即可，只不过巴塞罗那运营商也要和国内运营商进行流量结算。</p>
+<p>由于你的上网策略是由国内运营商在 PCRF 中控制的，因而你还是上不了脸书。</p>
+<p>好了，这一节就到这里了，我们来总结一下：</p>
+<ul>
+<li>移动网络的发展历程从 2G 到 3G，再到 4G，逐渐从打电话的功能为主，向上网的功能为主转变；</li>
+<li>请记住 4G 网络的结构，有 eNodeB、MME、SGW、PGW 等，分控制面协议和数据面协议，你可以对照着结构，试着说出手机上网的流程；</li>
+<li>即便你在国外的运营商下上网，也是要通过国内运营商控制的，因而也上不了脸书。</li>
+</ul>
+<p>最后，给你留两个思考题：</p>
+<ol>
+<li>咱们上网都有套餐，有交钱多的，有交钱少的，你知道移动网络是如何控制不同优先级的用户的上网流量的吗？</li>
+<li>前面讲过的所有的网络都是基于物理机的，随着云计算兴起，无论是电商，还是移动网络都要部署在云中了，你知道云中网络的设计有哪些要点吗？</li>
+</ol>
+<h2 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h2><h3 id="软件定义网络"><a href="#软件定义网络" class="headerlink" title="软件定义网络"></a>软件定义网络</h3><p>​    </p>
+<p>​    </p>
+<h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>​    </p>
+<p>​    </p>
+<h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><p>​    </p>
+<p>​    </p>
+<h1 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h1><h2 id="TCP-IP常见攻击"><a href="#TCP-IP常见攻击" class="headerlink" title="TCP/IP常见攻击"></a>TCP/IP常见攻击</h2><h3 id="IP欺骗"><a href="#IP欺骗" class="headerlink" title="IP欺骗"></a>IP欺骗</h3><blockquote>
+<p>通过IP地址我们能知道什么？</p>
+</blockquote>
+<p>通过 IP 地址，我们就可以知道判断访问对象服务器的位置，通过这个 IP 地址就可以判断访问对象服务器的位置，从而将消息发送到服务器。一般发送者发出的消息首先经过子网的集线器，转发到最近的路由器，然后根据路由位置访问下一个路由器的位置，直到重点</p>
+<blockquote>
+<p>IP欺骗技术</p>
+</blockquote>
+<p>IP 欺骗技术就是<strong>伪造</strong>某台主机的 IP 地址的技术。通过IP 地址的伪装使得某台主机能够<strong>伪装</strong>另外的一台主机，而这台主机往往具有某种特权或者被另外的主机所信任。</p>
+<p>假设现在有一个合法用户 <strong>(1.1.1.1)</strong> 已经同服务器建立正常的连接，攻击者构造攻击的 TCP 数据，伪装自己的 IP 为 <strong>1.1.1.1</strong>，并向服务器发送一个带有 RSI 位的 TCP 数据段。服务器接收到这样的数据后，认为从 <strong>1.1.1.1</strong> 发送的连接有错误，就会清空缓冲区中建立好的连接。</p>
+<p>这时，如果合法用户 <strong>1.1.1.1</strong> 再发送合法数据，服务器就已经没有这样的连接了，该用户就必须从新开始建立连接。攻击时，伪造大量的IP地址，向目标发送 RST 数据，使服务器不对合法用户服务。虽然IP地址欺骗攻击有着相当难度，但我们应该清醒地意识到，这种攻击非常广泛，入侵往往从这种攻击开始。</p>
+<h3 id="SYN-Flooding"><a href="#SYN-Flooding" class="headerlink" title="SYN Flooding"></a>SYN Flooding</h3><blockquote>
+<p>SYN Flooding简介</p>
+</blockquote>
+<p>拒绝服务攻击（DDoS）从1970 年出现直到今天都依然在作祟，并给全球范围内的各大组织带来了不可估量的损失。<strong>SYN Flood</strong>是互联网上最经典的DDoS攻击方式之一，最早出现于 1999 年左右，雅虎是当时最著名的受害者。<strong>SYN Flood</strong>攻击利用了 <strong>TCP</strong> 三次握手的缺陷，能够以较小代价使目标服务器无法响应，且难以追查。</p>
+<p><strong>SYN  flood</strong> 是一种常见的 <strong>DOS</strong>（denial of service拒绝服务）和 <strong>DDos</strong> (distributed denial of serivce 分布式拒绝服务）攻击方式。这是一种使用TCP协议缺陷，发送大量的<strong>伪造的 TCP 连接请求</strong>，使得被攻击方 CPU 或内存资源耗尽，最终导致被攻击方无法提供正常的服务。</p>
+<blockquote>
+<p>TCP SYN Flood攻击原理</p>
+</blockquote>
+<p><strong>TCP  SYN Flood</strong> 攻击利用的是 <strong>TCP</strong> 的三次握手（<strong>SYN -&gt; SYN/ACK -&gt; ACK</strong>），假设连接发起方是A，连接接受方是 B，即 B 在某个端口（<strong>Port</strong>）上监听A发出的连接请求，过程如下图所示，左边是A，右边是B。</p>
+<p><img src="D:\Git-repo\hexo\source_posts\cs-network-protocol\640.png" alt="640"></p>
+<p>A 首先发送 <strong>SYN</strong>（Synchronization）消息给 B，要求 B 做好接收数据的准备；B 收到后反馈 <strong>SYN-ACK</strong>（Synchronization-Acknowledgement） 消息给A，这个消息的目的有两个：</p>
+<ul>
+<li>向 A 确认已做好接收数据的准备，</li>
+<li>同时要求 A 也做好接收数据的准备，此时 B 已向 A 确认好接收状态，并等待 A 的确认，连接处于<strong>半开状态（Half-Open）</strong>，顾名思义只开了一半；A 收到后再次发送 <strong>ACK</strong> (Acknowledgement) 消息给B，向 B 确认也做好了接收数据的准备，至此三次握手完成，「<strong>连接</strong>」就建立了，</li>
+</ul>
+<p>大家注意到没有，最关键的一点在于双方是否都按对方的要求进入了<strong>可以接收消息</strong>的状态。而这个状态的确认主要是双方将要使用的<strong>消息序号(**SquenceNum)，</strong>TCP** 为保证消息按发送顺序抵达接收方的上层应用，需要用<strong>消息序号</strong>来标记消息的发送先后顺序的。</p>
+<p><strong>TCP</strong>是「<strong>双工</strong>」(Duplex)连接，同时支持双向通信，也就是双方同时可向对方发送消息，其中 <strong>SYN</strong> 和 <strong>SYN-ACK</strong> 消息开启了A→B的单向通信通道（B 获知了 A 的消息序号）；<strong>SYN-ACK</strong> 和 <strong>ACK</strong> 消息开启了B→A单向通信通道（A获知了B的消息序号）。</p>
+<p>上面讨论的是双方在诚实守信，正常情况下的通信。</p>
+<p>但实际情况是，网络可能不稳定会丢包，使握手消息不能抵达对方，也可能是对方故意不按规矩来，故意延迟或不发送握手确认消息。</p>
+<p>假设  B 通过某 <strong>TCP</strong> 端口提供服务，B 在收到 A 的 <strong>SYN</strong> 消息时，积极的反馈了 <strong>SYN-ACK</strong> 消息，使连接进入<strong>半开状态</strong>，因为 B 不确定自己发给 A 的 <strong>SYN-ACK</strong> 消息或 A 反馈的 ACK 消息是否会丢在半路，所以会给每个待完成的半开连接都设一个<strong>Timer</strong>，如果超过时间还没有收到 A 的 <strong>ACK</strong> 消息，则重新发送一次 <strong>SYN-ACK</strong> 消息给A，直到重试超过一定次数时才会放弃。</p>
+<p>B 为帮助 A 能顺利连接，需要<strong>分配内核资源</strong>维护半开连接，那么当 B 面临海量的连接 A 时，如上图所示，<strong>SYN Flood</strong> 攻击就形成了。攻击方 A 可以控制肉鸡向 B 发送大量 SYN 消息但不响应 ACK 消息，或者干脆伪造 SYN 消息中的 <strong>Source IP</strong>，使 B 反馈的 <strong>SYN-ACK</strong> 消息石沉大海，导致 B 被大量注定不能完成的半开连接占据，直到资源耗尽，停止响应正常的连接请求。</p>
+<h3 id="UDP-Flooding"><a href="#UDP-Flooding" class="headerlink" title="UDP Flooding"></a>UDP Flooding</h3><p><strong>UDP</strong> 洪泛是也是一种拒绝服务攻击，将大量的用户数据报协议（<strong>UDP</strong>）数据包发送到目标服务器，目的是压倒该设备的处理和响应能力。防火墙保护目标服务器也可能因 <strong>UDP</strong> 泛滥而耗尽，从而导致对合法流量的拒绝服务。</p>
+<blockquote>
+<p>UDP Flood攻击如何工作？</p>
+</blockquote>
+<p><strong>UDP Flood</strong> 主要通过利用服务器响应发送到其中一个端口的 <strong>UDP</strong> 数据包所采取的步骤。在正常情况下，当服务器在特定端口接收到 <strong>UDP</strong> 数据包时，会经过两个步骤：</p>
+<ul>
+<li>服务器首先检查是否正在运行正在侦听指定端口的请求的程序。</li>
+<li>如果没有程序在该端口接收数据包，则服务器使用 <strong>ICMP</strong>（ping）数据包进行响应，以通知发送方目的地不可达。</li>
+</ul>
+<p>举个例子。假设今天要联系酒店的小蓝，酒店客服接到电话后先查看房间的列表来确保小蓝在客房内，随后转接给小蓝。</p>
+<p>首先，接待员接收到呼叫者要求连接到特定房间的电话。接待员然后需要查看所有房间的清单，以确保客人在房间中可用，并愿意接听电话。碰巧的是，此时如果突然间所有的电话线同时亮起来，那么他们就会很快就变得不堪重负了。</p>
+<p>当服务器接收到每个新的 <strong>UDP</strong> 数据包时，它将通过步骤来处理请求，并利用该过程中的服务器资源。发送 <strong>UDP</strong> 报文时，每个报文将包含源设备的 <strong>IP</strong> 地址。在这种类型的 <strong>DDoS</strong> 攻击期间，攻击者通常不会使用自己的真实 <strong>IP</strong> 地址，而是会欺骗 <strong>UDP</strong> 数据包的源 <strong>IP</strong> 地址，从而阻止攻击者的真实位置被暴露并潜在地饱和来自目标的响应数据包服务器。</p>
+<p>由于目标服务器利用资源检查并响应每个接收到的 <strong>UDP</strong> 数据包的结果，当接收到大量 <strong>UDP</strong> 数据包时，目标的资源可能会迅速耗尽，导致对正常流量的拒绝服务。</p>
+<p>![640 (1)](D:\Git-repo\hexo\source_posts\cs-network-protocol\640 (1).png)</p>
+<blockquote>
+<p>如何缓解<strong>UDP</strong>洪水攻击？</p>
+</blockquote>
+<p>大多数操作系统部分限制了 <strong>ICMP</strong> 报文的响应速率，以中断需要 ICMP 响应的 <strong>DDoS</strong> 攻击。这种缓解的一个缺点是在攻击过程中，合法的数据包也可能被过滤。如果 <strong>UDP Flood</strong> 的容量足够高以使目标服务器的防火墙的状态表饱和，则在服务器级别发生的任何缓解都将不足以应对目标设备上游的瓶颈。</p>
+<h3 id="4-TCP-重置攻击"><a href="#4-TCP-重置攻击" class="headerlink" title="4 TCP 重置攻击"></a>4 TCP 重置攻击</h3><p>在 <strong>TCP</strong> 重置攻击中，攻击者通过向通信的一方或双方发送伪造的消息，告诉它们立即断开连接，从而使通信双方连接中断。正常情况下，如果客户端收发现到达的报文段对于相关连接而言是不正确的，<strong>TCP</strong> 就会发送一个重置报文段，从而导致 <strong>TCP</strong> 连接的快速拆卸。</p>
+<p><strong>TCP</strong> 重置攻击利用这一机制，通过向通信方发送伪造的重置报文段，欺骗通信双方提前关闭 TCP 连接。如果伪造的重置报文段完全逼真，接收者就会认为它有效，并关闭 <strong>TCP</strong> 连接，防止连接被用来进一步交换信息。服务端可以创建一个新的 <strong>TCP</strong> 连接来恢复通信，但仍然可能会被攻击者重置连接。万幸的是，攻击者需要一定的时间来组装和发送伪造的报文，所以一般情况下这种攻击只对长连接有杀伤力，对于短连接而言，你还没攻击呢，人家已经完成了信息交换。</p>
+<p>从某种意义上来说，伪造 <strong>TCP</strong> 报文段是很容易的，因为 <strong>TCP/IP</strong> 都没有任何内置的方法来验证服务端的身份。有些特殊的 IP 扩展协议（例如 <code>IPSec</code>）确实可以验证身份，但并没有被广泛使用。客户端只能接收报文段，并在可能的情况下使用更高级别的协议（如 <code>TLS</code>）来验证服务端的身份。但这个方法对 <strong>TCP</strong> 重置包并不适用，因为 <strong>TCP</strong> 重置包是 <strong>TCP</strong> 协议本身的一部分，无法使用更高级别的协议进行验证。</p>
+<h3 id="5-模拟攻击"><a href="#5-模拟攻击" class="headerlink" title="5. 模拟攻击"></a>5. 模拟攻击</h3><blockquote>
+<p>以下实验是在 <code>OSX</code> 系统中完成的，其他系统请自行测试。</p>
+</blockquote>
+<p>现在来总结一下伪造一个 <strong>TCP</strong> 重置报文要做哪些事情：</p>
+<ul>
+<li>嗅探通信双方的交换信息。</li>
+<li>截获一个 <code>ACK</code> 标志位置位 1 的报文段，并读取其 <code>ACK</code> 号。</li>
+<li>伪造一个 TCP 重置报文段（<code>RST</code> 标志位置为 1），其序列号等于上面截获的报文的 <code>ACK</code> 号。这只是理想情况下的方案，假设信息交换的速度不是很快。大多数情况下为了增加成功率，可以连续发送序列号不同的重置报文。</li>
+<li>将伪造的重置报文发送给通信的一方或双方，时其中断连接。</li>
+</ul>
+<p>为了实验简单，我们可以使用本地计算机通过 <code>localhost</code> 与自己通信，然后对自己进行 TCP 重置攻击。需要以下几个步骤：</p>
+<ul>
+<li>在两个终端之间建立一个 TCP 连接。</li>
+<li>编写一个能嗅探通信双方数据的攻击程序。</li>
+<li>修改攻击程序，伪造并发送重置报文。</li>
+</ul>
+<p>下面正式开始实验。</p>
+<blockquote>
+<p>建立 TCP 连接</p>
+</blockquote>
+<p>可以使用 netcat 工具来建立 TCP 连接，这个工很多操作系统都预装了。打开第一个终端窗口，运行以下命令：</p>
+<pre><code>$ nc -nvl 8000</code></pre>
+<p>这个命令会启动一个 TCP 服务，监听端口为 <code>8000</code>。接着再打开第二个终端窗口，运行以下命令：</p>
+<pre><code>$ nc 127.0.0.1 8000</code></pre>
+<p>该命令会尝试与上面的服务建立连接，在其中一个窗口输入一些字符，就会通过 TCP 连接发送给另一个窗口并打印出来。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIyMDEzMTA2MQ==&amp;mid=2651155801&amp;idx=1&amp;sn=1e6d78eb10d17eed9b76d9a998dd4721&amp;chksm=8c2176c3bb56ffd58fcf0945b55f61da8276f33ef6e0ac76e65b5879d691d2421e57d53abc5e&amp;mpshare=1&amp;scene=23&amp;srcid=0401A7HxBrZ8LLjyjtiij0y6&amp;sharer_sharetime=1617272795419&amp;sharer_shareid=64abb8dbf61eddce88d292199cd11b73#rd">https://mp.weixin.qq.com/s?__biz=MzIyMDEzMTA2MQ==&amp;mid=2651155801&amp;idx=1&amp;sn=1e6d78eb10d17eed9b76d9a998dd4721&amp;chksm=8c2176c3bb56ffd58fcf0945b55f61da8276f33ef6e0ac76e65b5879d691d2421e57d53abc5e&amp;mpshare=1&amp;scene=23&amp;srcid=0401A7HxBrZ8LLjyjtiij0y6&amp;sharer_sharetime=1617272795419&amp;sharer_shareid=64abb8dbf61eddce88d292199cd11b73#rd</a></p>
+<h1 id="问题和解答"><a href="#问题和解答" class="headerlink" title="问题和解答"></a>问题和解答</h1><p><strong>可以通过路由表得到下一个路由器的 IP 地址，直接通过 IP 地址找就可以了，为什么还要通过本地的 MAC 地址呢？</strong></p>
+<p>在网络包里，有源 IP 地址和目标 IP 地址、源 MAC 地址和目标 MAC 地址。从路由表中取得下一跳的 IP 地址后，应该把这个地址放在哪里呢？如果放在目标 IP 地址里面，谁知道最终的目标在哪里呢？所以要用 MAC 地址。</p>
+<p>所谓的下一跳，看起来是 IP 地址，其实是要通过 ARP 得到 MAC 地址，将下一跳的 MAC 地址放在目标 MAC 地址里面。</p>
+<p>​    </p>
+<p>​    </p>
+<p><strong>MAC 地址可以修改吗？</strong></p>
+<p><strong>MAC地址</strong>（<code>Media Access Control</code>，介质访问控制），也叫硬件地址，长度是 48 比特（6 字节），由 16 进制的数字组成，分为前 24 位和后 24 位。</p>
+<p>前 24 位叫作<strong>组织唯一标志符</strong>（<code>Organizationally Unique Identifier，OUI</code>），是由 IEEE 的注册管理机构给不同厂家分配的代码，用于区分不同的厂家。后 24 位是厂家自己分配的，称为<strong>扩展标识符</strong>。同一个厂家生产的网卡中 MAC 地址后 24 位是不同的。</p>
+<p>MAC 本来设计为唯一性的，但是后来设备越来越多，而且还有虚拟化的设备和网卡，有很多工具可以修改，就很难保证不冲突了。但是至少应该保持一个局域网内是唯一的。</p>
+<p>MAC 的设计，使得即便不能保证绝对唯一，但是能保证一个局域网内出现冲突的概率很小。这样，一台机器启动的时候，就能够在没有 IP 地址的情况下，先用 MAC 地址进行通信，获得 IP 地址。</p>
+<p>好在 MAC 地址是工作在一个局域网中的，因而即便出现了冲突，网络工程师也能够在自己的范围内很快定位并解决这个问题。</p>
+<p>​    </p>
+<p>​    </p>
+<p><strong>TCP 重试有没有可能导致重复下单？</strong></p>
+<p>不会的。因为 TCP 层收到了重复包之后，TCP 层自己会进行去重，发给应用层、HTTP 层。还是一个唯一的下单请求，所以不会重复下单。</p>
+<p>那什么时候会导致重复下单呢？因为网络原因或者服务端错误，导致 TCP 连接断了，这样会重新发送应用层的请求，也即 HTTP 的请求会重新发送一遍。</p>
+<p>如果服务端设计的是无状态的，它记不住上一次已经发送了一次请求。如果处理不好，就会导致重复下单，这就需要服务端除了实现无状态，还需要根据传过来的订单号实现幂等，同一个订单只处理一次。</p>
+<p>还会有的现象是请求被黑客拦截，发送多次，这在 HTTPS 层可以有很多种机制，例如通过 Timestamp 和 Nonce 随机数联合起来，然后做一个不可逆的签名来保证。</p>
+
+            </div>
+            <hr />
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<!-- <div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div> -->
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《网络协议基础入门》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/02/04/cs-network-protocol/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                宵烛
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/02/04/cs-network-socket/">
+                    <div class="card-image">
+                        
+                        <img src="/2021/02/04/cs-network-socket/3fca89d0-064f-422b-8909-0adea56ee9ab.jpg" class="responsive-img" alt="网络编程原理与实践">
+                        
+                        <span class="card-title">网络编程原理与实践</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本文从实践出发，从问题的角度对网络编程相关的知识点进行阐述。和代码、实验进行关联，引出理论或算法的实际意义
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-02-04
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
+                                    计科
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" target="_blank">
+                        <span class="chip bg-color">计算机网络</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" target="_blank">
+                        <span class="chip bg-color">网络协议</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" target="_blank">
+                        <span class="chip bg-color">网络编程</span>
+                    </a>
+                    
+                    <a href="/tags/socket/" target="_blank">
+                        <span class="chip bg-color">socket</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/01/28/cs-cpp-question/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/34.jpg" class="responsive-img" alt="C++实战">
+                        
+                        <span class="card-title">C++实战</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本文讲解C++的相关知识
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-28
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
+                                    计科
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" target="_blank">
+                        <span class="chip bg-color">编程语言</span>
+                    </a>
+                    
+                    <a href="/tags/C/" target="_blank">
+                        <span class="chip bg-color">C++</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 宵烛 Blog<br />'
+            + '作者: 宵烛<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2020-2021 NightCandle 宵烛. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">101.7k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/night-candle" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1219303301@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=1219303301&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+<!--  -->
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<!-- <script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 2000;
+        var uvcountOffset = 1000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script> -->
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

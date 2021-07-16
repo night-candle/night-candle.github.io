@@ -1,0 +1,2203 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="HTTP协议原理和实践, CS 宵烛 xiaozhu NightCandle 计算机 网络安全">
+    <meta name="baidu-site-verification" content="fmlEuI34ir" />
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
+    <meta name="description" content="HTTP协议原理和实践
+
+​    
+1. HTTP协议基础1.1 五层模型
+
+
+物理层：主要作用是定义物理设备如何传输数据
+
+数据链路层：在通信的实体间建立数据链路连接
+
+网络层：为数据在结点之间传输创建逻辑链路 
+
+
+​    
+
+传输">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>HTTP协议原理和实践 | 宵烛 Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">宵烛 Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">宵烛 Blog</div>
+        <div class="logo-desc">
+            
+            学生 | 虚假CTF选手 | 计算机菜鸟
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        HTTP协议原理和实践
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" target="_blank">
+                            <span class="chip bg-color">计算机网络</span>
+                        </a>
+                        
+                        <a href="/tags/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" target="_blank">
+                            <span class="chip bg-color">通信协议</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category" target="_blank">
+                            笔记
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-09-23
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    宵烛
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    11.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    48 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="HTTP协议原理和实践"><a href="#HTTP协议原理和实践" class="headerlink" title="HTTP协议原理和实践"></a>HTTP协议原理和实践</h1><img src="http.png" alt="浏览器输入URL后HTTP请求返回的过程" style="zoom:120%;" />
+
+<p>​    </p>
+<h2 id="1-HTTP协议基础"><a href="#1-HTTP协议基础" class="headerlink" title="1. HTTP协议基础"></a>1. HTTP协议基础</h2><h3 id="1-1-五层模型"><a href="#1-1-五层模型" class="headerlink" title="1.1 五层模型"></a>1.1 五层模型</h3><p><img src="331769-20181124200628267-282150559.png" alt="TCP/IP五层模型"></p>
+<p><img src="705728-20160424234827195-1493107425.png"></p>
+<ul>
+<li><p>物理层：主要作用是定义物理设备如何传输数据</p>
+</li>
+<li><p>数据链路层：在通信的实体间建立数据链路连接</p>
+</li>
+<li><p>网络层：为数据在结点之间传输创建逻辑链路 </p>
+</li>
+</ul>
+<p>​    </p>
+<ul>
+<li>传输层：向用户提供可靠的端到端（End-to-End）服务（传输层向高层屏蔽了下层数据通信的细节）</li>
+<li>应用层：为应用软件提供了服务（屏蔽了网络传输相关细节）</li>
+</ul>
+<p>​    </p>
+<p>&emsp;&emsp;HTTP 协议的传输过程就是通过协议栈逐层向下，每一层都添加本层的专有数据，层层打包，然后通过下层发送出去。接收数据是则是相反的操作，从下往上穿过协议栈，逐层拆包，每层去掉本层的专有头，上层就会拿到自己的数据。下层的传输过程对于上层是完全“透明”的，上层也不需要关心下层的具体实现细节。</p>
+<p>​    </p>
+<p>​    </p>
+<h3 id="1-2-HTTP协议简介"><a href="#1-2-HTTP协议简介" class="headerlink" title="1.2 HTTP协议简介"></a>1.2 HTTP协议简介</h3><blockquote>
+<p>HTTP是什么？</p>
+<p>HTTP 是一个在计算机世界里专门在<strong>两点之间</strong>传输文字、图片、音频、视频等超文本数据的约定和规范</p>
+</blockquote>
+<p>​            </p>
+<p>&emsp;&emsp;<strong>HTTP</strong>是 <code>Hyper Text Transfer Protocol</code> <strong>（超文本传输协议）</strong>的缩写。它的发展是万维网协会和Internet工作小组IETF合作的结果。它确立了一种计算机之间交流通信的规范，以及相关的各种控制和错误处理方式。</p>
+<p>&emsp;&emsp;<strong>HTTP是一个应用层协议</strong>，由请求和响应构成，是一个标准的客户端服务器模型。</p>
+<p>&emsp;&emsp;因为 <strong>HTTP</strong> 是一个协议，是一种计算机间通信的规范，所以它<strong>不存在“单独的实体”</strong>。它不是应用程序，也不是操作系统，更不是 Web 服务器。但 HTTP 又与应用程序、操作系统、Web 服务器密切相关，在它们之间的通信过程中存在，而且是一种“动态的存在”，是发生在网络连接、传输超文本数据时的一个“动态过程”。</p>
+<p>&emsp;&emsp;在互联网世界里，<strong>HTTP 通常跑在 TCP/IP 协议栈之上</strong>，依靠 <code>IP 协议</code>实现寻址和路由、<code>TCP 协议</code>实现可靠数据传输、<code>DNS协议</code>实现域名查找、<code>SSL/TLS 协议</code>实现安全通信。此外，还有一些协议依赖于它，例如 <code>WebSocket</code>、<code>HTTPDNS</code> 等。这些协议相互交织，构成了一个协议网，而 <strong>HTTP</strong> 处于中心地位。</p>
+<p>​        </p>
+<blockquote>
+<p>把这些综合起来，使用递归缩写方式，我们可以把 HTTP 定义为“<strong>与 HTTP 协议相关的所有应用层技术的总和</strong>”</p>
+</blockquote>
+<p>​    </p>
+<p>​        </p>
+<h3 id="1-3-HTTP协议发展历史"><a href="#1-3-HTTP协议发展历史" class="headerlink" title="1.3 HTTP协议发展历史"></a>1.3 HTTP协议发展历史</h3><h4 id="史前时期"><a href="#史前时期" class="headerlink" title="史前时期"></a>史前时期</h4><p>&emsp;&emsp;20 世纪 60 年代，美国国防部高等研究计划署建立了 <code>ARPA</code> 网，它有四个分布在各地的节点，被认为是如今互联网的“始祖”。最早的阿帕网还是非常简陋的，<strong>网络控制协议</strong><code>Network Control Protocol</code><strong>（NCP）</strong>是阿帕网中连接不同计算机的通信协议。</p>
+<p>&emsp;&emsp;<strong>NCP</strong>诞生两年后，开发者温特·瑟夫和罗伯特·卡恩一起开发了一个阿帕网的下一代协议，并在 1974 年发表了以分组、序列化、流量控制、超时和容错等为核心的一种新型的网络互联协议，一举奠定了 <code>TCP/IP</code> 协议的基础。</p>
+<p>&emsp;&emsp;由于具有良好的分层结构和稳定的性能，TCP/IP 协议迅速战胜其他竞争对手流行起来，并在 80 年代中期进入了 <code>UNIX</code> 系统内核，促使更多的计算机接入了互联网。</p>
+<p>​    </p>
+<blockquote>
+<p>TCP/IP 的成功不是偶然的，而是综合了几个因素后的结果：</p>
+<ol>
+<li>TCP/IP 是免费或者是少量收费的，这样就扩大了使用人群</li>
+<li>TCP/IP 搭上了 UNIX 这辆时代快车，很快推出了基于套接字（socket）的实际编程接口</li>
+<li>TCP/IP 来源于实际需求，TCP/IP 解决了实际问题，并且在实际中不断完善</li>
+</ol>
+</blockquote>
+<p>​    </p>
+<h4 id="创世纪"><a href="#创世纪" class="headerlink" title="创世纪"></a>创世纪</h4><p>&emsp;&emsp;1989 年，任职于欧洲核子研究中心的<code>Tim Berners-Lee</code>发表了一篇论文，提出了在互联网上构建超链接文档系统的构想。这篇论文中他确立了三项关键技术。</p>
+<ol>
+<li><code>URI</code>：<code>Uniform Resource Identifier</code>即统一资源标识符，包括<code>URL</code>和<code>URN</code>，作为互联网上资源的唯一身份</li>
+<li><code>HTML</code>：即超文本标记语言，描述超文本文档</li>
+<li><code>HTTP</code>：即超文本传输协议，用来传输超文本</li>
+</ol>
+<p>&emsp;&emsp;基于它们，就可以把超文本系统完美地运行在互联网上，让各地的人们能够自由地共享信息，蒂姆把这个系统称为<code>World Wide Web</code>，也就是我们现在所熟知的 <code>Web</code></p>
+<p>​    </p>
+<h4 id="HTTP-0-9"><a href="#HTTP-0-9" class="headerlink" title="HTTP/0.9"></a>HTTP/0.9</h4><ul>
+<li><p>只有一个命令GET</p>
+</li>
+<li><p>没有HEADER等描述数据的信息</p>
+</li>
+<li><p>服务器发送完毕，就关闭TCP连接</p>
+</li>
+</ul>
+<p>​    </p>
+<p>&emsp;&emsp;20 世纪 90 年代初期的互联网世界非常简陋，计算机处理能力低，存储容量小，网速很慢，还是一片“信息荒漠”。网络上绝大多数的资源都是纯文本，很多通信协议也都使用纯文本，所以 HTTP 的设计也不可避免地受到了时代的限制。</p>
+<p>&emsp;&emsp;这一时期的 HTTP 被定义为 0.9 版，结构简单，为了便于服务器和客户端处理，它也采用了纯文本格式。蒂姆最初设想的系统里的文档都是只读的，所以只允许用<code>GET</code>动作从服务器上获取 HTML 文档，并且在响应请求之后立即关闭连接，功能非常有限。</p>
+<p>&emsp;&emsp;HTTP/0.9 虽然很简单，但作为一个“原型”，充分验证了 Web 服务的可行性。</p>
+<p>​    </p>
+<h4 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP/1.0"></a>HTTP/1.0</h4><ul>
+<li>增加了 HEAD、POST 等命令</li>
+<li>增加了响应状态码 <code>Status code</code>，标记可能的错误原因</li>
+<li>增加了 HTTP Header，让 HTTP 处理请求和响应更加灵活</li>
+<li>引入了协议版本号概念</li>
+<li>传输的数据不再仅限于文本</li>
+</ul>
+<p>​    </p>
+<p>&emsp;&emsp;1993 年，美国国家超级计算应用中心开发出了 <strong>Mosaic</strong>，是第一个可以图文混排的浏览器，随后又在 1995 年开发出了服务器软件 <strong>Apache</strong>，简化了 HTTP 服务器的搭建工作。</p>
+<p>&emsp;&emsp;同一时期，计算机多媒体技术也有了新的发展：1992 年发明了 <strong>JPEG</strong> 图像格式，1995 年发明了 <strong>MP3</strong> 音乐格式。</p>
+<p>&emsp;&emsp;这些新软件新技术一经推出立刻就吸引了广大网民的热情，更的多的人开始使用互联网，研究 HTTP 并提出改进意见，甚至实验性地往协议里添加各种特性，从用户需求的角度促进了 HTTP 的发展。</p>
+<p>&emsp;&emsp;在这些已有实践的基础上，经过一系列的草案，HTTP/1.0 版本在 1996 年正式发布。它在多方面增强了 0.9 版，形式上已经和我们现在的 HTTP 差别不大。</p>
+<blockquote>
+<p>但是HTTP/1.0 并不是一个“标准”，只是记录已有实践和模式的一份参考文档，不具有实际的约束力，相当于一个“备忘录”。</p>
+</blockquote>
+<p>​    </p>
+<h4 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h4><ul>
+<li>明确了连接管理，允许持久连接</li>
+<li>增加了 PUT、DELETE 等新命令</li>
+<li>增加了缓存管理和控制</li>
+<li>允许响应数据分块<strong>（chunked）</strong>，利于传输大文件</li>
+<li>增加 Host ，让互联网主机托管成为可能</li>
+</ul>
+<p>​    </p>
+<p>&emsp;&emsp;1995 年，网景的 Netscape Navigator 和微软的 Internet Explorer 开始了著名的“浏览器大战”，都希望在互联网上占据主导地位。最终微软的 IE 取得了胜利。不可否认的是，它再一次极大地推动了 Web 的发展，HTTP/1.0 也在这个过程中经受了实践检验。</p>
+<p>&emsp;&emsp;在“浏览器大战”结束之后的 1999 年，<strong>HTTP/1.1 发布了 RFC 文档，编号为 2616</strong>，正式确立了延续十余年的传奇。HTTP/1.1 是对 HTTP/1.0 的小幅度修正。但一个重要的区别是：它是一个“正式的标准”。这意味着今后互联网上所有的浏览器、服务器、网关、代理等等，只要用到 HTTP 协议，就必须严格遵守这个标准。HTTP/1.1 开启了后续的“Web 1.0”“Web 2.0”时代。</p>
+<p>&emsp;&emsp;由于 HTTP/1.1 太过庞大和复杂，所以在 2014 年又做了一次修订，原来的一个大文档被拆分成了六份较小的文档，编号为 7230-7235，优化了一些细节，但此外没有任何实质性的改动。</p>
+<p>​    </p>
+<h4 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP/2"></a>HTTP/2</h4><ul>
+<li><p>所有数据以二进制传输，不再是纯文本</p>
+</li>
+<li><p>头信息压缩以及推送等提高效率的功能</p>
+</li>
+<li><p>可发起多个请求，废弃了 1.1 里的管道</p>
+</li>
+<li><p>增强了安全性</p>
+</li>
+</ul>
+<p>​    </p>
+<p>&emsp;&emsp;Google 开发了自己的浏览器 Chrome，然后推出了新的 <code>SPDY 协议</code>，并在 Chrome 里应用于自家的服务器，开启了第二次的“浏览器大战”。这次的胜利者是 Google，Chrome 目前的全球的占有率超过了 60%。Google 借此顺势把 <code>SPDY</code> 推上了标准的宝座，互联网标准化组织以 <code>SPDY</code> 为基础开始制定新版本的 HTTP 协议，最终<strong>在 2015 年发布了 HTTP/2，RFC 编号 7540</strong></p>
+<p>​    </p>
+<blockquote>
+<p>HTTP2的优势：</p>
+<ol>
+<li><p>信道复用</p>
+</li>
+<li><p>分帧传输：传输数据不需要连续的发送，可以分成不同的帧进行发送</p>
+</li>
+<li><p>Server Push：使服务端可以主动的向客户端发送内容</p>
+</li>
+</ol>
+</blockquote>
+<p>​    </p>
+<h4 id="HTTP-3"><a href="#HTTP-3" class="headerlink" title="HTTP/3"></a>HTTP/3</h4><p>&emsp;&emsp;在 HTTP/2 还处于草案之时，Google 又发明了一个新的协议 <code>QUIC</code>，依托其的庞大用户量和数据量，持续地推动 <code>QUIC 协议</code>成为互联网上的“既成事实”。</p>
+<p>&emsp;&emsp;2018 年，互联网标准化组织 IETF 提议将“HTTP over QUIC”更名为“HTTP/3”并获得批准，HTTP/3 正式进入了标准化制订阶段，也许两三年后就会正式发布，到时候我们很可能会跳过 HTTP/2 直接进入 HTTP/3。</p>
+<p>​    </p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ol>
+<li>HTTP 协议始于三十年前蒂姆·伯纳斯 - 李的一篇论文</li>
+<li>HTTP/0.9 是个简单的文本协议，只能获取文本资源</li>
+<li>HTTP/1.0 确立了大部分现在使用的技术，但它不是正式标准</li>
+<li>HTTP/1.1 是目前互联网上使用最广泛的协议，功能也非常完善</li>
+<li>HTTP/2 基于 Google 的 SPDY 协议，注重性能改善，但还未普及</li>
+<li>HTTP/3 基于 Google 的 QUIC 协议，是将来的发展方向</li>
+</ol>
+<p>​    </p>
+<p>​    </p>
+<h3 id="1-4-HTTP报文格式"><a href="#1-4-HTTP报文格式" class="headerlink" title="1.4 HTTP报文格式"></a>1.4 HTTP报文格式</h3><img src="image-20210207223800223.png" alt="HTTP协议格式" style="zoom: 67%;" />
+
+<p>请求报文</p>
+<ul>
+<li><p>HTTP 协议是以 ASCII 码传输，建立在 TCP/IP 协议之上的应用层规范</p>
+</li>
+<li><p>规范把 HTTP 请求分为三个部分：状态行、请求头、消息主体</p>
+</li>
+</ul>
+<p>HTTP方法：</p>
+<ul>
+<li>用来定义对于资源的操作</li>
+<li>常用的有GET、POST、PUT、DELETE等</li>
+<li>从定义上讲有各自的语义</li>
+</ul>
+<p>HTTP CODE：</p>
+<ul>
+<li><p>定义服务器对请求的处理结果</p>
+</li>
+<li><p>各个区间的CODE有各自的语义</p>
+</li>
+<li><p>好的HTTP服务可以通过CODE判断结果</p>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<p>​    </p>
+<h3 id="1-5-一个简单web服务"><a href="#1-5-一个简单web服务" class="headerlink" title="1.5 一个简单web服务"></a>1.5 一个简单web服务</h3><p>创建一个基于node.js的简单的Web服务，然后在浏览器输出localhost:8000就可以得到返回值了</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">"123"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8000</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8000'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<img src="image-20210122212153947.png" alt="启动web服务" style="zoom: 90%;" />
+
+<img src="image-20210122212317288.png" alt="成功加载" style="zoom: 80%;" />
+
+<p>​    </p>
+<p>​    </p>
+<p>​    </p>
+<h2 id="2-HTTP的特性"><a href="#2-HTTP的特性" class="headerlink" title="2. HTTP的特性"></a>2. HTTP的特性</h2><h3 id="2-1-HTTP客户端"><a href="#2-1-HTTP客户端" class="headerlink" title="2.1 HTTP客户端"></a>2.1 HTTP客户端</h3><p>浏览器：浏览器地址输入baidu.com，就会返回响应内容。General就是http的首行，它并不属于http报文，它不仅返回内容，还处理了返回内容，如Response</p>
+<img src="331769-20181129064014294-1238237602.png" alt="Google浏览器" style="zoom: 50%;" />
+
+<img src="浏览器发起 HTTP 请求的典型场景.png" alt="浏览器发起 HTTP 请求的典型场景" style="zoom:60%;" />
+
+<p>​        curl：直接请求baidu.com，返回如下，而浏览器会去识别这个标签，然后重定向到<a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<img src="image-20210122215211846.png" alt="curl工具"  />
+
+<p><img src="image-20210122220156659.png"></p>
+<p>​    </p>
+<h3 id="2-2-CORS-跨域请求"><a href="#2-2-CORS-跨域请求" class="headerlink" title="2.2 CORS 跨域请求"></a>2.2 CORS 跨域请求</h3><h4 id="2-2-1-同域限制"><a href="#2-2-1-同域限制" class="headerlink" title="2.2.1 同域限制"></a>2.2.1 同域限制</h4><p><code>server1.js</code>：8880端口服务，返回<code>test.html</code>页面</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> html <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.html'</span><span class="token punctuation">,</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span>
+  response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8880</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8880'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>test.html</code>：向8887端口服务发起一个跨域的请求</p>
+<blockquote>
+<p>&emsp;&emsp;跨域资源共享<strong>CORS</strong> 是一种机制，它使用额外的 HTTP 头来告诉浏览器  让运行在一个 origin （domain）上的Web应用被准许访问来自不同源服务器上的指定的资源。当一个资源从与该资源本身所在的服务器不同的域、协议或端口请求一个资源时，资源会发起一个跨域 HTTP 请求。出于安全原因，浏览器限制从脚本内发起的跨源HTTP请求。</p>
+</blockquote>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+  <span class="token keyword">var</span> xhr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+
+  <span class="token comment" spellcheck="true">//XMLHttpRequest和Fetch API遵循同源策略,这意味着使用这些API的Web应用只能从同一个域请求HTTP资源，除非使用CORS头文件</span>
+
+  xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">'GET'</span><span class="token punctuation">,</span> <span class="token string">'http://127.0.0.1:8887/'</span><span class="token punctuation">)</span>
+  xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>server2.js</code>：8887端口服务</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+  response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'123'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="image-20210123164813202.png" alt="跨域请求报错"></p>
+<p>解决方法：在添加<code>server2.js</code>中添加代码如下（浏览器在解析请求返回的内容时发现没有Access-Control-Allow-Origin设置为允许，会将返回内容忽略掉并报错）</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript">response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token string">'Access-Control-Allow-Origin'</span><span class="token punctuation">:</span> <span class="token string">'*'</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这里就可以指定域名来访问服务器，从而实现安全的跨域请求 ，也可以通过判断request.url来进行不同的跨域请求设置</p>
+<blockquote>
+<p>提示：浏览器会认为localhost与127.0.0.1是跨域</p>
+</blockquote>
+<h4 id="2-2-2-jsonp实现跨域请求"><a href="#2-2-2-jsonp实现跨域请求" class="headerlink" title="2.2.2 jsonp实现跨域请求"></a>2.2.2 jsonp实现跨域请求</h4><p>直接在<code>test.html</code>中使用srcipt标签来实现跨域，这样就不需要在服务器设置Access-Control-Allow-Origin属性了</p>
+<p>浏览器允许link、img、script标签上面的src或者是ref跨域来实现的</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://localhost:8887<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-2-3-CORS预请求"><a href="#2-2-3-CORS预请求" class="headerlink" title="2.2.3 CORS预请求"></a>2.2.3 CORS预请求</h4><p>修改<code>test.html</code>文件，刷新页面后再次发生跨域的报错</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+  <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'http://localhost:8887'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    method<span class="token punctuation">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+    headers<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      <span class="token string">'X-Test-Cors'</span><span class="token punctuation">:</span> <span class="token string">'123'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="image-20210123180145542.png"></p>
+<p>报错原因：</p>
+<p>​    跨域资源共享标准（ cross-origin sharing standard ）允许在下列场景中使用跨域 HTTP 请求：</p>
+<ul>
+<li>由 XMLHttpRequest 或 Fetch 发起的跨域 HTTP 请求</li>
+<li>Web 字体 （CSS 中通过<code>@font-face</code>使用跨域字体资源）</li>
+<li>WebGL 贴图</li>
+<li>使用 drawImage 将 Images/video 画面绘制到 canvas</li>
+<li>样式表（使用 CSSOM）</li>
+</ul>
+<p>在发生跨域时的限制：</p>
+<ul>
+<li><p>允许的方法默认只有：<code>GET</code>、<code>HEAD</code>、<code>POST</code>，其他的方法是默认不允许的（其他方法就需要进行预请求）</p>
+</li>
+<li><p>允许<code>Content-Type</code>：<code>text/plain</code>、<code>multipart/form-data</code>、<code>application/x-www-form-urlencoded</code>,其他的也需要预请求</p>
+</li>
+<li><p>其他限制：请求头限制(<a target="_blank" rel="noopener" href="https://fetch.spec.whatwg.org/#cors-safelisted-request-header">Fetch</a>)、XMLHttpRequestUpload对象均没有注册任何事件监听器、请求中没有使用ReadableStream对象</p>
+</li>
+</ul>
+<p>解决方法：修改<code>server2.js</code>文件的请求头信息</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript">response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token string">'Access-Control-Allow-Origin'</span><span class="token punctuation">:</span> <span class="token string">'*'</span><span class="token punctuation">,</span>
+    <span class="token string">'Access-Control-Allow-Headers'</span><span class="token punctuation">:</span> <span class="token string">'X-Test-Cors'</span><span class="token punctuation">,</span>
+    <span class="token string">'Access-Control-Allow-Methods'</span><span class="token punctuation">:</span> <span class="token string">'POST, PUT, DELETE'</span><span class="token punctuation">,</span>
+    <span class="token string">'Access-Control-Max-Age'</span><span class="token punctuation">:</span> <span class="token string">'1000'</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>浏览器比之前多了一个请求，即预请求</p>
+<p><img src="image-20210123181435164.png"></p>
+<p>​<br>​    </p>
+<h3 id="2-3-缓存Cache-Control"><a href="#2-3-缓存Cache-Control" class="headerlink" title="2.3 缓存Cache-Control"></a>2.3 缓存Cache-Control</h3><h4 id="2-3-1-可缓存性"><a href="#2-3-1-可缓存性" class="headerlink" title="2.3.1 可缓存性"></a>2.3.1 可缓存性</h4><ul>
+<li>public：http请求返回的过程中，在Cache-Control中设置了public的值，代表在这个http请求中返回的内容所经过的任何路径（包括中间的一些http的代理服务器以及发出这个请求的客户端浏览器）都可以对返回内容进行缓存的操作</li>
+<li>private：只有发起请求的浏览器才可以进行缓存</li>
+<li>no-cache：不可以直接使用缓存</li>
+</ul>
+<blockquote>
+<p>no-cache可以在本地、proxy服务器进行缓存，但是每次发起请求都要去服务器验证(2.5 资源验证)；如果服务器返回允许使用这部分缓存，才可以使用缓存</p>
+</blockquote>
+<h4 id="2-3-2-到期"><a href="#2-3-2-到期" class="headerlink" title="2.3.2 到期"></a>2.3.2 到期</h4><ul>
+<li>max-age=<seconds>：设置这个缓存到多少秒过期</li>
+<li>s-maxage=<seconds>：s-maxage代替max-age，在代理服务器里才会生效，在客户端浏览器不会读取这个属性</li>
+<li>ma-stale=<seconds>：在max-age过期之后，如果我们返回的资源有这个max-stale的设置，发起请求的一方主动带的一个头，即便max-age过期了，只要在max-stale这个时间内依然可以使用这个过期的缓存，而不需要去原服务器请求（注意：只有在发起端设置才有用）</li>
+</ul>
+<h4 id="2-3-3-重新验证"><a href="#2-3-3-重新验证" class="headerlink" title="2.3.3 重新验证"></a>2.3.3 重新验证</h4><ul>
+<li>must-revalidate：在max-age过期了，我们必须到原服务端去发送这个请求来重新获取这部分数据，再来验证这部分内容是不是真的过期了，而不能直接使用本地的缓存</li>
+<li>proxy-revalidate：用在缓存服务器的，指在缓存服务器过期之后，必须到原服务端去发送这个请求来重新获取这部分数据，再来验证这部分内容是不是真的过期了，而不能直接使用本地的缓存</li>
+</ul>
+<h4 id="2-3-4-其他"><a href="#2-3-4-其他" class="headerlink" title="2.3.4 其他"></a>2.3.4 其他</h4><ul>
+<li>no-store：本地和代理服务器都是不可以缓存，每次都要去服务器端拿新的body内容</li>
+<li>no-transform：用在proxy服务器，告诉proxy服务器不可以随意改变返回的内容（例如不能随便压缩返回的图片）</li>
+</ul>
+<blockquote>
+<p>注意：上面这些头只是一个限制性、声明性的作用，它没有任何强制的约束力</p>
+</blockquote>
+<p>示例代码：</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/script.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> html <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.html'</span><span class="token punctuation">,</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/script.js'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/javascript'</span><span class="token punctuation">,</span>
+      <span class="token string">'Cache-Control'</span><span class="token punctuation">:</span> <span class="token string">'max-age=20'</span> <span class="token comment" spellcheck="true">// 设置缓存</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'console.log("script loaded")'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="image-20210124193709754.png"></p>
+<p><img src="image-20210124191947363.png" alt="从服务器获取script.js"></p>
+<p><img src="image-20210124192758176.png" alt="再次刷新后从缓存读取"></p>
+<p>问题：我们希望服务端更新了内容之后，客户端也能更新而不是读取的客户端的缓存</p>
+<p>解决方法：在打包完成后会在js文件名上根据打包完成的js文件以及其他的静态资源文件的内容加上一段hash码，如果js文件或者静态资源文件内容不变，hash码就不会变。也就是当url没有变就会使用本地的静态资源缓存，如果所有js文件或者静态资源文件内容变化了，那么嵌入到这些资源的url路径的hash码就会发生变化，这样客户端就会发起新的请求。</p>
+<p>​<br>​    </p>
+<h3 id="2-4-资源验证"><a href="#2-4-资源验证" class="headerlink" title="2.4 资源验证"></a>2.4 资源验证</h3><img src="image-20210124195304725.jpg" alt="浏览器资源验证流程" style="zoom:130%;" />
+
+<p><strong>验证头：</strong></p>
+<ul>
+<li>Last-Modified：上次修改时间，配合If-Modifie-Since或者If-Unmodified-Since使用，比对上次修改时间以验证资源是否需要更新</li>
+</ul>
+<blockquote>
+<p>​        请求的资源有Last-Modified，浏览器在下次请求的时候就会带上Last-Modified，服务器就读取Header中If-Modifie-Since的值来对比资源存在的地方，最后来对比上次修改的时间，如果时间是一样的代表资源还没有被重新修改过，服务器就告诉浏览器可以直接使用这个缓存</p>
+</blockquote>
+<ul>
+<li>Etag：数据签名，资源发生了改变它的数据签名就会改变；配合If-Match或者If-Non-Match使用，对比资源的签名判断是否使用缓存</li>
+</ul>
+<p>示例代码</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> html <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.html'</span><span class="token punctuation">,</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/script.js'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">const</span> etag <span class="token operator">=</span> request<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">'if-none-match'</span><span class="token punctuation">]</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>etag <span class="token operator">===</span> <span class="token string">'777'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">304</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/javascript'</span><span class="token punctuation">,</span>
+        <span class="token string">'Cache-Control'</span><span class="token punctuation">:</span> <span class="token string">'max-age=2000000, no-cache'</span><span class="token punctuation">,</span>
+        <span class="token string">'Last-Modified'</span><span class="token punctuation">:</span> <span class="token string">'123'</span><span class="token punctuation">,</span>
+        <span class="token string">'Etag'</span><span class="token punctuation">:</span> <span class="token string">'777'</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/javascript'</span><span class="token punctuation">,</span>
+        <span class="token string">'Cache-Control'</span><span class="token punctuation">:</span> <span class="token string">'max-age=2000000, no-cache'</span><span class="token punctuation">,</span>
+        <span class="token string">'Last-Modified'</span><span class="token punctuation">:</span> <span class="token string">'123'</span><span class="token punctuation">,</span>
+        <span class="token string">'Etag'</span><span class="token punctuation">:</span> <span class="token string">'777'</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'console.log("script loaded twice")'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="image-20210124201729755.png" alt="设置资源验证"></p>
+<p><img src="image-20210124202044063.png" alt="返回304"></p>
+<p><img src="image-20210124202633019.png" alt="缓存读取"></p>
+<p>​<br>​    </p>
+<h3 id="2-5-Cookie和Session"><a href="#2-5-Cookie和Session" class="headerlink" title="2.5 Cookie和Session"></a>2.5 Cookie和Session</h3><h4 id="2-5-1-cookie"><a href="#2-5-1-cookie" class="headerlink" title="2.5.1 cookie"></a>2.5.1 cookie</h4><ul>
+<li>通过Set-Cookie设置，保存在浏览器中</li>
+<li>下次在同域的请求中自动带上</li>
+<li>键值对，可以设置多个</li>
+</ul>
+<h4 id="2-5-2-cookie属性"><a href="#2-5-2-cookie属性" class="headerlink" title="2.5.2 cookie属性"></a>2.5.2 cookie属性</h4><ul>
+<li>max-age和expires设置过期时间</li>
+<li>Secure只在https的时候发送</li>
+<li>HttpOnly无法通过document.cookie访问（安全性）</li>
+</ul>
+<p>示例代码：</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> html <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.html'</span><span class="token punctuation">,</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span><span class="token punctuation">,</span>
+      <span class="token string">'Set-Cookie'</span><span class="token punctuation">:</span> <span class="token string">'id=123'</span>
+      <span class="token comment" spellcheck="true">//'Set-Cookie': ['id=123', 'abc=456'] 可以设置多个CooKie</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span>cookie<span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>开启服务</p>
+<p><img src="image-20210125140602729.png" alt="查看cookie"></p>
+<blockquote>
+<p>如果Cookie没有设置过期时间，在浏览器关闭后就没有了</p>
+</blockquote>
+<p>设置HttpOnly属性</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript">response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span><span class="token punctuation">,</span>
+    <span class="token string">'Set-Cookie'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'id=123; max-age=2'</span><span class="token punctuation">,</span> <span class="token string">'abc=456;HttpOnly'</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="image-20210125141908195.png" alt="abc=456被禁止访问"></p>
+<p>设置domain</p>
+<blockquote>
+<p>​        不同域名的cookie是不能共享的，不过我们可以设置domain来实现所有的二级域可以读到一级域的cookie。（有更好的方式)</p>
+</blockquote>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">// const host = request.headers.host</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span>host <span class="token operator">===</span> <span class="token string">'test.com'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span><span class="token punctuation">{</span>
+     <span class="token string">'Content-type'</span><span class="token punctuation">:</span><span class="token string">'text/html'</span><span class="token punctuation">,</span>
+     <span class="token string">'Set-Cookie'</span><span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">'id=123;max-age=2'</span><span class="token punctuation">,</span><span class="token string">'abc=345;domain=test.com'</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意：不可以跨域设置domain</p>
+<h4 id="2-5-2-session"><a href="#2-5-2-session" class="headerlink" title="2.5.2 session"></a>2.5.2 session</h4><p>服务器创建session后，会把session的id以cookie的形式回写给客户机，这样，只要客户机的浏览器不关，再去访问服务器时，都会带着session的id号去，服务器发现客户机浏览器带session的id过来了，就会使用内存中与之对应的session为之服务。</p>
+<blockquote>
+<p>Session不等于Cookie</p>
+</blockquote>
+<h4 id="2-5-3-Session和Cookie的主要区别"><a href="#2-5-3-Session和Cookie的主要区别" class="headerlink" title="2.5.3 Session和Cookie的主要区别"></a>2.5.3 Session和Cookie的主要区别</h4><ul>
+<li>Cookie是把用户的数据写给用户的浏览器。</li>
+<li>Session技术把用户的数据写到用户独占的session中。</li>
+<li>Session对象由服务器创建，开发人员可以调用request对象的getSession方法得到session对象。</li>
+</ul>
+<p>​<br>​    </p>
+<h3 id="2-6-HTTP的长连接"><a href="#2-6-HTTP的长连接" class="headerlink" title="2.6 HTTP的长连接"></a>2.6 HTTP的长连接</h3><p>&emsp;&emsp;在HTTP/1.0中<strong>默认使用短连接</strong>。也就是说客户端和服务器每进行一次HTTP操作就建立一次连接，任务结束就中断连接。当客户端浏览器访问的某个HTML或其他类型的Web页中包含有其他的Web资源（如JavaScript文件、图像文件、CSS文件等），每遇到这样一个Web资源，浏览器就会重新建立一个HTTP会话。</p>
+<p>&emsp;&emsp;从HTTP/1.1起，默认使用长连接，用以保持连接特性。使用长连接的HTTP协议，会在响应头加入<code>Connection:keep-alive</code>。在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，客户端再次访问这个服务器时，会继续使用这一条已经建立的连接。</p>
+<p>&emsp;&emsp;实现长连接需要客户端和服务端都支持长连接。 HTTP协议的长连接和短连接，实质上是TCP协议的长连接和短连接。</p>
+<ul>
+<li><p>Connection:keep-alive：是可以复用TCP/IP的链接，不用每次发起一个请求就创建一个TCP/IP的链接（只有在同域下，这个TCP/IP的链接才可以复用）</p>
+</li>
+<li><p>Connection:close：每次发起请求就会创建一个TCP/IP链接，没有重复使用TCP/IP链接（每个连接的建立都是需要资源消耗和时间消耗的）</p>
+</li>
+</ul>
+<p>示例代码：</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> html <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.html'</span><span class="token punctuation">,</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> img <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.jpg'</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'image/jpg'</span><span class="token punctuation">,</span>
+      <span class="token string">'Connection'</span><span class="token punctuation">:</span> <span class="token string">'keep-alive'</span> <span class="token comment" spellcheck="true">// or close</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/test1.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/test2.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/test3.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/test4.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/test5.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/test6.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/test7.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<img src="image-20210125151346961.png" alt="查看Network" style="zoom:90%;" />
+
+<img src="image-20210125152325682.png" alt="等待" style="zoom:90%;" />
+
+<p>此时<code>Connection:keep-alive</code>，可以看到Chrome浏览器支持6个并发的连接，其他的图片在等待，等待有TCP连接空出来再发送请求</p>
+<p>如果<code>Connection:close</code>,TCP连接不会复用，可以看到每个Connection ID都不一样</p>
+<img src="image-20210125152745803.png" alt="短连接" style="zoom:90%;" />
+
+<p>访问使用HTTP2的Google页面，发现只用了一个Connection ID</p>
+<img src="image-20210125153633792.png" alt="" style="zoom:90%;" />
+
+<blockquote>
+<p>HTTP2可以信道复用，在TCP连接上可以并发的去发送http请求，链接一个网站只需要一个TCP链接(同域的情况下)</p>
+</blockquote>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/gotodsp/p/6366163.html">HTTP长连接、短连接</a></p>
+<p>​<br>​    </p>
+<h3 id="2-7-数据协商"><a href="#2-7-数据协商" class="headerlink" title="2.7 数据协商"></a>2.7 数据协商</h3><p>&emsp;&emsp;在客户端发送给服务端一个请求时，会声明希望拿到的数据格式以及数据相关的一些限制，服务端会根据这个请求进行判断，返回不同的数据（服务端是根据客户端发送的请求头信息来进行区分，然后服务端决定返回怎么样的数据）</p>
+<h4 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h4><p><strong>Accept：</strong></p>
+<ul>
+<li>Accept：表示想要的数据类型</li>
+<li>Accept-Encoding：代表数据使用什么样的编码方式进行传输</li>
+<li>Accept-Language：实现不同的地方访问服务展示的语言不同</li>
+<li>User-Agent：表示浏览器相关的信息，手机端的浏览器和PC端的浏览器是不一样的，可以通过User-Agent判断</li>
+</ul>
+<h4 id="返回"><a href="#返回" class="headerlink" title="返回"></a>返回</h4><p><strong>Content：</strong></p>
+<ul>
+<li>Content-Type：对应Accept，Accept可以接收几种数据格式，Content-Type从其中选择一种</li>
+<li>Content-Encoding：对应Accept-Encoding</li>
+<li>Content-language：根据你的请求返回语言还是没有根据请求返回语言</li>
+</ul>
+<p><code>Content-Type</code></p>
+<ul>
+<li><p>application/x-www-form-urlencoded：数据被编码为名称/值对。这是标准的编码格式</p>
+</li>
+<li><p>multipart/form-data： 数据被编码为一条消息，页上的每个控件对应消息中的一个部分</p>
+</li>
+<li><p>text/plain： 数据以纯文本形式（text/json/xml/html）进行编码，其中不含任何控件或格式字符</p>
+<p>……</p>
+</li>
+</ul>
+<blockquote>
+<p> 当你想要设置你想要的数据时就通过设置Accept中的属性来达到，服务端就会根据你的请求来进行对应的请求</p>
+</blockquote>
+<p><img src="image-20210126153300531.png"></p>
+<p>​<br>​    </p>
+<h3 id="2-8-Redirect"><a href="#2-8-Redirect" class="headerlink" title="2.8 Redirect"></a>2.8 Redirect</h3><p>&emsp;&emsp;我们通过url去访问一个路径，请求资源的时候，发现这个资源已经不在这个url指定的位置了，这时候服务器就会告诉客户端浏览器，请求的资源现在在那个地方，浏览器再去重新请求那个地方</p>
+<p>通过服务器判断请求的路径来实现重定向到新的url，一般返回3**有几种状态：</p>
+<ul>
+<li>302（每次访问都需要通过旧的url再跳转到新的资源的URL上）</li>
+<li>301（指定之前的资源的路径永久变成了新定义的资源路径，出现了之前路径访问的时候，直接在浏览器就会变成新的路径，就不需要服务器去指定一个新的location，因为是一个永久的变更；除非主动清除缓存，不然浏览器都会默认调整）</li>
+</ul>
+<p>示例代码</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">302</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Location'</span><span class="token punctuation">:</span> <span class="token string">'/new'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/new'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'&lt;div>this is content&lt;/div>'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="image-20210126165112534.png"></p>
+<p><img src="image-20210126165723871.png" alt="重定向"></p>
+<p>​<br>​    </p>
+<h3 id="2-9-Content-Security-Policy"><a href="#2-9-Content-Security-Policy" class="headerlink" title="2.9 Content-Security-Policy"></a>2.9 Content-Security-Policy</h3><p><strong>内容安全策略</strong>，为了让网站变得更加的安全</p>
+<ul>
+<li>限制资源获取</li>
+<li>报告资源获取越权</li>
+</ul>
+<p>限制方式：</p>
+<ul>
+<li>default-src限制全局（与链接有关的都可以限制它的作用范围）</li>
+<li>制定资源类型（可以根据特定的资源来限制它的资源范围）</li>
+</ul>
+<p>资源类型（网页上跟链接有关的，需要从外链进行加载内容，都可以进行资源类型的限制）</p>
+<ul>
+<li><p>connect-src（请求发向的地方目标）</p>
+</li>
+<li><p>mainfest-src</p>
+</li>
+<li><p>img-src（图片可以从哪几个网站加载）</p>
+</li>
+<li><p>font-src</p>
+</li>
+<li><p>media-src</p>
+</li>
+<li><p>style-src（样式从哪几个网址加载）</p>
+</li>
+<li><p>frame-src</p>
+</li>
+<li><p>script-src（脚本从哪几个网址加载）</p>
+<p>…..</p>
+</li>
+</ul>
+<p>示例代码</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> html <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.html'</span><span class="token punctuation">,</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span><span class="token punctuation">,</span>
+      <span class="token string">'Content-Security-Policy'</span><span class="token punctuation">:</span> <span class="token string">'default-src http: https:'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>This is content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'inline js'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 不希望有inline js</span>
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="image-20210126171420934.png" alt="禁止执行inline js"></p>
+<p>使用外链的方式加载 js 代码，进行测试，此时可以加载</p>
+<p>设置为只能使用本域名下的  js 代码进行加载，进行测试</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> html <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.html'</span><span class="token punctuation">,</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span><span class="token punctuation">,</span>
+      <span class="token string">'Content-Security-Policy'</span><span class="token punctuation">:</span> <span class="token string">'default-src \'self\''</span> <span class="token comment" spellcheck="true">// 限制所有外链</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'application/javascript'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'console.log("loaded script")'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>This is content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'inline js'</span><span class="token punctuation">)</span>
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>test.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://cdn.bootcss.com/jquery/3.3.1/core.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="image-20210126172831056.png"></p>
+<p><img src="image-20210126173450739.png" alt="blocked:csp"></p>
+<p>限制表单</p>
+<pre><code>&#39;Content-Security-Policy&#39;: &#39;default-src \&#39;self\&#39;; form-action \&#39;self\&#39; </code></pre>
+<p><img src="image-20210126174415329.png"></p>
+<p>主动向服务器发请求汇报，可以允许加载（Content-Security-Policy-Report-Only）</p>
+<pre><code>&#39;Content-Security-Policy&#39;: &#39;default-src \&#39;self\&#39;; form-action \&#39;self\&#39;; report-uri /report&#39;</code></pre>
+<p><img src="image-20210126175140576.png"></p>
+<p>可以通过meta标签使用</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Content-Security-Policy<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>script-src <span class="token punctuation">'</span>self<span class="token punctuation">'</span>; form-action <span class="token punctuation">'</span>self<span class="token punctuation">'</span>;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP">CSP</a></p>
+<p>​    </p>
+<p>​    </p>
+<p>​    </p>
+<h2 id="3-Nginx代理基础"><a href="#3-Nginx代理基础" class="headerlink" title="3. Nginx代理基础"></a>3. Nginx代理基础</h2><h3 id="3-1-Nginx安装"><a href="#3-1-Nginx安装" class="headerlink" title="3.1 Nginx安装"></a>3.1 Nginx安装</h3><p>Nginx的作用： 通过一台物理机器可以运行多个服务，节省资源，从而高效地利用计算机</p>
+<p><a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">Nginx下载</a> </p>
+<img src="image-20210125154517050.png" alt="下载页面" style="zoom: 70%;" />
+
+<p>直接下载这个页面上的windows压缩包，然后解压，在解压的文件夹中打开git bash来运行nginx</p>
+<img src="image-20210125155122837.png" alt="启动服务" style="zoom:90%;" />
+
+<img src="image-20210125155100880.png" alt="启动成功" style="zoom:60%;" />
+
+<p>​<br>​    </p>
+<h3 id="3-2-Nginx代理配置"><a href="#3-2-Nginx代理配置" class="headerlink" title="3.2 Nginx代理配置"></a>3.2 Nginx代理配置</h3><p>在nginx软件下新建一个servers并创建一个test.conf文件，并且修改<code>nginx.conf</code>，引入<code>test.conf</code>文件：</p>
+<p><code>test.conf</code>：</p>
+<pre><code>server &#123;
+  listen      80;
+  server_name test.com;
+
+  location /
+  &#123;
+    proxy_pass http://127.0.0.1:8887;
+    # proxy_set_header Host $host;
+  &#125;
+&#125;</code></pre>
+<p><code>nginx.conf</code>：（nginx-1.19.6\conf\nginx.conf）</p>
+<pre><code>include     servers/*.conf;</code></pre>
+<p>启动server服务</p>
+<p><code>server.js</code></p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> zlib <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'zlib'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>host<span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> html <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.html'</span><span class="token punctuation">)</span>
+  response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span><span class="token punctuation">,</span>
+    <span class="token string">'Content-Encoding'</span><span class="token punctuation">:</span> <span class="token string">'gzip'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>zlib<span class="token punctuation">.</span><span class="token function">gzipSync</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/form<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>form<span class="token punctuation">"</span></span> <span class="token attr-name">enctype</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>application/x-www-form-urlencoded<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    <span class="token keyword">var</span> form <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'form'</span><span class="token punctuation">)</span>
+    form<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'submit'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      e<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token keyword">var</span> formData <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FormData</span><span class="token punctuation">(</span>form<span class="token punctuation">)</span>
+      <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/form'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        method<span class="token punctuation">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+        body<span class="token punctuation">:</span> formData
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>通过<code>test.com</code>来访问代理的网址</p>
+<img src="image-20210126183044339.png" alt="成功" style="zoom:80%;" />
+
+
+
+<p>补充：在<code>test.conf</code>文件中如果是否设置<code>proxy_set_header Host $host;</code>在服务端会返回会不同</p>
+<p><img src="image-20210126184400512.png"></p>
+<blockquote>
+<p>host经过中间代理的层级后被修改</p>
+</blockquote>
+<p>​<br>​    </p>
+<h3 id="3-3-Nginx代理缓存"><a href="#3-3-Nginx代理缓存" class="headerlink" title="3.3 Nginx代理缓存"></a>3.3 Nginx代理缓存</h3><p>代理缓存是在代理设置的，所有每一个新请求都会经过代理。在浏览器客户端，只要第一个用户请求了，代理服务器缓存之后，其他用户都可以使用代理服务器的缓存</p>
+<p>修改<code>test.conf</code>：</p>
+<p><img src="20190105210021993.png"></p>
+<pre><code>proxy_cache_path cache levels=1:2 keys_zone=my_cache:10m; 
+
+
+server &#123;
+  listen      80;
+  server_name test.com;
+
+  location /
+  &#123;
+    proxy_cache my_cache;
+    proxy_pass http://127.0.0.1:8888;
+    proxy_set_header Host $host;
+  &#125;
+&#125;
+
+server &#123;
+  listen      80;
+  server_name a.test.com;
+
+  location /
+  &#123;
+    proxy_pass http://127.0.0.1:8888;
+    proxy_set_header Host $host;
+  &#125;
+&#125;</code></pre>
+<p>新建一个文件夹，并创建<code>server.js</code>和<code>test.html</code>文件</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> wait <span class="token operator">=</span> <span class="token punctuation">(</span>seconds<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span>resolve<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> seconds <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> html <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.html'</span><span class="token punctuation">,</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/data'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Cache-Control'</span><span class="token punctuation">:</span> <span class="token string">'max-age=3, s-maxage=20'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token function">wait</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'success'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>可以在<code>server.js</code>修改对应的返回头信息来实现各种配置（2.3 缓存Cache-Control）</p>
+</blockquote>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>This is content, and data is: <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>data<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+  <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/data'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>resp<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> resp<span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>text<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>innerText <span class="token operator">=</span> text
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="image-20210126222337746.png" alt="第一次请求 从服务器获取 耗时长"></p>
+<p><img src="image-20210126222518856.png" alt="第二次请求 从浏览器缓存读取"></p>
+<p><img src="image-20210126222543578.png" alt="第三次请求 从代理缓存读取"></p>
+<p>设置头信息Vary：指定在发生一个请求的时候，只要和服务器端的指定的http头的值相同的情况下，客户端才会使用缓存</p>
+<pre><code>&#39;Vary&#39;: &#39;X-Test-Cache&#39;</code></pre>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>This is content, and data is: <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>data<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>click me<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+  <span class="token keyword">var</span> index <span class="token operator">=</span> <span class="token number">0</span>
+  <span class="token keyword">function</span> doRequest <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> data <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">)</span>
+    data<span class="token punctuation">.</span>innerText <span class="token operator">=</span> <span class="token string">''</span>
+    <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/data'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      headers<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token string">'X-Test-Cache'</span><span class="token punctuation">:</span> index<span class="token operator">++</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>resp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> resp<span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>text<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      data<span class="token punctuation">.</span>innerText <span class="token operator">=</span> text
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> doRequest<span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="image-20210126223806916.png" alt="多次请求"></p>
+<p>​<br>​    </p>
+<h3 id="3-4-Nginx部署HTTPS服务"><a href="#3-4-Nginx部署HTTPS服务" class="headerlink" title="3.4 Nginx部署HTTPS服务"></a>3.4 Nginx部署HTTPS服务</h3><p>在Nginx根目录下新建一个certs文件夹，并在里面打开git bash，输入以下命令，生成公钥和私钥</p>
+<pre class="line-numbers language-bash"><code class="language-bash">openssl req -x509 -newkey rsa:2048 -nodes -sha256 -keyout localhost-privket.pem -out localhost-cert.pem<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><img src="20190106113824992.png"></p>
+<pre><code>proxy_cache_path cache levels=1:2 keys_zone=my_cache:10m;
+
+
+server &#123;
+  listen      443;
+  server_name test.com;
+
+  listen ... ssl;
+  ssl_certificate_key ../certs/localhost-privket.pem;
+  ssl_certificate ../certs/localhost-cert.pem;
+
+  location /
+  &#123;
+    proxy_cache my_cache;
+    proxy_pass http://127.0.0.1:8887;
+    proxy_set_header Host $host;
+  &#125;
+&#125;</code></pre>
+<p><img src="image-20210126230619376.png"></p>
+<p>这样直接访问的时候会出现<code>400 Bad Request The plain HTTP request was sent to HTTPS port</code>错误</p>
+<p>需要再修改<code>test.conf</code>文件：</p>
+<pre><code>proxy_cache_path cache levels=1:2 keys_zone=my_cache:10m;
+
+
+server &#123;
+  listen 80;
+  server_name test.com;
+
+  listen 443 ssl;
+  ssl_certificate_key ../certs/localhost-privket.pem;
+  ssl_certificate ../certs/localhost-cert.pem;
+
+  location /
+  &#123;
+    proxy_cache my_cache;
+    proxy_pass http://127.0.0.1:8887;
+    proxy_set_header Host $host;
+  &#125;
+&#125;</code></pre>
+<p><img src="image-20210126231543378.png" alt="启动成功"></p>
+<p>还可以通过配置来实现访问HTTP协议的网址时自动转到HTTPS协议上，修改<code>test.conf</code>：</p>
+<pre><code>proxy_cache_path cache levels=1:2 keys_zone=my_cache:10m;
+
+server &#123;
+  listen        80 default_server;
+  listen        [::]:80 default_server;
+  server_name   test.com;
+  return 302 https://$server_name$request_uri;
+&#125;
+
+server &#123;
+
+  server_name test.com;
+
+  listen 443 ssl;
+  ssl_certificate_key ../certs/localhost-privket.pem;
+  ssl_certificate ../certs/localhost-cert.pem;
+
+  location /
+  &#123;
+    proxy_cache my_cache;
+    proxy_pass http://127.0.0.1:8887;
+    proxy_set_header Host $host;
+  &#125;
+&#125;</code></pre>
+<p>还有其他Nginx配置，可以查看：<a target="_blank" rel="noopener" href="http://nginx.org/en/docs/http/configuring_https_servers.html#single_http_https_server">Nginx官方文档</a></p>
+<h3 id="3-5-Nginx简单配置HTTP2"><a href="#3-5-Nginx简单配置HTTP2" class="headerlink" title="3.5 Nginx简单配置HTTP2"></a>3.5 Nginx简单配置HTTP2</h3><blockquote>
+<p>注意：需要支持HTTPS才能使用HTTP2，通过Nginx来开启HTTP2</p>
+</blockquote>
+<p>修改<code>test.conf</code>：</p>
+<pre><code>proxy_cache_path cache levels=1:2 keys_zone=my_cache:10m;
+
+server &#123;
+  listen        80 default_server;
+  listen        [::]:80 default_server;
+  server_name   test.com;
+  return 302 https://$server_name$request_uri;
+&#125;
+
+server &#123;
+
+  server_name test.com;
+
+  listen 443 ssl http2;
+  ssl_certificate_key ../certs/localhost-privket.pem;
+  ssl_certificate ../certs/localhost-cert.pem;
+
+  location /
+  &#123;
+    proxy_cache my_cache;
+    proxy_pass http://127.0.0.1:8888;
+    proxy_set_header Host $host;
+  &#125;
+&#125;</code></pre>
+<p><code>server.js</code>：</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript">
+<span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+
+http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'request come'</span><span class="token punctuation">,</span> request<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> html <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.html'</span><span class="token punctuation">,</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> img <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'test.jpg'</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'text/html'</span><span class="token punctuation">,</span>
+      <span class="token string">'Connection'</span><span class="token punctuation">:</span> <span class="token string">'keep-alive'</span><span class="token punctuation">,</span>
+      <span class="token string">'Link'</span><span class="token punctuation">:</span> <span class="token string">'&lt;/test.jpg>; as=image; rel=preload'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    response<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'image/jpg'</span><span class="token punctuation">,</span>
+      <span class="token string">'Connection'</span><span class="token punctuation">:</span> <span class="token string">'keep-alive'</span> <span class="token comment" spellcheck="true">// or close</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    response<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">8887</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server listening on 8887'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width<span class="token punctuation">=</span>device-width, initial-scale<span class="token punctuation">=</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie<span class="token punctuation">=</span>edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/test.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>运行<code>server.js</code>，并启动<code>Nginx</code></p>
+<p><img src="image-20210127121127126.png"></p>
+<p>HTTP1与HTTP2的比较</p>
+<img src="image-20210127122742425.png" alt="HTTP1 vs HTTP2" style="zoom:80%;" />
+
+
+
+<blockquote>
+<p>不是所有浏览器都支持HTTP2，使用Ngnix开启HTTP2可以做到兼容HTTP1和HTTP2（ALPN方案）</p>
+<p>而Ngnix与后端之间使用HTTP1</p>
+</blockquote>
+<p><img src="image-20210127123715040.png" alt="HTTP2"></p>
+<p><img src="image-20210127124129626.png" alt="HTTP1"></p>
+<h2 id="4-HTTP关联知识点"><a href="#4-HTTP关联知识点" class="headerlink" title="4. HTTP关联知识点"></a>4. HTTP关联知识点</h2><h3 id="4-1-HTTP相关应用技术"><a href="#4-1-HTTP相关应用技术" class="headerlink" title="4.1 HTTP相关应用技术"></a>4.1 HTTP相关应用技术</h3><p><img src="%E4%B8%8B%E8%BD%BD.png"></p>
+<h4 id="4-1-1-网络"><a href="#4-1-1-网络" class="headerlink" title="4.1.1 网络"></a>4.1.1 网络</h4><p>&emsp;&emsp;互联网的正式名称是<code>Internet</code>，里面存储着无穷无尽的信息资源，我们通常所说的“上网”实际上访问的只是互联网的一个子集<code>World Wide Web</code>，它基于 HTTP 协议，传输 HTML 等超文本资源，能力也就被限制在 HTTP 协议之内。</p>
+<p>&emsp;&emsp;互联网上还有许多万维网之外的资源，例如常用的电子邮件、<code>BT</code> 和 <code>Magnet</code> 点对点下载、<code>FTP</code> 文件下载、<code>SSH</code> 安全登录、各种即时通信服务等等，它们需要用各自的专有协议来访问。不过由于 HTTP 协议非常灵活、易于扩展，而且“超文本”的表述能力很强，所以很多其他原本不属于 HTTP 的资源也可以“包装”成 HTTP 来访问，即各种“网页应用”。（如“微信网页版”“邮箱网页版”）综合来看，现在的互联网 90% 以上的部分都被万维网，也就是 HTTP 所覆盖。</p>
+<p>​    </p>
+<h4 id="4-1-2-Web-服务器"><a href="#4-1-2-Web-服务器" class="headerlink" title="4.1.2 Web 服务器"></a>4.1.2 Web 服务器</h4><p>&emsp;&emsp;浏览器是 HTTP 里的请求方，在协议另一端的<strong>应答方</strong>就是<strong>服务器</strong>，<strong>Web Server</strong></p>
+<p>Web服务器时有两个层面的含义：硬件和软件</p>
+<p><strong>硬件</strong>含义就是<strong>物理形式或“云”形式的机器</strong>，在大多数情况下它可能不是一台服务器，而是利用反向代理、负载均衡等技术组成的庞大集群。但从外界看来，它仍然表现为一台机器，但这个形象是虚拟的。</p>
+<p><strong>软件</strong>含义的 Web 服务器可能我们更为关心，它就是提供 Web 服务的应用程序，通常会运行在硬件含义的服务器上。它利用强大的硬件能力响应海量的客户端 HTTP 请求，处理磁盘上的网页、图片等静态文件，或者把请求转发给后面的业务应用，返回动态的信息。</p>
+<p>​    </p>
+<p><code>Apache</code> 是老牌的服务器，功能相当完善，相关的资料很多，学习门槛低，是许多创业者建站的入门产品。</p>
+<p><code>Nginx</code> 是后起之秀，高性能、高稳定，且易于扩展，自2004年推出后就不断蚕食<code>Apache</code>的市场份额。</p>
+<p>此外还有 <code>IIS</code>、 <code>Jetty/Tomcat</code> 等，因为性能不是很高，所以在互联网上应用得较少。</p>
+<p>​    </p>
+<h4 id="4-1-3-CDN"><a href="#4-1-3-CDN" class="headerlink" title="4.1.3 CDN"></a>4.1.3 CDN</h4><p>&emsp;&emsp;浏览器通常不会直接连到服务器，中间会经过“重重关卡”，其中的一个重要角色就叫做 <strong>CDN</strong></p>
+<p>&emsp;&emsp;<strong>内容分发网络</strong><code>Content Delivery Network</code>它应用了 HTTP 协议里的缓存和代理技术，代替源站响应客户端的请求。</p>
+<p>&emsp;&emsp;<strong>CDN</strong>可以缓存源站的数据，让浏览器的请求不用到达源站服务器，直接在“半路”就可以获取响应。如果调度算法很优秀，更可以找到离用户最近的节点，大幅度缩短响应时间。</p>
+<p>&emsp;&emsp;<strong>CDN</strong> 也是现在互联网中的一项重要基础设施，除了基本的网络加速外，还提供负载均衡、安全防护、边缘计算、跨运营商网络等功能，能够成倍地“放大”源站服务器的服务能力，很多云服务商都把其作为产品的一部分。</p>
+<p>​        </p>
+<h4 id="4-1-4-爬虫"><a href="#4-1-4-爬虫" class="headerlink" title="4.1.4 爬虫"></a>4.1.4 爬虫</h4><p>&emsp;&emsp;<strong>爬虫</strong><code>Crawler</code>是一种可以自动访问 Web 资源的应用程序。据估计，互联网上至少有 50% 的流量都是由爬虫产生的，某些特定领域的比例还会更高。绝大多数是由各大搜索引擎“放”出来的，抓取网页存入庞大的数据库，再建立关键字索引，这样我们才能够在搜索引擎中快速地搜索到互联网角落里的页面。</p>
+<p>&emsp;&emsp;爬虫也有不好的一面，它会过度消耗网络资源，占用服务器和带宽，影响网站对真实数据的分析，甚至导致敏感信息泄漏。所以，又出现了“反爬虫”技术，通过各种手段来限制爬虫。其中一项就是“君子协定”<code>robots.txt</code>，约定哪些该爬，哪些不该爬。</p>
+<p>​    </p>
+<h4 id="4-1-5-WebService-WAF"><a href="#4-1-5-WebService-WAF" class="headerlink" title="4.1.5 WebService/WAF"></a>4.1.5 WebService/WAF</h4><p>&emsp;&emsp;<strong>Web</strong> <strong>Service</strong>是一种由 <code>W3C</code> 定义的应用服务开发规范，使用 <code>client-server</code> 主从架构，通常使用 <code>WSDL</code> 定义服务接口，使用 <code>HTTP</code> 协议传输 <code>XML</code> 或 <code>SOAP</code> 消息，也就是说，它是<strong>一个基于 Web（HTTP）的服务架构技术</strong>，既可以运行在内网，也可以在适当保护后运行在外网。因为采用了 HTTP 协议传输数据，所以在 Web Service 架构里服务器和客户端可以采用不同的操作系统或编程语言开发，(如服务器端用 <code>Linux+Java</code>，客户端用 <code>Windows+C#</code>）具有跨平台跨语言的优点。</p>
+<blockquote>
+<p>Web Service 是网络服务实体，而 Web Server 是网络服务器</p>
+</blockquote>
+<p>​    </p>
+<p>&emsp;&emsp;<strong>网络应用防火墙</strong>  <code>WAF</code>  是应用层面的“防火墙”，专门检测 HTTP 流量，是防护 Web 应用的安全技术。WAF 通常位于 Web 服务器之前，可以阻止如 <code>SQL 注入</code>、<code>跨站脚本等攻击</code>，目前应用较多的一个开源项目是 <code>ModSecurity</code>，它能够完全集成进 <code>Apache</code> 或 <code>Nginx</code>。</p>
+<p>​    </p>
+<h4 id="4-1-6-小结"><a href="#4-1-6-小结" class="headerlink" title="4.1.6 小结"></a>4.1.6 小结</h4><ol>
+<li>互联网上绝大部分资源都使用 HTTP 协议传输</li>
+<li>浏览器是 HTTP 协议里的请求方，即 User Agent</li>
+<li>服务器是 HTTP 协议里的应答方，常用的有 Apache 和 Nginx</li>
+<li>CDN 位于浏览器和服务器之间，主要起到缓存加速的作用</li>
+<li>爬虫是另一类 User Agent，是自动访问网络资源的程序</li>
+</ol>
+<p>​    </p>
+<p>​    </p>
+<h3 id="4-2-HTTP相关协议"><a href="#4-2-HTTP相关协议" class="headerlink" title="4.2 HTTP相关协议"></a>4.2 HTTP相关协议</h3><p><img src="2020128.png"></p>
+<h4 id="4-2-1-TCP-IP"><a href="#4-2-1-TCP-IP" class="headerlink" title="4.2.1 TCP/IP"></a>4.2.1 TCP/IP</h4><p>&emsp;&emsp;<code>TCP/IP 协议</code>是目前网络世界事实上的标准通信协议。它实际上是一系列网络通信协议的统称，其中最核心的两个协议是<strong>TCP</strong>和<strong>IP</strong>，其他还有 <code>UDP</code>、<code>ICMP</code>、<code>ARP</code> 等，共同构成了一个复杂但有层次的协议栈。</p>
+<p>&emsp;&emsp;这个协议栈有四层，最上层是<strong>应用层</strong>，最下层是<strong>链接层</strong>，<strong>TCP 属于传输层，IP 属于网际层</strong>。</p>
+<p>&emsp;&emsp;<strong>IP 协议</strong>是<code>Internet Protocol</code>的缩写，主要目的是解决寻址和路由问题，以及如何在两点间传送数据包。IP 协议使用<strong>IP 地址</strong>的概念来定位互联网上的每一台计算机。</p>
+<blockquote>
+<p>现在我们使用的 IP 协议大多数是 v4 版，地址是四个用    <code>.</code>    分隔的数字（例如<strong>192.168.0.1</strong>），总共有 $2^{32}$，大约 42 亿个可以分配的地址。互联网的快速发展让地址的分配管理很快就捉襟见肘。所以出现了 v6 版，使用 8 组    <code>:</code>    分隔的数字作为地址，有$ 2^{128}$ 个</p>
+</blockquote>
+<p>​    </p>
+<p>&emsp;&emsp;<strong>TCP 协议</strong>是<code>Transmission ControlProtocol</code>（<strong>传输控制协议</strong>）的缩写，它位于 IP 协议之上，基于 IP 协议提供可靠的、字节流形式的通信，是 HTTP 协议得以实现的基础。<strong>可靠</strong>是指保证数据不丢失，<strong>字节流</strong>是指保证数据完整，所以在 TCP 协议的两端可以如同操作文件一样访问传输的数据，就像是读写在一个密闭的管道里流动的字节。</p>
+<p>​        </p>
+<p>​    </p>
+<h4 id="4-2-2-HTTPS"><a href="#4-2-2-HTTPS" class="headerlink" title="4.2.2 HTTPS"></a>4.2.2 HTTPS</h4><blockquote>
+<p><strong>HTTP over SSL/TLS</strong>，也就是运行在 SSL/TLS 协议上的 HTTP</p>
+</blockquote>
+<p>&emsp;&emsp;HTTP是不安全的，因为http协议传输的数据都是未加密的明文。为了保证这些隐私数据能加密传输，于是根据<strong>SSL协议</strong><code>Secure Sockets Layer</code>用于对HTTP协议传输的数据进行加密，从而就诞生了HTTPS</p>
+<p>&emsp;&emsp;SSL/TLS是一个负责加密通信的安全协议，建立在 TCP/IP 之上，所以也是个可靠的传输协议，可以被用作 HTTP 的下层。SSL由网景公司发明，当发展到 3.0 时被标准化，改名为 <strong>TLS</strong><code>Transport Layer Security</code>，但由于历史的原因还是有很多人称之为 SSL/TLS，或者直接简称为 SSL</p>
+<p><strong>加密：</strong></p>
+<ul>
+<li>私钥（放在服务器上，用于公钥加密过的数据）</li>
+<li>公钥（放在互联网上，所有人都能拿到的一串加密的字符串，这个加密的字符串是来加密我们的字符信息的。当加密的数据传到服务器上，只有服务器通过私钥解密，才能把公钥加密的数据拿出来）</li>
+</ul>
+<p><strong>https握手的过程：</strong></p>
+<p><img src="Inked%E6%8F%A1%E6%89%8B_LI.jpg"></p>
+<p><strong>https和http的主要区别：</strong></p>
+<ul>
+<li><p>https协议需要到ca机构申请ssl证书(如沃通CA)，高级别的ssl证书需要一定费用</p>
+</li>
+<li><p>http是超文本传输协议，信息是明文传输，https 则是具有安全性的ssl加密传输协议</p>
+</li>
+<li><p>http和https使用的是完全不同的连接方式，用的端口也不一样（http是80端口，https是443端口）</p>
+</li>
+<li><p>http的连接很简单，是无状态的；https协议是由ssl+http协议构建的可进行加密传输、身份认证的网络协议，更安全</p>
+</li>
+</ul>
+<p>​    </p>
+<h4 id="4-2-3-代理"><a href="#4-2-3-代理" class="headerlink" title="4.2.3 代理"></a>4.2.3 代理</h4><p>&emsp;&emsp;<strong>代理</strong><code>Proxy</code>是 HTTP 协议中请求方和应答方中间的一个环节，作为<strong>中转站</strong>，既可以转发客户端的请求，也可以转发服务器的应答。</p>
+<p>代理有很多的种类，常见的有：</p>
+<ul>
+<li><strong>匿名代理</strong>：完全“隐匿”了被代理的机器，外界看到的只是代理服务器</li>
+<li><strong>透明代理</strong>：顾名思义，它在传输过程中是“透明开放”的，外界既知道代理，也知道客户端</li>
+<li><strong>正向代理</strong>：靠近客户端，代表客户端向服务器发送请求</li>
+<li><strong>反向代理</strong>：靠近服务器端，代表服务器响应客户端的请求（CDN实际上就是一种代理，它代替源站服务器响应客户端的请求，通常扮演着透明代理和反向代理的角色）</li>
+</ul>
+<p>​    </p>
+<p>由于代理在传输过程中插入了一个中间层，所以可以在这个环节做很多事，比如：</p>
+<ul>
+<li><strong>负载均衡</strong>：把访问请求均匀分散到多台机器，实现访问集群化</li>
+<li><strong>内容缓存</strong>：暂存上下行的数据，减轻后端的压力</li>
+<li><strong>安全防护</strong>：隐匿 IP, 使用 WAF 等工具抵御网络攻击，保护被代理的机器</li>
+<li><strong>数据处理</strong>：提供压缩、加密等额外的功能</li>
+</ul>
+<blockquote>
+<p>关于 HTTP 的代理还有一个特殊的<strong>代理协议</strong><code>proxy protocol</code>，它由知名的代理软件 <code>HAProxy</code> 制订，但并不是 RFC 标准。</p>
+</blockquote>
+<p>​    </p>
+<p>​    </p>
+<h4 id="4-2-4-小结"><a href="#4-2-4-小结" class="headerlink" title="4.2.4 小结"></a>4.2.4 小结</h4><ol>
+<li>TCP/IP 是网络世界最常用的协议，HTTP 通常运行在 TCP/IP 提供的可靠传输基础上</li>
+<li>DNS 域名是 IP 地址的等价替代，需要用域名解析实现到 IP 地址的映射</li>
+<li>URI 是用来标记互联网上资源的一个名字，由“协议名 + 主机名 + 路径”构成，俗称 URL</li>
+<li>HTTPS 相当于“HTTP+SSL/TLS+TCP/IP”，为 HTTP 套了一个安全的外壳</li>
+<li>代理是 HTTP 传输过程中的“中转站”，可以实现缓存加速、负载均衡等功能</li>
+</ol>
+<p>​    </p>
+<p>​    </p>
+<blockquote>
+<p>完结</p>
+</blockquote>
+<p><img src="%E4%B8%8B%E8%BD%BD22.png" alt="HTTP思维导图">    </p>
+<p>​    </p>
+<p>​    </p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chenliyang/p/6558756.html">参考文章</a></p>
+<p><a target="_blank" rel="noopener" href="https://http2.akamai.com/demo">HTTP2演示</a></p>
+
+            </div>
+            <hr />
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<!-- <div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div> -->
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《HTTP协议原理和实践》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/09/23/http/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                宵烛
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/09/25/design-patterns/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="设计模式简介">
+                        
+                        <span class="card-title">设计模式简介</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            设计模式1. 单例模式属于创建型模式，它提供了一种创建对象的最佳方式。
+这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。
+单例模式
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-25
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category" target="_blank">
+                                    笔记
+                                </a>
+                            
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
+                                    计科
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" target="_blank">
+                        <span class="chip bg-color">设计模式</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/09/23/mybatis-study/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/32.jpg" class="responsive-img" alt="mybatis-study">
+                        
+                        <span class="card-title">mybatis-study</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category" target="_blank">
+                                    笔记
+                                </a>
+                            
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
+                                    计科
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SSM%E6%A1%86%E6%9E%B6/" target="_blank">
+                        <span class="chip bg-color">SSM框架</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 宵烛 Blog<br />'
+            + '作者: 宵烛<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2020-2021 NightCandle 宵烛. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">101.7k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/night-candle" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1219303301@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=1219303301&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+<!--  -->
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<!-- <script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 2000;
+        var uvcountOffset = 1000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script> -->
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>
