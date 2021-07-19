@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://night-candle.github.io/2021/01/27/cs-game-program-design/</loc>
+    <lastmod>2021-07-16</lastmod>
+  </url>  <url>
     <loc>http://night-candle.github.io/2020/08/28/github-blog-for-hexo/</loc>
     <lastmod>2021-07-15</lastmod>
   </url>  <url>
@@ -27,9 +30,6 @@
   </url>  <url>
     <loc>http://night-candle.github.io/2020/02/16/sort-algorithms/</loc>
     <lastmod>2021-02-23</lastmod>
-  </url>  <url>
-    <loc>http://night-candle.github.io/2021/01/27/cs-game-program-design/</loc>
-    <lastmod>2021-02-19</lastmod>
   </url>  <url>
     <loc>http://night-candle.github.io/2021/01/27/blog-sc-web-security-basic/</loc>
     <lastmod>2021-02-19</lastmod>
