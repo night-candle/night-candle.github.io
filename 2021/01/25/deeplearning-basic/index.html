@@ -334,7 +334,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/27.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -497,14 +497,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    21k
+                    20.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    88 分
+                    87 分
                 </div>
                 
                 
@@ -547,7 +547,6 @@
 <p>​    </p>
 <h4 id="神经元"><a href="#神经元" class="headerlink" title="神经元"></a>神经元</h4><p>1943 年，McCulloch 和 Pitts 将生物的神经网络抽象为一个简单模型，即 <strong>M-P 神经元模型</strong>。把许多这样的神经元按一定的层次结构连接起来，就得到神经网络。</p>
 <p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/simple-neuron.png" alt="一个简单的神经元"></p>
-<p>其中：</p>
 <ol>
 <li>$a_1,a_2\dots a_n$ 为各个输入的分量</li>
 <li>$w_1,w_2 \cdots w_n$ 为各个输入分量对应的权重参数</li>
@@ -556,43 +555,34 @@
 <li>$t$ 为神经元的输出</li>
 </ol>
 <p>​    </p>
-<p>使用数学公式表示：<br>$$<br>t = f(W^TA+b)<br>$$<br>可见：<strong>一个神经元的功能是求得输入向量与权向量的内积后，经一个非线性传递函数得到一个标量结果</strong></p>
-<p>​    </p>
-<h4 id="单层神经网络"><a href="#单层神经网络" class="headerlink" title="单层神经网络"></a>单层神经网络</h4><p>最基本的神经元网络形式，由有限个神经元构成，所有神经元的输入向量都是同一个向量。由于每一个神经元都会产生一个标量结果，所以单层神经元的输出是一个向量，向量的维数等于神经元的数目。</p>
+<p><strong>一个神经元的功能是求得输入向量与权向量的内积后，经一个非线性传递函数得到一个标量结果</strong>，数学公式表示：<br>$$<br>t = f(W^TA+b)<br>$$<br>​    </p>
+<h4 id="单层神经网络"><a href="#单层神经网络" class="headerlink" title="单层神经网络"></a>单层神经网络</h4><p>最基本的神经元网络形式，由有限个神经元构成，所有神经元的输入向量都是同一个向量。单层神经元的输出是一个向量，向量的维数等于神经元的数目。</p>
 <p><img src="%E5%8D%95%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.png"></p>
 <p>​        </p>
-<h4 id="1-3-4-感知机"><a href="#1-3-4-感知机" class="headerlink" title="1.3.4 感知机"></a>1.3.4 感知机</h4><p>感知机由<strong>两层</strong>神经网络组成，输入层接收外界输入信号后传递给输出层<strong>（输出+1正例，-1反例）</strong>，输出层是 M-P 神经元，其中从$w_0,w_1\cdots w_n$都表示权重</p>
+<h4 id="感知机"><a href="#感知机" class="headerlink" title="感知机"></a>感知机</h4><p>感知机由<strong>两层</strong>神经网络组成，输入层接收外界输入信号后传递给输出层<strong>（输出 +1正例，-1反例）</strong>，输出层是 M-P 神经元。</p>
 <p><img src="%E6%84%9F%E7%9F%A5%E6%9C%BA.png"></p>
-<p><strong>感知机的作用：</strong></p>
+<p><strong>感知机的作用</strong></p>
 <p>简单的二分类模型，把一个n维向量空间用一个超平面分割成两部分，给定一个输入向量，超平面可以判断出这个向量位于超平面的哪一边，得到输入正类或者是反类，<strong>对应到2维空间就是一条直线把一个平面分为两个部分</strong>。</p>
 <p>​    </p>
-<h4 id="1-3-5-多层神经网络"><a href="#1-3-5-多层神经网络" class="headerlink" title="1.3.5 多层神经网络"></a>1.3.5 多层神经网络</h4><p>多层神经网络就是由单层神经网络进行叠加之后得到的，所以就形成了<strong>层</strong>的概念，常见的多层神经网络有如下结构</p>
+<h4 id="多层神经网络"><a href="#多层神经网络" class="headerlink" title="多层神经网络"></a>多层神经网络</h4><p>多层神经网络由单层神经网络叠加得到，所以形成了<strong>层</strong>的概念，常见的多层神经网络有如下结构。</p>
 <ul>
-<li><p>输入层<code>Input layer</code>，众多神经元<code>Neuron</code>接受大量输入消息。输入的消息称为输入向量。</p>
+<li><p>输入层<code>Input layer</code>，众多神经元接受大量输入消息。（输入的消息称为输入向量）</p>
 </li>
-<li><p>输出层<code>Output layer</code>，消息在神经元链接中传输、分析、权衡，形成输出结果。输出的消息称为输出向量。</p>
+<li><p>输出层<code>Output layer</code>，消息在神经元链接中传输、分析、权衡，形成输出结果。（输出的消息称为输出向量）</p>
 </li>
-<li><p>隐藏层<code>Hidden layer</code>，是输入层和输出层之间众多神经元和链接组成的各个层面。隐层可以有一层或多层。隐层的节点数目不定，但数目越多神经网络的非线性越显著，从而神经网络的强健性<code>robustness</code>更显著。</p>
+<li><p>隐藏层<code>Hidden layer</code>，是输入层和输出层之间众多神经元和链接组成的各个层面。隐层可以有一层或多层。隐层的节点数目不定，但数目越多神经网络的非线性越显著，从而神经网络的强健性更显著。</p>
 </li>
 </ul>
 <p><img src="%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.png"></p>
-<p><strong>概念：全连接层</strong></p>
-<p>全连接层：当前一层和前一层每个神经元相互链接，称当前这一层为全连接层。</p>
-<p><img src="%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82.png"></p>
-<p>从上图看出，全连接层就是在前一层的输出的基础上进行一次 $Y=Wx+b$ 的变化(不考虑激活函数的情况下就是一次线性变化，所谓线性变化就是平移和缩放的组合)</p>
+<p><strong>全连接层</strong></p>
+<p>当前一层和前一层每个神经元相互链接，称当前这一层为全连接层</p>
+<p>全连接层就是在前一层的输出的基础上进行一次 $Y=Wx+b$ 的变化（不考虑激活函数的情况下就是一次线性变化）</p>
 <p>​    </p>
-<h4 id="1-3-6-激活函数"><a href="#1-3-6-激活函数" class="headerlink" title="1.3.6 激活函数"></a>1.3.6 激活函数</h4><p>引入：假设我们有这样一组数据，三角形和四边形，需要把他们分为两类</p>
-<img src="激活函数1.png" style="zoom: 80%;" />
-
-<p>通过不带激活函数的感知机模型我们可以划出一条线, 把平面分割开</p>
-<p><img src="%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B02.png"></p>
-<p>假设确定了参数 $w$ 和 $b$ 之后带入需要预测的数据，如果y&gt;0，认为这个点在直线的右边，也就是正类（三角形），否则在左边（四边形）</p>
-<p>但是三角形和四边形是没有办法通过直线分开的，可以考虑使用多层神经网络来进行尝试，比如在前面的感知机模型中再增加一层</p>
-<p><img src="%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B03.png"></p>
-<p>对上图中的等式进行合并，我们可以得到：<br>$$<br>y = (w_{1-11}w_{2-1}+\cdots)x_1+(w_{1-21}w_{2-1}+\cdots)x_2 + (w_{2-1}+\cdots)b_{1-1}<br>$$<br>上式依然只能够绘制出直线，即使是多层神经网络相比于前面的感知机也没有改进。但是如果在前面感知机的基础上加上<strong>非线性的激活函数</strong>之后，输出的结果就不再是一条直线</p>
-<p><img src="%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B04.png"></p>
-<p>如果给定合适的参数 $w$ 和 $b$ ，就可以得到合适的曲线，能够完成对最开始问题的非线性分割，所以激活函数很重要的一个作用就是<strong>增加模型的非线性分割能力</strong></p>
-<img src="clip_image001.jpg" alt="常见的激活函数" style="zoom:80%;" />
+<h4 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h4><p>激活函数很重要的一个作用就是<strong>增加模型的非线性分割能力</strong></p>
+<p>如果在感知机的基础上加上<strong>非线性的激活函数</strong>之后，输出的结果就不再是一条直线</p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/activation-function.png"></p>
+<p>如果给定合适的参数 $w$ 和 $b$ ，就可以得到合适的曲线，能够完成对最开始问题的非线性分割</p>
+<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/common-activation-functions.jpg" alt="常见的激活函数" style="zoom:95%;" />
 
 <ul>
 <li><p><code>sigmoid</code> 只会输出正数，以及靠近0的输出变化率最大</p>
@@ -602,25 +592,23 @@
 <li><p><code>Relu</code>是输入只能大于0，常用于输入是图片格式，因为图片的像素值作为输入时取值为[0,255]</p>
 </li>
 </ul>
-<p>激活函数的作用：</p>
+<p><strong>激活函数的作用：</strong></p>
 <ul>
-<li><p><strong>增加模型的非线性分割能力</strong></p>
+<li><p>增加模型的非线性分割能力</p>
 </li>
-<li><p><strong>提高模型鲁棒性</strong></p>
+<li><p>提高模型鲁棒性</p>
 </li>
-<li><p><strong>缓解梯度消失问题</strong></p>
+<li><p>缓解梯度消失问题</p>
 </li>
-<li><p><strong>加速模型收敛</strong></p>
+<li><p>加速模型收敛</p>
 <p>……</p>
 </li>
 </ul>
-<p>深度学习的<strong>思想</strong>：</p>
-<p>输出的最原始、最基本的数据，通过模型来进行特征工程，进行更加高级特征的学习，然后通过传入的数据来确定合适的参数，让模型去更好的拟合数据。</p>
-<p>​    </p>
-<p>​    </p>
-<p>​    </p>
-<h3 id="1-4-梯度下降"><a href="#1-4-梯度下降" class="headerlink" title="1.4 梯度下降"></a>1.4 梯度下降</h3><h4 id="1-4-1-梯度是什么"><a href="#1-4-1-梯度是什么" class="headerlink" title="1.4.1 梯度是什么?"></a>1.4.1 梯度是什么?</h4><p>梯度是一个向量，是参数更新的方向</p>
-<p>机器学习中，收集数据$x$ ，构建机器学习模型$f$，得到$f(x,w) = Y_{predict}$</p>
+<p><strong>深度学习的思想:</strong></p>
+<p>通过模型来进行特征工程，进行更加高级特征的学习，然后通过传入的数据来确定合适的参数，让模型去更好的拟合数据。    </p>
+<p>​        </p>
+<p>​        </p>
+<h3 id="1-1-3-梯度下降"><a href="#1-1-3-梯度下降" class="headerlink" title="1.1.3 梯度下降"></a>1.1.3 梯度下降</h3><h4 id="梯度是什么"><a href="#梯度是什么" class="headerlink" title="梯度是什么?"></a>梯度是什么?</h4><p>机器学习中构建机器学习模型$f$，得到$f(x,w) = Y_{predict}$</p>
 <p>判断模型好坏的方法：</p>
 <ul>
 <li><p>回归损失    $loss = (Y_{predict}-Y_{true})^2$</p>
@@ -646,9 +634,9 @@
 <li>$\nabla w &lt;0 $ ,意味着w将增大</li>
 <li>$\nabla w &gt;0 $ ,意味着w将减小</li>
 </ol>
-<p>总结：梯度就是多元函数参数的变化趋势，只有一个自变量时称为<strong>导数</strong></p>
+<p>总结：<strong>梯度就是多元函数参数的变化趋势</strong>，只有一个自变量时称为导数</p>
 <p>​    </p>
-<h4 id="2-3-2-偏导的计算"><a href="#2-3-2-偏导的计算" class="headerlink" title="2.3.2 偏导的计算"></a>2.3.2 偏导的计算</h4><h5 id="常见的导数计算"><a href="#常见的导数计算" class="headerlink" title="常见的导数计算"></a>常见的导数计算</h5><ul>
+<h4 id="偏导的计算"><a href="#偏导的计算" class="headerlink" title="偏导的计算"></a>偏导的计算</h4><h5 id="常见的导数计算"><a href="#常见的导数计算" class="headerlink" title="常见的导数计算"></a>常见的导数计算</h5><ul>
 <li><p>多项式求导数：$f(x) = x^5$ ,$f^{‘}(x) = 5x^{(5-1)}$</p>
 </li>
 <li><p>基本运算求导：$f(x) = xy$ ，$f^{‘}(x) = y$</p>
@@ -660,12 +648,12 @@
 <li><p>导数的微分形式：$f^{‘}(x) = \frac{d f(x)}{dx}$</p>
 </li>
 </ul>
-<h5 id="多元函数求偏导"><a href="#多元函数求偏导" class="headerlink" title="多元函数求偏导"></a>多元函数求偏导</h5><p>一元函数，即有一个自变量。类似$f(x)$</p>
-<p>多元函数，即有多个自变量。类似$f(x,y,z),三个自变量x,y,z$</p>
+<p>​    </p>
+<h5 id="多元函数求偏导"><a href="#多元函数求偏导" class="headerlink" title="多元函数求偏导"></a>多元函数求偏导</h5><p>多元函数，即有多个自变量。如$f(x,y,z)$</p>
 <p>多元函数求偏导过程中：<strong>对某一个自变量求导，其他自变量当做常量即可</strong></p>
 <p>​    </p>
 <p>​    </p>
-<h3 id="1-5-反向传播算法"><a href="#1-5-反向传播算法" class="headerlink" title="1.5 反向传播算法"></a>1.5 反向传播算法</h3><h4 id="1-5-1-计算图和反向传播"><a href="#1-5-1-计算图和反向传播" class="headerlink" title="1.5.1 计算图和反向传播"></a>1.5.1 计算图和反向传播</h4><p><strong>计算图</strong>：通过图的方式来描述函数的图形</p>
+<h3 id="1-1-4-反向传播算法"><a href="#1-1-4-反向传播算法" class="headerlink" title="1.1.4 反向传播算法"></a>1.1.4 反向传播算法</h3><h4 id="计算图和反向传播"><a href="#计算图和反向传播" class="headerlink" title="计算图和反向传播"></a>计算图和反向传播</h4><p><strong>计算图</strong>：通过图的方式来描述函数的图形</p>
 <p>$J(a,b,c) = 3(a+bc),令u=a+v,v = bc$，绘制成计算图可以表示为：</p>
 <p><img src="%E8%AE%A1%E7%AE%97%E5%9B%BE.png"></p>
 <p>绘制成为计算图之后，可以清楚的看到向前计算的过程。之后，对每个节点求偏导可有：</p>
@@ -2634,11 +2622,11 @@ idx: 4 Test set: Avg. loss: 0.8696, Accuracy: 4027/5000 (80.54%)</code></pre>
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/01/25/blog-sc-windows-security-basic/">
+                <a href="/2021/01/25/sec-win-basic/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/29.jpg" class="responsive-img" alt="Windows系统安全基础">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="Windows系统安全基础">
                         
                         <span class="card-title">Windows系统安全基础</span>
                     </div>
@@ -2691,7 +2679,7 @@ idx: 4 Test set: Avg. loss: 0.8696, Accuracy: 4027/5000 (80.54%)</code></pre>
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="设计模式简介">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="设计模式简介">
                         
                         <span class="card-title">设计模式简介</span>
                     </div>
@@ -2902,7 +2890,7 @@ idx: 4 Test set: Avg. loss: 0.8696, Accuracy: 4027/5000 (80.54%)</code></pre>
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">101.7k</span>
+            <span class="white-color">101.3k</span>
             
 
             <br>
