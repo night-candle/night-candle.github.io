@@ -491,7 +491,7 @@ export ARCH=x86
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.9k
+                    5.8k
                 </div>
                 
 
@@ -762,14 +762,10 @@ ssize_t <span class="token function">hello_read</span><span class="token punctua
     <span class="token function">unregister_chrdev_region</span><span class="token punctuation">(</span>devNum<span class="token punctuation">,</span> subDevNum<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-<span class="token function">module_init</span><span class="token punctuation">(</span>hello_init<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">module_exit</span><span class="token punctuation">(</span>hello_exit<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">module_init</span><span class="token punctuation">(</span>hello_init<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//module_init 声明驱动的入口函数 hello_init</span>
+<span class="token function">module_exit</span><span class="token punctuation">(</span>hello_exit<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//module_exit 声明驱动的出口函数 hello_exit</span>
 <span class="token function">MODULE_LICENSE</span><span class="token punctuation">(</span><span class="token string">"GPL"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//缓存</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-</ol>
-<p>   module_init 声明驱动的入口函数 hello_init</p>
-<p>   module_exit 声明驱动的出口函数 hello_exit</p>
-<ol start="2">
 <li><p>编写Makefile</p>
 <pre class="line-numbers language-makefile"><code class="language-makefile"><span class="token keyword">ifneq</span> <span class="token punctuation">(</span><span class="token variable">$</span><span class="token punctuation">(</span>KERNELRELEASE<span class="token punctuation">)</span>,<span class="token punctuation">)</span>
 obj-m <span class="token operator">:=</span> helloDev.o <span class="token comment" spellcheck="true">#内核编译系统进行识别</span>
@@ -832,7 +828,7 @@ KDIR<span class="token operator">:=</span> /lib/modules/4.4.0-31-generic/build <
 </ol>
 <h2 id="05-应用层write-怎样调用到驱动的write"><a href="#05-应用层write-怎样调用到驱动的write" class="headerlink" title="05 应用层write()怎样调用到驱动的write()"></a>05 应用层write()怎样调用到驱动的write()</h2><ol>
 <li><p>对write函数，C库只会做一些检查，然后就陷入write的系统调用，系统调用会通过软中断的方式陷入到内核空间里去执行</p>
-<p>![调用流程](<a target="_blank" rel="noopener" href="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211113-calling">https://gitee.com/lastlight/MyPictrue/raw/master/img/20211113-calling</a> process.png)</p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211113-calling-process.png" alt="调用流程"></p>
 </li>
 </ol>
 <ol start="2">
@@ -858,13 +854,12 @@ KDIR<span class="token operator">:=</span> /lib/modules/4.4.0-31-generic/build <
 <pre class="line-numbers language-c"><code class="language-c">   <span class="token keyword">if</span> <span class="token punctuation">(</span>file<span class="token operator">-></span>f_op<span class="token operator">-></span>write<span class="token punctuation">)</span> <span class="token keyword">return</span> file<span class="token operator">-></span>f_op<span class="token operator">-></span><span class="token function">write</span><span class="token punctuation">(</span>file<span class="token punctuation">,</span> p<span class="token punctuation">,</span> count<span class="token punctuation">,</span> pos<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>判断 hello 驱动里有没有定义 write 函数，如果有，那就调用</p>
 <p>所以按照如上的路径，应用程序里的 write 就顺利的调用到了 hello 驱动里的 write 函数</p>
+<blockquote>
+<p>注意：在 linux 里，在应用层用文件句柄也就是fd表示一个打开的文件，但是在内核里用 <code>struct file</code> 表示一个打开的文件，用 <code>struct file_operations</code> 表示对该文件的操作，他们之间是一一对应的</p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211113-write-function-call.png" alt="fs/read_write.c"></p>
+</blockquote>
 </li>
 </ol>
-<pre><code>  &gt; （fs/read_write.c）
-  &gt;
-  &gt; ![](https://gitee.com/lastlight/MyPictrue/raw/master/img/20211113-write-function-call.png)
-  &gt;
-  &gt; 注意：在 linux 里，在应用层用文件句柄也就是fd表示一个打开的文件，但是在内核里用 `struct file` 表示一个打开的文件，用 `struct file_operations` 表示对该文件的操作，他们之间是一一对应的</code></pre>
 <h2 id="06-字符设备驱动代码添加到内核源码树"><a href="#06-字符设备驱动代码添加到内核源码树" class="headerlink" title="06 字符设备驱动代码添加到内核源码树"></a>06 字符设备驱动代码添加到内核源码树</h2><ol>
 <li><p>拷贝源码到字符设备文件夹中</p>
 <p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211117-move.png"></p>
