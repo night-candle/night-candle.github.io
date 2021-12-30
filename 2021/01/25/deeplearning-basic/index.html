@@ -334,7 +334,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/27.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -497,7 +497,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    20.6k
+                    20.5k
                 </div>
                 
 
@@ -557,12 +557,11 @@
 <p>​    </p>
 <p><strong>一个神经元的功能是求得输入向量与权向量的内积后，经一个非线性传递函数得到一个标量结果</strong>，数学公式表示：<br>$$<br>t = f(W^TA+b)<br>$$<br>​    </p>
 <h4 id="单层神经网络"><a href="#单层神经网络" class="headerlink" title="单层神经网络"></a>单层神经网络</h4><p>最基本的神经元网络形式，由有限个神经元构成，所有神经元的输入向量都是同一个向量。单层神经元的输出是一个向量，向量的维数等于神经元的数目。</p>
-<p><img src="%E5%8D%95%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.png"></p>
 <p>​        </p>
 <h4 id="感知机"><a href="#感知机" class="headerlink" title="感知机"></a>感知机</h4><p>感知机由<strong>两层</strong>神经网络组成，输入层接收外界输入信号后传递给输出层<strong>（输出 +1正例，-1反例）</strong>，输出层是 M-P 神经元。</p>
-<p><img src="%E6%84%9F%E7%9F%A5%E6%9C%BA.png"></p>
 <p><strong>感知机的作用</strong></p>
 <p>简单的二分类模型，把一个n维向量空间用一个超平面分割成两部分，给定一个输入向量，超平面可以判断出这个向量位于超平面的哪一边，得到输入正类或者是反类，<strong>对应到2维空间就是一条直线把一个平面分为两个部分</strong>。</p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210831-perceptron.png"></p>
 <p>​    </p>
 <h4 id="多层神经网络"><a href="#多层神经网络" class="headerlink" title="多层神经网络"></a>多层神经网络</h4><p>多层神经网络由单层神经网络叠加得到，所以形成了<strong>层</strong>的概念，常见的多层神经网络有如下结构。</p>
 <ul>
@@ -573,7 +572,6 @@
 <li><p>隐藏层<code>Hidden layer</code>，是输入层和输出层之间众多神经元和链接组成的各个层面。隐层可以有一层或多层。隐层的节点数目不定，但数目越多神经网络的非线性越显著，从而神经网络的强健性更显著。</p>
 </li>
 </ul>
-<p><img src="%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.png"></p>
 <p><strong>全连接层</strong></p>
 <p>当前一层和前一层每个神经元相互链接，称当前这一层为全连接层</p>
 <p>全连接层就是在前一层的输出的基础上进行一次 $Y=Wx+b$ 的变化（不考虑激活函数的情况下就是一次线性变化）</p>
@@ -601,7 +599,6 @@
 <li><p>缓解梯度消失问题</p>
 </li>
 <li><p>加速模型收敛</p>
-<p>……</p>
 </li>
 </ul>
 <p><strong>深度学习的思想:</strong></p>
@@ -617,10 +614,7 @@
 </li>
 </ul>
 <p>目标：通过调整参数$w$，尽可能的降低$loss$</p>
-<img src="梯度1.png" style="zoom: 68.5%;" />
-
 <p>随机选择一个起始点$w_0$,通过调整$w_0$，让$loss$函数取到最小值</p>
-<p><img src="%E6%A2%AF%E5%BA%A62.png"></p>
 <p><strong>$w$的更新方法</strong>：</p>
 <ol>
 <li>计算$w$的梯度</li>
@@ -636,7 +630,8 @@
 </ol>
 <p>总结：<strong>梯度就是多元函数参数的变化趋势</strong>，只有一个自变量时称为导数</p>
 <p>​    </p>
-<h4 id="偏导的计算"><a href="#偏导的计算" class="headerlink" title="偏导的计算"></a>偏导的计算</h4><h5 id="常见的导数计算"><a href="#常见的导数计算" class="headerlink" title="常见的导数计算"></a>常见的导数计算</h5><ul>
+<h4 id="偏导的计算"><a href="#偏导的计算" class="headerlink" title="偏导的计算"></a>偏导的计算</h4><p><strong>常见的导数计算</strong></p>
+<ul>
 <li><p>多项式求导数：$f(x) = x^5$ ,$f^{‘}(x) = 5x^{(5-1)}$</p>
 </li>
 <li><p>基本运算求导：$f(x) = xy$ ，$f^{‘}(x) = y$</p>
@@ -649,21 +644,24 @@
 </li>
 </ul>
 <p>​    </p>
-<h5 id="多元函数求偏导"><a href="#多元函数求偏导" class="headerlink" title="多元函数求偏导"></a>多元函数求偏导</h5><p>多元函数，即有多个自变量。如$f(x,y,z)$</p>
+<p><strong>多元函数求偏导</strong></p>
+<p>多元函数，即有多个自变量。如$f(x,y,z)$</p>
 <p>多元函数求偏导过程中：<strong>对某一个自变量求导，其他自变量当做常量即可</strong></p>
 <p>​    </p>
 <p>​    </p>
 <h3 id="1-1-4-反向传播算法"><a href="#1-1-4-反向传播算法" class="headerlink" title="1.1.4 反向传播算法"></a>1.1.4 反向传播算法</h3><h4 id="计算图和反向传播"><a href="#计算图和反向传播" class="headerlink" title="计算图和反向传播"></a>计算图和反向传播</h4><p><strong>计算图</strong>：通过图的方式来描述函数的图形</p>
 <p>$J(a,b,c) = 3(a+bc),令u=a+v,v = bc$，绘制成计算图可以表示为：</p>
-<p><img src="%E8%AE%A1%E7%AE%97%E5%9B%BE.png"></p>
-<p>绘制成为计算图之后，可以清楚的看到向前计算的过程。之后，对每个节点求偏导可有：</p>
-<p><img src="%E8%AE%A1%E7%AE%97%E6%A2%AF%E5%BA%A6.png"></p>
-<p>反向传播的过程就是一个上图的从右往左的过程，自变量$a,b,c$各自的偏导就是连线上的梯度的乘积：<br>$$<br>\frac{dJ}{da} = 3 \cdot 1 \\<br>\frac{dJ}{db} = 3 \cdot 1 \cdot c \\<br>\frac{dJ}{dc} = 3 \cdot 1 \cdot b<br>$$<br>​    </p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210902-calculation-chart.png"></p>
+<p>对每个节点求偏导可有：</p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210902-back-propagation.png"></p>
+<p>自变量$a,b,c$各自的偏导就是连线上的梯度的乘积：<br>$$<br>\frac{dJ}{da} = 3 \cdot 1 \\<br>\frac{dJ}{db} = 3 \cdot 1 \cdot c \\<br>\frac{dJ}{dc} = 3 \cdot 1 \cdot b<br>$$<br>​    </p>
 <p>​    </p>
-<h4 id="1-5-2-神经网络的反向传播"><a href="#1-5-2-神经网络的反向传播" class="headerlink" title="1.5.2 神经网络的反向传播"></a>1.5.2 神经网络的反向传播</h4><h5 id="神经网络示意图"><a href="#神经网络示意图" class="headerlink" title="神经网络示意图"></a>神经网络示意图</h5><p><img src="%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%A1%E7%AE%97%E5%9B%BE.png"></p>
+<h4 id="神经网络的反向传播"><a href="#神经网络的反向传播" class="headerlink" title="神经网络的反向传播"></a>神经网络的反向传播</h4><p><strong>神经网络示意图</strong></p>
+<p><img src="deeplearning-basic/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%A1%E7%AE%97%E5%9B%BE.png"></p>
 <p>$w1,w2,….wn$表示网络第n层权重</p>
 <p>$w_n[i,j]$表示第n层第i个神经元，连接到第n+1层第j个神经元的权重</p>
-<h5 id="神经网络计算图"><a href="#神经网络计算图" class="headerlink" title="神经网络计算图"></a>神经网络计算图</h5><p><img src="%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%A1%E7%AE%97%E5%9B%BE2.png"></p>
+<p><strong>神经网络计算图</strong></p>
+<p><img src="deeplearning-basic/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%A1%E7%AE%97%E5%9B%BE2.png"></p>
 <p>其中：</p>
 <ol>
 <li>$\nabla out$是根据损失函数对预测值进行求导得到的结果</li>
@@ -685,7 +683,7 @@
 <p>$$<br>\nabla a^l_i = f’(a^l_i)\cdot (\sum_{j=1}^m w_{i,j}\cdot \nabla a_j^{l+1})<br>$$</p>
 <p>​    </p>
 <p>​    </p>
-<h2 id="1-2-PyTorch"><a href="#1-2-PyTorch" class="headerlink" title="1.2 PyTorch"></a>1.2 PyTorch</h2><h3 id="1-6-PyTorch实现线性回归"><a href="#1-6-PyTorch实现线性回归" class="headerlink" title="1.6 PyTorch实现线性回归"></a>1.6 PyTorch实现线性回归</h3><h4 id="1-6-1-向前计算"><a href="#1-6-1-向前计算" class="headerlink" title="1.6.1 向前计算"></a>1.6.1 向前计算</h4><p>对于pytorch中的一个tensor，如果设置它的属性 <code>.requires_grad</code>为<code>True</code>，那么它将会追踪对于该张量的所有操作。或者可以理解为，这个tensor是一个参数，后续会被计算梯度，更新该参数。</p>
+<h2 id="1-2-PyTorch"><a href="#1-2-PyTorch" class="headerlink" title="1.2 PyTorch"></a>1.2 PyTorch</h2><h3 id="1-2-1-PyTorch实现线性回归"><a href="#1-2-1-PyTorch实现线性回归" class="headerlink" title="1.2.1 PyTorch实现线性回归"></a>1.2.1 PyTorch实现线性回归</h3><h4 id="向前计算"><a href="#向前计算" class="headerlink" title="向前计算"></a>向前计算</h4><p>对于pytorch中的一个tensor，如果设置它的属性 <code>.requires_grad</code>为<code>True</code>，那么它将会追踪对于该张量的所有操作。或者可以理解为，这个tensor是一个参数，后续会被计算梯度，更新该参数。</p>
 <p>​    </p>
 <p><strong>计算过程</strong></p>
 <p>假设有以下条件（1/4表示求均值，xi中有4个数），使用torch完成其向前计算的过程<br>$$<br>\begin{array}{c}<br>&amp;o = \frac{1}{4}\sum_iz_i \\<br>&amp;z_i = 3(x_i+2)^2\\<br>其中:&amp;z_i|_{x_i=1}=27<br>\end{array}<br>$$<br>如果$x$为参数，需要对其进行梯度的计算和更新，那么在最开始随机设置$x$的值的过程中，需要设置他的<code>requires_grad</code>属性为True，其<strong>默认值为False</strong></p>
@@ -820,7 +818,7 @@ w tensor<span class="token punctuation">(</span><span class="token punctuation">
 b tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0.8372</span><span class="token punctuation">]</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>​    </p>
 <p>​    </p>
-<h3 id="1-7-PyTorch完成基础模型"><a href="#1-7-PyTorch完成基础模型" class="headerlink" title="1.7 PyTorch完成基础模型"></a>1.7 PyTorch完成基础模型</h3><h4 id="1-7-1-常用API"><a href="#1-7-1-常用API" class="headerlink" title="1.7.1 常用API"></a>1.7.1 常用API</h4><p>在pytorch中预设了一些更加灵活简单的对象，让我们来构造模型、定义损失，优化损失等</p>
+<h3 id="1-2-2-PyTorch完成基础模型"><a href="#1-2-2-PyTorch完成基础模型" class="headerlink" title="1.2.2 PyTorch完成基础模型"></a>1.2.2 PyTorch完成基础模型</h3><h4 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h4><p>在pytorch中预设了一些更加灵活简单的对象，让我们来构造模型、定义损失，优化损失等</p>
 <h5 id="nn-Module"><a href="#nn-Module" class="headerlink" title="nn.Module"></a>nn.Module</h5><p><code>nn.Modul</code> 是<code>torch.nn</code>提供的一个类，是pytorch中自定义网络的一个基类，在这个类中定义了很多方法让继承这个类定义网络的时候非常简单</p>
 <p>自定义网络的时候，有两个方法需要特别注意：</p>
 <ol>
@@ -2626,7 +2624,7 @@ idx: 4 Test set: Avg. loss: 0.8696, Accuracy: 4027/5000 (80.54%)</code></pre>
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="Windows系统安全基础">
+                        <img src="/medias/featureimages/32.jpg" class="responsive-img" alt="Windows系统安全基础">
                         
                         <span class="card-title">Windows系统安全基础</span>
                     </div>
@@ -2675,26 +2673,31 @@ idx: 4 Test set: Avg. loss: 0.8696, Accuracy: 4027/5000 (80.54%)</code></pre>
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/09/25/design-patterns/">
+                <a href="/2020/11/19/linuxkernel/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="设计模式简介">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="Linux 内核开发">
                         
-                        <span class="card-title">设计模式简介</span>
+                        <span class="card-title">Linux 内核开发</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            设计模式1. 单例模式属于创建型模式，它提供了一种创建对象的最佳方式。
-这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。
-单例模式
+                            01 编译Linux4.9内核并运行Linux 源码下载
+Kernel Documentation
+编译内核
+指定硬件体系架构
+export ARCH=x86
+如果要编译arm的内核，则指定ARCH=arm且需要安装交叉编译器
+
+配置boa
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-25
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-19
                             </span>
                         <span class="publish-author">
                             
@@ -2704,10 +2707,6 @@ idx: 4 Test set: Avg. loss: 0.8696, Accuracy: 4027/5000 (80.54%)</code></pre>
                                     笔记
                                 </a>
                             
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
-                                    计科
-                                </a>
-                            
                             
                         </span>
                     </div>
@@ -2715,8 +2714,8 @@ idx: 4 Test set: Avg. loss: 0.8696, Accuracy: 4027/5000 (80.54%)</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" target="_blank">
-                        <span class="chip bg-color">设计模式</span>
+                    <a href="/tags/LinuxKernel/" target="_blank">
+                        <span class="chip bg-color">LinuxKernel</span>
                     </a>
                     
                 </div>
@@ -2890,7 +2889,7 @@ idx: 4 Test set: Avg. loss: 0.8696, Accuracy: 4027/5000 (80.54%)</code></pre>
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">101.3k</span>
+            <span class="white-color">112.5k</span>
             
 
             <br>

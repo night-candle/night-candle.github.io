@@ -711,7 +711,7 @@ Linu">
 <p>​    </p>
 <p>​    </p>
 <h3 id="1-3-Socket套接字"><a href="#1-3-Socket套接字" class="headerlink" title="1.3 Socket套接字"></a>1.3 Socket套接字</h3><h4 id="1-3-1-socket-是什么？"><a href="#1-3-1-socket-是什么？" class="headerlink" title="1.3.1 socket 是什么？"></a>1.3.1 socket 是什么？</h4><p>&emsp;&emsp;<code>socket</code> 中文翻译为<strong>套接字</strong>，有时也叫<strong>套接口</strong>。这个单词的原意是“插口”“插槽”， 在网络编程中寓意是可以通过插口接入的方式，快速完成网络连接和数据收发。<code>socket</code>也可以看做是对物理世界的直接映射。</p>
-<p><img src="image-20210202195509023.png" alt="客户端和服务器工作核心逻辑"></p>
+<p><img src="cs-network-socket/image-20210202195509023.png" alt="客户端和服务器工作核心逻辑"></p>
 <p>&emsp;&emsp;右侧的图显示的是服务器端初始化的过程：首先初始化 <code>socket</code>，之后需要执行 <code>bind</code> 函数，将自己的服务能力绑定在一个固定的地址和端口上，紧接着执行 <code>listen</code> 操作，将原先的 <code>socket</code> 转化为服务端的 <code>socket</code>，服务端最后阻塞在 <code>accept</code> 上，此时，服务器端已经准备就绪，等待客户端的请求。</p>
 <p>&emsp;&emsp;客户端需要先初始化 <code>socket</code>，再执行 <code>connect</code> 向服务器端的地址和端口发起连接请求。这个过程就是<strong>TCP 三次握手</strong><code>Three-way Handshake</code>。三次握手完成，客户端和服务器端建立连接，就进入了数据传输过程。<strong>一旦连接建立，数据的传输就不再是单向的，而是双向的，这是 TCP 的一个显著特性</strong>。</p>
 <p>&emsp;&emsp;当客户端完成和服务器端的交互后，需要和服务器端断开连接时，就会执行 <code>close</code> 函数，操作系统内核此时会通过原先的连接链路向服务器端发送一个 <code>FIN</code> 包，服务器收到之后执行被动关闭，这时候整个链路处于半关闭状态，此后服务器端也会执行 <code>close</code> 函数，整个链路才会真正关闭。<strong>半关闭的状态下，发起 close 请求的一方在没有收到对方 FIN 包之前都认为连接是正常的</strong>，而在全关闭的状态下，双方都感知连接已经关闭。</p>
@@ -1629,13 +1629,13 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/02/19/sec-ctf/">
+                <a href="/2021/02/19/sec-ctfwp/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="从0开始的CTF">
+                        <img src="/medias/featureimages/33.jpg" class="responsive-img" alt="CTF">
                         
-                        <span class="card-title">从0开始的CTF</span>
+                        <span class="card-title">CTF</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1690,7 +1690,7 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="网络协议基础入门">
+                        <img src="/medias/featureimages/31.jpg" class="responsive-img" alt="网络协议基础入门">
                         
                         <span class="card-title">网络协议基础入门</span>
                     </div>
@@ -1911,7 +1911,7 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">101.3k</span>
+            <span class="white-color">112.5k</span>
             
 
             <br>

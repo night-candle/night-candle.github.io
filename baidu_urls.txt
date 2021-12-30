@@ -1,4 +1,6 @@
-http://night-candle.github.io/2021/02/19/sec-ctf/
+http://night-candle.github.io/2021/12/07/math/
+http://night-candle.github.io/2021/11/25/webrtc/
+http://night-candle.github.io/2021/02/19/sec-ctfwp/
 http://night-candle.github.io/2021/02/04/cs-network-socket/
 http://night-candle.github.io/2021/02/04/cs-network-protocol/
 http://night-candle.github.io/2021/01/28/cs-cpp-question/
@@ -10,6 +12,7 @@ http://night-candle.github.io/2021/01/27/sec-web-basic/
 http://night-candle.github.io/2021/01/25/mysql-question/
 http://night-candle.github.io/2021/01/25/sec-win-basic/
 http://night-candle.github.io/2021/01/25/deeplearning-basic/
+http://night-candle.github.io/2020/11/19/linuxkernel/
 http://night-candle.github.io/2020/09/25/design-patterns/
 http://night-candle.github.io/2020/09/23/http/
 http://night-candle.github.io/2020/09/23/mybatis-study/

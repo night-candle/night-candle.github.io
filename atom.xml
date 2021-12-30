@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://night-candle.github.io/"/>
-  <updated>2021-05-29T05:26:24.094Z</updated>
+  <updated>2021-12-11T09:04:01.957Z</updated>
   <id>http://night-candle.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>从0开始的CTF</title>
-    <link href="http://night-candle.github.io/2021/02/19/sec-ctf/"/>
-    <id>http://night-candle.github.io/2021/02/19/sec-ctf/</id>
-    <published>2021-02-19T04:00:33.000Z</published>
-    <updated>2021-05-29T05:26:24.094Z</updated>
+    <title></title>
+    <link href="http://night-candle.github.io/2021/12/07/math/"/>
+    <id>http://night-candle.github.io/2021/12/07/math/</id>
+    <published>2021-12-07T15:03:28.679Z</published>
+    <updated>2021-12-11T09:04:01.957Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,52 @@
       
         
         
-          &lt;h1 id=&quot;CTF&quot;&gt;&lt;a href=&quot;#CTF&quot; class=&quot;headerlink&quot; title=&quot;CTF&quot;&gt;&lt;/a&gt;CTF&lt;/h1&gt;&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot;
+          &lt;h2 id=&quot;求导&quot;&gt;&lt;a href=&quot;#求导&quot; class=&quot;headerlink&quot; title=&quot;求导&quot;&gt;&lt;/a&gt;求导&lt;/h2&gt;&lt;p&gt;$(\ln_{}{(x+\sqrt{1+x^{2}})} )^{‘}=\frac{1}{\sqrt{1+x^{2}}} $&lt;/p&gt;
+&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://night-candle.github.io/2021/11/25/webrtc/"/>
+    <id>http://night-candle.github.io/2021/11/25/webrtc/</id>
+    <published>2021-11-25T12:54:23.850Z</published>
+    <updated>2021-11-25T13:25:55.787Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;1876
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>CTF</title>
+    <link href="http://night-candle.github.io/2021/02/19/sec-ctfwp/"/>
+    <id>http://night-candle.github.io/2021/02/19/sec-ctfwp/</id>
+    <published>2021-02-19T04:00:33.000Z</published>
+    <updated>2021-09-02T00:22:25.673Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;ctf线下赛&lt;br&gt;web漏洞挖掘与利用—10%&lt;br&gt;pwn漏洞与利用—-90%&lt;br&gt;赛程：32小时连续奋战&lt;br&gt;打攻防&lt;br&gt;资源：5个服务器(gamebox) ip
         
       
     
@@ -51,7 +96,7 @@
     <link href="http://night-candle.github.io/2021/02/04/cs-network-socket/"/>
     <id>http://night-candle.github.io/2021/02/04/cs-network-socket/</id>
     <published>2021-02-04T14:32:24.000Z</published>
-    <updated>2021-04-28T11:33:34.033Z</updated>
+    <updated>2021-12-22T14:11:01.704Z</updated>
     
     <summary type="html">
     
@@ -85,7 +130,7 @@
     <link href="http://night-candle.github.io/2021/02/04/cs-network-protocol/"/>
     <id>http://night-candle.github.io/2021/02/04/cs-network-protocol/</id>
     <published>2021-02-04T13:05:42.000Z</published>
-    <updated>2021-06-08T12:22:30.597Z</updated>
+    <updated>2021-08-19T14:15:28.097Z</updated>
     
     <summary type="html">
     
@@ -141,7 +186,7 @@
     <link href="http://night-candle.github.io/2021/01/28/cs-my-os/"/>
     <id>http://night-candle.github.io/2021/01/28/cs-my-os/</id>
     <published>2021-01-28T03:26:19.000Z</published>
-    <updated>2021-04-13T11:38:56.379Z</updated>
+    <updated>2021-09-18T10:13:14.723Z</updated>
     
     <summary type="html">
     
@@ -167,7 +212,7 @@
     <link href="http://night-candle.github.io/2021/01/27/cs-big-data-basic/"/>
     <id>http://night-candle.github.io/2021/01/27/cs-big-data-basic/</id>
     <published>2021-01-27T11:45:11.000Z</published>
-    <updated>2021-02-24T11:00:56.329Z</updated>
+    <updated>2021-08-16T12:57:22.856Z</updated>
     
     <summary type="html">
     
@@ -193,7 +238,7 @@
     <link href="http://night-candle.github.io/2021/01/27/cs-game-program-design/"/>
     <id>http://night-candle.github.io/2021/01/27/cs-game-program-design/</id>
     <published>2021-01-27T08:40:48.000Z</published>
-    <updated>2021-07-16T10:31:03.785Z</updated>
+    <updated>2021-12-19T13:26:42.636Z</updated>
     
     <summary type="html">
     
@@ -241,11 +286,11 @@
   </entry>
   
   <entry>
-    <title>Web安全</title>
+    <title>Web安全基础</title>
     <link href="http://night-candle.github.io/2021/01/27/sec-web-basic/"/>
     <id>http://night-candle.github.io/2021/01/27/sec-web-basic/</id>
     <published>2021-01-27T08:35:53.000Z</published>
-    <updated>2021-08-08T09:56:37.523Z</updated>
+    <updated>2021-08-25T09:16:27.868Z</updated>
     
     <summary type="html">
     
@@ -253,7 +298,7 @@
       
         
         
-          &lt;h2 id=&quot;web安全基础&quot;&gt;&lt;a href=&quot;#web安全基础&quot; class=&quot;headerlink&quot; title=&quot;web安全基础&quot;&gt;&lt;/a&gt;web安全基础&lt;/h2&gt;&lt;p&gt;1.1
+          &lt;h2 id=&quot;Web安全基础&quot;&gt;&lt;a href=&quot;#Web安全基础&quot; class=&quot;headerlink&quot; title=&quot;Web安全基础&quot;&gt;&lt;/a&gt;Web安全基础&lt;/h2&gt;&lt;h3 id=&quot;1-前端基础&quot;&gt;&lt;a href=&quot;#1-前端基础&quot; class=&quot;headerlink&quot;
         
       
     
@@ -265,6 +310,8 @@
       <category term="前端" scheme="http://night-candle.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
     
       <category term="web安全" scheme="http://night-candle.github.io/tags/web%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="后端" scheme="http://night-candle.github.io/tags/%E5%90%8E%E7%AB%AF/"/>
     
   </entry>
   
@@ -331,7 +378,7 @@
     <link href="http://night-candle.github.io/2021/01/25/deeplearning-basic/"/>
     <id>http://night-candle.github.io/2021/01/25/deeplearning-basic/</id>
     <published>2021-01-25T01:45:06.000Z</published>
-    <updated>2021-07-23T01:01:46.319Z</updated>
+    <updated>2021-09-05T16:37:47.465Z</updated>
     
     <summary type="html">
     
@@ -353,6 +400,32 @@
       <category term="深度学习" scheme="http://night-candle.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="NLP" scheme="http://night-candle.github.io/tags/NLP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 内核开发</title>
+    <link href="http://night-candle.github.io/2020/11/19/linuxkernel/"/>
+    <id>http://night-candle.github.io/2020/11/19/linuxkernel/</id>
+    <published>2020-11-19T01:00:00.000Z</published>
+    <updated>2021-12-30T08:41:33.292Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;01-编译Linux4-9内核并运行&quot;&gt;&lt;a href=&quot;#01-编译Linux4-9内核并运行&quot; class=&quot;headerlink&quot; title=&quot;01 编译Linux4.9内核并运行&quot;&gt;&lt;/a&gt;01 编译Linux4.9内核并运行&lt;/h2&gt;&lt;p&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="笔记" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="LinuxKernel" scheme="http://night-candle.github.io/tags/LinuxKernel/"/>
     
   </entry>
   
@@ -473,97 +546,6 @@
       <category term="redis" scheme="http://night-candle.github.io/tags/redis/"/>
     
       <category term="NOSQL" scheme="http://night-candle.github.io/tags/NOSQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基于Hexo的GitHub博客搭建</title>
-    <link href="http://night-candle.github.io/2020/08/28/github-blog-for-hexo/"/>
-    <id>http://night-candle.github.io/2020/08/28/github-blog-for-hexo/</id>
-    <published>2020-08-28T09:24:54.000Z</published>
-    <updated>2021-07-15T16:31:35.082Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;0-前言&quot;&gt;&lt;a href=&quot;#0-前言&quot; class=&quot;headerlink&quot; title=&quot;0.前言&quot;&gt;&lt;/a&gt;0.前言&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Github Pages&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Github
-        
-      
-    
-    </summary>
-    
-      <category term="教程" scheme="http://night-candle.github.io/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="前端" scheme="http://night-candle.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-      <category term="博客" scheme="http://night-candle.github.io/tags/%E5%8D%9A%E5%AE%A2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring入门笔记</title>
-    <link href="http://night-candle.github.io/2020/08/24/spring-study/"/>
-    <id>http://night-candle.github.io/2020/08/24/spring-study/</id>
-    <published>2020-08-24T12:28:29.000Z</published>
-    <updated>2021-01-27T03:49:20.764Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;SpringIoC-amp-DI&quot;&gt;&lt;a href=&quot;#SpringIoC-amp-DI&quot; class=&quot;headerlink&quot; title=&quot;SpringIoC&amp;amp;DI&quot;&gt;&lt;/a&gt;SpringIoC&amp;amp;DI&lt;/h1&gt;&lt;h2
-        
-      
-    
-    </summary>
-    
-      <category term="笔记" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="计科" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%A7%91/"/>
-    
-    
-      <category term="SSM框架" scheme="http://night-candle.github.io/tags/SSM%E6%A1%86%E6%9E%B6/"/>
-    
-      <category term="后端" scheme="http://night-candle.github.io/tags/%E5%90%8E%E7%AB%AF/"/>
-    
-      <category term="Java" scheme="http://night-candle.github.io/tags/Java/"/>
-    
-      <category term="Spring" scheme="http://night-candle.github.io/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>十大经典排序算法整理汇总</title>
-    <link href="http://night-candle.github.io/2020/02/16/sort-algorithms/"/>
-    <id>http://night-candle.github.io/2020/02/16/sort-algorithms/</id>
-    <published>2020-02-16T07:09:23.000Z</published>
-    <updated>2021-07-21T11:46:35.884Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="笔记" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="计科" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%A7%91/"/>
-    
-    
-      <category term="算法" scheme="http://night-candle.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
