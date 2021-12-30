@@ -491,14 +491,14 @@ export ARCH=x86
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6k
+                    5.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    26 分
+                    25 分
                 </div>
                 
                 
@@ -703,7 +703,6 @@ virt-y        <span class="token operator">:=</span> <span class="token variable
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/poll.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/sched.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/slab.h></span></span>
-
 <span class="token macro property">#<span class="token directive keyword">define</span> BUFFER_MAX    (10)</span>
 <span class="token macro property">#<span class="token directive keyword">define</span> OK            (0)</span>
 <span class="token macro property">#<span class="token directive keyword">define</span> ERROR         (-1)</span>
@@ -765,11 +764,11 @@ ssize_t <span class="token function">hello_read</span><span class="token punctua
 <span class="token punctuation">}</span>
 <span class="token function">module_init</span><span class="token punctuation">(</span>hello_init<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">module_exit</span><span class="token punctuation">(</span>hello_exit<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">MODULE_LICENSE</span><span class="token punctuation">(</span><span class="token string">"GPL"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//缓存</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>module_init 声明驱动的入口函数 hello_init</p>
-<p>module_exit 声明驱动的出口函数 hello_exit</p>
+<span class="token function">MODULE_LICENSE</span><span class="token punctuation">(</span><span class="token string">"GPL"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//缓存</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ol>
+<p>   module_init 声明驱动的入口函数 hello_init</p>
+<p>   module_exit 声明驱动的出口函数 hello_exit</p>
 <ol start="2">
 <li><p>编写Makefile</p>
 <pre class="line-numbers language-makefile"><code class="language-makefile"><span class="token keyword">ifneq</span> <span class="token punctuation">(</span><span class="token variable">$</span><span class="token punctuation">(</span>KERNELRELEASE<span class="token punctuation">)</span>,<span class="token punctuation">)</span>
@@ -799,26 +798,38 @@ KDIR<span class="token operator">:=</span> /lib/modules/4.4.0-31-generic/build <
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/select.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">define</span> DATA_NUM    (64)</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> fd<span class="token punctuation">,</span> i<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> r_len<span class="token punctuation">,</span> w_len<span class="token punctuation">;</span>
+    fd_set fdset<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span>DATA_NUM<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"hello world"</span><span class="token punctuation">;</span>
+    <span class="token function">memset</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>DATA_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    fd <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"/dev/hello"</span><span class="token punctuation">,</span> O_RDWR<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\r\n"</span><span class="token punctuation">,</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span> <span class="token operator">==</span> fd<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"open file error\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>    
+    <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"open successe\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    w_len <span class="token operator">=</span> <span class="token function">write</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span>buf<span class="token punctuation">,</span> DATA_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r_len <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> DATA_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d %d\r\n"</span><span class="token punctuation">,</span> w_len<span class="token punctuation">,</span> r_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s\r\n"</span><span class="token punctuation">,</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>手动创建设备文件</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">mknod</span> /dev/hello c 232 0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211112-driver-test-succeeded.png" alt="执行测试程序"></p>
+<p>执行dmesg查看驱动输出，发现驱动的hell_open, hello_write, hello_read被依次调用了</p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211112-test.png"></p>
 </li>
 </ol>
-<p>   #define DATA_NUM    (64)<br>   int main(int argc, char *argv[])<br>   {<br>       int fd, i;<br>       int r_len, w_len;<br>       fd_set fdset;<br>       char buf[DATA_NUM]=”hello world”;<br>       memset(buf,0,DATA_NUM);<br>       fd = open(“/dev/hello”, O_RDWR);<br>       printf(“%d\r\n”,fd);<br>       if(-1 == fd) {<br>             perror(“open file error\r\n”);<br>           return -1;<br>       }<br>       else {<br>           printf(“open successe\r\n”);<br>       }</p>
-<pre><code>   w_len = write(fd,buf, DATA_NUM);
-   r_len = read(fd, buf, DATA_NUM);
-   printf(&quot;%d %d\r\n&quot;, w_len, r_len);
-   printf(&quot;%s\r\n&quot;,buf);
-
-   return 0;</code></pre>
-<p>   }</p>
-<pre><code>
-手动创建设备文件
-
-```bash
-mknod /dev/hello c 232 0</code></pre>
-<p>   <img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211112-driver-test-succeeded.png" alt="执行测试程序"></p>
-<p>   执行dmesg查看驱动输出，发现驱动的hell_open, hello_write, hello_read被依次调用了</p>
-<p>   <img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211112-test.png"></p>
 <h2 id="05-应用层write-怎样调用到驱动的write"><a href="#05-应用层write-怎样调用到驱动的write" class="headerlink" title="05 应用层write()怎样调用到驱动的write()"></a>05 应用层write()怎样调用到驱动的write()</h2><ol>
 <li><p>对write函数，C库只会做一些检查，然后就陷入write的系统调用，系统调用会通过软中断的方式陷入到内核空间里去执行</p>
 <p>![调用流程](<a target="_blank" rel="noopener" href="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211113-calling">https://gitee.com/lastlight/MyPictrue/raw/master/img/20211113-calling</a> process.png)</p>
@@ -931,7 +942,6 @@ mknod /dev/hello c 232 0</code></pre>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/poll.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/sched.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/slab.h></span></span>
-
 <span class="token macro property">#<span class="token directive keyword">define</span> BUFFER_MAX    (64)</span>
 <span class="token macro property">#<span class="token directive keyword">define</span> OK            (0)</span>
 <span class="token macro property">#<span class="token directive keyword">define</span> ERROR         (-1)</span>
@@ -1003,7 +1013,7 @@ ssize_t <span class="token function">hello_read</span><span class="token punctua
 <span class="token punctuation">}</span>
 <span class="token function">module_init</span><span class="token punctuation">(</span>hello_init<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">module_exit</span><span class="token punctuation">(</span>hello_exit<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">MODULE_LICENSE</span><span class="token punctuation">(</span><span class="token string">"GPL"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">MODULE_LICENSE</span><span class="token punctuation">(</span><span class="token string">"GPL"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>Makefile同上</p>
 </li>
 <li><p>测试代码</p>
@@ -1012,7 +1022,6 @@ ssize_t <span class="token function">hello_read</span><span class="token punctua
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/select.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
-
 <span class="token macro property">#<span class="token directive keyword">define</span> DATA_NUM    (32)</span>
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -1036,135 +1045,102 @@ ssize_t <span class="token function">hello_read</span><span class="token punctua
     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"write len: %d\n"</span><span class="token punctuation">,</span> w_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">close</span><span class="token punctuation">(</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/select.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">define</span> DATA_NUM    (32)</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> fd<span class="token punctuation">,</span> i<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> r_len<span class="token punctuation">,</span> w_len<span class="token punctuation">;</span>
+    fd_set fdset<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> rbuf<span class="token punctuation">[</span>DATA_NUM<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">memset</span><span class="token punctuation">(</span>rbuf<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>DATA_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    fd <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"/dev/hello"</span><span class="token punctuation">,</span> O_RDWR<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span> <span class="token operator">==</span> fd<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"open file error\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>    
+    <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"open successe\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    r_len <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> rbuf<span class="token punctuation">,</span> DATA_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>r_len <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"read error\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"read len: %d\n"</span><span class="token punctuation">,</span> r_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> rbuf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">close</span><span class="token punctuation">(</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>c
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211119-test.png"></p>
 </li>
 </ol>
-<p>   #define DATA_NUM    (32)<br>   int main(int argc, char *argv[])<br>   {<br>       int fd, i;<br>       int r_len, w_len;<br>       fd_set fdset;<br>       char rbuf[DATA_NUM];<br>       memset(rbuf,0,DATA_NUM);<br>       fd = open(“/dev/hello”, O_RDWR);<br>       if(-1 == fd) {<br>             perror(“open file error\n”);<br>           return -1;<br>       }<br>       else {<br>           printf(“open successe\n”);<br>       }</p>
-<pre><code>   r_len = read(fd, rbuf, DATA_NUM);
-   if(r_len == -1) &#123;
-       perror(&quot;read error\n&quot;);
-       return -1;
-   &#125;
-   printf(&quot;read len: %d\n&quot;, r_len);
-   printf(&quot;%s\n&quot;, rbuf);
-   close(fd);c
-   return 0;</code></pre>
-<p>   }</p>
-<pre><code>
-![](https://gitee.com/lastlight/MyPictrue/raw/master/img/20211119-test.png)
-
-
-
-## 08 x86段页式内存管理
-
-1. 逻辑地址到物理地址的转换（32）
-
-![x86 cpu 段页式内存管理机制](https://gitee.com/lastlight/MyPictrue/raw/master/img/20211120-x86cpu-mm.png)
-
-2. 分段 `Segmentation`
-
-在 Intel 平台下，逻辑地址是 [selector:offset] 形式，selector 是 CS 寄存器的值，offset 是 EIP 寄存器的值，如果用 selector 去 GDT( 全局描述符表 ) 里拿到 segment base address（段基址） 然后加上 offset（段内偏移），这就得到了 linear address
-
-逻辑地址转换为线性地址的过程：
-
-（1）先从段选择符（selector）中得到段描述符
-
-（2）从段描述符中得到段基地址
-
-（3）线性地址=段基地址+段内偏移（即虚拟地址）
-
-3. 段选择符
-
-Index 是13位的索引号
-
-T1 字段表示使用的是 GDT 还是使用 LDT，GDT、LDT 里的内容就是段描述符
-
-- 一些全局的段描述符，就放在**全局段描述符表**（GDT）中
-- 一些局部的，例如每个进程自己的，就放在**局部段描述符表**（LDT）中
-
-段描述符的 Base 字段描述了一个段的的基地址，然后再加上段内偏移offset，就得到了最终的线性地址
-
-![selector](https://gitee.com/lastlight/MyPictrue/raw/master/img/20211128-segment-selector.png)
-
-4. 分页 `Paging`
-
-![](https://gitee.com/lastlight/MyPictrue/raw/master/img/20211128-paging.png)
-
-Linux内核里把线性地址转换成物理地址是通过页表映射来实现的，页表映射具体还可以分为二级页表、三级页表等，但是原理是相同的，以二级页表的映射机制为例
-
-从上图可以看出，linux把32的线性地址划分成了3段：
-
-高10bit：对应上图里的（Dir)，表示在页目录表内部的偏移，用来定位页表的物理地址。
-
-中间10bite：对应上图里的（Table），表示在页表内部的偏移，用来定位具体的物理内存的的基地址。
-
-最低12bit：对应上图里的（Offset），刚好表示4K大小，用来定位在物理内存某个块里的偏移。 
-
-
-
-
-
-
-
-
-
-把线性地址分成三段，用前两段分别作为索引去查表，根据页表项（Page Table Entry）获得一个物理内存块的起始地址（物理内存编号），加上页内偏移就得到了最终的 physical address
-
-https://www.bilibili.com/read/cv8129309
-
-
-
-
-
-
-
-
-
-5. Linux 内核中逻辑地址、虚拟地址和线性地址的关系
-
-Intel 的设计中段式内存管理中的段类型分为三种：代码段、数据段、系统段，但只靠页式内存管理就已经可以完成 Linux 内核需要的所有功能，所以 Linux 内核将所有类型的段的 segment base address 都设成 0 。由于段限长是地址总线的寻址限度，所以所有段内空间跟整个线性空间重合了，逻辑地址也就简化为了段内的偏移量（逻辑地址=虚拟地址）
-
-所以在 x86 linux 内核里，**逻辑地址、虚拟地址、线性地址，这三个地址是一致的**
-
-
-
-6. 参考
-
-[Linux 用户空间与内核空间及分段机制](https://zhuanlan.zhihu.com/p/377946859)
-
-[Linux 内核中逻辑地址/虚拟地址/线性地址三者的区别](https://blog.csdn.net/mirage1993/article/details/71156109)
-
-[Linux 内核中逻辑、虚拟、线性和物理地址大扫盲](https://www.toutiao.com/a6855591224003265036/?log_from=42a7e1ffc21a_1637399126505)
-
-## 09 Linux内核同步
-
-### 场景及解决
-
-1. 场景
-
-在驱动程序中，有些设备只允许打开一次
-
-```c
-int xxx_count = 0; //驱动中的全局变量，表示打开的标志
-...
-int hello_open(struct inode *p, struct file *f)
-&#123;
-    if(xxx_count)&#123;
-        return -EBUSY; //打开失败
-    &#125;
-    ++ xxx_count;
-    return 0; //打开成功
-&#125;</code></pre>
-<p>   假如一个进程 A 先对此设备调用 open ,另一个进程 B 也对此设备调用open，若调度如下，进程 A B 都会打开成功</p>
-   <img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211128-sample.png" style="zoom:67%;" />
-
-<ol start="2">
+<h2 id="08-x86段页式内存管理"><a href="#08-x86段页式内存管理" class="headerlink" title="08 x86段页式内存管理"></a>08 x86段页式内存管理</h2><ol>
+<li><p>逻辑地址到物理地址的转换（32）</p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211120-x86cpu-mm.png" alt="x86 cpu 段页式内存管理机制"></p>
+</li>
+<li><p>分段 <code>Segmentation</code></p>
+<p>在 Intel 平台下，逻辑地址是 [selector:offset] 形式，selector 是 CS 寄存器的值，offset 是 EIP 寄存器的值，如果用 selector 去 GDT( 全局描述符表 ) 里拿到 segment base address（段基址） 然后加上 offset（段内偏移），这就得到了 linear address</p>
+<p>逻辑地址转换为线性地址的过程：</p>
+<p>（1）先从段选择符（selector）中得到段描述符</p>
+<p>（2）从段描述符中得到段基地址</p>
+<p>（3）线性地址=段基地址+段内偏移（即虚拟地址）</p>
+</li>
+<li><p>段选择符</p>
+<p>Index 是13位的索引号</p>
+<p>T1 字段表示使用的是 GDT 还是使用 LDT，GDT、LDT 里的内容就是段描述符</p>
+<ul>
+<li>一些全局的段描述符，就放在<strong>全局段描述符表</strong>（GDT）中</li>
+<li>一些局部的，例如每个进程自己的，就放在<strong>局部段描述符表</strong>（LDT）中</li>
+</ul>
+<p>段描述符的 Base 字段描述了一个段的的基地址，然后再加上段内偏移offset，就得到了最终的线性地址</p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211128-segment-selector.png" alt="selector"></p>
+</li>
+<li><p>分页 <code>Paging</code></p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211128-paging.png"></p>
+<p>Linux内核里把线性地址转换成物理地址是通过页表映射来实现的，页表映射具体还可以分为二级页表、三级页表等，但是原理是相同的，以二级页表的映射机制为例</p>
+<p>从上图可以看出，linux把32的线性地址划分成了3段：</p>
+<p>高10bit：对应上图里的（Dir)，表示在页目录表内部的偏移，用来定位页表的物理地址。</p>
+<p>中间10bite：对应上图里的（Table），表示在页表内部的偏移，用来定位具体的物理内存的的基地址。</p>
+<p>最低12bit：对应上图里的（Offset），刚好表示4K大小，用来定位在物理内存某个块里的偏移。 </p>
+</li>
+</ol>
+<p>   把线性地址分成三段，用前两段分别作为索引去查表，根据页表项（Page Table Entry）获得一个物理内存块的起始地址（物理内存编号），加上页内偏移就得到了最终的 physical address</p>
+<p>   <a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv8129309">https://www.bilibili.com/read/cv8129309</a></p>
+<ol start="5">
+<li><p>Linux 内核中逻辑地址、虚拟地址和线性地址的关系</p>
+<p>Intel 的设计中段式内存管理中的段类型分为三种：代码段、数据段、系统段，但只靠页式内存管理就已经可以完成 Linux 内核需要的所有功能，所以 Linux 内核将所有类型的段的 segment base address 都设成 0 。由于段限长是地址总线的寻址限度，所以所有段内空间跟整个线性空间重合了，逻辑地址也就简化为了段内的偏移量（逻辑地址=虚拟地址）</p>
+<p>所以在 x86 linux 内核里，<strong>逻辑地址、虚拟地址、线性地址，这三个地址是一致的</strong></p>
+</li>
+</ol>
+<ol start="6">
+<li><p>参考</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/377946859">Linux 用户空间与内核空间及分段机制</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mirage1993/article/details/71156109">Linux 内核中逻辑地址/虚拟地址/线性地址三者的区别</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.toutiao.com/a6855591224003265036/?log_from=42a7e1ffc21a_1637399126505">Linux 内核中逻辑、虚拟、线性和物理地址大扫盲</a></p>
+</li>
+</ol>
+<h2 id="09-Linux内核同步"><a href="#09-Linux内核同步" class="headerlink" title="09 Linux内核同步"></a>09 Linux内核同步</h2><h3 id="场景及解决"><a href="#场景及解决" class="headerlink" title="场景及解决"></a>场景及解决</h3><ol>
+<li><p>场景</p>
+<p>在驱动程序中，有些设备只允许打开一次</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> xxx_count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//驱动中的全局变量，表示打开的标志</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">int</span> <span class="token function">hello_open</span><span class="token punctuation">(</span><span class="token keyword">struct</span> inode <span class="token operator">*</span>p<span class="token punctuation">,</span> <span class="token keyword">struct</span> file <span class="token operator">*</span>f<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>xxx_count<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span>EBUSY<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//打开失败</span>
+    <span class="token punctuation">}</span>
+    <span class="token operator">++</span> xxx_count<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//打开成功</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>假如一个进程 A 先对此设备调用 open ,另一个进程 B 也对此设备调用open，若调度如下，进程 A B 都会打开成功</p>
+<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211128-sample.png" style="zoom:67%;" />
+</li>
 <li><p>xxx_count 是一个共享资源，并发执行的单元对共享资源的同时访问会引发静态问题，解决竞态问题的途径是保证对共享资源的<strong>互斥访问</strong></p>
 <p>访问共享资源的代码区块叫做临界区，临界区需要用某种<strong>内核同步方法</strong>来保护</p>
 </li>
@@ -1771,7 +1747,7 @@ static inline void atomic_##op(int i, atomic_t *v)            \
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">112.5k</span>
+            <span class="white-color">112.4k</span>
             
 
             <br>
