@@ -249,20 +249,6 @@
   </url>
   
   <url>
-    <loc>http://night-candle.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
-    <lastmod>2022-04-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://night-candle.github.io/tags/MySQL/</loc>
-    <lastmod>2022-04-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://night-candle.github.io/tags/SSM%E6%A1%86%E6%9E%B6/</loc>
     <lastmod>2022-04-28</lastmod>
     <changefreq>daily</changefreq>
@@ -277,7 +263,21 @@
   </url>
   
   <url>
+    <loc>http://night-candle.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <lastmod>2022-04-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://night-candle.github.io/tags/NOSQL/</loc>
+    <lastmod>2022-04-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://night-candle.github.io/tags/MySQL/</loc>
     <lastmod>2022-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
