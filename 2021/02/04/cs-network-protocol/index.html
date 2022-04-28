@@ -48,21 +48,6 @@
     </script>
 
     
-        <script>
-            (function(){
-                var bp = document.createElement('script');
-                var curProtocol = window.location.protocol.split(':')[0];
-                if (curProtocol === 'https') {
-                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-                }
-                else {
-                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-                }
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(bp, s);
-            })();
-        </script>
-    
 
     <script>
         (function(){
@@ -334,7 +319,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/31.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -505,14 +490,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    17.9k
+                    18.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    65 分
+                    66 分
                 </div>
                 
                 
@@ -1431,7 +1416,16 @@ $ sudo ip link set up eth1<span aria-hidden="true" class="line-numbers-rows"><sp
 <p>​    </p>
 <h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>​    </p>
 <p>​    </p>
-<h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><p>​    </p>
+<h1 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h1><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><p>RPC（<code>Remote Procedure Call</code>），远程过程调用协议，是分布式系统常见的一种通信方法。</p>
+<p>当两个物理分离的子系统需要建立逻辑上的关联时，RPC 是牵线搭桥的常见技术手段之一。</p>
+<p>除 RPC 之外，常见的多系统数据交互方案还有分布式消息队列、HTTP 请求调用、数据库和分布式缓存等</p>
+<p>早期 ONC RPC 框架</p>
+<p>服务之间的互相调用，该怎么实现呢？</p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><a href="zotero://open-pdf/library/items/LH2Q89FF">Implementing remote procedure calls</a></p>
+<p>定义了 RPC 的调用标准</p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220318-rpc.jpg"></p>
+<p>其中 RPC 和 HTTP 调用是没有经过中间件的，它们是端到端系统的直接数据交互HTTP 调用其实也可以看成是一种特殊的 RPC，只不过传统意义上的 RPC 是指长连接<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:417707733%7D">数据交互</a>，而 HTTP 一般是指即用即走的短链接。</p>
+<p>RPC 在我们熟知的各种中间件中都有它的身影。Nginx/Redis/MySQL/Dubbo/Hadoop/Spark/Tensorflow 等重量级开源产品都是在 RPC 技术的基础上构建出来的，我们这里说的 RPC 指的是广义的 RPC，也就是分布式系统的通信技术。</p>
 <p>​    </p>
 <h1 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h1><h2 id="TCP-IP常见攻击"><a href="#TCP-IP常见攻击" class="headerlink" title="TCP/IP常见攻击"></a>TCP/IP常见攻击</h2><h3 id="IP欺骗"><a href="#IP欺骗" class="headerlink" title="IP欺骗"></a>IP欺骗</h3><blockquote>
 <p>通过IP地址我们能知道什么？</p>
@@ -1673,7 +1667,7 @@ $ sudo ip link set up eth1<span aria-hidden="true" class="line-numbers-rows"><sp
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/30.jpg" class="responsive-img" alt="C++实战">
+                        <img src="/medias/featureimages/33.jpg" class="responsive-img" alt="C++实战">
                         
                         <span class="card-title">C++实战</span>
                     </div>
@@ -1728,7 +1722,7 @@ $ sudo ip link set up eth1<span aria-hidden="true" class="line-numbers-rows"><sp
 
         var selection = window.getSelection();
         // if the selection is short let's not annoy our users.
-        if (('' + selection).length < Number.parseInt('120')) {
+        if (('' + selection).length < Number.parseInt('200')) {
             return;
         }
 
@@ -1863,7 +1857,7 @@ $ sudo ip link set up eth1<span aria-hidden="true" class="line-numbers-rows"><sp
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">112.4k</span>
+            <span class="white-color">111.3k</span>
             
 
             <br>

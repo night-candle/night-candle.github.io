@@ -50,21 +50,6 @@ export ARCH=x86
     </script>
 
     
-        <script>
-            (function(){
-                var bp = document.createElement('script');
-                var curProtocol = window.location.protocol.split(':')[0];
-                if (curProtocol === 'https') {
-                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-                }
-                else {
-                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-                }
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(bp, s);
-            })();
-        </script>
-    
 
     <script>
         (function(){
@@ -336,7 +321,7 @@ export ARCH=x86
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/25.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -453,8 +438,8 @@ export ARCH=x86
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/LinuxKernel/" target="_blank">
-                            <span class="chip bg-color">LinuxKernel</span>
+                        <a href="/tags/Linux/" target="_blank">
+                            <span class="chip bg-color">Linux</span>
                         </a>
                         
                     </div>
@@ -477,7 +462,7 @@ export ARCH=x86
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-11-19
+                    2021-11-19
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -491,14 +476,14 @@ export ARCH=x86
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.8k
+                    9.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    25 分
+                    41 分
                 </div>
                 
                 
@@ -521,7 +506,7 @@ export ARCH=x86
 </li>
 <li><p>配置内核</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">make</span> menuconfig<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211031-LinuxConfigurationMenu.png" alt="Linux配置菜单"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211031-LinuxConfigurationMenu.png" alt="Linux配置菜单"></p>
 <p>这一步是对第2步的菜单进行微调，我们需要内核支持ramdisk驱动，需要选中如下配置：</p>
 <pre><code>General setup  ---&gt;
     [*] Initial RAM filesystem and RAM disk (initramfs/initrd) support
@@ -534,12 +519,37 @@ Device Drivers  ---&gt;
 <li><p>编译内核</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">make</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>编译成功后的内核位于：arch/x86_64/boot/bzImage</p>
+<blockquote>
+<p><strong>vmlinux</strong>：是内核源码编译出来的原始ELF格式文件，未经压缩。用于kernel-debug，产生system.map符号表，不能用于直接加载，不可以作为启动内核，只是启动过程中的中间媒体</p>
+<p><strong>bzImage</strong>：是压缩的内核镜像文件，bz表示”big zImage”，两者的不同之处在于zImage解压缩内核到低端内存（第一个640K），bzImage解压缩内核到高端内存（1M以上）。如果内核比较大应该用bzImage，比zImage有更高的压缩率</p>
+</blockquote>
+</li>
+<li><p>交叉编译器</p>
+<p>交叉编译工具链的命名规则一般为：<code>$arch [-$vendor] -$os [-[gnu][eabi][hf]]-gcc</code></p>
+<ul>
+<li>arch：体系架构，不可省略</li>
+<li>vendor：工具链提供商，可省略</li>
+<li>os：目标操作系统，不可省略</li>
+<li>eabi：嵌入式应用二进制接口（Embedded Application Binary Interface），可选的参数包括：<ul>
+<li>abi：二进制应用接口</li>
+<li>eabi：嵌入式二进制应用接口，主要针对嵌入式平台</li>
+<li>gnu：表示编译器使用gnu glibc库</li>
+<li>el：表示使用软浮点处理单元（softfp）</li>
+<li>hf：表示使用硬件浮点处理单元（hard）</li>
+</ul>
+</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li>arm-linux-gcc：针对arm的linux的交叉编译器</li>
+<li>arm-linux-gnueabi-gcc：针对arm的linux的交叉编译器，使用gnu glibc库</li>
+</ul>
 </li>
 </ol>
 <h3 id="编译文件系统"><a href="#编译文件系统" class="headerlink" title="编译文件系统"></a>编译文件系统</h3><p><a target="_blank" rel="noopener" href="https://busybox.net/downloads/">buysbox源码下载</a></p>
 <ol>
 <li><p>配置buysbox源码</p>
-<p>把busybox配置为静态编译，这样busybox在运行的时候就不需要额外的动态链接库</p>
+<p>busybox配置为静态编译，busybox在运行的时候就不需要额外的动态链接库</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">make</span> menuconfig<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <pre><code>Busybox Settings  ---&gt;
     Build Options  ---&gt;
@@ -578,11 +588,10 @@ mdev -s</code></pre>
 <span class="token function">mknod</span> null c 1 3
 <span class="token function">mknod</span> tty1 c 4 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>一个最小的、完整的可以被内核启动的文件系统就完成了</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/schips/p/12125736.html">BusyBox 添加自定义命令\小程序</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/schips/p/12125736.html">BusyBox 添加自定义命令/小程序</a></p>
 </li>
 </ol>
-<h3 id="制作根文件系统镜像文件"><a href="#制作根文件系统镜像文件" class="headerlink" title="制作根文件系统镜像文件"></a>制作根文件系统镜像文件</h3><p>思路：</p>
-<ol>
+<h3 id="制作根文件系统镜像文件"><a href="#制作根文件系统镜像文件" class="headerlink" title="制作根文件系统镜像文件"></a>制作根文件系统镜像文件</h3><ol>
 <li><p>先制作一个空的镜像文件</p>
 </li>
 <li><p>然后把此镜像文件格式化为ext3格式</p>
@@ -592,6 +601,8 @@ mdev -s</code></pre>
 <li><p>卸载该镜像文件</p>
 </li>
 <li><p>打成gzip包</p>
+</li>
+</ol>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 <span class="token function">rm</span> -rf rootfs.ext3
 <span class="token function">rm</span> -rf fs
@@ -602,20 +613,20 @@ mkfs.ext3 rootfs.ext3
 <span class="token function">cp</span> -rf ./_install/* ./fs
 <span class="token function">umount</span> ./fs
 <span class="token function">gzip</span> --best -c rootfs.ext3 <span class="token operator">></span> rootfs.img.gz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>最终生成的文件系统镜像名字为：rootfs.img.gz</p>
-</li>
-</ol>
+<p>   最终生成的文件系统镜像名字为：rootfs.img.gz</p>
 <h3 id="启动内核和文件系统"><a href="#启动内核和文件系统" class="headerlink" title="启动内核和文件系统"></a>启动内核和文件系统</h3><ol>
 <li><p>安装qemu</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">sudo</span> apt <span class="token function">install</span> qemu-system-x86<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li><p>通过qemu模拟器启动编译好的内核和文件系统镜像：</p>
+<li><p>通过qemu模拟器启动编译好的内核和文件系统镜像</p>
 <pre class="line-numbers language-bash"><code class="language-bash">qemu-system-x86_64 -kernel ./linux-4.9.229/arch/x86_64/boot/bzImage  -initrd ./busybox-1.30.0/rootfs.img.gz -append <span class="token string">"root=/dev/ram init=/linuxrc"</span> -serial file:output.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211031-qemu.png"></p>
-<p>取回鼠标 <code>ctrl + alt + g</code></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211031-qemu.png"></p>
+<blockquote>
+<p>qemu取回鼠标 Ctrl + Alt + G</p>
+</blockquote>
 </li>
 </ol>
-<h2 id="02-Linux内核源码目录"><a href="#02-Linux内核源码目录" class="headerlink" title="02 Linux内核源码目录"></a>02 Linux内核源码目录</h2><p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211031-linuxkernel.png" alt="linux内核源码目录"></p>
+<h2 id="02-Linux内核源码目录"><a href="#02-Linux内核源码目录" class="headerlink" title="02 Linux内核源码目录"></a>02 Linux内核源码目录</h2><p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211031-linuxkernel.png" alt="linux内核源码目录"></p>
 <ul>
 <li>arch：内核支持的CPU体系架构，例如arm/mach-omap1，即ti公司的soc，此soc的cpu核是ARM提供</li>
 <li>firmware：固件相关</li>
@@ -659,11 +670,9 @@ virt-y        <span class="token operator">:=</span> virt/<span aria-hidden="tru
 <span class="token comment" spellcheck="true">#CONFIG_TTY值对应Kconfig文件中的config TTY</span>
 obj-<span class="token variable">$</span><span class="token punctuation">(</span>CONFIG_LEGACY_PTYS<span class="token punctuation">)</span>    <span class="token operator">+=</span> pty.o
 
-......<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ul>
-<li>obj-y 表示要编译到内核中</li>
-<li>obj-m 表示要编译成驱动</li>
-</ul>
+......
+
+<span class="token comment" spellcheck="true"># obj-y 表示要编译到内核中,obj-m 表示要编译成驱动</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>每个目录编译后会生成一个 built-in.o 文件，是目录下所有 obj-y 下所有 .o 文件的链接文件，内核只需要链接这个文件即可</p>
 </li>
@@ -783,9 +792,9 @@ KDIR<span class="token operator">:=</span> /lib/modules/4.4.0-31-generic/build <
 </ol>
 <ol start="3">
 <li><p>执行make进行编译和加载hello驱动到内核</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211112-driver-test.png" alt="加载驱动并查看内核日志"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211112-driver-test.png" alt="加载驱动并查看内核日志"></p>
 <p>可见执行insmod的时候，驱动文件里的hello_init被调用了</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211112-check-driver.png" alt="lsmod命令查看驱动"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211112-check-driver.png" alt="lsmod命令查看驱动"></p>
 </li>
 </ol>
 <ol start="4">
@@ -821,27 +830,24 @@ KDIR<span class="token operator">:=</span> /lib/modules/4.4.0-31-generic/build <
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>手动创建设备文件</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">mknod</span> /dev/hello c 232 0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211112-driver-test-succeeded.png" alt="执行测试程序"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211112-driver-test-succeeded.png" alt="执行测试程序"></p>
 <p>执行dmesg查看驱动输出，发现驱动的hell_open, hello_write, hello_read被依次调用了</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211112-test.png"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211112-test.png"></p>
 </li>
 </ol>
 <h2 id="05-应用层write-怎样调用到驱动的write"><a href="#05-应用层write-怎样调用到驱动的write" class="headerlink" title="05 应用层write()怎样调用到驱动的write()"></a>05 应用层write()怎样调用到驱动的write()</h2><ol>
 <li><p>对write函数，C库只会做一些检查，然后就陷入write的系统调用，系统调用会通过软中断的方式陷入到内核空间里去执行</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211113-calling-process.png" alt="调用流程"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211113-calling-process.png" alt="调用流程"></p>
 </li>
 </ol>
 <ol start="2">
 <li><p>操作系统的系统调用是如何知道应该调用哪个驱动里的write函数？</p>
 <ul>
 <li><p>在hello驱动里，有定义主次设备号并组合成了devNum</p>
+<p><code>cdev_init(gDev, gFile);</code>  建立了 gDev 和 gFile 的逻辑关系</p>
+<p><code>cdev_add(gDev, devNum, 1);</code> 建立了 gDev 和 devNum 的逻辑关系</p>
 </li>
-<li><p><code>cdev_init(gDev, gFile);</code>  建立了 gDev 和 gFile 的逻辑关系</p>
-</li>
-<li><p><code>cdev_add(gDev, devNum, 1);</code> 建立了 gDev 和 devNum 的逻辑关系</p>
-<ul>
-<li>以上两句代码其实建立了gFile 和 devNum 的对应关系，也就是 file_operations 和主次设备号的对应关系</li>
-</ul>
+<li><p>以上两句代码其实建立了gFile 和 devNum 的对应关系，也就是 file_operations 和主次设备号的对应关系</p>
 </li>
 <li><p>打开设备文件 /dev/hello 后就已经建立了这个文件和 hello 驱动里的 struct file 和 struct file_operations 的对应关系</p>
 </li>
@@ -856,13 +862,13 @@ KDIR<span class="token operator">:=</span> /lib/modules/4.4.0-31-generic/build <
 <p>所以按照如上的路径，应用程序里的 write 就顺利的调用到了 hello 驱动里的 write 函数</p>
 <blockquote>
 <p>注意：在 linux 里，在应用层用文件句柄也就是fd表示一个打开的文件，但是在内核里用 <code>struct file</code> 表示一个打开的文件，用 <code>struct file_operations</code> 表示对该文件的操作，他们之间是一一对应的</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211113-write-function-call.png" alt="fs/read_write.c"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211113-write-function-call.png" alt="fs/read_write.c"></p>
 </blockquote>
 </li>
 </ol>
 <h2 id="06-字符设备驱动代码添加到内核源码树"><a href="#06-字符设备驱动代码添加到内核源码树" class="headerlink" title="06 字符设备驱动代码添加到内核源码树"></a>06 字符设备驱动代码添加到内核源码树</h2><ol>
 <li><p>拷贝源码到字符设备文件夹中</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211117-move.png"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211117-move.png"></p>
 </li>
 <li><p>添加Makefile</p>
 <pre class="line-numbers language-makefile"><code class="language-makefile">obj-<span class="token variable">$</span><span class="token punctuation">(</span>CONFIG_HELLO<span class="token punctuation">)</span> <span class="token operator">+=</span> helloDev.o<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -874,60 +880,15 @@ KDIR<span class="token operator">:=</span> /lib/modules/4.4.0-31-generic/build <
      help
        hello device</code></pre>
 <p>查看配置</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211117-add-success.png"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211117-add-success.png"></p>
 </li>
 <li><p>重新编译内核（驱动编译到内核中，静态加载）</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211117-recompiling-kernel.png"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211117-recompiling-kernel.png"></p>
 </li>
 </ol>
-<h2 id="07-内核空间和用户空间数据拷贝"><a href="#07-内核空间和用户空间数据拷贝" class="headerlink" title="07 内核空间和用户空间数据拷贝"></a>07 内核空间和用户空间数据拷贝</h2><h3 id="内核空间和用户空间"><a href="#内核空间和用户空间" class="headerlink" title="内核空间和用户空间"></a>内核空间和用户空间</h3><ol>
-<li><p>32位 linux 系统的地址空间分布</p>
-<p>操作系统分配给每个进程一个独立的、连续的、虚拟的地址内存空间</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211117-memory-space.png"></p>
-<ul>
-<li><p>用户空间地址范围：0x00000000～0xBFFFFFFF，大小3G</p>
+<h2 id="07-内核空间和用户空间数据拷贝"><a href="#07-内核空间和用户空间数据拷贝" class="headerlink" title="07 内核空间和用户空间数据拷贝"></a>07 内核空间和用户空间数据拷贝</h2><ol>
+<li><p>内核空间和用户空间</p>
 </li>
-<li><p>内核空间地址范围：0xC0000000 ~ 0xFFFFFFFF，大小1G</p>
-</li>
-</ul>
-</li>
-<li><p>逻辑地址和虚拟地址</p>
-<p>在intel x86下，<strong>逻辑地址</strong>是由一个段标识符加上一个指定段内的相对地址的偏移量组成，表示为 [段标识符：段内偏移量]，例如：[cs:eip]</p>
-<p><strong>虚拟地址</strong>其实就是上述组成逻辑地址的段内偏移offset</p>
-<p><strong>线性地址</strong>是由逻辑地址经过一系列转换得到的，具体来讲就是： 线性地址=段描述符所在段的基地址+offset（intel x86 线性地址由逻辑地址经过段页式转换得到）</p>
-<p><strong>物理地址</strong>是真正的物理内存的地址</p>
-</li>
-<li><p>linux 内核划分内核空间和用户空间的原因</p>
-<ul>
-<li><p><strong>安全考量</strong></p>
-<p>整个系统中有各种资源，比如计算资源、内存资源和外设资源。而linux是多用户、多进程系统。所以，这些资源必须在受限的、被管理的状态下使用，要不然就陷入了混乱。空间隔离可以保证即便是单个应用程序出现错误也不会影响到操作系统的稳定性。</p>
-</li>
-<li><p><strong>处理器模式不同，权限不同</strong></p>
-<p>内核空间和用户空间代码运行时的处理器模式是不同的，用户模式只能正常执行程序，而特权模式才能访问外设、处理中断等</p>
-<ul>
-<li><p>对于x86体系的cpu， 用户空间代码运行在Ring3模式（用户模式），内核空间代码运行Ring 0模式（特权模式）</p>
-</li>
-<li><p>对于arm体系的cpu，用户空间代码运行在usr模式（用户模式），内核空间代码运行在svc模式（特权模式）</p>
-</li>
-</ul>
-</li>
-<li><p><strong>核心代码和业务代码的解耦</strong></p>
-<p>内核代码偏重于系统和资源管理，而用户空间代码偏重于业务逻辑代码的实现，两者分工不同，隔离也是解耦</p>
-</li>
-</ul>
-</li>
-<li><p>64位系统的内核空间和用户空间的地址分布</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211119-64-os.png"></p>
-<ul>
-<li><p>64位系统的地址线有64位，但是在具体实现上，并没有使用这么多，一般来说，48位的地址线就够了</p>
-<p>比如armv8-A，高64TB是内核空间，低64TB是用户空间</p>
-</li>
-<li><p>内核空间的的高16位都是1，用户空间的低16位都是0，这样可以方便的对用户空间和内核空间进行有效性检测，防止越界</p>
-</li>
-</ul>
-</li>
-</ol>
-<h3 id="数据拷贝驱动"><a href="#数据拷贝驱动" class="headerlink" title="数据拷贝驱动"></a>数据拷贝驱动</h3><ol>
 <li><p>驱动代码</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/module.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/moduleparam.h></span></span>
@@ -1072,55 +1033,10 @@ ssize_t <span class="token function">hello_read</span><span class="token punctua
     <span class="token function">close</span><span class="token punctuation">(</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>c
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211119-test.png"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211119-test.png"></p>
 </li>
 </ol>
-<h2 id="08-x86段页式内存管理"><a href="#08-x86段页式内存管理" class="headerlink" title="08 x86段页式内存管理"></a>08 x86段页式内存管理</h2><ol>
-<li><p>逻辑地址到物理地址的转换（32）</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211120-x86cpu-mm.png" alt="x86 cpu 段页式内存管理机制"></p>
-</li>
-<li><p>分段 <code>Segmentation</code></p>
-<p>在 Intel 平台下，逻辑地址是 [selector:offset] 形式，selector 是 CS 寄存器的值，offset 是 EIP 寄存器的值，如果用 selector 去 GDT( 全局描述符表 ) 里拿到 segment base address（段基址） 然后加上 offset（段内偏移），这就得到了 linear address</p>
-<p>逻辑地址转换为线性地址的过程：</p>
-<p>（1）先从段选择符（selector）中得到段描述符</p>
-<p>（2）从段描述符中得到段基地址</p>
-<p>（3）线性地址=段基地址+段内偏移（即虚拟地址）</p>
-</li>
-<li><p>段选择符</p>
-<p>Index 是13位的索引号</p>
-<p>T1 字段表示使用的是 GDT 还是使用 LDT，GDT、LDT 里的内容就是段描述符</p>
-<ul>
-<li>一些全局的段描述符，就放在<strong>全局段描述符表</strong>（GDT）中</li>
-<li>一些局部的，例如每个进程自己的，就放在<strong>局部段描述符表</strong>（LDT）中</li>
-</ul>
-<p>段描述符的 Base 字段描述了一个段的的基地址，然后再加上段内偏移offset，就得到了最终的线性地址</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211128-segment-selector.png" alt="selector"></p>
-</li>
-<li><p>分页 <code>Paging</code></p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211128-paging.png"></p>
-<p>Linux内核里把线性地址转换成物理地址是通过页表映射来实现的，页表映射具体还可以分为二级页表、三级页表等，但是原理是相同的，以二级页表的映射机制为例</p>
-<p>从上图可以看出，linux把32的线性地址划分成了3段：</p>
-<p>高10bit：对应上图里的（Dir)，表示在页目录表内部的偏移，用来定位页表的物理地址。</p>
-<p>中间10bite：对应上图里的（Table），表示在页表内部的偏移，用来定位具体的物理内存的的基地址。</p>
-<p>最低12bit：对应上图里的（Offset），刚好表示4K大小，用来定位在物理内存某个块里的偏移。 </p>
-</li>
-</ol>
-<p>   把线性地址分成三段，用前两段分别作为索引去查表，根据页表项（Page Table Entry）获得一个物理内存块的起始地址（物理内存编号），加上页内偏移就得到了最终的 physical address</p>
-<p>   <a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv8129309">https://www.bilibili.com/read/cv8129309</a></p>
-<ol start="5">
-<li><p>Linux 内核中逻辑地址、虚拟地址和线性地址的关系</p>
-<p>Intel 的设计中段式内存管理中的段类型分为三种：代码段、数据段、系统段，但只靠页式内存管理就已经可以完成 Linux 内核需要的所有功能，所以 Linux 内核将所有类型的段的 segment base address 都设成 0 。由于段限长是地址总线的寻址限度，所以所有段内空间跟整个线性空间重合了，逻辑地址也就简化为了段内的偏移量（逻辑地址=虚拟地址）</p>
-<p>所以在 x86 linux 内核里，<strong>逻辑地址、虚拟地址、线性地址，这三个地址是一致的</strong></p>
-</li>
-</ol>
-<ol start="6">
-<li><p>参考</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/377946859">Linux 用户空间与内核空间及分段机制</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mirage1993/article/details/71156109">Linux 内核中逻辑地址/虚拟地址/线性地址三者的区别</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.toutiao.com/a6855591224003265036/?log_from=42a7e1ffc21a_1637399126505">Linux 内核中逻辑、虚拟、线性和物理地址大扫盲</a></p>
-</li>
-</ol>
-<h2 id="09-Linux内核同步"><a href="#09-Linux内核同步" class="headerlink" title="09 Linux内核同步"></a>09 Linux内核同步</h2><h3 id="场景及解决"><a href="#场景及解决" class="headerlink" title="场景及解决"></a>场景及解决</h3><ol>
+<h2 id="08-Linux内核同步"><a href="#08-Linux内核同步" class="headerlink" title="08 Linux内核同步"></a>08 Linux内核同步</h2><h3 id="场景及解决"><a href="#场景及解决" class="headerlink" title="场景及解决"></a>场景及解决</h3><ol>
 <li><p>场景</p>
 <p>在驱动程序中，有些设备只允许打开一次</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> xxx_count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//驱动中的全局变量，表示打开的标志</span>
@@ -1134,7 +1050,7 @@ ssize_t <span class="token function">hello_read</span><span class="token punctua
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//打开成功</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>假如一个进程 A 先对此设备调用 open ,另一个进程 B 也对此设备调用open，若调度如下，进程 A B 都会打开成功</p>
-<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211128-sample.png" style="zoom:67%;" />
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211128-sample.png" style="zoom:67%;" />
 </li>
 <li><p>xxx_count 是一个共享资源，并发执行的单元对共享资源的同时访问会引发静态问题，解决竞态问题的途径是保证对共享资源的<strong>互斥访问</strong></p>
 <p>访问共享资源的代码区块叫做临界区，临界区需要用某种<strong>内核同步方法</strong>来保护</p>
@@ -1178,7 +1094,7 @@ ssize_t <span class="token function">hello_read</span><span class="token punctua
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>测试</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211128-test.png"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211128-test.png"></p>
 </li>
 <li><p>信号量用于进程之间的同步，进程在信号量保护的临界区代码里是可以睡眠的，这是和自旋锁的最大的区别</p>
 </li>
@@ -1336,11 +1252,149 @@ static inline void atomic_##op(int i, atomic_t *v)            \
 </li>
 </ol>
 <h3 id="Linux内核同步机制：spinlock"><a href="#Linux内核同步机制：spinlock" class="headerlink" title="Linux内核同步机制：spinlock"></a>Linux内核同步机制：spinlock</h3><ol>
-<li>使用</li>
-<li>spinlock源码与体系相关（ARM）</li>
+<li><p>使用</p>
+<pre class="line-numbers language-c"><code class="language-c">spinlock_t count_lock<span class="token punctuation">;</span>
+<span class="token keyword">int</span> open_count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token keyword">int</span> <span class="token function">hello_open</span><span class="token punctuation">(</span><span class="token keyword">struct</span> inode <span class="token operator">*</span>p<span class="token punctuation">,</span> <span class="token keyword">struct</span> file <span class="token operator">*</span>f<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">spin_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>count_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>open_count <span class="token operator">>=</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">spin_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>count_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span>EBUSY<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    open_count<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token function">spin_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>count_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token keyword">int</span> <span class="token function">hello_init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token function">spin_lock_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>count_lock<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//初始化</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>spinlock的系列函数</p>
+<ul>
+<li>spin_lock：进程和进程之间的同步</li>
+<li>spin_lock_bh：涉及到和本地软中断之间的同步</li>
+<li>spin_lock_irq：涉及到和本地硬件中断之间的同步</li>
+<li>spin_lock_irqsave：涉及到和本地硬件中断之间的同步并保存本地中断状态</li>
+<li>spin_lock_trylock：尝试获取锁，如果成功返回非零值</li>
+</ul>
+</li>
+</ol>
+<h3 id="spinlock内核源码"><a href="#spinlock内核源码" class="headerlink" title="spinlock内核源码"></a>spinlock内核源码</h3><p>spinlock源码与体系相关（ARM）</p>
+<ol>
+<li><p>结构体</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">// spinlock -> raw_spinlock（有补丁也不能睡眠） -> arch_spinlock_t</span>
+
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token keyword">union</span> <span class="token punctuation">{</span>
+        u32 slock<span class="token punctuation">;</span>
+        <span class="token keyword">struct</span> __raw_tickets <span class="token punctuation">{</span>
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> __ARMEB__ </span><span class="token comment" spellcheck="true">//大端</span>
+            u16 next<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//owner表示持有这个数字的thread可以获取自旋锁</span>
+            u16 owner<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//next表示如果后续再有thread请求获取这个自旋锁就给它分配这个数字</span>
+<span class="token macro property">#<span class="token directive keyword">else</span></span>
+            u16 owner<span class="token punctuation">;</span>
+            u16 next<span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+        <span class="token punctuation">}</span> tickets<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> arch_spinlock_t<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>spinlock的公平性：先到先唤醒，后到后唤醒</p>
+<ol>
+<li>刚开始owner = next = 0，第一个thread获取spinlock可获取成功</li>
+<li>第二个thread获取spinlock，如果第一个thread还没有释放锁，则next ++</li>
+<li>第三个thread获取spinlock，如果第一个thread还没有释放锁，则next = 2</li>
+<li>此时第一个thread释放spinlock，则执行owner ++，owner = 1</li>
+<li>此时虽然第二个和第三个thread都在等待锁，但因为第二个thread的owner = next，可以获取锁，第三个thread继续等待</li>
+</ol>
+</blockquote>
+</li>
+<li><p>init</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">//spin_lock_init -> raw_spin_lock_init -> __RAW_SPIN_LOCK_UNLOCKED -> __RAW_SPIN_LOCK_INITIALIZER -> __ARCH_SPIN_LOCK_UNLOCKED</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> __ARCH_SPIN_LOCK_UNLOCKED    { { 0 } }</span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    u32 lock<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> arch_rwlock_t<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>spin_lock（）</p>
+<p>UP：如果内核不允许抢占，spin_lock是个空函数，如果内核允许抢占，spin_lock只是禁止抢占</p>
+<p>SMP：spin_lock除了禁止抢占，还会调用体系相关代码实现排他性loop</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">//UP：单核CPU</span>
+<span class="token comment" spellcheck="true">//spin_lock -> raw_spin_lock(_raw_spin_lock) -> __LOCK(lock)</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> __LOCK(lock) \
+  do { preempt_disable(); ___LOCK(lock); } while (0) </span><span class="token comment" spellcheck="true">//抢占关闭</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> ___LOCK(lock) \
+  do { __acquire(lock); (void)(lock); } while (0)</span>
+
+<span class="token comment" spellcheck="true">//SMP：多核</span>
+<span class="token comment" spellcheck="true">//spin_lock -> raw_spin_lock(_raw_spin_lock) -> __raw_spin_lock -> __raw_spin_lock</span>
+
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">__raw_spin_lock</span><span class="token punctuation">(</span>raw_spinlock_t <span class="token operator">*</span>lock<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">preempt_disable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">spin_acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token operator">-></span>dep_map<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> _RET_IP_<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">LOCK_CONTENDED</span><span class="token punctuation">(</span>lock<span class="token punctuation">,</span> do_raw_spin_trylock<span class="token punctuation">,</span> do_raw_spin_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//do_raw_spin_lock(lock)</span>
+<span class="token punctuation">}</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> LOCK_CONTENDED(_lock, try, lock) \
+    lock(_lock)</span>
+
+<span class="token keyword">void</span> <span class="token function">do_raw_spin_lock</span><span class="token punctuation">(</span>raw_spinlock_t <span class="token operator">*</span>lock<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">debug_spin_lock_before</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">arch_spin_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token operator">-></span>raw_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">debug_spin_lock_after</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">arch_spin_lock</span><span class="token punctuation">(</span>arch_spinlock_t <span class="token operator">*</span>lock<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> tmp<span class="token punctuation">;</span>
+    u32 newval<span class="token punctuation">;</span>
+    arch_spinlock_t lockval<span class="token punctuation">;</span>
+
+    <span class="token function">prefetchw</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token operator">-></span>slock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    __asm__ <span class="token function">__volatile__</span><span class="token punctuation">(</span>
+<span class="token string">"1:    ldrex    %0, [%3]\n"</span>
+<span class="token string">"    add    %1, %0, %4\n"</span>
+<span class="token string">"    strex    %2, %1, [%3]\n"</span>
+<span class="token string">"    teq    %2, #0\n"</span>
+<span class="token string">"    bne    1b"</span>
+    <span class="token punctuation">:</span> <span class="token string">"=&amp;r"</span> <span class="token punctuation">(</span>lockval<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"=&amp;r"</span> <span class="token punctuation">(</span>newval<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"=&amp;r"</span> <span class="token punctuation">(</span>tmp<span class="token punctuation">)</span>
+    <span class="token punctuation">:</span> <span class="token string">"r"</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token operator">-></span>slock<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"I"</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> TICKET_SHIFT<span class="token punctuation">)</span>
+    <span class="token punctuation">:</span> <span class="token string">"cc"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>lockval<span class="token punctuation">.</span>tickets<span class="token punctuation">.</span>next <span class="token operator">!=</span> lockval<span class="token punctuation">.</span>tickets<span class="token punctuation">.</span>owner<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">wfe</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token comment" spellcheck="true">//忙等但尽量让cpu进去low power mode</span>
+        <span class="token comment" spellcheck="true">//参考：https://www.cnblogs.com/sky-heaven/p/12926376.html</span>
+        lockval<span class="token punctuation">.</span>tickets<span class="token punctuation">.</span>owner <span class="token operator">=</span> <span class="token function">ACCESS_ONCE</span><span class="token punctuation">(</span>lock<span class="token operator">-></span>tickets<span class="token punctuation">.</span>owner<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">smp_mb</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>arch_spin_lock函数的作用：</p>
+<ol>
+<li>实现对next的独占访问，next = next + 1</li>
+<li>while循环等待owner == next，return后得到该锁</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220113-spinlock-flow-chart.png" alt="流程图"></p>
+</li>
 </ol>
 <h3 id="同步机制的比较"><a href="#同步机制的比较" class="headerlink" title="同步机制的比较"></a>同步机制的比较</h3><ul>
-<li>信号量的特点<ul>
+<li><p>信号量的特点</p>
+<ul>
 <li>用于进程和进程之间的同步</li>
 <li>允许有多个进程进入临界区代码执行</li>
 <li>进程获取不到信号量锁会陷入休眠，并让出CPU</li>
@@ -1349,25 +1403,578 @@ static inline void atomic_##op(int i, atomic_t *v)            \
 <li><strong>不支持进程和中断之间的同步</strong></li>
 </ul>
 </li>
-<li>自旋锁的特点<ul>
+<li><p>自旋锁的特点</p>
+<ul>
 <li>是一种<strong>死等</strong>的锁机制</li>
 <li>一次只能有一个执行单元获取锁并进入临界区，其它的执行单元都是在门口不断死等</li>
 <li>执行时间短</li>
 <li><strong>可以在中断上下文执行</strong>（中断上下文代码不允许睡眠，也不允许调用可能会引起睡眠的函数）</li>
+<li>spinlock不区分reader和writer，对于那些读写强度不对称的是不适合的</li>
+</ul>
+</li>
+<li><p>读写自旋锁 rw spinlock</p>
+<ul>
+<li>自旋锁的改进，rw spinlock给reader赋予了更高的优先级</li>
+<li>加锁的逻辑：<ol>
+<li>假设临界区内没有任何的thread，这时候任何read thread或者write thread可以进入</li>
+<li>假设临界区内有一个read thread，这时候新来的read thread可以任意进入，但是write thread<br>不可以进入</li>
+<li>假设临界区内有一个write thread，这时候任何的read thread或者write thread都不可以进入</li>
+<li>假设临界区内有一个或者多个read thread，write thread不可以进入临界区，也无法阻止后续read thread的进入，要一直等到临界区没有read thread的时候才可以进入</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>顺序锁 seqlock</p>
+<ul>
+<li>seqlock 给writer赋予了更高的优先级</li>
+<li>加锁的逻辑：<ol>
+<li>假设临界区内没有任何的thread，这时候任何read thread或者write thread可以进入</li>
+<li>在临界区没有write thread的情况下，read thread可以随意进入</li>
+<li>假设临界区内有一个write thread，这时候任何的read thread或者write thread都不可以进入</li>
+<li>在临界区只有有read thread的情况下，write thread可以立刻执行，不会等待</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>spin lock的不足：性能问题</p>
+<p>rw spin lcok、spin lock和seqlock，它们都是基于一个remory中的共享变量（对该变量的访问是原子的）</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220113-spinlock-performance.png"></p>
+</blockquote>
+</li>
+<li><p>rcu</p>
+<ul>
+<li>基于multi-processor之间的共享counter的锁机制已经不能满足性能的需求，在这种情况下rcu机制应运而生</li>
 </ul>
 </li>
 </ul>
-<h2 id="10-Linux内核内存管理和分配方法"><a href="#10-Linux内核内存管理和分配方法" class="headerlink" title="10 Linux内核内存管理和分配方法"></a>10 Linux内核内存管理和分配方法</h2><h2 id="Loopback驱动源码分析"><a href="#Loopback驱动源码分析" class="headerlink" title="Loopback驱动源码分析"></a>Loopback驱动源码分析</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1N64y1a75N?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1N64y1a75N?spm_id_from=333.999.0.0</a></p>
+<p>  参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/133445693">spinlock前世今生</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/crybaby/p/13062811.html">Linux自旋锁内核源码分析</a></li>
+</ul>
+<h2 id="09-字符设备驱动到平台设备驱动"><a href="#09-字符设备驱动到平台设备驱动" class="headerlink" title="09 字符设备驱动到平台设备驱动"></a>09 字符设备驱动到平台设备驱动</h2><ol>
+<li><p>platform驱动</p>
+<ul>
+<li><p>platform是一条虚拟总线，可以将一些设备放置在该虚拟设备总线上，设备为platform_device，要操作这些设备需要使用匹配的驱动，驱动为platform_driver</p>
+</li>
+<li><p>使用platform总线的好处</p>
+<ul>
+<li>把设备都挂接在一个pseudo总线上，便于管理，同时也符合Linux的设备模型机制。其结果是，配套的sysfs节点、设备电源管理都成为可能</li>
+<li>隔离设备和驱动。在BSP中定义platform设备和它使用的资源、设备的具体配置信息；而在驱动中，只需要通过通用的API去获取资源和数据，做到了BSP相关代码和驱动代码的分离，使得驱动具有更好的可扩展性和跨平台性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>将char设备驱动改造为platform驱动</p>
+<p>当执行insmod时，驱动会在总线上查找与其对应的设备，查找成功后执行 probe 动作进行设备初始化，当驱动卸载后执行remove函数，进行退出动作</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">//头文件</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/platform_device.h></span></span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">hello_plat_release</span><span class="token punctuation">(</span><span class="token keyword">struct</span> device <span class="token operator">*</span>dev<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">static</span> <span class="token keyword">struct</span> resource hello_dev_resource<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">.</span>start <span class="token operator">=</span> LEDBASE<span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>end   <span class="token operator">=</span> LEDBASE <span class="token operator">+</span> LEDLEN <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>flags <span class="token operator">=</span> IORESOURCE_MEM<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//平台设备结构体</span>
+<span class="token keyword">struct</span> platform_device hello_device <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span>name          <span class="token operator">=</span> <span class="token string">"hello-device"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>id          <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>num_resources      <span class="token operator">=</span> <span class="token function">ARRAY_SIZE</span><span class="token punctuation">(</span>hello_dev_resource<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token comment" spellcheck="true">//指定资源</span>
+    <span class="token punctuation">.</span>resource      <span class="token operator">=</span> hello_dev_resource<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>dev <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">.</span>release <span class="token operator">=</span> hello_plat_release<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//平台驱动结构体</span>
+<span class="token keyword">static</span> <span class="token keyword">struct</span> platform_driver hellodev_driver <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span>probe        <span class="token operator">=</span> hellodev_probe<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>remove        <span class="token operator">=</span> hellodev_remove<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>driver        <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">.</span>owner    <span class="token operator">=</span> THIS_MODULE<span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>name    <span class="token operator">=</span> <span class="token string">"hello-device"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//初始化</span>
+<span class="token keyword">int</span> <span class="token function">charDrvInit</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//注册平台设备和驱动</span>
+    <span class="token function">platform_device_register</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>hello_device<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">platform_driver_register</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>hellodev_driver<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> __exit <span class="token function">charDrvExit</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">platform_device_unregister</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>hello_device<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">platform_driver_unregister</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>hellodev_driver<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">module_init</span><span class="token punctuation">(</span>charDrvInit<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">module_exit</span><span class="token punctuation">(</span>charDrvExit<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ol>
+<ol start="3">
+<li><p>源码</p>
+<p>platform_device结构体</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> platform_device <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">char</span>    <span class="token operator">*</span>name<span class="token punctuation">;</span>
+    <span class="token keyword">int</span>        id<span class="token punctuation">;</span>
+    bool        id_auto<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> device    dev<span class="token punctuation">;</span>
+    u32        num_resources<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> resource    <span class="token operator">*</span>resource<span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> <span class="token keyword">struct</span> platform_device_id    <span class="token operator">*</span>id_entry<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>driver_override<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* Driver name to force a match */</span>
+
+    <span class="token comment" spellcheck="true">/* MFD cell pointer */</span>
+    <span class="token keyword">struct</span> mfd_cell <span class="token operator">*</span>mfd_cell<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/* arch specific additions */</span>
+    <span class="token keyword">struct</span> pdev_archdata    archdata<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>platform_driver结构体</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> platform_driver <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>probe<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">struct</span> platform_device <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>remove<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">struct</span> platform_device <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>shutdown<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">struct</span> platform_device <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>suspend<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">struct</span> platform_device <span class="token operator">*</span><span class="token punctuation">,</span> pm_message_t state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>resume<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">struct</span> platform_device <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> device_driver driver<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">struct</span> platform_device_id <span class="token operator">*</span>id_table<span class="token punctuation">;</span>
+    bool prevent_deferred_probe<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>设备注册</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">platform_device_register</span><span class="token punctuation">(</span><span class="token keyword">struct</span> platform_device <span class="token operator">*</span>pdev<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">device_initialize</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>pdev<span class="token operator">-></span>dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">arch_setup_pdev_archdata</span><span class="token punctuation">(</span>pdev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">platform_device_add</span><span class="token punctuation">(</span>pdev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>驱动注册</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">//platform_driver_register -> __platform_driver_register</span>
+
+<span class="token keyword">int</span> <span class="token function">__platform_driver_register</span><span class="token punctuation">(</span><span class="token keyword">struct</span> platform_driver <span class="token operator">*</span>drv<span class="token punctuation">,</span>
+                <span class="token keyword">struct</span> module <span class="token operator">*</span>owner<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    drv<span class="token operator">-></span>driver<span class="token punctuation">.</span>owner <span class="token operator">=</span> owner<span class="token punctuation">;</span>
+    drv<span class="token operator">-></span>driver<span class="token punctuation">.</span>bus <span class="token operator">=</span> <span class="token operator">&amp;</span>platform_bus_type<span class="token punctuation">;</span>
+    drv<span class="token operator">-></span>driver<span class="token punctuation">.</span>probe <span class="token operator">=</span> platform_drv_probe<span class="token punctuation">;</span>
+    drv<span class="token operator">-></span>driver<span class="token punctuation">.</span>remove <span class="token operator">=</span> platform_drv_remove<span class="token punctuation">;</span>
+    drv<span class="token operator">-></span>driver<span class="token punctuation">.</span>shutdown <span class="token operator">=</span> platform_drv_shutdown<span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token function">driver_register</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>drv<span class="token operator">-></span>driver<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">struct</span> bus_type platform_bus_type <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span>name        <span class="token operator">=</span> <span class="token string">"platform"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>dev_groups    <span class="token operator">=</span> platform_dev_groups<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>match        <span class="token operator">=</span> platform_match<span class="token punctuation">,</span><span class="token comment" spellcheck="true">//match函数用于之后匹配</span>
+    <span class="token punctuation">.</span>uevent        <span class="token operator">=</span> platform_uevent<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>pm        <span class="token operator">=</span> <span class="token operator">&amp;</span>platform_dev_pm_ops<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>驱动的匹配原则</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">//driver_register -> bus_add_driver -> driver_attach</span>
+
+<span class="token comment" spellcheck="true">//总线上找到设备，让驱动与设备进行匹配</span>
+<span class="token keyword">int</span> <span class="token function">driver_attach</span><span class="token punctuation">(</span><span class="token keyword">struct</span> device_driver <span class="token operator">*</span>drv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">bus_for_each_dev</span><span class="token punctuation">(</span>drv<span class="token operator">-></span>bus<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> drv<span class="token punctuation">,</span> __driver_attach<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">__driver_attach</span><span class="token punctuation">(</span><span class="token keyword">struct</span> device <span class="token operator">*</span>dev<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>data<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> device_driver <span class="token operator">*</span>drv <span class="token operator">=</span> data<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> ret<span class="token punctuation">;</span>
+    ret <span class="token operator">=</span> <span class="token function">driver_match_device</span><span class="token punctuation">(</span>drv<span class="token punctuation">,</span> dev<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dev<span class="token operator">-></span>driver<span class="token punctuation">)</span>
+        <span class="token function">driver_probe_device</span><span class="token punctuation">(</span>drv<span class="token punctuation">,</span> dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//driver_probe_device -> really_probe -> drv->probe(dev);//调用驱动的probe</span>
+    <span class="token function">device_unlock</span><span class="token punctuation">(</span>dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>dev<span class="token operator">-></span>parent<span class="token punctuation">)</span>
+        <span class="token function">device_unlock</span><span class="token punctuation">(</span>dev<span class="token operator">-></span>parent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token keyword">int</span> <span class="token function">driver_match_device</span><span class="token punctuation">(</span><span class="token keyword">struct</span> device_driver <span class="token operator">*</span>drv<span class="token punctuation">,</span>
+                      <span class="token keyword">struct</span> device <span class="token operator">*</span>dev<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> drv<span class="token operator">-></span>bus<span class="token operator">-></span>match <span class="token operator">?</span> drv<span class="token operator">-></span>bus<span class="token operator">-></span><span class="token function">match</span><span class="token punctuation">(</span>dev<span class="token punctuation">,</span> drv<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//bus上定义的match函数</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">platform_match</span><span class="token punctuation">(</span><span class="token keyword">struct</span> device <span class="token operator">*</span>dev<span class="token punctuation">,</span> <span class="token keyword">struct</span> device_driver <span class="token operator">*</span>drv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> platform_device <span class="token operator">*</span>pdev <span class="token operator">=</span> <span class="token function">to_platform_device</span><span class="token punctuation">(</span>dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> platform_driver <span class="token operator">*</span>pdrv <span class="token operator">=</span> <span class="token function">to_platform_driver</span><span class="token punctuation">(</span>drv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token comment" spellcheck="true">/* fall-back to driver name match */</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>pdev<span class="token operator">-></span>name<span class="token punctuation">,</span> drv<span class="token operator">-></span>name<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ol>
+<h2 id="10-Linux内存地址空间"><a href="#10-Linux内存地址空间" class="headerlink" title="10 Linux内存地址空间"></a>10 Linux内存地址空间</h2><h3 id="内核空间和用户空间"><a href="#内核空间和用户空间" class="headerlink" title="内核空间和用户空间"></a>内核空间和用户空间</h3><ol>
+<li><p>32位 linux 系统的地址空间分布</p>
+<p>操作系统分配给每个进程一个独立的、连续的、虚拟的地址内存空间</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211117-memory-space.png"></p>
+<p>现代采用虛拟内存的操作系统通常都使用平坦地址空间</p>
+<ul>
+<li><p>用户空间地址范围：0x00000000～0xBFFFFFFF，大小3G</p>
+</li>
+<li><p>内核空间地址范围：0xC0000000 ~ 0xFFFFFFFF，大小1G</p>
+</li>
+</ul>
+</li>
+<li><p>逻辑地址和虚拟地址</p>
+<p>在intel x86下，<strong>逻辑地址</strong>是由一个段标识符加上一个指定段内的相对地址的偏移量组成，表示为 [段标识符：段内偏移量]，例如：[cs:eip]</p>
+<p><strong>虚拟地址</strong>其实就是上述组成逻辑地址的段内偏移offset</p>
+<p><strong>线性地址</strong>是由逻辑地址经过一系列转换得到的，具体来讲就是： 线性地址=段描述符所在段的基地址+offset（intel x86 线性地址由逻辑地址经过段页式转换得到）</p>
+<p><strong>物理地址</strong>是真正的物理内存的地址</p>
+</li>
+<li><p>linux 内核划分内核空间和用户空间的原因</p>
+<ul>
+<li><p><strong>安全考量</strong></p>
+<p>整个系统中有各种资源，比如计算资源、内存资源和外设资源。而linux是多用户、多进程系统。所以，这些资源必须在受限的、被管理的状态下使用，要不然就陷入了混乱。空间隔离可以保证即便是单个应用程序出现错误也不会影响到操作系统的稳定性。</p>
+</li>
+<li><p><strong>处理器模式不同，权限不同</strong></p>
+<p>内核空间和用户空间代码运行时的处理器模式是不同的，用户模式只能正常执行程序，而特权模式才能访问外设、处理中断等</p>
+<ul>
+<li><p>对于x86体系的cpu， 用户空间代码运行在Ring3模式（用户模式），内核空间代码运行Ring 0模式（特权模式）</p>
+</li>
+<li><p>对于arm体系的cpu，用户空间代码运行在usr模式（用户模式），内核空间代码运行在svc模式（特权模式）</p>
+</li>
+</ul>
+</li>
+<li><p><strong>核心代码和业务代码的解耦</strong></p>
+<p>内核代码偏重于系统和资源管理，而用户空间代码偏重于业务逻辑代码的实现，两者分工不同，隔离也是解耦</p>
+</li>
+</ul>
+</li>
+<li><p>64位系统的内核空间和用户空间的地址分布</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211119-64-os.png"></p>
+<ul>
+<li><p>64位系统的地址线有64位，但是在具体实现上，并没有使用这么多，一般来说，48位的地址线就够了</p>
+<p>比如armv8-A，高64TB是内核空间，低64TB是用户空间</p>
+</li>
+<li><p>内核空间的的高16位都是1，用户空间的低16位都是0，这样可以方便的对用户空间和内核空间进行有效性检测，防止越界</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="MMU地址转换"><a href="#MMU地址转换" class="headerlink" title="MMU地址转换"></a>MMU地址转换</h3><p>MMU 是一种硬件电路，它包含两个部件，一个是分段部件，一个是分页部件</p>
+<ul>
+<li><p>分段机制把一个逻辑地址转换为线性地址</p>
+</li>
+<li><p>分页机制把一个线性地址转换为物理地址</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220118-mmu.png"></p>
+</li>
+</ul>
+<h3 id="x86段页式内存管理"><a href="#x86段页式内存管理" class="headerlink" title="x86段页式内存管理"></a>x86段页式内存管理</h3><ol>
+<li><p>逻辑地址到物理地址的转换（32）</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211120-x86cpu-mm.png" alt="x86 cpu 段页式内存管理机制"></p>
+</li>
+<li><p>分段 <code>Segmentation</code></p>
+<p>在 Intel 平台下，逻辑地址是 [selector:offset] 形式，selector 是 CS 寄存器的值，offset 是 EIP 寄存器的值，如果用 selector 去 GDT( 全局描述符表 ) 里拿到 segment base address（段基址） 然后加上 offset（段内偏移），这就得到了 linear address</p>
+<p>逻辑地址转换为线性地址的过程：</p>
+<p>（1）先从段选择符（selector）中得到段描述符</p>
+<p>（2）从段描述符中得到段基地址</p>
+<p>（3）线性地址=段基地址+段内偏移（即虚拟地址）</p>
+</li>
+</ol>
+<ol start="3">
+<li><p>段选择符</p>
+<p>为了方便快速检索段选择符，处理器提供了 6 个分段寄存器来缓存段选择符：cs ss ds es fs gs</p>
+<ul>
+<li>段的基地址（Base Address）：在线性地址空间中段的起始地址</li>
+<li>段的界限（Limit）：在虚拟地址空间中，段内可以使用的最大偏移量</li>
+</ul>
+<p>段选择符的组成</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211128-segment-selector.png" alt="selector"></p>
+<ul>
+<li><p>Index 是13位的索引号</p>
+</li>
+<li><p>T1 字段表示使用的是 GDT 还是使用 LDT，GDT、LDT 里的内容就是段描述符</p>
+<ul>
+<li>一些全局的段描述符，就放在<strong>全局段描述符表</strong>（GDT）中</li>
+<li>一些局部的，例如每个进程自己的，就放在<strong>局部段描述符表</strong>（LDT）中</li>
+</ul>
+</li>
+<li><p>段描述符的 Base 字段描述了一个段的的基地址，然后再加上段内偏移offset，就得到了最终的线性地址</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="4">
+<li><p>分页 <code>Paging</code></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211128-paging.png"></p>
+<p>线性地址转换成物理地址通过页表映射实现，页表映射具体还可以分为二级页表、三级页表等</p>
+<p>以二级页表的映射机制为例：</p>
+<p>linux把32的线性地址划分成了3段：</p>
+<ul>
+<li><p>高10bit：对应上图里的（Dir)，表示在页目录表内部的偏移，用来定位页表的物理地址。</p>
+</li>
+<li><p>中间10bite：对应上图里的（Table），表示在页表内部的偏移，用来定位具体的物理内存的的基地址。</p>
+</li>
+<li><p>最低12bit：对应上图里的（Offset），刚好表示4K大小，用来定位在物理内存某个块里的偏移。 </p>
+</li>
+</ul>
+</li>
+</ol>
+<p>   把线性地址分成三段，用前两段分别作为索引去查表，根据页表项（Page Table Entry）获得一个物理内存块的起始地址（物理内存编号），加上页内偏移就得到了最终的 physical address</p>
+<p>   <a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv8129309">https://www.bilibili.com/read/cv8129309</a></p>
+<ol start="5">
+<li><p>Linux 内核中逻辑地址、虚拟地址和线性地址的关系</p>
+<p>Intel 的设计中段式内存管理中的段类型分为三种：代码段、数据段、系统段，但只靠页式内存管理就已经可以完成 Linux 内核需要的所有功能，所以 Linux 内核将所有类型的段的 segment base address 都设成 0 。由于段限长是地址总线的寻址限度，所以所有段内空间跟整个线性空间重合了，逻辑地址也就简化为了段内的偏移量（逻辑地址=虚拟地址）</p>
+<p>所以在 x86 linux 内核里，<strong>逻辑地址、虚拟地址、线性地址，这三个地址是一致的</strong></p>
+</li>
+</ol>
+<ol start="6">
+<li><p>参考</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/377946859">Linux 用户空间与内核空间及分段机制</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mirage1993/article/details/71156109">Linux 内核中逻辑地址/虚拟地址/线性地址三者的区别</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.toutiao.com/a6855591224003265036/?log_from=42a7e1ffc21a_1637399126505">Linux 内核中逻辑、虚拟、线性和物理地址大扫盲</a></p>
+</li>
+</ol>
+<h3 id="用户态地址空间"><a href="#用户态地址空间" class="headerlink" title="用户态地址空间"></a>用户态地址空间</h3><h3 id="内核态地址空间"><a href="#内核态地址空间" class="headerlink" title="内核态地址空间"></a>内核态地址空间</h3><h3 id="进程内存空间"><a href="#进程内存空间" class="headerlink" title="进程内存空间"></a>进程内存空间</h3><ul>
+<li><p>用户进程通常情况只能访问用户空间的虚拟地址，不能访问内核空间虚拟地址</p>
+</li>
+<li><p>内核空间是由内核负责映射，不会跟着进程变化；内核空间地址有自己对应的页表，用户进程各自有不同的页表</p>
+</li>
+</ul>
+<h2 id="11-Linux内核内存管理"><a href="#11-Linux内核内存管理" class="headerlink" title="11 Linux内核内存管理"></a>11 Linux内核内存管理</h2><h3 id="伙伴算法"><a href="#伙伴算法" class="headerlink" title="伙伴算法"></a>伙伴算法</h3><ol>
+<li><p>页框：内核使用<code>struct page</code>结构体描述每个物理页</p>
+</li>
+<li><p>场景：内核在很多情况下，需要申请连续的页框，而且数量不定</p>
+</li>
+<li><p>实现：</p>
+<ul>
+<li>Linux把所有的空闲页框分组为11个块链表（<code>#define MAX_ORDER 11</code>），每个链表上的页框块是固定的，在第i条链表中每个页框块都包含$2^i$个连续页</li>
+<li>每个页框块的第一个页框的物理地址是该块大小的整数倍（例如：大小为16个页框的块其起始地址是$16 \times 2^{12}$的倍数）</li>
+<li>假设连续的物理内存，各页面块左右的页面，要么是等同大小，要么就是整数倍，而且还是偶数，形同伙伴</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220114-buddy.png"></p>
+<ul>
+<li><p>伙伴管理算法的申请过程：如果申请指定大小的页面在其页面块链表中不存在，则会往高阶的页面块链表进行查找，直到找到为止。如果在高阶的页面块链表找到空闲的页面块，则会将其拆分为两块，如果拆分后仍比需要的大，那么继续拆分，直至到大小刚好为止</p>
+</li>
+<li><p>伙伴管理算法的释放过程：当某块页面被释放时，且其存在空闲的<strong>伙伴页面块</strong>（两个页面块的大小相同且两者的物理地址连续），则算法会将其两者合并为一个大的页面块，合并后的页面块如果还可以找到伙伴页面块，则会继续合并，直至到大小为$2^{MAX_ORDER}$个页面为止</p>
+<blockquote>
+<p>如何分配 4M 以上内存：</p>
+<ol>
+<li><p>修改MAX_ORDER</p>
+</li>
+<li><p>内核启动选型传递”mem=”参数，预留部分内存</p>
+</li>
+<li><p>在start_kernel中mem_init函数之前调用alloc_boot_mem函数预分配大块内存</p>
+</li>
+<li><p>vmalloc 函数：分配在虚拟内存中连续但在物理内存中不一定连续的内存</p>
+<p>……</p>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>页框操作</p>
+<ul>
+<li><p><code>alloc_pages()</code></p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token keyword">struct</span> page <span class="token operator">*</span><span class="token function">alloc_pages</span><span class="token punctuation">(</span>gfp_t gfp_mask<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> order<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>分配$2^{order}$个连续的物理页，并返回一个指针，指向第一个页的page结构体</p>
+</li>
+<li><p><code>page_address()</code></p>
+<pre class="line-numbers language-c"><code class="language-c">   <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">page_address</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">struct</span> page <span class="token operator">*</span>page<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>返回page页面所映射的的虚拟地址</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="slab内存管理机制"><a href="#slab内存管理机制" class="headerlink" title="slab内存管理机制"></a>slab内存管理机制</h3><ol>
+<li><p>slab实现了小块物理内存的分配和管理，减少伙伴算法在分配小块连续内存时所产生的内部碎片</p>
+</li>
+<li><p>将频繁使用的对象缓存起来，减少分配、初始化和释放对象的时间开销</p>
+</li>
+<li><p>通过着色技术调整对象以更好的使用硬件高速缓存</p>
+</li>
+<li><p>slab层把不同的对象划分为高速缓存(cache) 组，其中每个高速缓存都存放不同类型的对象，每种对象类型对应一个高速缓存，例如一个高速缓存存放<code>task_ struct</code>结构体， 而另外一个高速缓存存放<code>struct inode</code>结构体</p>
+</li>
+<li><p>slab由一个或者多个物理上连续的页组成，每个高速缓存由多个slab组成</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220114-slab.png"></p>
+<p>slab 分配器的结构</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220114-slab-detail.png"></p>
+<p>slab/slob/slub</p>
+</li>
+<li><p>专用高速缓存</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">//建立高速缓存</span>
+<span class="token keyword">struct</span> kmem_cache <span class="token operator">*</span>
+<span class="token function">kmem_cache_create</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">,</span> size_t size<span class="token punctuation">,</span> size_t align<span class="token punctuation">,</span>
+          <span class="token keyword">unsigned</span> <span class="token keyword">long</span> flags<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>ctor<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>cat /proc/slabinfo</code>查看所有的高速缓存</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">//从高速缓存申请内存</span>
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">kmem_cache_alloc</span><span class="token punctuation">(</span><span class="token keyword">struct</span> kmem_cache <span class="token operator">*</span>cachep<span class="token punctuation">,</span> gfp_t flags<span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">kmem_cache_destroy</span><span class="token punctuation">(</span><span class="token keyword">struct</span> kmem_cache <span class="token operator">*</span>s<span class="token punctuation">)</span>
+<span class="token keyword">static</span> __always_inline <span class="token keyword">void</span> <span class="token operator">*</span>
+<span class="token function">slab_alloc</span><span class="token punctuation">(</span><span class="token keyword">struct</span> kmem_cache <span class="token operator">*</span>cachep<span class="token punctuation">,</span> gfp_t flags<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> caller<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>普通高速缓存</p>
+<p>返回一个指向内存块的指针，其内存块大小至少size大小，所分配的内存在<strong>物理上是连续的</strong></p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">static</span> __always_inline <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">kmalloc</span><span class="token punctuation">(</span>size_t size<span class="token punctuation">,</span> gfp_t flags<span class="token punctuation">)</span>
+
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">kzalloc</span><span class="token punctuation">(</span>size_t size<span class="token punctuation">,</span> gfp_t flags<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//内存空间置为0</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">kmalloc</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> flags <span class="token operator">|</span> __GFP_ZERO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>返回一个指向内存块的指针，其内存块大小至少size大小，所分配的内存在<strong>物理上无需连续</strong></p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">vmalloc</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> size<span class="token punctuation">)</span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">vzalloc</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> size<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//内存空间置为0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+</ol>
+<h3 id="Linux内存分配函数比较"><a href="#Linux内存分配函数比较" class="headerlink" title="Linux内存分配函数比较"></a>Linux内存分配函数比较</h3><p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220114-compare.png"></p>
+<h3 id="kmalloc-内核源码实现"><a href="#kmalloc-内核源码实现" class="headerlink" title="kmalloc()内核源码实现"></a>kmalloc()内核源码实现</h3><p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220116-kmalloc.png"></p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">static</span> __always_inline <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">kmalloc</span><span class="token punctuation">(</span>size_t size<span class="token punctuation">,</span> gfp_t flags<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">__builtin_constant_p</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>size <span class="token operator">></span> KMALLOC_MAX_CACHE_SIZE<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token function">kmalloc_large</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//...</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">__kmalloc</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//size一般不会指定</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">// mm/slab.c中的实现</span>
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">__kmalloc</span><span class="token punctuation">(</span>size_t size<span class="token punctuation">,</span> gfp_t flags<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">__do_kmalloc</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> flags<span class="token punctuation">,</span> _RET_IP_<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">static</span> __always_inline <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">__do_kmalloc</span><span class="token punctuation">(</span>size_t size<span class="token punctuation">,</span> gfp_t flags<span class="token punctuation">,</span>
+                      <span class="token keyword">unsigned</span> <span class="token keyword">long</span> caller<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> kmem_cache <span class="token operator">*</span>cachep<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>ret<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span>size <span class="token operator">></span> KMALLOC_MAX_CACHE_SIZE<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    cachep <span class="token operator">=</span> <span class="token function">kmalloc_slab</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//得到高速缓存结构体</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span><span class="token function">ZERO_OR_NULL_PTR</span><span class="token punctuation">(</span>cachep<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> cachep<span class="token punctuation">;</span>
+    ret <span class="token operator">=</span> <span class="token function">slab_alloc</span><span class="token punctuation">(</span>cachep<span class="token punctuation">,</span> flags<span class="token punctuation">,</span> caller<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//查到空闲的对象</span>
+    <span class="token comment" spellcheck="true">//...</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/*
+ * Find the kmem_cache structure that serves a given size of
+ * allocation
+ */</span>
+<span class="token keyword">struct</span> kmem_cache <span class="token operator">*</span><span class="token function">kmalloc_slab</span><span class="token punctuation">(</span>size_t size<span class="token punctuation">,</span> gfp_t flags<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> index<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>size <span class="token operator">&lt;=</span> <span class="token number">192</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>size<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> ZERO_SIZE_PTR<span class="token punctuation">;</span>
+
+        index <span class="token operator">=</span> size_index<span class="token punctuation">[</span><span class="token function">size_index_elem</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span>size <span class="token operator">></span> KMALLOC_MAX_CACHE_SIZE<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">WARN_ON</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        index <span class="token operator">=</span> <span class="token function">fls</span><span class="token punctuation">(</span>size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> CONFIG_ZONE_DMA</span>
+<span class="token comment" spellcheck="true">//...</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+    <span class="token keyword">return</span> kmalloc_caches<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//struct kmem_cache *kmalloc_caches[KMALLOC_SHIFT_HIGH + 1];</span>
+
+    <span class="token comment" spellcheck="true">//#define KMALLOC_SHIFT_HIGH    ((MAX_ORDER + PAGE_SHIFT - 1) &lt;= 25 ? \</span>
+    <span class="token comment" spellcheck="true">//            (MAX_ORDER + PAGE_SHIFT - 1) : 25)</span>
+
+    <span class="token operator">/</span>PAGE_SHIFT
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>一页的大小是4K，所以PAGE_SHIFT值为12，往左偏移12位</p>
+<p>MAX_ORDER值为11，即为伙伴算法块链表数</p>
+<p>所以内核中最多可以定义23个高速缓存结构体</p>
+</blockquote>
+<p>高速缓存索引和object size对应关系</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> __init <span class="token function">create_kmalloc_caches</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> flags<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> KMALLOC_SHIFT_LOW<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> KMALLOC_SHIFT_HIGH<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>kmalloc_caches<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token function">new_kmalloc_cache</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//第5个开始</span>
+
+        <span class="token comment" spellcheck="true">/*
+         * Caches that are not of the two-to-the-power-of size.
+         * These have to be created immediately after the
+         * earlier power of two caches
+         */</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>KMALLOC_MIN_SIZE <span class="token operator">&lt;=</span> <span class="token number">32</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>kmalloc_caches<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> i <span class="token operator">==</span> <span class="token number">6</span><span class="token punctuation">)</span>
+            <span class="token function">new_kmalloc_cache</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>KMALLOC_MIN_SIZE <span class="token operator">&lt;=</span> <span class="token number">64</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>kmalloc_caches<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> i <span class="token operator">==</span> <span class="token number">7</span><span class="token punctuation">)</span>
+            <span class="token function">new_kmalloc_cache</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/* Kmalloc array is now usable */</span>
+    slab_state <span class="token operator">=</span> UP<span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> CONFIG_ZONE_DMA</span>
+<span class="token comment" spellcheck="true">//...</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> __init <span class="token function">new_kmalloc_cache</span><span class="token punctuation">(</span><span class="token keyword">int</span> idx<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> flags<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    kmalloc_caches<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">create_kmalloc_cache</span><span class="token punctuation">(</span>kmalloc_info<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>name<span class="token punctuation">,</span>
+                    kmalloc_info<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>size<span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">static</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> size<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">const</span> kmalloc_info<span class="token punctuation">[</span><span class="token punctuation">]</span> __initconst <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">{</span><span class="token constant">NULL</span><span class="token punctuation">,</span>                      <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">,</span>        <span class="token punctuation">{</span><span class="token string">"kmalloc-96"</span><span class="token punctuation">,</span>             <span class="token number">96</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">"kmalloc-192"</span><span class="token punctuation">,</span>           <span class="token number">192</span><span class="token punctuation">}</span><span class="token punctuation">,</span>        <span class="token punctuation">{</span><span class="token string">"kmalloc-8"</span><span class="token punctuation">,</span>               <span class="token number">8</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">"kmalloc-16"</span><span class="token punctuation">,</span>             <span class="token number">16</span><span class="token punctuation">}</span><span class="token punctuation">,</span>        <span class="token punctuation">{</span><span class="token string">"kmalloc-32"</span><span class="token punctuation">,</span>             <span class="token number">32</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">"kmalloc-64"</span><span class="token punctuation">,</span>             <span class="token number">64</span><span class="token punctuation">}</span><span class="token punctuation">,</span>        <span class="token punctuation">{</span><span class="token string">"kmalloc-128"</span><span class="token punctuation">,</span>           <span class="token number">128</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment" spellcheck="true">//...</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="虚拟地址空间管理机制"><a href="#虚拟地址空间管理机制" class="headerlink" title="虚拟地址空间管理机制"></a>虚拟地址空间管理机制</h3><blockquote>
+<p>进程如何管理和分配它的3G虚拟地址空间？</p>
+<p><strong>分治思想</strong></p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220118-vma.png"></p>
+<p> <code>/proc/PID/maps</code>显示进程映射了的内存区域和访问权限</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220118-maps.png"></p>
+<blockquote>
+<p>内核中进程的一段地址空间用一个<code>vm_area_struct</code>结构体表示，所有地址空间存储在 <strong>task -&gt; mm -&gt; mmap</strong>链表中</p>
+</blockquote>
+<h3 id="内存池"><a href="#内存池" class="headerlink" title="内存池"></a>内存池</h3><p>内核态内存池</p>
+<p>用户态内存池</p>
+<h3 id="DMA-内存"><a href="#DMA-内存" class="headerlink" title="DMA 内存"></a>DMA 内存</h3><ol>
+<li>直接内存访问是一种<strong>硬件机制</strong>，它允许外围设备和主内存之间直接传输它们的 I/O 数据，而不需要系统处理器的参与</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220118-vm_area_struct.jpg"></p>
+<h2 id="Loopback驱动源码分析"><a href="#Loopback驱动源码分析" class="headerlink" title="Loopback驱动源码分析"></a>Loopback驱动源码分析</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1N64y1a75N?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1N64y1a75N?spm_id_from=333.999.0.0</a></p>
 <p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000010911305">https://segmentfault.com/a/1190000010911305</a></p>
+<h2 id="基于fuse实现自定义文件系统"><a href="#基于fuse实现自定义文件系统" class="headerlink" title="基于fuse实现自定义文件系统"></a>基于fuse实现自定义文件系统</h2><p>fuse文件系统</p>
+<p>用户空间驱动</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1NS4y1L7Me?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1NS4y1L7Me?spm_id_from=333.999.0.0</a></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220223-fuse.png"></p>
 <h2 id="Page-Cache"><a href="#Page-Cache" class="headerlink" title="Page Cache"></a>Page Cache</h2><p>服务器的 load 飙高、服务器的 I/O 吞吐飙高、业务响应时延出现大的毛刺、业务平均访问时延明显增加 … 这些问题很可能是由于 Page Cache 管理不到位引起的，Page Cache 管理不当除了会增加系统 I/O 吞吐外，还会引起业务性能抖动</p>
 <h3 id="什么是-Page-Cache-？"><a href="#什么是-Page-Cache-？" class="headerlink" title="什么是 Page Cache ？"></a>什么是 Page Cache ？</h3><ul>
 <li><p>Page Cache 是内核管理的内存，它不属于用户</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211126-page-cache.jpg" alt="应用程序产生Page Cache的逻辑示意图"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211126-page-cache.jpg" alt="应用程序产生Page Cache的逻辑示意图"></p>
 </li>
 <li><p>Linux 上直接查看 Page Cache 的方式包括 <code>/proc/meminfo</code>、<code>free</code> 、<code>/proc/vmstat</code> 命令等</p>
 <blockquote>
 <p>/proc/meminfo：</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211127-meminfo.png"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211127-meminfo.png"></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/mmalecki/procps/blob/master/free.c">free</a>：通过解析 /proc/meminfo 得出统计数据</p>
 <p><strong>buff/cache = Buffers + Cached + SReclaimable</strong></p>
 </blockquote>
@@ -1378,7 +1985,7 @@ static inline void atomic_##op(int i, atomic_t *v)            \
 <p>等式的两边就是 Page Cache</p>
 <p><strong>Active(file) + Inactive(file)</strong> 是 File-backed page（与文件对应的内存页），mmap() 内存映射方式和 buffered I/O 消耗的内存就属于这部分</p>
 <p><strong>SwapCached</strong> 是在打开了 Swap 分区后，把 Inactive(anon) + Active(anon) 这两项里的匿名页给交换到磁盘（swap out），然后再读入到内存（swap in）后分配的内存，由于读入到内存后原来的 Swap File 还在，所以 SwapCached 也可以认为是 File-backed page，这样做的目的是为了减少 I/O</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211127-swapcached.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211127-swapcached.jpg"></p>
 <blockquote>
 <p>SwapCached 只在 Swap 分区打开的情况下才会有，建议在生产环境中关闭 Swap 分区，因为 Swap 过程产生的 I/O 会很容易引起性能抖动</p>
 </blockquote>
@@ -1389,7 +1996,7 @@ static inline void atomic_##op(int i, atomic_t *v)            \
 <p><a target="_blank" rel="noopener" href="https://github.com/mmalecki/procps/blob/master/free.c">https://github.com/mmalecki/procps/blob/master/free.c</a></p>
 <h3 id="为什么需要-Page-Cache-？"><a href="#为什么需要-Page-Cache-？" class="headerlink" title="为什么需要 Page Cache ？"></a>为什么需要 Page Cache ？</h3><p>标准 I/O 和内存映射会先把数据写入到 Page Cache，这样做会通过减少 I/O 次数来提升读写效率</p>
 <p>内核开发</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20211230-kerneldev.png"></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211230-kerneldev.png"></p>
 
             </div>
             <hr />
@@ -1426,7 +2033,7 @@ static inline void atomic_##op(int i, atomic_t *v)            \
                   property="dct:title" rel="dct:type">
                     《Linux 内核开发》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/11/19/linuxkernel/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/11/19/linuxkernel/" property="cc:attributionName"
                rel="cc:attributionURL">
                 宵烛
             </a> 采用
@@ -1466,29 +2073,37 @@ static inline void atomic_##op(int i, atomic_t *v)            \
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/01/25/deeplearning-basic/">
+                <a href="/2021/11/19/linuxkernel/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="深度学习基础">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="Linux 内核开发">
                         
-                        <span class="card-title">深度学习基础</span>
+                        <span class="card-title">Linux 内核开发</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本文是对深度学习的简单入门知识讲解
+                            01 编译Linux4.9内核并运行Linux 源码下载
+Kernel Documentation
+编译内核
+指定硬件体系架构
+export ARCH=x86
+如果要编译arm的内核，则指定ARCH=arm且需要安装交叉编译器
+
+配置boa
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-25
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-11-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -1497,23 +2112,16 @@ static inline void atomic_##op(int i, atomic_t *v)            \
                                     笔记
                                 </a>
                             
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
-                                    计科
-                                </a>
-                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" target="_blank">
-                        <span class="chip bg-color">深度学习</span>
-                    </a>
-                    
-                    <a href="/tags/NLP/" target="_blank">
-                        <span class="chip bg-color">NLP</span>
+                    <a href="/tags/Linux/" target="_blank">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
                 </div>
@@ -1527,36 +2135,29 @@ static inline void atomic_##op(int i, atomic_t *v)            \
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/09/25/design-patterns/">
+                <a href="/2021/02/04/cs-network-socket/">
                     <div class="card-image">
                         
+                        <img src="/2021/02/04/cs-network-socket/3fca89d0-064f-422b-8909-0adea56ee9ab.jpg" class="responsive-img" alt="网络编程原理与实践">
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="设计模式简介">
-                        
-                        <span class="card-title">设计模式简介</span>
+                        <span class="card-title">网络编程原理与实践</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            设计模式1. 单例模式属于创建型模式，它提供了一种创建对象的最佳方式。
-这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。
-单例模式
+                            本文从实践出发，从问题的角度对网络编程相关的知识点进行阐述。和代码、实验进行关联，引出理论或算法的实际意义
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-25
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-02-04
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category" target="_blank">
-                                    笔记
-                                </a>
-                            
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
+                            <a href="/categories/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
                                     计科
                                 </a>
                             
@@ -1567,8 +2168,20 @@ static inline void atomic_##op(int i, atomic_t *v)            \
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" target="_blank">
-                        <span class="chip bg-color">设计模式</span>
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" target="_blank">
+                        <span class="chip bg-color">计算机网络</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" target="_blank">
+                        <span class="chip bg-color">网络协议</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" target="_blank">
+                        <span class="chip bg-color">网络编程</span>
+                    </a>
+                    
+                    <a href="/tags/socket/" target="_blank">
+                        <span class="chip bg-color">socket</span>
                     </a>
                     
                 </div>
@@ -1588,7 +2201,7 @@ static inline void atomic_##op(int i, atomic_t *v)            \
 
         var selection = window.getSelection();
         // if the selection is short let's not annoy our users.
-        if (('' + selection).length < Number.parseInt('120')) {
+        if (('' + selection).length < Number.parseInt('200')) {
             return;
         }
 
@@ -1742,7 +2355,7 @@ static inline void atomic_##op(int i, atomic_t *v)            \
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">112.4k</span>
+            <span class="white-color">111.3k</span>
             
 
             <br>

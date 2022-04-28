@@ -4,25 +4,23 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="操作系统基础与实验, CS 宵烛 xiaozhu NightCandle 计算机 网络安全">
+    <meta name="keywords" content="从零开发操作系统实验, CS 宵烛 xiaozhu NightCandle 计算机 网络安全">
     <meta name="baidu-site-verification" content="fmlEuI34ir" />
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
-    <meta name="description" content="1. 环境的配置与搭建
-完成第一个引导扇区启动程序
-
+    <meta name="description" content="01 | 环境的配置与搭建
 工具：VirtualBox、Nasm （汇编）
-通过硬盘启动自己的操作系统
 
+目标：通过硬盘启动自己的操作系统
+
+
+
+实验：完成第一个引导扇区启动程序
 
 
 生成虚拟磁盘：将虚拟文件当做硬盘挂载
 diskpart命令：制作自己的虚拟磁盘
 
-
-
-
-编写汇编代码
 
 ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,7 +30,7 @@ diskpart命令：制作自己的虚拟磁盘
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>操作系统基础与实验 | 宵烛 Blog</title>
+    <title>从零开发操作系统实验 | 宵烛 Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -58,21 +56,6 @@ diskpart命令：制作自己的虚拟磁盘
         })();
     </script>
 
-    
-        <script>
-            (function(){
-                var bp = document.createElement('script');
-                var curProtocol = window.location.protocol.split(':')[0];
-                if (curProtocol === 'https') {
-                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-                }
-                else {
-                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-                }
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(bp, s);
-            })();
-        </script>
     
 
     <script>
@@ -345,13 +328,13 @@ diskpart命令：制作自己的虚拟磁盘
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        操作系统基础与实验
+                        从零开发操作系统实验
                     </div>
                 </div>
             </div>
@@ -500,7 +483,7 @@ diskpart命令：制作自己的虚拟磁盘
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    2.6k
                 </div>
                 
 
@@ -518,45 +501,42 @@ diskpart命令：制作自己的虚拟磁盘
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-环境的配置与搭建"><a href="#1-环境的配置与搭建" class="headerlink" title="1. 环境的配置与搭建"></a>1. 环境的配置与搭建</h2><blockquote>
-<p>完成第一个引导扇区启动程序</p>
+                <h2 id="01-环境的配置与搭建"><a href="#01-环境的配置与搭建" class="headerlink" title="01 | 环境的配置与搭建"></a>01 | 环境的配置与搭建</h2><ul>
+<li><p>工具：<code>VirtualBox</code>、<code>Nasm</code> （汇编）</p>
+</li>
+<li><p>目标：通过硬盘启动自己的操作系统</p>
+</li>
+</ul>
+<blockquote>
+<p>实验：完成第一个引导扇区启动程序</p>
 </blockquote>
-<p>工具：<code>VirtualBox</code>、<code>Nasm</code> （汇编）</p>
-<p>通过硬盘启动自己的操作系统</p>
-</br>
-
 <ol>
 <li><p>生成虚拟磁盘：将虚拟文件当做硬盘挂载</p>
 <p><code>diskpart</code>命令：制作自己的虚拟磁盘</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210918-diskpart.png" alt="执行diskpart命令得到vhd"></p>
+</li>
+<li><p>编写汇编代码</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210219-203710096.png"></p>
+<blockquote>
+<p>此代码段是存于磁盘引导扇区的系统引导程序</p>
+<p>若存于硬盘第一个扇区，则这段代码称为硬盘主引导记录</p>
+</blockquote>
+</li>
+<li><p>使用<code>Nasm</code>进行编译</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220213-nasm1.png"></p>
+</li>
+<li><p>使用<code>dd</code>工具将<code>.bin</code>文件写入磁盘</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220213-dd1.png"></p>
+</li>
+<li><p>在虚拟机中运行</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220213-vm-run.png"></p>
 </li>
 </ol>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210918-diskpart.png" alt="执行diskpart命令得到vhd"></p>
-<ol start="2">
-<li>编写汇编代码</li>
-</ol>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210219-203710096.png"></p>
-<blockquote>
-<p>此代码段是存于磁盘引导扇区的系统引导程序。若存于硬盘第一个扇区，则这段代码称为硬盘主引导记录</p>
-</blockquote>
-<ol start="3">
-<li>使用<code>Nasm</code>进行编译</li>
-</ol>
-<p><img src="clip_image003.png"></p>
-<ol start="4">
-<li>使用<code>dd</code>工具将<code>.bin</code>文件写入磁盘</li>
-</ol>
-<img src="clip_image004.png" style="zoom:80%;" />
-
-<ol start="5">
-<li>在虚拟机中运行</li>
-</ol>
-<p><img src="clip_image005.png" alt="VirtualBox"></p>
 <p>​    </p>
-<p>​    </p>
-<h2 id="2-操作系统基础知识"><a href="#2-操作系统基础知识" class="headerlink" title="2. 操作系统基础知识"></a>2. 操作系统基础知识</h2><ol>
-<li>CPU的组成</li>
+<h2 id="02-操作系统基础"><a href="#02-操作系统基础" class="headerlink" title="02 | 操作系统基础"></a>02 | 操作系统基础</h2><ol>
+<li>CPU组成</li>
 </ol>
-<p><img src="clip_image001-1613657815336.png"></p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-cpu.png"></p>
 <ol start="2">
 <li><p>寄存器是CPU内部的信息存储单元，Intel 8086CPU有14个寄存器</p>
 <blockquote>
@@ -626,20 +606,18 @@ diskpart命令：制作自己的虚拟磁盘
 <p>1）需要让机器做事情</p>
 <p>2）开机后接管CPU的控制权</p>
 <p>3）需要接收和发送消息给硬件</p>
-<p><img src="image-20210327170958294.png"></p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-os1.png"></p>
 <p>4）需要管理和调度应用</p>
-<p><img src="image-20210327170859055.png"></p>
 <p>5）需要让用户可以参与管理</p>
-<p><img src="image-20210327171142182.png"></p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-os-user.png"></p>
 <blockquote>
 <p><em>A group of program that controls the execution of application programs. Acts as an interface between applications and hardware</em></p>
 </blockquote>
 </li>
 <li><p>计算机启动过程</p>
-<p><img src="image-20210327164844772.png"></p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-os-start.jpg"></p>
 <p>开机后OS需要接管CPU的控制权，但在OS运行之前是BIOS在管理计算机，之后由OS接管</p>
-<img src="未命名图片.png" alt="内存分布" style="zoom:67%;" />
-
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-memory-distribution.png"></p>
 <p><strong>BIOS 初始化</strong></p>
 <ul>
 <li><strong>加电自检</strong> POST，<code>power on self test</code> ：固化在主板的BIOS，检查硬件的好坏，内存地址为 <code>0fff:0000</code><br>打开电源，BIOS开始自检，然后出发19号中断，在处理19号中断时，BIOS检测电脑是否具有软盘、硬盘或是固定磁盘，如果有任何可以使用的磁盘，就把磁盘的第一个扇区（512B）加载到内存</li>
@@ -674,9 +652,9 @@ diskpart命令：制作自己的虚拟磁盘
 <li><p><strong>一个字符在显示缓冲区中要占两个字节</strong>，分别存放字符的ASCII码和属性，显示缓冲区分为8页，每页4KB，显示器可以显示任意一页的内容。通常情况下B8000H - B8F9F中的4000个字节的内容将出现在显示器上</p>
 </li>
 </ul>
-<img src="1352355487_4802.PNG" style="zoom:74%;" />
+<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-rgb.png" style="zoom:70%;" />
 
-<img src="clip_image001-1613740820108.png" style="zoom:75%;" />
+<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-memory.png" style="zoom:75%;" />
 
 <blockquote>
 <p>BIOS有自动寻找硬件功能，且BIOS在实际的物理内存中是有布局的</p>
@@ -686,97 +664,136 @@ diskpart命令：制作自己的虚拟磁盘
 <ol>
 <li>编写汇编代码</li>
 </ol>
-<img src="image-20210219211835330.png" alt="" style="zoom:85%;" />
-
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-il.png"></p>
+<blockquote>
+<p><code>$</code>当前位置</p>
+<p><code>$$</code>程序起始位置</p>
+</blockquote>
 <ol start="2">
-<li>编译</li>
+<li><p>编译</p>
+</li>
+<li><p>写入磁盘</p>
+</li>
 </ol>
-<p><img src="image-20210219210014919.png"></p>
-<ol start="3">
-<li>写入磁盘</li>
-</ol>
-<p><img src="image-20210219210433335.png"></p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210219-dd.png"></p>
 <ol start="4">
 <li>在虚拟机中运行</li>
 </ol>
-<p><img src="image-20210219210605483.png"></p>
-<h2 id="4-从硬盘引导"><a href="#4-从硬盘引导" class="headerlink" title="4. 从硬盘引导"></a>4. 从硬盘引导</h2><ol>
-<li>目前的硬盘一般分为 <strong>HDD</strong>（Hard Disk Drive，传统的磁碟型机械硬盘）和 <strong>SSD</strong>（Solid State Disk，固态硬盘）</li>
-</ol>
-<p><img src="clip_image001.jpg"></p>
+<h2 id="04-从硬盘引导"><a href="#04-从硬盘引导" class="headerlink" title="04 | 从硬盘引导"></a>04 | 从硬盘引导</h2><ul>
+<li><p>目前硬盘一般分为 <strong>HDD</strong>（Hard Disk Drive，传统的磁碟型机械硬盘）和 <strong>SSD</strong>（Solid State Disk，固态硬盘）</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-drive.jpg" style="zoom:80%;" />
+
 <ul>
-<li><strong>HDD</strong>：Hard Disk Drive（硬碟），即传统机械硬盘。由盘片、磁头、转轴、控制电机等部分组成。工作时盘片转动，磁头定位在盘片的指定位置上进行读写操作。传统硬盘的优势在于容量大、成本低，寿命也相对较长，适合进行大容量的数据写入；但缺点也非常明显，比如体积重量大、发热量大、速度慢、不抗震、噪音大等等。</li>
-<li><strong>SSD</strong>：Solid-State Drive（固态硬盘）。一般使用 <strong>NAND 闪存</strong>制成。由于不存在机械部件，所以稳定性、噪音、发热量、抗震性都要比传统机械硬盘更好，读写速度也更快。当然，闪存的造价较高，所以 SSD 的价格也更高。</li>
+<li><p><strong>HDD</strong>：Hard Disk Drive，即传统机械硬盘</p>
+<ul>
+<li>由盘片、磁头、转轴、控制电机等部分组成，工作时盘片转动，磁头定位在盘片的指定位置上进行读写操作</li>
+<li>优势在于容量大、成本低，寿命也相对较长，适合进行大容量的数据写入</li>
+<li>缺点也非常明显，比如体积重量大、发热量大、速度慢、不抗震、噪音大等等</li>
 </ul>
-<p>​    </p>
-<p>​    </p>
-<ol start="2">
+</li>
+<li><p><strong>SSD</strong>：Solid-State Drive（固态硬盘）</p>
+<ul>
+<li>一般使用 <strong>NAND 闪存</strong>制成</li>
+<li>由于不存在机械部件，所以稳定性、噪音、发热量、抗震性都要比传统机械硬盘更好，读写速度也更快，但是价格也更高</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><p><strong>磁盘结构</strong></p>
-<p><img src="clip_image001-1618313289573.jpg"></p>
-</li>
-</ol>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-hdd.jpg" style="zoom: 80%;" />
+
 <ul>
-<li>磁道<code>Track</code>。当磁盘旋转时，磁头若保持在一个位置上，则每个磁头都会在磁盘表面划出一个圆形轨迹，这些圆形轨迹就叫做磁道</li>
-<li>柱<code>Cylinder</code>。在有多个盘片构成的盘组中，由不同盘片的面，但处于同一半径圆的多个磁道组成的一个圆柱面</li>
-<li>扇区<code>Sector</code>。磁盘上的每个磁道被等分为若干个弧段，这些弧段便是硬盘的扇区。硬盘的第一个扇区，叫做引导扇区</li>
-<li>磁头<code>Head</code>。硬盘读取数据的关键部件，它的主要作用就是将存储在硬盘盘片上的磁信息转化为电信号向外传输，而它的工作原理则是利用特殊材料的电阻值会随着磁场变化的原理来读写盘片上的数据，磁头的好坏在很大程度上决定着硬盘盘片的存储密度</li>
-<li>盘片<code>Platter</code>。硬盘中承载数据存储的介质。硬盘盘片是以坚固耐用的材料为盘基，将磁粉附着在铝合金（新材料也有用玻璃）圆盘片的表面上，表面被加工的相当平滑。这些磁粉被划分成称为磁道的若干个同心圆，在每个同心圆的磁道上就好像有无数的任意排列的小磁铁，它们分别代表着 0 和 1 的状态。当这些小磁铁受到来自磁头的磁力影响时，其排列的方向会随之改变。利用磁头的磁力控制指定的一些小磁铁方向，使每个小磁铁都可以用来储存信息。硬盘是由多个盘片叠加在一起，互相之间由垫圈隔开</li>
+<li>磁道<code>Track</code>：当磁盘旋转时，磁头若保持在一个位置上，则每个磁头都会在磁盘表面划出一个圆形轨迹，这些圆形轨迹就叫做磁道</li>
+<li>半经大小相同的磁道所组成的柱形叫柱面</li>
+<li>柱面<code>Cylinder</code>：由不同盘片的半经大小相同的磁道所组成的圆柱面</li>
+<li>扇区<code>Sector</code>：磁盘上的每个磁道被等分为若干个弧段，这些弧段便是硬盘的扇区<ul>
+<li>硬盘的第一个扇区，叫做引导扇区</li>
+<li>磁盘又称<strong>块设备</strong>，因为存取不是字节流形式的，而是以块为单位，每个块为一个扇区</li>
 </ul>
-<p>​    </p>
-<p>​    </p>
-<ol start="3">
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- 磁头：主要作用是将存储在硬盘盘片上的磁信息转化为电信号向外传输
+
+  - 工作原理是利用特殊材料的电阻值会随着磁场变化的原理来读写盘片上的数据
+  - 磁头的好坏在很大程度上决定着硬盘盘片的存储密度
+
+
+
+- 盘片：硬盘中承载数据存储的介质
+
+  - 硬盘是由多个盘片叠加在一起，互相之间由垫圈隔开</code></pre>
+<ul>
+<li><p>编址</p>
+<ul>
+<li><p>编址时优先考虑磁盘旋转，而后再考虑磁头移动（以柱面优先的形式编址）</p>
+</li>
+<li><p><code>CHS</code></p>
+<ul>
+<li>CHS寻址模式使用柱面号+磁头号+扇区号来编址（C，H，S）</li>
+<li>地址（块号）=<code>C × (nHeads × nSectors) + H × nSectors + S</code></li>
+</ul>
+</li>
+<li><p><code>LBA</code></p>
+<ul>
+<li>扩大了寻址范围</li>
+<li>LBA：用 28 bit来描述一个扇区</li>
+</ul>
+</li>
+<li><p>以上就是从存储设备（硬盘）到文件系统的<strong>第一层抽象</strong>，即抽象出块设备的块号（块地址）</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
 <li><p>CPU不会直接和硬盘打交道，而是和IO接口和硬盘控制的主寄存器打交道</p>
-<p>Data寄存器、Error寄存器、Device寄存器（给出硬盘状态）…</p>
-<blockquote>
-<p>CHS：CHS寻址模式将硬盘划分为磁头（Heads）、柱面(Cylinder)、扇区(Sector)</p>
-<p>LBA：用28 bit来描述一个扇区</p>
-</blockquote>
+<ul>
+<li>Data寄存器、Error寄存器、Device寄存器（给出硬盘状态）…</li>
+</ul>
 </li>
-</ol>
-<p>​    </p>
-<p>​    </p>
-<ol start="4">
+</ul>
+<ul>
 <li><p>读取数据步骤</p>
-<p>​    1）先选择通道，往该通道上的<code>sector count</code>寄存器写入待操作的扇区数</p>
-<p>​    2）往该通道的3个LBA寄存器写入扇区的起始地址</p>
-<p>​    3）往<code>device</code>寄存器写入LBA的24-27位，设为LBA，并设置<code>dev</code>表明是从盘还是主盘</p>
-<p>​    4）往<code>command</code>寄存器写命令</p>
-<p>​    5）检查status寄存器</p>
-<p>​    6）读入数据</p>
+<p>1）先选择通道，往该通道上的<code>sector count</code>寄存器写入待操作的扇区数</p>
+<p>2）往该通道的3个LBA寄存器写入扇区的起始地址</p>
+<p>3）往<code>device</code>寄存器写入LBA的24-27位，设为LBA，并设置<code>dev</code>表明是从盘还是主盘</p>
+<p>4）往<code>command</code>寄存器写命令</p>
+<p>5）检查status寄存器</p>
+<p>6）读入数据</p>
 </li>
-</ol>
-<p>​    </p>
-<p>​    </p>
-<ol start="5">
-<li>实验</li>
-</ol>
+</ul>
 <blockquote>
-<p>将第二个扇区里面的内容加载进入内存</p>
+<p>实验：将第二个扇区里面的内容加载进入内存</p>
 </blockquote>
 <ol>
 <li>编写汇编代码</li>
 </ol>
 <p><code>mbr.asm</code></p>
-<p><img src="image-20210222175013827.png"></p>
 <p><code>loader.asm</code></p>
-<p><img src="image-20210328204109922.png"></p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-loader.png"></p>
 <ol start="2">
-<li>使用<code>Nasm</code>进行编译</li>
+<li><p>使用<code>Nasm</code>进行编译</p>
+</li>
+<li><p>写入磁盘</p>
+</li>
 </ol>
-<p><img src="image-20210328204354509.png"></p>
-<ol start="3">
-<li>写入磁盘</li>
-</ol>
-<p><img src="image-20210328205434971.png"></p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-dd.png"></p>
 <ol start="4">
 <li>在虚拟机中运行</li>
 </ol>
-<p><img src="image-20210328205542679.png"></p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-display.png"></p>
 <blockquote>
 <p>突破了512字节！</p>
 </blockquote>
 <p>​    </p>
-<p>​    </p>
+<ul>
+<li>参考：<ul>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/335397213/answer/752283935">机械硬盘如何编址</a></li>
+<li></li>
+</ul>
+</li>
+</ul>
 <h2 id="5-保护模式入门"><a href="#5-保护模式入门" class="headerlink" title="5. 保护模式入门"></a>5. 保护模式入门</h2><ol>
 <li>在80286以前，CPU只有实模式，最多能够访问1M的内存空间。<ul>
 <li>可以任意访问内存，操作系统和用户程序实际上做不到内存的隔离</li>
@@ -792,7 +809,7 @@ diskpart命令：制作自己的虚拟磁盘
 </ul>
 </li>
 </ol>
-<p><img src="image-20210328210312513.png" alt="保护模式下被扩展成32位寄存器"></p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-32-os.png" alt="保护模式下被扩展成32位寄存器"></p>
 <ol start="3">
 <li><strong>全局描述符表位于内存中</strong>，CPU用专门的寄存器指向它。这个专门的寄存器是<strong>GDTR</strong>（一个48位的寄存器）,专门用来存储 GDT 的内存地址及大小。</li>
 </ol>
@@ -836,7 +853,7 @@ diskpart命令：制作自己的虚拟磁盘
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《操作系统基础与实验》
+                    《从零开发操作系统实验》
                 </span> 由
             <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/01/28/cs-my-os/" property="cc:attributionName"
                rel="cc:attributionURL">
@@ -886,7 +903,7 @@ diskpart命令：制作自己的虚拟磁盘
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/30.jpg" class="responsive-img" alt="C++实战">
+                        <img src="/medias/featureimages/33.jpg" class="responsive-img" alt="C++实战">
                         
                         <span class="card-title">C++实战</span>
                     </div>
@@ -939,7 +956,7 @@ diskpart命令：制作自己的虚拟磁盘
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/29.jpg" class="responsive-img" alt="大数据入门">
+                        <img src="/medias/featureimages/32.jpg" class="responsive-img" alt="大数据入门">
                         
                         <span class="card-title">大数据入门</span>
                     </div>
@@ -990,7 +1007,7 @@ diskpart命令：制作自己的虚拟磁盘
 
         var selection = window.getSelection();
         // if the selection is short let's not annoy our users.
-        if (('' + selection).length < Number.parseInt('120')) {
+        if (('' + selection).length < Number.parseInt('200')) {
             return;
         }
 
@@ -1144,7 +1161,7 @@ diskpart命令：制作自己的虚拟磁盘
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">112.4k</span>
+            <span class="white-color">111.3k</span>
             
 
             <br>

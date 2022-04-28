@@ -45,21 +45,6 @@
     </script>
 
     
-        <script>
-            (function(){
-                var bp = document.createElement('script');
-                var curProtocol = window.location.protocol.split(':')[0];
-                if (curProtocol === 'https') {
-                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-                }
-                else {
-                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-                }
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(bp, s);
-            })();
-        </script>
-    
 
     <script>
         (function(){
@@ -331,7 +316,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -599,7 +584,6 @@
 <p><strong>注意事项：</strong>如果一个系统的策略多于四个，就需要考虑使用混合模式，解决策略类膨胀的问题。</p>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>我们将创建一个定义活动的 <em>Strategy</em> 接口和实现了 <em>Strategy</em> 接口的实体策略类。<em>Context</em> 是一个使用了某种策略的类。</p>
 <p><em>StrategyPatternDemo</em>，我们的演示类使用 <em>Context</em> 和策略对象来演示 Context 在它所配置或使用的策略改变时的行为变化。</p>
-<p><img src="strategy_pattern_uml_diagram.jpg" alt="策略模式的UML图"></p>
 
             </div>
             <hr />
@@ -680,31 +664,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/11/19/linuxkernel/">
+                <a href="/2021/01/25/deeplearning-basic/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="Linux 内核开发">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="深度学习基础">
                         
-                        <span class="card-title">Linux 内核开发</span>
+                        <span class="card-title">深度学习基础</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            01 编译Linux4.9内核并运行Linux 源码下载
-Kernel Documentation
-编译内核
-指定硬件体系架构
-export ARCH=x86
-如果要编译arm的内核，则指定ARCH=arm且需要安装交叉编译器
-
-配置boa
+                            本文是对深度学习的简单入门知识讲解
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-19
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-25
                         </span>
                         <span class="publish-author">
                             
@@ -714,6 +691,10 @@ export ARCH=x86
                                     笔记
                                 </a>
                             
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
+                                    计科
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -721,8 +702,12 @@ export ARCH=x86
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/LinuxKernel/" target="_blank">
-                        <span class="chip bg-color">LinuxKernel</span>
+                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" target="_blank">
+                        <span class="chip bg-color">深度学习</span>
+                    </a>
+                    
+                    <a href="/tags/NLP/" target="_blank">
+                        <span class="chip bg-color">NLP</span>
                     </a>
                     
                 </div>
@@ -740,7 +725,7 @@ export ARCH=x86
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="HTTP协议原理和实践">
+                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="HTTP协议原理和实践">
                         
                         <span class="card-title">HTTP协议原理和实践</span>
                     </div>
@@ -795,7 +780,7 @@ export ARCH=x86
 
         var selection = window.getSelection();
         // if the selection is short let's not annoy our users.
-        if (('' + selection).length < Number.parseInt('120')) {
+        if (('' + selection).length < Number.parseInt('200')) {
             return;
         }
 
@@ -949,7 +934,7 @@ export ARCH=x86
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">112.4k</span>
+            <span class="white-color">111.3k</span>
             
 
             <br>

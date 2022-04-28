@@ -5,3 +5,9 @@
     height: 64px;
     width: 64px;
 }
+
+/* 重置背景的颜色 */
+.red {
+    background-color: #6b91a6d2 !important;
+}
+
