@@ -9,12 +9,8 @@
     <!-- <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" /> -->
     <!-- <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" /> -->
     <meta name="description" content="
-​    
-0. 前言&amp;emsp;&amp;emsp;一些关于网络编程方面的问题，该怎样回答呢？
-
-大家经常说的四层、七层，分别指的是什么？
-TCP 三次握手是什么，TIME_WAIT 是怎么发生的？CLOSE_WAIT 又是什么状态？
-Linu">
+00 | 前言&amp;emsp;&amp;emsp;在计算机领域中，网络是信息传输、接收、共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，可以进行数据传递，从而实现资源的共享
+&amp;emsp;&amp;emsp;网络编程从大方面说就是对信息的发送到接受，通">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -257,7 +253,7 @@ Linu">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/2021/02/04/cs-network-socket/3fca89d0-064f-422b-8909-0adea56ee9ab.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/night-candle/figurebed/main/img/cover-watermelon.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -424,14 +420,14 @@ Linu">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    15.4k
+                    18.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    58 分
+                    69 分
                 </div>
                 
                 
@@ -442,63 +438,83 @@ Linu">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><img src="3fca89d0-064f-422b-8909-0adea56ee9ab.jpg"></p>
-<p>​    </p>
-<h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h2><p>&emsp;&emsp;一些关于网络编程方面的问题，该怎样回答呢？</p>
-<ul>
-<li>大家经常说的四层、七层，分别指的是什么？</li>
-<li>TCP 三次握手是什么，TIME_WAIT 是怎么发生的？CLOSE_WAIT 又是什么状态？</li>
-<li>Linux 下的 <code>epoll</code> 解决的是什么问题？如何使用 <code>epoll</code> 写出高性能的网络程序？</li>
-<li>什么是网络事件驱动模型？<code>Reactor</code> 模式又是什么？</li>
-</ul>
-<p>这些问题看似简单，但想做到完全理解却并不容易。很多时候我们希望尽可能详尽地学习网络编程，但难以理清脉络。学习高性能网络编程，需要掌握两个核心要点：<strong>第一就是理解网络协议，并在这个基础上和操作系统内核配合，感知各种网络 I/O 事件；第二就是学会使用线程处理并发</strong>。本文会从实践出发，从问题的角度对知识点进行阐述。</p>
+                <p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/cover-watermelon.jpg"></p>
+<h2 id="00-前言"><a href="#00-前言" class="headerlink" title="00 | 前言"></a>00 | 前言</h2><p>&emsp;&emsp;在计算机领域中，网络是信息传输、接收、共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，可以进行数据传递，从而实现资源的共享</p>
+<p>&emsp;&emsp;网络编程从大方面说就是对信息的发送到接受，通过操作相应 API 调度计算机硬件资源，并利用传输管道（网线）进行数据交换的过程</p>
+<p>&emsp;&emsp;一些关于网络编程方面的问题看似简单，但想做到完全理解却并不容易，学习高性能网络编程，需要掌握两个核心要点：<strong>第一就是理解网络协议，并在这个基础上和操作系统内核配合，感知各种网络 I/O 事件；第二就是学会使用线程处理并发</strong></p>
+<p>&emsp;&emsp;本文会从实践出发，从问题的角度对知识点进行阐述</p>
 <p>​    </p>
 <p>​    </p>
-<h2 id="1-网络编程入门"><a href="#1-网络编程入门" class="headerlink" title="1. 网络编程入门"></a>1. 网络编程入门</h2><h3 id="1-1-基本概念"><a href="#1-1-基本概念" class="headerlink" title="1.1 基本概念"></a>1.1 基本概念</h3><h4 id="1-1-1-客户端-服务器网络模型"><a href="#1-1-1-客户端-服务器网络模型" class="headerlink" title="1.1.1 客户端 - 服务器网络模型"></a>1.1.1 客户端 - 服务器网络模型</h4><p><img src="image-20210127184051313.png"></p>
+<h2 id="01-网络编程入门"><a href="#01-网络编程入门" class="headerlink" title="01 | 网络编程入门"></a>01 | 网络编程入门</h2><h3 id="1-1-基本概念"><a href="#1-1-基本概念" class="headerlink" title="1.1 基本概念"></a>1.1 基本概念</h3><h4 id="1-1-1-客户端-服务器网络模型"><a href="#1-1-1-客户端-服务器网络模型" class="headerlink" title="1.1.1 客户端 - 服务器网络模型"></a>1.1.1 客户端 - 服务器网络模型</h4><p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210127-network-model.png"></p>
 <ol>
-<li>当一个客户端需要服务时，它会向服务器端发送一个请求。这个请求是按照双方约定的格式来发送的，以便保证服务器端是可以理解的</li>
-<li>服务器端收到这个请求后，会根据双方约定的格式解释它，并且以合适的方式进行操作</li>
-<li>服务器端完成处理请求之后，会给客户端发送一个响应，然后等待客户端的下一步操作</li>
-<li>客户端收到响应并进行处理</li>
-</ol>
+<li><p>当一个客户端需要服务时，它会向服务器端发送一个请求，这个请求是按照双方约定的格式来发送的，以便保证服务器端可以理解</p>
+</li>
+<li><p>服务器端收到这个请求后，会根据双方约定的格式解释它，并且以合适的方式进行操作</p>
+</li>
+<li><p>服务器端完成处理请求之后，会给客户端发送一个响应，然后等待客户端的下一步操作</p>
+</li>
+<li><p>客户端收到响应并进行处理</p>
 <blockquote>
-<p>区别出客户端和服务器，本质上是因为二者编程模型是不同的。<strong>需要强调的是，无论是客户端，还是服务器端，它们运行的单位都是进程，而不是机器</strong></p>
+<p>区别出客户端和服务器，本质上是因为二者编程模型是不同的，<strong>但无论是客户端，还是服务器端，它们运行的单位都是进程</strong></p>
 </blockquote>
+</li>
+</ol>
 <p>​    </p>
 <p>​    </p>
-<h4 id="1-1-2-IP和端口"><a href="#1-1-2-IP和端口" class="headerlink" title="1.1.2 IP和端口"></a>1.1.2 IP和端口</h4><h5 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h5><p>在 TCP/IP 协议栈中，IP 用来表示网络世界的地址。在一台计算机上是可以同时存在多个连接的，区分出不同的连接就需要用到端口这个概念。<strong>计算机的 IP 地址是唯一的，每个连接的端口号是不同的。</strong></p>
+<h4 id="1-1-2-IP-和端口"><a href="#1-1-2-IP-和端口" class="headerlink" title="1.1.2 IP 和端口"></a>1.1.2 IP 和端口</h4><ul>
+<li><p>在 TCP/IP 协议栈中，IP 用来表示网络世界的地址</p>
+</li>
+<li><p>在一台计算机上是可以同时存在多个连接的，区分出不同的连接就需要用到端口这个概念</p>
 <blockquote>
 <p>端口号是一个 16 位的整数，最多为 65536</p>
 </blockquote>
-<p>​    </p>
-<h5 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h5><p>当一个客户端发起连接请求时，客户端的端口是由操作系统内核临时分配的，称为<strong>临时端口</strong>，服务器端的端口通常是一个众所周知的端口<code>Well Known Ports</code>。一个连接可以通过客户端 - 服务器端的 IP 和端口唯一确定，这叫做<strong>套接字对</strong>，按照（客户端地址、客户端端口、服务端地址、服务端端口）这样的四元组表示：</p>
+</li>
+<li><p><strong>计算机的 IP 地址是唯一的，每个连接的端口号是不同的</strong></p>
+</li>
+<li><p>当一个客户端发起连接请求时，客户端的端口是由操作系统内核临时分配的，称为<strong>临时端口</strong>，服务器端的端口通常是一个众所周知的端口<code>Well Known Ports</code></p>
+</li>
+<li><p>一个连接可以通过客户端 - 服务器端的 IP 和端口唯一确定，这叫做<strong>套接字对</strong>，按照（客户端地址、客户端端口、服务端地址、服务端端口）这样的四元组表示：</p>
 <pre><code>（clientaddr:clientport, serveraddr: serverport)</code></pre>
-<p><img src="image-20210127190636490.png" alt="一个客户端 - 服务器之间的连接"></p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="1-1-3-子网掩码"><a href="#1-1-3-子网掩码" class="headerlink" title="1.1.3 子网掩码"></a>1.1.3 子网掩码</h4><p>&emsp;&emsp;在网络 IP 划分的时候，我们需要区分两个概念：</p>
-<ul>
-<li><strong>网络</strong><code>network</code>：表示这组 IP 共同的部分，比如在 <strong>192.168.1.1</strong>~<strong>192.168.1.255</strong> 这个区间里，它们共同的部分是 <strong>192.168.1.0</strong></li>
-<li><strong>主机</strong><code>host</code>：表示这组 IP 不同的部分，上面例子中 1~255 就是不同的那些部分，表示有 255 个可用的不同 IP</li>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210127-connection.png" alt="一个客户端 - 服务器之间的连接"></p>
+</li>
 </ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="1-1-3-子网掩码"><a href="#1-1-3-子网掩码" class="headerlink" title="1.1.3 子网掩码"></a>1.1.3 子网掩码</h4><p>&emsp;&emsp;在网络 IP 划分的时候需要区分两个概念：</p>
+<ul>
+<li><p>网络<code>network</code>：表示这组 IP 共同的部分，比如在 <strong>192.168.1.1</strong>~<strong>192.168.1.255</strong> 这个区间里，它们共同的部分是 <strong>192.168.1.0</strong></p>
+</li>
+<li><p>主机<code>host</code>：表示这组 IP 不同的部分，上例中 1~255 就是不同的部分，表示有 255 个可用的不同 IP</p>
 <blockquote>
-<p>例如 IPv4 地址，<strong>192.0.2.12</strong>，以说前面三个 bytes 是子网，最后一个 byte 是 host，或者说 host 为 8 位，子网掩码为 <strong>192.0.2.0/24</strong>（<strong>255.255.255.0</strong>）</p>
+<p>例如 IPv4 地址，<strong>192.0.2.12</strong>，前面三个 bytes 是子网，最后一个 byte 是 host，或者说 host 为 8 位，子网掩码为 <strong>192.0.2.0/24</strong>（<strong>255.255.255.0</strong>）    </p>
 </blockquote>
-<p>​    </p>
-<p>网络地址位数由<strong>子网掩码</strong><code>Netmask</code>决定，<strong>将 IP 地址与子网掩码进行位与操作，就能得到网络的值</strong>。</p>
-<p><strong>注意</strong>：子网掩码的格式永远都是二进制格式：前面是一连串的 1，后面跟着一连串的 0</p>
+</li>
+<li><p>网络地址位数由子网掩码<code>Netmask</code>决定，<strong>将 IP 地址与子网掩码进行位与操作，就能得到网络的值</strong></p>
+</li>
+<li><p><strong>注意</strong>：子网掩码的格式永远都是二进制格式：前面是一连串的 1，后面跟着一连串的 0</p>
 <blockquote>
-<p>如 IP <strong>192.0.2.12</strong>，使用子网掩码<strong>255.255.255.0</strong>时，网络就会是 <strong>192.0.2.12 与 255.255.255.0</strong> 得到的值：<strong>192.0.2.0</strong></p>
-<p><strong>255.192.0.0</strong> 这样的子网掩码无法直观地知道有多少个 1，多少个 0，后来有了新的表示方法： <strong>IP /网络的位数</strong><br>如 IP <strong>192.0.2.12/30</strong>：有 30 个 1， 2 个 0，主机个数为 4</p>
+<p><strong>255.192.0.0</strong> 这样的子网掩码无法直观地知道有多少个 1，多少个 0，后来有了新的表示方法：<strong>IP / 网络的位数</strong><br>如 IP <strong>192.0.2.12/30</strong>：有 30 个 1， 2 个 0，主机个数为 4</p>
 </blockquote>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<h4 id="1-1-4-保留网段和端口"><a href="#1-1-4-保留网段和端口" class="headerlink" title="1.1.4 保留网段和端口"></a>1.1.4 保留网段和端口</h4><h5 id="保留网段"><a href="#保留网段" class="headerlink" title="保留网段"></a>保留网段</h5><p>国际标准组织在 IPv4 地址空间里面，专门划出了一些网段，这些网段不会用做公网上的 IP，而是仅仅保留做内部使用，我们把这些地址称作保留网段。</p>
-<p>下表是三个保留网段，其可以容纳的计算机主机个数分别是 16777216 个、1048576 个和 65536 个</p>
-<p><img src="e175c8ce-85a9-409f-aac1-b0f96c5756df.png"></p>
+<h4 id="1-1-4-保留网段和端口"><a href="#1-1-4-保留网段和端口" class="headerlink" title="1.1.4 保留网段和端口"></a>1.1.4 保留网段和端口</h4><h5 id="保留网段"><a href="#保留网段" class="headerlink" title="保留网段"></a>保留网段</h5><ul>
+<li><p>国际标准组织在 IPv4 地址空间里面专门划出了一些网段，这些网段不会用做公网上的 IP 而是仅仅保留做内部使用，这些地址称作保留网段</p>
+</li>
+<li><p>下表是三个保留网段，用于专用网络中的本地通信</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210127-reserved-network-ranges.png"></p>
+</li>
+<li><p><code>255.255.255.255/32</code>：用于受限广播地址</p>
+</li>
+<li><p><code>224.0.0.0/4</code>：用于多播</p>
+</li>
+</ul>
 <p>​    </p>
-<h5 id="保留端口"><a href="#保留端口" class="headerlink" title="保留端口"></a>保留端口</h5><p>保留端口就是大家约定俗成的，已经被对应服务广为使用的端口，比如 ftp 的 21 端口，ssh 的 22 端口，http 的 80 端口等。</p>
-<p><code>glibc</code> 定义的保留端口：</p>
+<h5 id="保留端口"><a href="#保留端口" class="headerlink" title="保留端口"></a>保留端口</h5><ul>
+<li><p>保留端口就是大家约定俗成的，已经被对应服务广为使用的端口，比如 ftp 的 21 端口，ssh 的 22 端口，http 的 80 端口等</p>
+</li>
+<li><p>glibc 定义的保留端口：</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* Standard well-known ports.  */</span>
 <span class="token keyword">enum</span>
   <span class="token punctuation">{</span>
@@ -514,147 +530,201 @@ Linu">
     IPPORT_NAMESERVER <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">/* Domain Name Service.  */</span>
     IPPORT_WHOIS <span class="token operator">=</span> <span class="token number">43</span><span class="token punctuation">,</span>    <span class="token comment" spellcheck="true">/* Internet Whois service.  */</span>
     IPPORT_MTP <span class="token operator">=</span> <span class="token number">57</span><span class="token punctuation">,</span>
-
-
-
-
     IPPORT_TFTP <span class="token operator">=</span> <span class="token number">69</span><span class="token punctuation">,</span>   <span class="token comment" spellcheck="true">/* Trivial File Transfer Protocol.  */</span>
     IPPORT_RJE <span class="token operator">=</span> <span class="token number">77</span><span class="token punctuation">,</span>
     IPPORT_FINGER <span class="token operator">=</span> <span class="token number">79</span><span class="token punctuation">,</span>   <span class="token comment" spellcheck="true">/* Finger service.  */</span>
     IPPORT_TTYLINK <span class="token operator">=</span> <span class="token number">87</span><span class="token punctuation">,</span>
     IPPORT_SUPDUP <span class="token operator">=</span> <span class="token number">95</span><span class="token punctuation">,</span>   <span class="token comment" spellcheck="true">/* SUPDUP protocol.  */</span>
-
-
     IPPORT_EXECSERVER <span class="token operator">=</span> <span class="token number">512</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true">/* execd service.  */</span>
     IPPORT_LOGINSERVER <span class="token operator">=</span> <span class="token number">513</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">/* rlogind service.  */</span>
     IPPORT_CMDSERVER <span class="token operator">=</span> <span class="token number">514</span><span class="token punctuation">,</span>
     IPPORT_EFSSERVER <span class="token operator">=</span> <span class="token number">520</span><span class="token punctuation">,</span>
-
-
     <span class="token comment" spellcheck="true">/* UDP ports.  */</span>
     IPPORT_BIFFUDP <span class="token operator">=</span> <span class="token number">512</span><span class="token punctuation">,</span>
     IPPORT_WHOSERVER <span class="token operator">=</span> <span class="token number">513</span><span class="token punctuation">,</span>
     IPPORT_ROUTESERVER <span class="token operator">=</span> <span class="token number">520</span><span class="token punctuation">,</span>
-
-
     <span class="token comment" spellcheck="true">/* Ports less than this value are reserved for privileged processes.  */</span>
     IPPORT_RESERVED <span class="token operator">=</span> <span class="token number">1024</span><span class="token punctuation">,</span>
-
-
     <span class="token comment" spellcheck="true">/* Ports greater this value are reserved for (non-privileged) servers.  */</span>
-    IPPORT_USERRESERVED <span class="token operator">=</span> <span class="token number">5000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    IPPORT_USERRESERVED <span class="token operator">=</span> <span class="token number">5000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
 <p>​    </p>
-<h4 id="1-1-5-域名系统"><a href="#1-1-5-域名系统" class="headerlink" title="1.1.5 域名系统"></a>1.1.5 域名系统</h4><p>&emsp;&emsp;IP 协议的职责是<strong>网际互连</strong>，它在 MAC 层之上，使用 IP 地址把 MAC 编号转换成了四位数字，对物理网卡的 MAC 地址做了一层抽象，只要每个小网络在 IP 地址这个概念上达成一致，不管在 MAC 层有多大的差异，都可以接入 TCP/IP 协议栈，终汇合进整个互联网。</p>
-<p>&emsp;&emsp;但接入互联网的计算机越来越多，IP 地址的缺点也就暴露出来了，数字形式的地址对于人类来说却既难以记忆又难以输入，于是<strong>域名系统</strong><code>Domain Name System</code>出现了，用有意义的名字来作为 IP 地址的等价替代，在 IP 地址之上再来一次抽象。</p>
+<h4 id="1-1-5-域名系统"><a href="#1-1-5-域名系统" class="headerlink" title="1.1.5 域名系统"></a>1.1.5 域名系统</h4><ul>
+<li><p>IP 协议的职责是<strong>网际互连</strong>，它使用 IP 地址把 MAC 编号转换成了四位数字，对物理网卡的 MAC 地址做了一层抽象，只要每个小网络在 IP 地址这个概念上达成一致，不管在 MAC 层有多大的差异，都可以接入 TCP/IP 协议栈，终汇合进整个互联网</p>
+</li>
+<li><p>但数字形式的地址对于人类来说却既难以记忆又难以输入，于是<strong>域名系统</strong><code>Domain Name System</code>出现了，用有意义的名字来作为 IP 地址的等价替代，在 IP 地址之上再进行一次抽象</p>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<h5 id="域名的形式"><a href="#域名的形式" class="headerlink" title="域名的形式"></a>域名的形式</h5><p>​    </p>
-<p>&emsp;&emsp;在 DNS 中，<strong>域名</strong><code>Domain Name</code>又称为<strong>主机名</strong><code>Host</code>，全球域名按照从大到小的结构，形成了一棵树状结构。实际访问一个域名时，是从最底层开始写起。域名用 <code>.</code> 分隔成多个单词，级别从左到右逐级升高，最右边的被称为<strong>顶级域名</strong>。</p>
-<p><img src="image-20210129151658062.png"></p>
-<p>&emsp;&emsp;域名不仅能够代替 IP 地址，还有许多其他的用途。在Web服务器中，域名可以用来标识虚拟主机，决定由哪个虚拟主机来对外提供服务，比如在 Nginx 里就会使用<code>server_name</code>指令：</p>
+<h5 id="域名的形式"><a href="#域名的形式" class="headerlink" title="域名的形式"></a>域名的形式</h5><ul>
+<li><p>在 DNS 中，<strong>域名</strong><code>Domain Name</code>又称为<strong>主机名</strong><code>Host</code></p>
+</li>
+<li><p>全球域名按照从大到小的结构，形成了一棵树状结构，实际访问一个域名时，是从最底层开始写起，域名用 <code>.</code> 分隔成多个单词，级别从左到右逐级升高，最右边的被称为<strong>顶级域名</strong></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210129-domain-name.png"></p>
+</li>
+<li><p>域名还有许多其他的用途：在Web服务器中，域名可以用来标识虚拟主机，决定由哪个虚拟主机来对外提供服务，比如在 Nginx 里就会使用<code>server_name</code>指令：</p>
 <pre class="line-numbers language-nginx"><code class="language-nginx"><span class="token keyword">server</span> <span class="token punctuation">{</span>    
     <span class="token keyword">listen</span> <span class="token number">80</span><span class="token punctuation">;</span>                <span class="token comment" spellcheck="true"># 监听 80 端口    </span>
     <span class="token keyword">server_name</span>  a<span class="token punctuation">.</span>test<span class="token punctuation">.</span>com<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true"># 主机名是 a.test.com  </span>
     <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> 
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>域名<strong>本质上是个名字空间系统</strong>，使用多级域名就可以划分出不同的国家、地区、组织、公司、部门，每个域名都是独一无二的，可以作为一种身份的标识。因为这个特性，域名也被扩展到了其他应用领域，比如 Java 的包机制采用域名作为命名空间。 <code>XML</code> 里使用 <code>URI</code> 作为名字空间，也间接使用了域名。</p>
+</li>
+<li><p>域名本质上是个<strong>名字空间系统</strong>，使用多级域名就可以划分出不同的国家、地区、组织、公司、部门，每个域名都是独一无二的，可以作为一种身份的标识，因为这个特性，域名也被扩展到了其他应用领域</p>
+<ul>
+<li>比如 Java 的包机制采用域名作为命名空间</li>
+<li><code>XML</code> 里使用 <code>URI</code> 作为名字空间，也间接使用了域名</li>
+</ul>
+</li>
+</ul>
 <p>​    </p>
-<h5 id="域名的解析"><a href="#域名的解析" class="headerlink" title="域名的解析"></a>域名的解析</h5><p>​    </p>
-<p>&emsp;&emsp;IP 地址必须转换成 MAC 地址才能访问主机，想要使用 TCP/IP 协议来通信要使用 IP 地址，所以需要把域名做一个转换，<strong>映射</strong>到它的真实 IP，这就是<strong>域名解析</strong>。全世界有几亿站点，几十亿网民，而每天网络上的 HTTP 流量更是天文数字。这些请求绝大多数都是基于域名来访问网站的，所以 DNS 就成了互联网的重要基础设施，必须要保证域名解析稳定可靠、快速高效。</p>
-<p>&emsp;&emsp;DNS 的核心系统是一个三层的树状、分布式服务，基本对应域名的结构：</p>
-<ol>
-<li><strong>根域名服务器</strong> <code>Root DNS Server</code>：管理顶级域名服务器，返回“<code>com</code>、<code>net</code>、<code>cn</code>等顶级域名服务器的 IP 地址</li>
-<li><strong>顶级域名服务器</strong> <code>Top-level DNS Server</code>：管理各自域名下的权威域名服务器，比如 <code>com</code> 顶级域名服务器可以返回 <code>apple.com</code> 域名服务器的 IP 地址</li>
-<li><strong>权威域名服务器</strong> <code>Authoritative DNS Server</code>：管理自己域名下主机的 IP 地址，比如 <code>apple.com</code> 权威域名服务器可以返回 <code>www.apple.com</code> 的 IP 地址</li>
-</ol>
-<p>&emsp;&emsp;根域名服务器是关键，它必须是众所周知的。 目前全世界共有 13 组根域名服务器，又有数百台的镜像，保证一定能够被访问到。有了这个系统以后，任何一个域名都可以<strong>在这个树形结构里从顶至下进行查询</strong>，就好像是把域名从右到左顺序走了一遍，终就获得了域名对应的 IP 地址。</p>
+<h5 id="域名的解析"><a href="#域名的解析" class="headerlink" title="域名的解析"></a>域名的解析</h5><ul>
+<li><p>IP 地址必须转换成 MAC 地址才能访问主机，使用 TCP/IP 协议来通信要使用 IP 地址，所以需要把域名做转换，<strong>映射</strong>到它的真实 IP，这就是域名解析</p>
+</li>
+<li><p>DNS 的核心系统是一个三层的树状分布式服务，基本对应域名的结构：</p>
+<ul>
+<li><p>根域名服务器 <code>Root DNS Server</code>：管理顶级域名服务器，返回 com、net、cn 等顶级域名服务器的 IP 地址</p>
+</li>
+<li><p>顶级域名服务器 <code>Top-level DNS Server</code>：管理各自域名下的权威域名服务器，比如  com 顶级域名服务器可以返回 apple.com 域名服务器的 IP 地址</p>
+</li>
+<li><p>权威域名服务器 <code>Authoritative DNS Server</code>：管理自己域名下主机的 IP 地址，比如 apple.com 权威域名服务器可以返回 <a target="_blank" rel="noopener" href="http://www.apple.com/">www.apple.com</a> 的 IP 地址</p>
+</li>
+</ul>
+</li>
+<li><p>根域名服务器必须是众所周知的，目前全世界共有 13 组根域名服务器，又有数百台的镜像，保证一定能够被访问到，有了这个系统以后，任何一个域名都可以在这个树形结构里<strong>从顶至下进行查询</strong>（把域名从右到左走了一遍），获得域名对应的 IP</p>
 <blockquote>
 <ol>
-<li>目前全世界有 13 组根 DNS 服务器，因为DNS协议还有UDP协议里包大小的限制，只有512字节，再除以DNS记录长度，最多15组，再去掉buffer</li>
+<li>目前全世界有 13 组根 DNS 服务器，因为 DNS 协议里包大小的限制（512 字节），再除以 DNS 记录长度，最多 15 组，再去掉 buffer</li>
 <li>HTTP 协议中并没有明确要求必须使用 DNS，但实际上为了方便访问互联网上的 Web 服务器，通常都会使用 DNS 来定位或标记主机名，间接地把 DNS 与 HTTP 绑在了一起</li>
 </ol>
 </blockquote>
-<p>​    </p>
-<p>&emsp;&emsp;在核心 DNS 系统之外，还有两种手段用来减轻域名解析的压力，并且能够更快地获取结果，基本思路就是<strong>缓存</strong></p>
-<ol>
-<li>大公司、网络运行商都会建立自己的 DNS 服务器，作为用户 DNS 查询的代理，代替用户访问核心 DNS 系统。这些服务器被称为<strong>非权威域名服务器</strong>，可以缓存之前的查询结果，如果已经有了记录，就无需再向根服务器发起查询，直接返回对应的 IP 地址。这些 DNS 服务器的数量要比核心系统的服务器多很多，而且大多部署在离用户很近的地方。比较知名的 DNS 有 Google 的<strong>8.8.8.8</strong>，Microsoft 的<strong>4.2.2.1</strong>，还有 CloudFlare 的<strong>1.1.1.1</strong>等。</li>
-<li>操作系统里也会对 DNS 解析结果做缓存，直接在操作系统里就可以拿到 IP 地址。另外，操作系统里还有一个特殊的<strong>主机映射</strong>文件，通常是一个可编辑的文本，在 Linux 里是<code>/etc/hosts</code>，在 Windows 里是<code>C:\WINDOWS\system32\drivers\etc\hosts</code>，如果操作系统在缓存里找不到 DNS 记录，就会找这个文件。</li>
-</ol>
+</li>
+<li><p>在核心 DNS 系统之外，还有两种手段用来减轻域名解析的压力，基本思路就是<strong>缓存</strong></p>
+<ul>
+<li><p>大公司、网络运行商都会建立自己的 DNS 服务器作为用户 DNS 查询的代理，这些服务器被称为<strong>非权威域名服务器</strong>，可以缓存之前的查询结果，如果已经有了记录，就无需再向根服务器发起查询，直接返回对应的 IP 地址，这些 DNS 服务器的数量要比核心系统的服务器多很多，而且大多部署在离用户很近的地方（比较知名的 DNS 有 Google 的<strong>8.8.8.8</strong>，Microsoft 的<strong>4.2.2.1</strong>，CloudFlare 的<strong>1.1.1.1</strong>）</p>
+</li>
+<li><p>操作系统里也会对 DNS 解析结果做缓存，直接在操作系统里就可以拿到 IP 地址，另外，操作系统里还有一个特殊的<strong>主机映射</strong>文件（在 Linux 里是<code>/etc/hosts</code>，在 Windows 里是<code>C:\WINDOWS\system32\drivers\etc\hosts</code>），如果操作系统在缓存里找不到 DNS 记录，就会找这个文件</p>
+</li>
+</ul>
+</li>
+</ul>
 <blockquote>
 <p><strong>总结</strong>：DNS 是一个树状的分布式查询系统，为了提高查询效率，外围有多级的缓存</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210129-dns-architecture.png" alt="现在的DNS架构"></p>
 </blockquote>
-<p><img src="image-20210129164918773.png" alt="现在的DNS架构"></p>
 <p>​    </p>
-<h5 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h5><ol>
+<h5 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h5><ul>
 <li><p>重定向，对外服务的域名不变，而主机的 IP 地址变动。当主机有情况需要下线或迁移时，可以更改 DNS 记录让域名指向其他机器。</p>
 </li>
 <li><p><strong>基于域名实现的负载均衡</strong></p>
-<p>域名解析可以返回多个 IP 地址，客户端收到多个 IP 地址后，使用轮询算法依次向服务器发起请求，实现负载均衡。</p>
-<p>域名解析可以配置内部的策略，返回离客户端近的主机或者当前服务质量好的主机，在 DNS 端把请求分发到不同的服务器。</p>
+<ul>
+<li><p>域名解析可以返回多个 IP 地址，客户端收到多个 IP 地址后，使用轮询算法依次向服务器发起请求，实现负载均衡</p>
+</li>
+<li><p>域名解析可以配置内部的策略，返回离客户端近的主机或者当前服务质量好的主机，在 DNS 端把请求分发到不同的服务器</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<h4 id="1-1-6-数据报和字节流"><a href="#1-1-6-数据报和字节流" class="headerlink" title="1.1.6 数据报和字节流"></a>1.1.6 数据报和字节流</h4><ul>
+<li><p>TCP又叫<strong>字节流套接字</strong><code>Stream Socket</code>，<strong>UDP</strong> 又叫<strong>数据报套接字</strong><code>Datagram Socket</code>，一般以<code>SOCK_STREAM</code>与<code>SOCK_DGRAM</code>分别表示 TCP 和 UDP 套接字，<code>Datagram Sockets</code> 有时称为无连接的 sockets<code>connectionless sockets</code></p>
+</li>
+<li><p>字节流套接字是可靠的，双向连接的通讯串流，TCP 通过诸如<strong>连接管理，拥塞控制，数据流与窗口管理，超时和重传</strong>等一系列精巧而详细的设计，提供了高质量的端到端的通信方式</p>
+</li>
+<li><p>数据报套接字也可以做到更高的可靠性，只不过这种可靠性，需要应用程序进行设计处理，比如对报文进行编号，设计 <code>Request-Ack</code> 机制，再加上重传等，在一定程度上可以达到更为高可靠的 UDP 程序</p>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="1-1-7-其他"><a href="#1-1-7-其他" class="headerlink" title="1.1.7 其他"></a>1.1.7 其他</h4><p>​    </p>
+<p>​    </p>
+<h3 id="1-2-网络分层"><a href="#1-2-网络分层" class="headerlink" title="1.2 网络分层"></a>1.2 网络分层</h3><h4 id="1-2-1-TCP-IP-网络分层模型"><a href="#1-2-1-TCP-IP-网络分层模型" class="headerlink" title="1.2.1 TCP/IP 网络分层模型"></a>1.2.1 TCP/IP 网络分层模型</h4><ol>
+<li><p>链接层<code>link layer</code>，负责在以太网、WiFi 这样的底层网络上发送原始数据包，工作在网卡这个层次，使用 MAC 地址来标记网络上的设备，所以有时也叫 <code>MAC</code> 层</p>
+</li>
+<li><p>网际层或网络互连层<code>internet layer</code>，IP 协议就处在这一层，可以在链接层的基础上，用 IP 地址取代 MAC 地址，把许许多多的局域网、广域网连接成一个虚拟的巨大网络，在这个网络里找设备时只需要把 IP 地址翻译成 MAC 地址</p>
+</li>
+<li><p>传输层<code>transport layer</code>，这个层次协议的职责是保证数据在 IP 地址标记的两点之间可靠地传输，是 TCP 协议工作的层次</p>
+</li>
+<li><p>应用层<code>application layer</code>，有各种面向具体应用的协议（如 Telnet、SSH、FTP、SMTP、<a href="https://night-candle.github.io/2021/02/04/cs-network-protocol/#toc-heading-5">HTTP</a>）</p>
+<blockquote>
+<p>MAC 层的传输单位是<strong>帧</strong><code>frame</code>，IP 层的传输单位是<strong>包</strong><code>packet</code>，TCP 层的传输单位是<strong>段</strong><code>segment</code>，HTTP 的传输单位则是<strong>消息</strong>或<strong>报文</strong><code>message</code>，它们可以统称为<strong>数据包</strong></p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210128-tcpip.png"></p>
 </li>
 </ol>
 <p>​    </p>
-<h4 id="1-1-6-数据报和字节流"><a href="#1-1-6-数据报和字节流" class="headerlink" title="1.1.6 数据报和字节流"></a>1.1.6 数据报和字节流</h4><p>&emsp;&emsp;<strong>TCP</strong>又被叫做<strong>字节流套接字</strong><code>Stream Socket</code>，<strong>UDP</strong> 又被叫做<strong>数据报套接字</strong><code>Datagram Socket</code>，一般以<code>SOCK_STREAM</code>与<code>SOCK_DGRAM</code>分别表示 TCP 和 UDP 套接字。<code>Datagram Sockets</code> 有时称为<strong>无连接的 sockets</strong> <code>connectionless sockets</code></p>
-<p>&emsp;&emsp;<strong>字节流套接字是可靠的</strong>，双向连接的通讯串流。比如以<code>1-2-3</code>的顺序将字节流输出到套接字上，它们在另一端一定会以<code>1-2-3</code>的顺序抵达，且不会出错。TCP 通过诸如<strong>连接管理，拥塞控制，数据流与窗口管理，超时和重传</strong>等一系列精巧而详细的设计，提供了高质量的端到端的通信方式。</p>
-<p>&emsp;&emsp;<strong>数据报套接字</strong>也可以做到更高的可靠性，只不过这种可靠性，需要应用程序进行设计处理，比如对报文进行编号，设计 <code>Request-Ack</code> 机制，再加上重传等，在一定程度上可以达到更为高可靠的 UDP 程序。</p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="1-1-7-其他"><a href="#1-1-7-其他" class="headerlink" title="1.1.7 其他"></a>1.1.7 其他</h4><p>&emsp;&emsp;什么是网络</p>
-<ul>
-<li>在计算机领域中，网络是信息传输、接收、共享的虚拟平台</li>
-<li>通过它把各个点、面、体的信息联系到一起，可以进行数据传递，从而实现这些资源的共享</li>
-</ul>
-<p>&emsp;&emsp;什么是网络编程</p>
-<ul>
-<li>大方面说就是对信息的发送到接受</li>
-<li>通过操作相应API调度计算机硬件资源，并利用传输管道（网线）进行数据交换的过程</li>
-</ul>
-<p>​    </p>
-<p>​    </p>
-<h3 id="1-2-网络分层"><a href="#1-2-网络分层" class="headerlink" title="1.2 网络分层"></a>1.2 网络分层</h3><p>&emsp;&emsp;网络为什么要分层？因为复杂的程序都要分层。网络包的格式很复杂，处理网络包的程序也很复杂。<strong>复杂的程序都要分层，这是程序设计的要求。</strong>比如，复杂的电商还会分数据库层、缓存层、Compose 层、Controller 层和接入层，每一层专注做本层的事情。</p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="1-2-1-TCP-IP-网络分层模型"><a href="#1-2-1-TCP-IP-网络分层模型" class="headerlink" title="1.2.1 TCP/IP 网络分层模型"></a>1.2.1 TCP/IP 网络分层模型</h4><p><img src="image-20210128181222554.png"></p>
-<p>第一层：<strong>链接层</strong><code>link layer</code>，负责在以太网、WiFi 这样的底层网络上发送原始数据包，工作在网卡这个层次，使用 MAC 地址来标记网络上的设备，所以有时也叫 <code>MAC</code> 层。<br>第二层：<strong>网际层</strong>或<strong>网络互连层</strong><code>internet layer</code>，IP 协议就处在这一层，可以在链接层的基础上，用 IP 地址取代 MAC 地址，把许许多多的局域网、广域网连接成一个虚拟的巨大网络，在这个网络里找设备时只需要把 IP 地址翻译成 MAC 地址。<br>第三层：<strong>传输层</strong><code>transport layer</code>，这个层次协议的职责是保证数据在 IP 地址标记的两点之间可靠地传输，是 TCP 协议工作的层次。<br>第四层：<strong>应用层</strong><code>application layer</code>，有各种面向具体应用的协议。如 <code>Telnet</code>、<code>SSH</code>、<code>FTP</code>、<code>SMTP</code>、<code>HTTP</code> 等。</p>
+<h4 id="1-2-2-OSI-网络分层模型"><a href="#1-2-2-OSI-网络分层模型" class="headerlink" title="1.2.2 OSI 网络分层模型"></a>1.2.2 OSI 网络分层模型</h4><ol>
+<li><p><strong>物理层</strong>，网络的物理形式，例如电缆、光纤、网卡、集线器等等</p>
+</li>
+<li><p><strong>数据链路层</strong>，它基本相当于 TCP/IP 的链接层</p>
+</li>
+<li><p><strong>网络层</strong>，相当于 TCP/IP 里的网际层</p>
+</li>
+<li><p><strong>传输层</strong>，相当于 TCP/IP 里的传输层</p>
+</li>
+<li><p><strong>会话层</strong>，维护网络中的连接状态，即保持会话和同步</p>
+</li>
+<li><p><strong>表示层</strong>，把数据转换为合适、可理解的语法和语义</p>
+</li>
+<li><p><strong>应用层</strong>，面向具体的应用传输数据</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210128-osi.png"></p>
 <blockquote>
-<p>MAC 层的传输单位是<strong>帧</strong><code>frame</code>，IP 层的传输单位是<strong>包</strong><code>packet</code>，TCP 层的传输单位是<strong>段</strong><code>segment</code>，HTTP 的传输单位则是<strong>消息</strong>或<strong>报文</strong><code>message</code>。但这些名词并没有什么本质的区分，可以统称为<strong>数据包</strong></p>
-</blockquote>
-<p>​    </p>
-<h4 id="1-2-2-OSI-网络分层模型"><a href="#1-2-2-OSI-网络分层模型" class="headerlink" title="1.2.2 OSI 网络分层模型"></a>1.2.2 OSI 网络分层模型</h4><p><img src="image-20210128182157585.png"></p>
-<p>第一层：<strong>物理层</strong>，网络的物理形式，例如电缆、光纤、网卡、集线器等等<br>第二层：<strong>数据链路层</strong>，它基本相当于 TCP/IP 的链接层<br>第三层：<strong>网络层</strong>，相当于 TCP/IP 里的网际层<br>第四层：<strong>传输层</strong>，相当于 TCP/IP 里的传输层<br>第五层：<strong>会话层</strong>，维护网络中的连接状态，即保持会话和同步<br>第六层：<strong>表示层</strong>，把数据转换为合适、可理解的语法和语义<br>第七层：<strong>应用层</strong>，面向具体的应用传输数据</p>
-<p>​    </p>
-<p>&emsp;&emsp;TCP/IP 是一个纯软件的栈，没有网络应有的最根基的电缆、网卡等物理设备的位置。而 OSI 则补足了这个缺失，在理论层面上描述网络更加完整。OSI 为每一层标记了明确了编号，最底层是一层，最上层是七层，而 TCP/IP 的层次从来只有名字而没有编号。</p>
-<p>​    </p>
-<p><img src="image-20210128182446366.png" alt="对应关系"></p>
-<p>&emsp;&emsp;OSI 的分层模型在四层以上分的太细，而 TCP/IP 实际应用时的会话管理、编码转换、压缩等和具体应用经常联系的很紧密，很难分开。</p>
-<blockquote>
+<p>常用术语：</p>
 <p><strong>四层负载均衡</strong>：工作在传输层上，基于 TCP/IP 协议的特性，例如 IP 地址、端口号等实现对后端服务器的负载均衡<br><strong>七层负载均衡</strong>：工作在应用层上，看到的是 HTTP 协议，解析 HTTP 报文里的 URI、主机名、资源类型等数据，再用适当的策略转发给后端服务器<br><strong>三层路由</strong>：设备工作在ip层，报文经过有路由功能的设备时，设备分析报文中的头部信息，拿到ip地址，根据网段范围，进行本地转发或选择下一个网关<br><strong>二层转发</strong>：设备工作在链路层，帧在经过交换机设备时，检查帧的头部信息，拿到目标mac地址，进行本地转发和广播</p>
 </blockquote>
+</li>
+</ol>
+<p>​    </p>
+<h4 id="1-2-3-5层参考模型"><a href="#1-2-3-5层参考模型" class="headerlink" title="1.2.3 5层参考模型"></a>1.2.3 5层参考模型</h4><ul>
+<li><p>TCP/IP 是一个纯软件的栈，没有网络应有的最根基的电缆、网卡等物理设备的位置，而 OSI 则补足了这个缺失，在理论层面上描述网络更加完整</p>
+</li>
+<li><p>OSI 的分层模型在四层以上分的太细，而 TCP/IP 实际应用时的会话管理、编码转换、压缩等和具体应用经常联系的很紧密，很难分开</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210128-map.png" alt="对应关系"></p>
+</li>
+<li><p>因此有了结合 OSI 和 TCP/IP 优点的 5 层参考模型</p>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<h3 id="1-3-Socket套接字"><a href="#1-3-Socket套接字" class="headerlink" title="1.3 Socket套接字"></a>1.3 Socket套接字</h3><h4 id="1-3-1-socket-是什么？"><a href="#1-3-1-socket-是什么？" class="headerlink" title="1.3.1 socket 是什么？"></a>1.3.1 socket 是什么？</h4><p>&emsp;&emsp;<code>socket</code> 中文翻译为<strong>套接字</strong>，有时也叫<strong>套接口</strong>。这个单词的原意是“插口”“插槽”， 在网络编程中寓意是可以通过插口接入的方式，快速完成网络连接和数据收发。<code>socket</code>也可以看做是对物理世界的直接映射。</p>
-<p><img src="cs-network-socket/image-20210202195509023.png" alt="客户端和服务器工作核心逻辑"></p>
-<p>&emsp;&emsp;右侧的图显示的是服务器端初始化的过程：首先初始化 <code>socket</code>，之后需要执行 <code>bind</code> 函数，将自己的服务能力绑定在一个固定的地址和端口上，紧接着执行 <code>listen</code> 操作，将原先的 <code>socket</code> 转化为服务端的 <code>socket</code>，服务端最后阻塞在 <code>accept</code> 上，此时，服务器端已经准备就绪，等待客户端的请求。</p>
-<p>&emsp;&emsp;客户端需要先初始化 <code>socket</code>，再执行 <code>connect</code> 向服务器端的地址和端口发起连接请求。这个过程就是<strong>TCP 三次握手</strong><code>Three-way Handshake</code>。三次握手完成，客户端和服务器端建立连接，就进入了数据传输过程。<strong>一旦连接建立，数据的传输就不再是单向的，而是双向的，这是 TCP 的一个显著特性</strong>。</p>
-<p>&emsp;&emsp;当客户端完成和服务器端的交互后，需要和服务器端断开连接时，就会执行 <code>close</code> 函数，操作系统内核此时会通过原先的连接链路向服务器端发送一个 <code>FIN</code> 包，服务器收到之后执行被动关闭，这时候整个链路处于半关闭状态，此后服务器端也会执行 <code>close</code> 函数，整个链路才会真正关闭。<strong>半关闭的状态下，发起 close 请求的一方在没有收到对方 FIN 包之前都认为连接是正常的</strong>，而在全关闭的状态下，双方都感知连接已经关闭。</p>
+<h3 id="1-3-Socket-套接字"><a href="#1-3-Socket-套接字" class="headerlink" title="1.3 Socket 套接字"></a>1.3 Socket 套接字</h3><h4 id="1-3-1-Socket-是什么？"><a href="#1-3-1-Socket-是什么？" class="headerlink" title="1.3.1 Socket 是什么？"></a>1.3.1 Socket 是什么？</h4><ul>
+<li><p><code>socket</code> 译为<strong>套接字</strong>， 在网络编程中寓意是可以通过插口接入的方式，快速完成网络连接和数据收发，它把 TCP/IP 层复杂的操作抽象为几个简单的接口供应用层调用以实现进程在网络中通信</p>
+<p>*To allow for many processes within a single Host to use TCP communication facilities simultaneously, the TCP provides a set of addresses or ports within each host.  Concatenated with the network and host addresses from the internet communication layer, this forms a socket.  A pair of sockets uniquely identifies each connection.*（RFC793）</p>
+</li>
+<li><p>理解 socket</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210202-server-client.png" alt="客户端和服务器工作核心逻辑"></p>
+<ul>
+<li><p>服务器端初始化的过程：首先初始化 <code>socket</code>，之后需要执行 <code>bind</code> 函数，将自己的服务能力绑定在一个固定的地址和端口上，紧接着执行 <code>listen</code> 操作，将原先的 <code>socket</code> 转化为服务端的 <code>socket</code>，服务端最后阻塞在 <code>accept</code> 上，此时，服务器端已经准备就绪，等待客户端的请求</p>
+</li>
+<li><p>客户端需要先初始化 <code>socket</code>，再执行 <code>connect</code> 向服务器端的地址和端口发起连接请求</p>
+<p>这个过程就是<strong>TCP 三次握手</strong><code>Three-way Handshake</code>，三次握手完成，客户端和服务器端建立连接，就进入了数据传输过程，<strong>一旦连接建立，数据的传输就不再是单向的，而是双向的</strong></p>
 <blockquote>
-<p>&emsp;&emsp;具体来说，客户端进程向操作系统内核发起 <code>write</code> 字节流写操作，内核协议栈将字节流通过网络设备传输到服务器端，服务器端从内核得到信息，将字节流从内核读入到进程中，并开始业务逻辑的处理，完成之后，服务器端再将得到的结果以同样的方式写给客户端。</p>
+<p>具体来说，客户端进程向操作系统内核发起 <code>write</code> 字节流写操作，内核协议栈将字节流通过网络设备传输到服务器端，服务器端从内核得到信息，将字节流从内核读入到进程中，并开始业务逻辑的处理，完成之后，服务器端再将得到的结果以同样的方式写给客户端</p>
 </blockquote>
-<p>​    </p>
-<p>&emsp;&emsp;以上所有的操作，都是通过 <code>socket</code> 来完成的。无论是 <code>connect</code>还是 <code>accept</code>，或者 <code>read/write</code> 操作等，<strong>socket 是用来建立连接，传输数据的唯一途径</strong>。</p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="1-3-2-直观解释"><a href="#1-3-2-直观解释" class="headerlink" title="1.3.2 直观解释*"></a>1.3.2 直观解释*</h4><p>&emsp;&emsp;可以把整个 TCP 的网络交互和数据传输想象成打电话，<strong>socket 就好像是手里的电话机</strong>，<strong>connect 就好比拿着电话机拨号</strong>，而服务器端的 <strong>bind 就好比是将电话号码和我们家里的电话机绑定</strong>，这样别人就可以用这个号码找到你，<strong>listen 就好似接上线后听到了响铃</strong>，<strong>accept 就好比是被叫的一方拿起电话开始应答</strong>。至此，三次握手就完成了，连接建立完毕。</p>
-<p>&emsp;&emsp;接下来，拨打电话的人开始说话：“你好。”这时就进入了 write，接收电话的人听到的过程可以想象成 read（听到并读出数据），并且开始应答，双方就进入了 read/write 的数据传输过程。</p>
-<p>&emsp;&emsp;最后，拨打电话的人完成了此次交流，挂上电话，对应的操作可以理解为 close，接听电话的人知道对方已挂机，也挂上电话，也是一次 close。</p>
-<p>&emsp;&emsp;<strong>在整个电话交流过程中，电话是我们可以和外面通信的设备，对应到网络编程的世界里，socket 也是我们可以和外界进行网络通信的途径。</strong></p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="1-3-3-socket发展历史"><a href="#1-3-3-socket发展历史" class="headerlink" title="1.3.3 socket发展历史*"></a>1.3.3 socket发展历史*</h4><p>&emsp;&emsp;<code>socket</code> 是加州大学伯克利分校的研究人员在 20 世纪 80 年代早期提出的，所以也被叫做伯克利套接字。研究者们设想<strong>用 socket 的概念屏蔽掉底层协议栈的差别</strong>。第一版实现 <code>socket</code> 的就是 <code>TCP/IP</code> 协议，最早是在 <strong>BSD 4.2 Unix 内核</strong>上实现了 socket。</p>
-<p>&emsp;&emsp;很快人们就发现这么一个概念带来了网络编程的便利，于是有更多人也接触到了 socket 的概念。Linux 作为 Unix 系统的一个开源实现，很早就从头开发实现了 TCP/IP 协议，伴随着 socket 的成功，Windows 也引入了 socket 的概念。于是在今天的世界里，socket 成为网络互联互通的标准。</p>
+</li>
+<li><p>四次挥手：当客户端交互完成需断开连接时，会执行 <code>close</code> 函数，内核此时会通过原先的连接链路向服务端发送一个 <code>FIN</code> 包，服务端收到之后执行被动关闭，这时候整个链路处于半关闭状态，此后服务端也会执行 <code>close</code> 函数，整个链路才会真正关闭，<strong>半关闭的状态下，发起 close 请求的一方在没有收到对方 FIN 包之前都认为连接是正常的</strong>，而在全关闭的状态下，双方都感知连接已经关闭</p>
+</li>
+<li><p>以上所有的操作，都是通过 <code>socket</code> 来完成的，无论是 <code>connect</code>还是 <code>accept</code>，或者 <code>read/write</code> 操作等，<strong>socket 是用来建立连接，传输数据的唯一途径</strong></p>
+</li>
+</ul>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<h4 id="1-3-4-套接字地址格式"><a href="#1-3-4-套接字地址格式" class="headerlink" title="1.3.4 套接字地址格式"></a>1.3.4 套接字地址格式</h4><p>&emsp;&emsp;<strong>在使用套接字时，首先要解决通信双方寻址的问题，</strong>我们需要套接字的地址建立连接。下面是套接字的<strong>通用</strong>地址结构（适用于多种地址族）</p>
+<h4 id="1-3-2-Socket-发展历史"><a href="#1-3-2-Socket-发展历史" class="headerlink" title="1.3.2 Socket 发展历史*"></a>1.3.2 Socket 发展历史*</h4><ul>
+<li><p><code>socket</code> 是加州大学伯克利分校的研究人员在 20 世纪 80 年代早期提出的，所以也被叫做伯克利套接字，研究者们设想<strong>用 socket 的概念屏蔽掉底层协议栈的差别</strong></p>
+</li>
+<li><p>第一版实现 <code>socket</code> 的就是 <code>TCP/IP</code> 协议，最早是在 <strong>BSD 4.2 Unix 内核</strong>上实现了 socket</p>
+</li>
+<li><p>很快人们就发现这么一个概念带来了网络编程的便利，Linux 作为 Unix 系统的一个开源实现，很早就从头开发实现了 TCP/IP 协议，伴随着 socket 的成功，Windows 也引入了 socket 的概念，在今天的世界里，socket 成为网络互联互通的标准</p>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="1-3-3-套接字地址格式"><a href="#1-3-3-套接字地址格式" class="headerlink" title="1.3.3 套接字地址格式"></a>1.3.3 套接字地址格式</h4><ul>
+<li><p>在使用套接字时，首先要解决通信双方寻址的问题</p>
+</li>
+<li><p>下面是套接字的<strong>通用</strong>地址结构（适用于多种地址族）</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* POSIX.1g 规范规定了地址族为 2 字节的值.  */</span>
 <span class="token keyword">typedef</span> <span class="token keyword">unsigned</span> <span class="token keyword">short</span> <span class="token keyword">int</span> sa_family_t<span class="token punctuation">;</span>
 <span class="token comment" spellcheck="true">/* 描述通用套接字地址  */</span>
@@ -662,14 +732,20 @@ Linu">
     sa_family_t sa_family<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">/* 地址族.  16-bit*/</span>
     <span class="token keyword">char</span> sa_data<span class="token punctuation">[</span><span class="token number">14</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">/* 具体的地址值 112-bit */</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>在这个结构体里第一个字段是<strong>地址族</strong>，表示<strong>使用什么样的方式对地址进行解释和保存</strong>。地址族在 <code>glibc</code> 里的定义非常多，常用的有：</p>
+<p>结构体里第一个字段是<strong>地址族</strong>，表示<strong>使用什么样的方式对地址进行解释和保存</strong>，地址族在 glibc 里的定义非常多，常用的有：</p>
 <ul>
-<li><code>AF_LOCAL</code>：表示的是本地地址，对应的是 <code>Unix</code> 套接字，这种情况一般用于本地 <code>socket</code> 通信，很多情况下也可以写成 <code>AF_UNIX</code>、<code>AF_FILE</code></li>
-<li><code>AF_INET</code>：因特网使用的 IPv4 地址</li>
-<li><code>AF_INET6</code>：因特网使用的 IPv6 地址</li>
+<li><p><code>AF_LOCAL</code>：表示的是本地地址，对应的是 <code>Unix</code> 套接字，这种情况一般用于本地 <code>socket</code> 通信，很多情况下也可以写成 <code>AF_UNIX</code>、<code>AF_FILE</code></p>
+</li>
+<li><p><code>AF_INET</code>：因特网使用的 IPv4 地址</p>
+</li>
+<li><p><code>AF_INET6</code>：因特网使用的 IPv6 地址</p>
+</li>
 </ul>
-<p>&emsp;&emsp;<code>AF_</code> 含义是 <code>Address Family</code>，很多情况下也会看到以 <code>PF_</code> 表示的宏，含义是 <code>Protocol Family</code>（协议族）。用 AF_xxx 这样的值来初始化 socket 地址，用 PF_xxx 这样的值来初始化 socket。</p>
-<p>在 <code>&lt;sys/socket.h&gt;</code> 头文件中可以看到这两个值是一一对应的。</p>
+</li>
+</ul>
+<ul>
+<li><p><code>AF_</code> 含义是 <code>Address Family</code>，还有以 <code>PF_</code> 表示的宏，含义是 <code>Protocol Family</code>（协议族），用 AF_ 这样的值来初始化 socket 地址，用 PF_ 这样的值来初始化 socket</p>
+<p>在 <code>&lt;sys/socket.h&gt;</code> 头文件中可以看到这两个值是一一对应的</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* 各种地址族的宏定义  */</span>
 <span class="token macro property">#<span class="token directive keyword">define</span> AF_UNSPEC PF_UNSPEC</span>
 <span class="token macro property">#<span class="token directive keyword">define</span> AF_LOCAL  PF_LOCAL</span>
@@ -684,8 +760,15 @@ Linu">
 <span class="token macro property">#<span class="token directive keyword">define</span> AF_ATMPVC PF_ATMPVC</span>
 <span class="token macro property">#<span class="token directive keyword">define</span> AF_X25    PF_X25</span>
 <span class="token macro property">#<span class="token directive keyword">define</span> AF_INET6  PF_INET6</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><strong>套接字地址格式比较</strong></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210401-address-family-compare.png"></p>
+</li>
+</ul>
 <p>​    </p>
-<h5 id="IPv4-套接字格式地址"><a href="#IPv4-套接字格式地址" class="headerlink" title="IPv4 套接字格式地址*"></a>IPv4 套接字格式地址*</h5><pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* IPV4 套接字地址，32bit 值.  */</span>
+<h5 id="IPv4-套接字格式地址"><a href="#IPv4-套接字格式地址" class="headerlink" title="IPv4 套接字格式地址*"></a>IPv4 套接字格式地址*</h5><ul>
+<li><p>常用的 IPv4 地址族的结构</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* IPV4 套接字地址，32bit 值.  */</span>
 <span class="token keyword">typedef</span> uint32_t in_addr_t<span class="token punctuation">;</span>
 <span class="token keyword">struct</span> in_addr
   <span class="token punctuation">{</span>
@@ -699,14 +782,21 @@ Linu">
     in_port_t sin_port<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">/* 端口口  16-bit*/</span>
     <span class="token keyword">struct</span> in_addr sin_addr<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">/* Internet address. 32-bit */</span>
 
-
     <span class="token comment" spellcheck="true">/* 这里仅仅用作占位符，不做实际用处  */</span>
     <span class="token keyword">unsigned</span> <span class="token keyword">char</span> sin_zero<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>sockaddr_in</code>与 <code>sockaddr</code> 一样，都有一个 16-bit 的 <code>sin_family</code> 字段，对于 IPv4 来说这个值就是 <code>AF_INET</code>。端口号最多是 16-bit，最大支持 $2^{16}$= 65536，支持寻址的端口号最多就是 65535。</p>
-<p>实际的 IPv4 地址是一个 32-bit 的字段，最多支持的地址数就是$2^{32}$，大约是 42 亿，但随着互联网发展，全球接入的设备越来越多，地址渐渐显得不太够用了。</p>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><code>sockaddr_in</code>与 <code>sockaddr</code> 一样，都有一个 16-bit 的 <code>sin_family</code> 字段，对于 IPv4 来说这个值就是 <code>AF_INET</code></li>
+<li>端口号最多是 16-bit，最大支持 $2^{16}$= 65536，支持寻址的端口号最多就是 65535</li>
+</ul>
+</li>
+<li><p>IPv4 地址是一个 32-bit 的字段，最多支持的地址数就是$2^{32}$，大约是 42 亿，但随着互联网发展，全球接入的设备越来越多，地址渐渐显得不太够用了</p>
+</li>
+</ul>
 <p>​    </p>
-<h5 id="IPv6-套接字地址格式"><a href="#IPv6-套接字地址格式" class="headerlink" title="IPv6 套接字地址格式*"></a>IPv6 套接字地址格式*</h5><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> sockaddr_in6
+<h5 id="IPv6-套接字地址格式"><a href="#IPv6-套接字地址格式" class="headerlink" title="IPv6 套接字地址格式*"></a>IPv6 套接字地址格式*</h5><ul>
+<li><p>IPv6 的地址结构</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> sockaddr_in6
   <span class="token punctuation">{</span>
     sa_family_t sin6_family<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* 16-bit */</span>
     in_port_t sin6_port<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">/* 传输端口号 # 16-bit */</span>
@@ -714,63 +804,81 @@ Linu">
     <span class="token keyword">struct</span> in6_addr sin6_addr<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">/* IPv6 地址 128-bit */</span>
     uint32_t sin6_scope_id<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* IPv6 域 ID 32-bit */</span>
   <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>整个结构体长度是 28 个字节，地址族是 <code>AF_INET6</code>，端口同 IPv4 地址一样，关键的地址从 32 位升级到 128 位，完全解决了寻址数字不够的问题。（其中流控信息和域 IP 这两个字段，一个在 <code>glibc</code> 的官网上没出现，另一个是当前未使用的字段）</p>
-<p>​    </p>
-<p>无论 IPv4 还是 IPv6 的地址格式都是因特网套接字的格式，还有一种本地套接字格式，用来做为本地进程间的通信，即 <code>AF_LOCAL</code></p>
+<p>整个结构体长度是 28 个字节，地址族是 <code>AF_INET6</code>，端口同 IPv4 地址一样（其中流控信息和域 IP 这两个字段，一个在 glibc 的官网上没出现，另一个是当前未使用的字段）</p>
+</li>
+<li><p>地址从 32 位升级到 128 位，完全解决了寻址数字不够的问题</p>
+</li>
+</ul>
+<h5 id="本地套接字地址格式"><a href="#本地套接字地址格式" class="headerlink" title="本地套接字地址格式*"></a>本地套接字地址格式*</h5><ul>
+<li><p>本地套接字用来做为本地进程间的通信，即 <code>AF_LOCAL</code></p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> sockaddr_un <span class="token punctuation">{</span>
     <span class="token keyword">unsigned</span> <span class="token keyword">short</span> sun_family<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* 固定为 AF_LOCAL */</span>
     <span class="token keyword">char</span> sun_path<span class="token punctuation">[</span><span class="token number">108</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">/* 路径名 */</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>为什么本地套接字格式不需要端口号，而 IPv4 和 IPv6 套接字格式却需要端口号呢？</p>
-<p><strong>一切皆文件，socket也是文件</strong>。socket基于文件操作，<strong>因此只需要根据文件路径便可区分，不需要使用端口</strong>。也正因如此，IPv4 和 IPv6 套接字地址结构的长度是固定的，而本地地址是可变的。</p>
+<p><strong>一切皆文件，socket也是文件</strong>，socket基于文件操作，<strong>因此只需要根据文件路径便可区分，不需要使用端口</strong>，也正因如此，IPv4 和 IPv6 套接字地址结构的长度是固定的，而本地地址是可变的</p>
 </blockquote>
+</li>
+</ul>
 <p>​    </p>
-<h5 id="套接字地址格式比较"><a href="#套接字地址格式比较" class="headerlink" title="套接字地址格式比较"></a>套接字地址格式比较</h5><p><img src="image-20210401203448576.png"></p>
 <p>​    </p>
-<p>​    </p>
-<h3 id="1-4-TCP建立连接"><a href="#1-4-TCP建立连接" class="headerlink" title="1.4 TCP建立连接"></a>1.4 TCP建立连接</h3><h4 id="1-4-1-服务端准备连接"><a href="#1-4-1-服务端准备连接" class="headerlink" title="1.4.1 服务端准备连接"></a>1.4.1 服务端准备连接</h4><p>​    </p>
-<h5 id="创建套接字"><a href="#创建套接字" class="headerlink" title="创建套接字"></a>创建套接字</h5><p>要创建一个可用的套接字，需要使用下面的函数：</p>
+<h3 id="1-4-TCP-建立连接"><a href="#1-4-TCP-建立连接" class="headerlink" title="1.4 TCP 建立连接"></a>1.4 TCP 建立连接</h3><h4 id="1-4-1-服务端准备连接"><a href="#1-4-1-服务端准备连接" class="headerlink" title="1.4.1 服务端准备连接"></a>1.4.1 服务端准备连接</h4><p>​    </p>
+<h5 id="创建套接字"><a href="#创建套接字" class="headerlink" title="创建套接字"></a>创建套接字</h5><ul>
+<li><p>要创建一个可用的套接字，使用 socket 函数：</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">socket</span><span class="token punctuation">(</span><span class="token keyword">int</span> domain<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">,</span> <span class="token keyword">int</span> protocol<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><code>domain</code> 指 <code>PF_INET</code>、<code>PF_INET6</code> 、 <code>PF_LOCAL</code> 等，表示什么样的套接字</p>
-<p><code>type</code> 可用的值：</p>
 <ul>
+<li><code>domain</code> 指 <code>PF_INET</code>、<code>PF_INET6</code> 、 <code>PF_LOCAL</code> 等，表示什么样的套接字</li>
+<li><code>type</code> 可用的值：</li>
 <li><code>SOCK_STREAM</code>: 表示字节流，对应 <code>TCP</code></li>
 <li><code>SOCK_DGRAM</code>： 表示数据报，对应 <code>UDP</code></li>
 <li><code>SOCK_RAW</code>: 表示原始套接字</li>
+<li><code>protocol</code> 原本是用来指定通信协议，但现在基本废弃（因为协议已经通过前面两个参数指定完成，目前一般写成 0 即可）</li>
 </ul>
-<p><code>protocol</code> 原本是用来指定通信协议的，但现在基本废弃。因为协议已经通过前面两个参数指定完成。目前一般写成 0 即可。</p>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
 <h5 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h5><p>​    </p>
-<p>创建出来的套接字如果需要被使用，就需要调用 <code>bind</code> 函数<strong>把套接字和套接字地址绑定</strong>，调用 bind 函数的方式如下：</p>
+<ul>
+<li><p>创建的套接字如果需要被使用，就需调用 <code>bind</code> 函数将套接字和套接字地址绑定：</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> sockaddr <span class="token operator">*</span> addr<span class="token punctuation">,</span> socklen_t len<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><code>sockaddr * addr</code>通用地址格式，但是实际上传入的参数可能是 IPv4、IPv6 或者本地套接字格式。</p>
-<p><code>len</code> 字段表示的就是传入的地址长度，是一个可变值。<code>bind</code> 函数会根据 <code>len</code> 字段判断传入的参数 <code>addr</code> 该怎么解析。</p>
+<ul>
+<li><p><code>sockaddr * addr</code>通用地址格式（但实际上传入的参数可能是 IPv4、IPv6 或者本地套接字格式）</p>
+</li>
+<li><p><code>len</code> 字段表示的就是传入的地址长度，是一个可变值，bind 函数会根据 <code>len</code> 字段判断传入的参数 <code>addr</code> 该怎么解析</p>
+</li>
+</ul>
 <blockquote>
-<p>BSD 设计套接字的时候 C 语言还没有<code>void *</code>的支持，所以 BSD 的设计者们设计了通用地址格式来作为支持 <code>bind</code> 和 <code>accept</code> 等这些函数的参数。对使用者来说，每次需要将 IPv4、IPv6 或者本地套接字格式转化为通用套接字格式。</p>
+<p>BSD 设计套接字的时候 C 语言还没有<code>void *</code>的支持，所以 BSD 的设计者们设计了通用地址格式来作为支持 <code>bind</code> 和 <code>accept</code> 等这些函数的参数，对使用者来说，每次需要将 IPv4、IPv6 或者本地套接字格式转化为通用套接字格式</p>
 </blockquote>
+</li>
+</ul>
 <p>​    </p>
-<p>&emsp;&emsp;设置 bind 时对地址和端口可以有多种处理方式：</p>
-<p>&emsp;&emsp;<strong>把地址设置成本机 IP 地址</strong>，相当于告诉系统内核仅对目标 IP 是本机 IP 地址的包进行处理。对部署前 IP 地址不确定的问题，可以利用<strong>通配地址</strong>的能力帮助解决。比如一台机器有两块网卡，那么向这两个 IP 请求的请求包都会被应用程序处理。</p>
-<p>IPv4 地址使用 <code>INADDR_ANY</code> 、 IPv6使用 <code>IN6ADDR_ANY</code> 来完成通配地址的设置。</p>
+<ul>
+<li><p>设置 bind 时对地址和端口可以有多种处理方式：</p>
+<ul>
+<li><p><strong>把地址设置成本机 IP 地址</strong>，相当于告诉系统内核仅对目标 IP 是本机 IP 地址的包进行处理，对部署前 IP 地址不确定的问题，可以利用<strong>通配地址</strong>的能力帮助解决，IPv4 地址使用 <code>INADDR_ANY</code> 、 IPv6使用 <code>IN6ADDR_ANY</code> 来完成通配地址的设置</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> sockaddr_in name<span class="token punctuation">;</span>
 name<span class="token punctuation">.</span>sin_addr<span class="token punctuation">.</span>s_addr <span class="token operator">=</span> <span class="token function">htonl</span> <span class="token punctuation">(</span>INADDR_ANY<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* IPV4 通配地址 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>如果把端口设置成 0，就相当于把端口的选择权交给操作系统内核，操作系统内核会选择一个空闲的端口，完成套接字的绑定。这在服务器端不常使用，一般来说服务器端的程序要绑定到一个众所周知的端口上</p>
+</li>
+</ul>
+</li>
+</ul>
 <p>​    </p>
-<p>&emsp;&emsp;如果把端口设置成 0，就相当于把端口的选择权<strong>交给操作系统内核</strong>来处理，操作系统内核会根据一定的算法选择一个空闲的端口，完成套接字的绑定。这在服务器端不常使用，一般来说服务器端的程序要绑定到一个众所周知的端口上。</p>
-<p>​    </p>
-<p>一个初始化 IPv4 TCP 套接字的例子:</p>
+<ul>
+<li><p>初始化 IPv4 TCP 套接字的例子</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/socket.h></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;netinet/in.h></span></span>
 
-
 <span class="token keyword">int</span> <span class="token function">make_socket</span> <span class="token punctuation">(</span>uint16_t port<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
   <span class="token keyword">int</span> sock<span class="token punctuation">;</span>
   <span class="token keyword">struct</span> sockaddr_in name<span class="token punctuation">;</span>
-
 
   <span class="token comment" spellcheck="true">/* 创建字节流类型的 IPV4 socket. */</span>
   sock <span class="token operator">=</span> <span class="token function">socket</span> <span class="token punctuation">(</span>PF_INET<span class="token punctuation">,</span> SOCK_STREAM<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -779,7 +887,6 @@ name<span class="token punctuation">.</span>sin_addr<span class="token punctuati
       <span class="token function">perror</span> <span class="token punctuation">(</span><span class="token string">"socket"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token function">exit</span> <span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-
 
   <span class="token comment" spellcheck="true">/* 绑定到 port 和 ip. */</span>
   name<span class="token punctuation">.</span>sin_family <span class="token operator">=</span> AF_INET<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* IPV4 */</span>
@@ -791,111 +898,160 @@ name<span class="token punctuation">.</span>sin_addr<span class="token punctuati
       <span class="token function">perror</span> <span class="token punctuation">(</span><span class="token string">"bind"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token function">exit</span> <span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-
-
   <span class="token keyword">return</span> sock
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
 <h5 id="listen"><a href="#listen" class="headerlink" title="listen"></a>listen</h5><p>​    </p>
-<p>&emsp;&emsp;初始化创建的套接字其目的是主动发起请求（通过调用 connect 函数）。而通过 listen 函数可以将原来的”主动”套接字转换为”被动”套接字，告诉操作系统内核<strong>等待用户请求</strong>，内核会为此做好接收用户请求的准备，比如完成连接队列。</p>
-<p><code>listen</code> 函数的原型：</p>
+<ul>
+<li><p>初始化创建的套接字通过 listen 函数可以将原来的“主动”套接字转换为“被动”套接字，告诉操作系统内核<strong>等待用户请求</strong>，内核会为此做好接收用户请求的准备，比如完成连接队列</p>
+</li>
+<li><p><code>listen</code> 函数原型：</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">listen</span> <span class="token punctuation">(</span><span class="token keyword">int</span> socketfd<span class="token punctuation">,</span> <span class="token keyword">int</span> backlog<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p> <code>socketfd</code> 为套接字描述符</p>
-<p> <code>backlog</code>为未完成连接队列的大小，这个参数的大小决定了可以接收的并发数目。这个参数越大，并发数目理论上也会越大。但是参数过大也会占用过多的系统资源，一些系统如 Linux 不允许修改这个参数。</p>
+<ul>
+<li><code>socketfd</code> 为套接字描述符</li>
+<li><code>backlog</code>为未完成连接队列的大小，这个参数的大小决定了可以接收的并发数目（这个参数越大，并发数目理论上也会越大，但是参数过大也会占用过多的系统资源，一些系统如 Linux 不允许修改这个参数）</li>
+</ul>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
 <h5 id="accept"><a href="#accept" class="headerlink" title="accept"></a>accept</h5><p>​    </p>
-<p>&emsp;&emsp;当客户端的连接请求到达时，服务器端应答成功，连接建立，这时操作系统内核要把这个事件通知到应用程序，让应用程序感知到这个连接。<strong>accept 函数的作用就是连接建立之后，操作系统内核和应用程序之间的桥梁。</strong></p>
-<p>accept 函数原型是：</p>
-<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">accept</span><span class="token punctuation">(</span><span class="token keyword">int</span> listensockfd<span class="token punctuation">,</span> <span class="token keyword">struct</span> sockaddr <span class="token operator">*</span>cliaddr<span class="token punctuation">,</span> socklen_t <span class="token operator">*</span>addrlen<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p> <code>listensockfd</code> 是套接字，可以称为 listen 套接字，因为这就是前面通过 bind，listen 一系列操作而得到的套接字。</p>
-<p>返回值有两个部分，第一个部分 <code>cliadd</code> 是通过指针方式获取的客户端的地址，<code>addrlen</code> 告诉地址的大小；另一部分是函数的返回值，是一个全新的描述字，代表了与客户端的连接。</p>
-<p><strong>注意</strong>：有两个套接字描述字，第一个是监听套接字描述字 <code>listensockfd</code>，它是作为输入参数存在；第二个是返回的已连接套接字描述字。</p>
-<p>​    </p>
-<blockquote>
-<p>为什么要把两个套接字分开呢？</p>
-<p>网络程序的一个重要特征是并发处理，不可能一个应用程序运行之后只能服务一个客户</p>
-</blockquote>
-<p>&emsp;&emsp;<strong>监听套接字一直都存在，直到这个监听套接字关闭</strong>。一个客户和服务器连接成功，完成了 TCP 三次握手，操作系统内核就为其生成一个<strong>已连接套接字</strong>，让应用服务器使用这个已连接套接字和客户进行通信处理。如果服务器完成了对这个客户的服务，关闭的就是<strong>已连接套接字</strong>，这样就完成了 TCP 连接的释放<strong>。这时候释放的只是这一个客户连接</strong>。最重要的是，<strong>监听套接字一直都处于监听状态，等待新的客户请求到达并服务</strong>。</p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="1-4-2-客户端发起连接"><a href="#1-4-2-客户端发起连接" class="headerlink" title="1.4.2 客户端发起连接"></a>1.4.2 客户端发起连接</h4><p>第一步建立一个套接字，方法和前面一样，客户端调用 <code>connect</code> 向服务端发起请求。</p>
-<p>​    </p>
-<h5 id="connect"><a href="#connect" class="headerlink" title="connect"></a>connect</h5><p>客户端和服务器端的连接建立是通过 <code>connect</code> 函数完成的。 <code>connect</code> 的构建函数：</p>
-<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">connect</span><span class="token punctuation">(</span><span class="token keyword">int</span> sockfd<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> sockaddr <span class="token operator">*</span>servaddr<span class="token punctuation">,</span> socklen_t addrlen<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p> <code>sockfd</code> 是连接套接字，通过 <code>socket</code> 函数创建。 <code>servaddr</code> 和 <code>addrlen</code> 分别代表<strong>指向套接字地址结构的指针和该结构的大小</strong>。<strong>套接字地址结构必须含有服务器的 IP 地址和端口号</strong>。</p>
-<p>&emsp;&emsp;在调用 <code>connect</code> 前不是必须调用 <code>bind</code> 函数，因为如果需要的话，内核会确定源 IP 地址，并按照一定的算法选择一个临时端口作为源端口。</p>
-<p>&emsp;&emsp;如果是 TCP 套接字，那么调用 <code>connect</code> 函数将激发 TCP 的三次握手过程，而且仅在连接建立成功或出错时才返回。</p>
-<p>​    </p>
-<p><strong>补充</strong>：</p>
-<p>出错返回可能有以下几种情况：</p>
-<ol>
-<li>三次握手无法建立，客户端发出的 <code>SYN</code> 包没有任何响应，返回 <code>TIMEOUT</code> 错误。这种情况比较常见的原因是对应的服务端 IP 写错。</li>
-<li>客户端收到了 <code>RST</code>（复位）回答，这时候客户端会立即返回 <code>CONNECTION REFUSED</code> 错误。这种情况比较常见于客户端发送连接请求时的请求端口写错，因为 <code>RST</code> 是 TCP 在发生错误时发送的一种 TCP 分节。（产生 RST 的三个条件是：目的地为某端口的 SYN 到达，然而该端口上没有正在监听的服务器；TCP 想取消一个已有连接；TCP 接收到一个根本不存在的连接上的分节）</li>
-<li>客户发出的 SYN 包在网络上引起了<code>destination unreachable</code>，目的不可达的错误。这种情况比较常见的原因是客户端和服务器端路由不通。</li>
-</ol>
-<p>根据不同的返回值可以做进一步的排查。</p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="1-4-3-TCP-三次握手的解读"><a href="#1-4-3-TCP-三次握手的解读" class="headerlink" title="1.4.3 TCP 三次握手的解读"></a>1.4.3 TCP 三次握手的解读</h4><p>下面结合服务端和客户端连接的主要函数讲解 TCP 三次握手的过程。</p>
-<p><img src="image-20210206140648582.png" alt="TCP 三次握手"></p>
-<p>服务端通过 <code>socket</code>、<code>bind</code> 和 <code>listen</code> 完成了被动套接字的准备工作，然后调用 <code>accept</code>，就会<strong>阻塞</strong>在这里，等待客户端的连接</p>
-<p>客户端通过 <code>socket</code> 和 <code>connect</code> 函数调用之后也会阻塞。接下来是<strong>操作系统内核网络协议栈</strong>工作，具体的过程：</p>
-<ol>
-<li>客户端的协议栈向服务器端发送了 SYN 包，并告诉服务器端当前发送序列号 <code>j</code>，客户端进入 <code>SYNC_SENT</code> 状态</li>
-<li>服务器端的协议栈收到包之后进行 ACK 应答，应答的值为 <code>j+1</code>，<strong>表示对 SYN 包 j 的确认</strong>，同时服务器也发送一个 SYN 包，告诉客户端当前我的发送序列号为 <code>k</code>，服务器端进入 <code>SYNC_RCVD</code> 状态</li>
-<li>客户端协议栈收到 ACK 之后，应用程序从 <code>connect</code> 调用返回，表示客户端到服务器端的<strong>单向连接建立成功</strong>，客户端的状态为 <strong>ESTABLISHED</strong>，同时客户端协议栈也会对服务器端的 SYN 包进行应答，应答数据为 <code>k+1</code></li>
-<li>应答包到达服务器端后，服务器端协议栈使得 <code>accept</code> 阻塞调用返回，这个时候服务器端到客户端的单向连接也建立成功，服务器端也进入 <code>ESTABLISHED</code> 状态</li>
-</ol>
-<p>​    </p>
-<p>​    </p>
-<p>形象的比喻：有 A 和 B 想进行通话</p>
 <ul>
-<li>A 先对 B 说：“喂，你在么？我在的，我的口令是 j ”</li>
-<li>B 收到之后大声回答：“我收到你的口令 j 并准备好了，你准备好了吗？我的口令是 k ”</li>
-<li>A 收到之后也大声回答：“我收到你的口令 k 并准备好了，我们开始吧 ”</li>
+<li><p>当客户端的连接请求到达时，服务器端应答成功，连接建立，这时操作系统内核要把这个事件通知到应用程序，让应用程序感知到这个连接，<strong>accept 函数的作用就是连接建立之后，操作系统内核和应用程序之间的桥梁</strong></p>
+</li>
+<li><p>accept 函数原型：</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">accept</span><span class="token punctuation">(</span><span class="token keyword">int</span> listensockfd<span class="token punctuation">,</span> <span class="token keyword">struct</span> sockaddr <span class="token operator">*</span>cliaddr<span class="token punctuation">,</span> socklen_t <span class="token operator">*</span>addrlen<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li><p><code>listensockfd</code> 是套接字，可以称为 listen 套接字，这就是前面通过 bind，listen 一系列操作而得到的套接字</p>
+</li>
+<li><p>返回值有两个部分，第一个部分 <code>cliadd</code> 是通过指针方式获取的客户端的地址，<code>addrlen</code> 告诉地址的大小；另一部分是函数的返回值，是一个全新的描述字，代表了与客户端的连接</p>
+</li>
 </ul>
+</li>
+<li><p><strong>注意</strong>：有两个套接字描述字，第一个是监听套接字描述字 <code>listensockfd</code>作为输入参数；第二个是返回的已连接套接字描述字</p>
+</li>
+<li><p><strong>监听套接字一直都存在，直到这个监听套接字关闭</strong>，一个客户和服务器连接成功，完成了 TCP 三次握手，操作系统内核就为其生成一个<strong>已连接套接字</strong>，让应用服务器使用这个已连接套接字和客户进行通信处理，如果服务器完成了对这个客户的服务，关闭的就是<strong>已连接套接字</strong>，这样就完成了 TCP 连接的释放，<strong>这时候释放的只是这一个客户连接</strong></p>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="1-4-2-客户端发起连接"><a href="#1-4-2-客户端发起连接" class="headerlink" title="1.4.2 客户端发起连接"></a>1.4.2 客户端发起连接</h4><ul>
+<li>第一步建立一个套接字，客户端调用 <code>connect</code> 向服务端发起请求</li>
+</ul>
+<p>​    </p>
+<h5 id="connect"><a href="#connect" class="headerlink" title="connect"></a>connect</h5><ul>
+<li><p>客户端和服务器端的连接建立是通过 <code>connect</code> 函数完成</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">connect</span><span class="token punctuation">(</span><span class="token keyword">int</span> sockfd<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> sockaddr <span class="token operator">*</span>servaddr<span class="token punctuation">,</span> socklen_t addrlen<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li><code>sockfd</code> 是连接套接字，通过 <code>socket</code> 函数创建</li>
+<li><code>servaddr</code> 和 <code>addrlen</code> 分别代表指向套接字地址结构的指针和该结构的大小</li>
+</ul>
+</li>
+<li><p>在调用 <code>connect</code> 前不是必须调用 <code>bind</code> 函数，因为如果需要的话，内核会确定源 IP 地址，并按照一定的算法选择一个临时端口作为源端口</p>
+</li>
+<li><p>如果是 TCP 套接字，那么调用 <code>connect</code> 函数将激发 TCP 的三次握手过程，而且仅在连接建立成功或出错时才返回</p>
+</li>
+<li><p><strong>补充</strong>：出错返回可能有以下几种情况，根据不同的返回值可以做进一步的排查</p>
+<ul>
+<li><p>三次握手无法建立，客户端发出的 <code>SYN</code> 包没有任何响应，返回 <code>TIMEOUT</code> 错误，比较常见的原因是对应的服务端 IP 写错</p>
+</li>
+<li><p>客户端收到了 <code>RST</code>（复位）回答，这时候客户端会立即返回 <code>CONNECTION REFUSED</code> 错误，这种情况比较常见于客户端发送连接请求时的请求端口写错</p>
+<blockquote>
+<p>产生 RST 条件</p>
+<ol>
+<li><p>目的地为某端口的 SYN 到达，然而该端口上没有正在监听的服务器</p>
+</li>
+<li><p>TCP 想取消一个已有连接</p>
+</li>
+<li><p>TCP 接收到一个根本不存在的连接上的分节</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>客户发出的 SYN 包在网络上引起了<code>destination unreachable</code>，目的不可达的错误，常见的原因是客户端和服务器端路由不通</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="1-4-3-TCP-三次握手"><a href="#1-4-3-TCP-三次握手" class="headerlink" title="1.4.3 TCP 三次握手"></a>1.4.3 TCP 三次握手</h4><ul>
+<li><p>TCP 三次握手过程</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210206-three-way-handshake.png" alt="TCP 三次握手"></p>
+<p>（这里使用的网络编程模型是阻塞式的，调用发起后不会直接返回，由操作系统内核处理之后才会返回）</p>
 <blockquote>
 <p>信道不可靠，但是通信双发需要就某个问题达成一致。而要解决这个问题, 无论在消息中包含什么信息，三次通信是理论上的最小值</p>
 </blockquote>
-<h3 id="1-5-TCP-Socket进行读写"><a href="#1-5-TCP-Socket进行读写" class="headerlink" title="1.5 TCP Socket进行读写"></a>1.5 TCP Socket进行读写</h3><h4 id="1-5-1-发送数据"><a href="#1-5-1-发送数据" class="headerlink" title="1.5.1 发送数据"></a>1.5.1 发送数据</h4><p>发送数据时常用的有三个函数 <code>write</code>、<code>send</code> 和 <code>sendmsg</code>，每个函数都是单独使用的，使用的场景略有不同</p>
+</li>
+<li><p>服务端通过 <code>socket</code>、<code>bind</code> 和 <code>listen</code> 完成了被动套接字的准备工作，然后调用 <code>accept</code>，就会阻塞在这里，等待客户端的连接</p>
+</li>
+<li><p>客户端通过 <code>socket</code> 和 <code>connect</code> 函数调用之后也会阻塞，接下来是<strong>内核网络协议栈</strong>工作，具体过程：</p>
+<ul>
+<li><p>客户端的协议栈向服务器端发送了 SYN 包，并告诉服务器端当前发送序列号 <code>j</code>，客户端进入 <code>SYNC_SENT</code> 状态</p>
+</li>
+<li><p>服务器端的协议栈收到包之后进行 ACK 应答，应答值为 <code>j+1</code>，表示对 SYN 包 j 的确认，同时服务器也发送一个 SYN 包，告诉客户端当前我的发送序列号为 <code>k</code>，服务器端进入 <code>SYNC_RCVD</code> 状态</p>
+</li>
+<li><p>客户端协议栈收到 ACK 之后，应用程序从 <code>connect</code> 调用返回，表示客户端到服务器端的单向连接建立成功，客户端的状态为 <code>ESTABLISHED</code>，同时客户端协议栈也会对 SYN 包进行应答，应答数据为 <code>k+1</code></p>
+</li>
+<li><p>应答包到达服务器端后，服务器端协议栈使得 <code>accept</code> 阻塞调用返回，这个时候服务器端到客户端的单向连接也建立成功，服务器端也进入 <code>ESTABLISHED</code> 状态</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-5-TCP-Socket-读写"><a href="#1-5-TCP-Socket-读写" class="headerlink" title="1.5 TCP Socket 读写"></a>1.5 TCP Socket 读写</h3><h4 id="1-5-1-发送数据"><a href="#1-5-1-发送数据" class="headerlink" title="1.5.1 发送数据"></a>1.5.1 发送数据</h4><ul>
+<li><p>发送数据时常用的有三个函数 <code>write</code>、<code>send</code> 和 <code>sendmsg</code>，每个函数使用的场景略有不同</p>
 <pre class="line-numbers language-c"><code class="language-c">ssize_t <span class="token function">write</span> <span class="token punctuation">(</span><span class="token keyword">int</span> socketfd<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>buffer<span class="token punctuation">,</span> size_t size<span class="token punctuation">)</span>
 ssize_t <span class="token function">send</span> <span class="token punctuation">(</span><span class="token keyword">int</span> socketfd<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>buffer<span class="token punctuation">,</span> size_t size<span class="token punctuation">,</span> <span class="token keyword">int</span> flags<span class="token punctuation">)</span>
 ssize_t <span class="token function">sendmsg</span><span class="token punctuation">(</span><span class="token keyword">int</span> sockfd<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> msghdr <span class="token operator">*</span>msg<span class="token punctuation">,</span> <span class="token keyword">int</span> flags<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>第一个函数是常见的文件写函数，如果把 <code>socketfd</code> 换成文件描述符，就是普通的文件写入。</p>
-<p>第二个函数是想<strong>指定选项</strong>，发送带外数据时使用。<strong>带外数据</strong>，是一种基于 TCP 协议的紧急数据，用于客户端 - 服务器在特定场景下的紧急处理。</p>
-<p>第三个函数是想<strong>指定多重缓冲区传输数据</strong>时使用，以结构体 <code>msghdr</code> 的方式发送数据。</p>
-<p>&emsp;&emsp;在套接字描述符上调用 <code>write</code> 函数，和在普通文件描述符上调用 <code>write</code> 函数两者的表现形式是一样（都是通过描述符句柄写入指定的数据），但内在的区别不一样。</p>
-<ol>
-<li>对于普通文件描述符而言，一个文件描述符代表了打开的一个文件句柄，通过调用 <code>write</code> 函数，操作系统内核帮我们不断地往文件系统中写入字节流。注意，写入的字节流大小通常和输入参数 <code>size</code> 的值是相同的，否则表示出错。</li>
-<li>对于套接字描述符而言，它代表了一个双向连接，在套接字描述符上调用 <code>write</code> 写入的字节数<strong>有可能</strong>比请求的数量少，这在普通文件描述符情况下是不正常的。</li>
-</ol>
-<p>&emsp;&emsp;产生这个现象的原因在于操作系统内核为读取和发送数据做了很多我们表面上看不到的工作。接下以 <code>write</code> 函数举例，重点阐述发送缓冲区的概念。</p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="1-5-2-发送缓冲区"><a href="#1-5-2-发送缓冲区" class="headerlink" title="1.5.2 发送缓冲区"></a>1.5.2 发送缓冲区</h4><p>&emsp;&emsp;当 TCP 三次握手成功，TCP 连接成功建立后，操作系统内核会为每一个连接创建配套的基础设施，比如<strong>发送缓冲区</strong>。发送缓冲区的大小可以通过套接字选项来改变，当我们的应用程序调用 <code>write</code> 函数时，实际所做的事情是把数据<strong>从应用程序中拷贝到操作系统内核的发送缓冲区中</strong>，并不一定是把数据通过套接字写出去。</p>
-<p>&emsp;&emsp;这里有几种情况：</p>
-<ol>
-<li><p>操作系统内核的发送缓冲区足够大，可以直接容纳这份数据，我们的程序从 <code>write</code> 调用中退出，返回写入的字节数就是应用程序的数据大小</p>
+<ul>
+<li>write 函数是常见的文件写函数，如果把 <code>socketfd</code> 换成文件描述符，就是普通的文件写入</li>
+<li>send 函数是想指定选项，发送带外数据时使用，<strong>带外数据</strong>是一种基于 TCP 协议的紧急数据，用于客户端 - 服务器在特定场景下的紧急处理</li>
+<li>sendmsg 是想<strong>指定多重缓冲区传输数据</strong>时使用，以结构体 <code>msghdr</code> 的方式发送数据</li>
+</ul>
 </li>
-<li><p>操作系统内核的发送缓冲区够大了，不过还有数据没有发送完，或者数据发送完了，但是操作系统内核的发送缓冲区不足以容纳应用程序数据，在这种情况下，<strong>操作系统内核并不会返回，也不会报错，而是应用程序被阻塞</strong>，也就是说应用程序在 <code>write</code> 函数调用处停留，不直接返回。（术语<strong>挂起</strong>也表达了相同的意思，不过是从操作系统内核角度来说的）</p>
-<p>那么什么时候才会返回呢？实际上每个操作系统内核的处理是不同的。大部分 UNIX 系统的做法是<strong>一直等到可以把应用程序数据完全放到操作系统内核的发送缓冲区中，再从系统调用中返回</strong>。注意返回的时刻，应用程序数据并没有全部被发送出去，发送缓冲区里还有部分数据，这部分数据会在稍后由操作系统内核通过网络发送出去。</p>
+<li><p>在套接字描述符上调用 <code>write</code> 函数，和在普通文件描述符上调用 <code>write</code> 函数两者的表现形式是一样（都是通过描述符句柄写入指定的数据），但内在的区别不一样</p>
+<ul>
+<li><p>对于普通文件描述符而言，一个文件描述符代表了打开的一个文件句柄，通过调用 write 函数，操作系统内核帮我们不断地往文件系统中写入字节流，此时写入的字节流大小通常和输入参数 size 的值是相同的</p>
 </li>
-</ol>
-<p><img src="image-20210225185354131.png"></p>
+<li><p>对于套接字描述符而言，它代表了一个双向连接，在套接字描述符上调用 write 写入的字节数有可能比请求的数量少，这在普通文件描述符情况下是不正常的，内核为读取和发送数据做了很多表面上看不到的工作</p>
+</li>
+</ul>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<h4 id="1-5-3-读取数据"><a href="#1-5-3-读取数据" class="headerlink" title="1.5.3 读取数据"></a>1.5.3 读取数据</h4><p>&emsp;&emsp;套接字描述本身和本地文件描述符并无区别，<strong>在 UNIX 的世界里万物都是文件</strong>，这就意味着可以将套接字描述符传递给那些原先为处理本地文件而设计的函数。这些函数包括 <code>read</code> 和 <code>write</code> 交换数据的函数。</p>
+<h4 id="1-5-2-发送缓冲区"><a href="#1-5-2-发送缓冲区" class="headerlink" title="1.5.2 发送缓冲区"></a>1.5.2 发送缓冲区</h4><ul>
+<li><p>当 TCP 三次握手成功，连接建立后，操作系统内核会为每一个连接创建配套的基础设施，比如发送缓冲区</p>
+</li>
+<li><p>当应用程序调用 <code>write</code> 函数时，实际所做的事情是把数据<strong>从应用程序中拷贝到操作系统内核的发送缓冲区中</strong>，并不一定是把数据通过套接字写出去</p>
+<ul>
+<li><p>操作系统内核的发送缓冲区足够大，可以直接容纳这份数据，我们的程序从 write 调用中退出，返回写入的字节数就是应用程序的数据大小</p>
+</li>
+<li><p>操作系统内核的发送缓冲区够大了，不过还有数据没有发送完，或者数据发送完了，但是操作系统内核的发送缓冲区不足以容纳应用程序数据，在这种情况下，应用程序被阻塞，大部分 UNIX 系统会一直等到可以把应用程序数据完全放到操作系统内核的发送缓冲区中，再从系统调用中返回</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210225-send-buffer.png"></p>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<p><strong>read 函数</strong></p>
-<p>函数的原型如下：</p>
+<h4 id="1-5-3-读取数据"><a href="#1-5-3-读取数据" class="headerlink" title="1.5.3 读取数据"></a>1.5.3 读取数据</h4><ul>
+<li><p>read 函数原型</p>
 <pre class="line-numbers language-c"><code class="language-c">ssize_t <span class="token function">read</span> <span class="token punctuation">(</span><span class="token keyword">int</span> socketfd<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>buffer<span class="token punctuation">,</span> size_t size<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>函数要求操作系统内核从套接字描述字 <code>socketfd</code> 读取最多多少个字节（<code>size</code>），并将结果存储到 <code>buffer</code> 中</p>
-<p><strong>返回值告诉我们实际读取的字节数目，也有一些特殊情况，如果返回值为 0，表示 EOF（end-of-file），这在网络中表示对端发送了 FIN 包，要处理断连的情况</strong>；如果返回值为 -1，表示出错。如果是非阻塞 I/O，情况会略有不同。</p>
-<p>如果我们想让应用程序每次都读到 size 个字节，就需要编写下面的函数，不断地循环读取：</p>
+<ul>
+<li>函数要求操作系统内核从套接字描述字 <code>socketfd</code> 读取最多多少个字节（size），并将结果存储到 buffer 中</li>
+<li>返回值告诉我们实际读取的字节数目，也有一些特殊情况<ul>
+<li>如果返回值为 0，表示 EOF（end-of-file），这在网络中表示对端发送了 FIN 包，要处理断连的情况</li>
+<li>如果返回值为 -1，表示出错</li>
+<li>如果是非阻塞 I/O，情况会略有不同</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如果我们想让应用程序每次都读到 size 个字节，就需要编写下面的函数，不断地循环读取：</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* 从 socketfd 描述字中读取 "size" 个字节. */</span>
 ssize_t <span class="token function">readn</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>vptr<span class="token punctuation">,</span> size_t size<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -909,39 +1065,32 @@ ssize_t <span class="token function">readn</span><span class="token punctuation"
     <span class="token keyword">while</span> <span class="token punctuation">(</span>nleft <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span>nread <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> ptr<span class="token punctuation">,</span> nleft<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token keyword">if</span> <span class="token punctuation">(</span>errno <span class="token operator">==</span> EINTR<span class="token punctuation">)</span>
-                nread <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">/* 这里需要再次调用 read */</span>
+                nread <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">/* 非阻塞 I/O 的情况下，没有数据可以读，需要再次调用 read */</span>
             <span class="token keyword">else</span>
                 <span class="token keyword">return</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>nread <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
             <span class="token keyword">break</span><span class="token punctuation">;</span>              <span class="token comment" spellcheck="true">/* EOF(End of File) 表示套接字关闭 */</span>
-
-
         nleft <span class="token operator">-</span><span class="token operator">=</span> nread<span class="token punctuation">;</span>
         ptr   <span class="token operator">+</span><span class="token operator">=</span> nread<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
     <span class="token keyword">return</span><span class="token punctuation">(</span>n <span class="token operator">-</span> nleft<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">/* 返回的是实际读取的字节数 */</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>解释：</p>
-<ul>
-<li>11-25 行的循环条件表示的是，在没读满 size 个字节之前，一直都要循环下去</li>
-<li>13-14 行表示的是非阻塞 I/O 的情况下，没有数据可以读，需要继续调用 read</li>
-<li>17-18 行表示读到对方发出的 FIN 包，表现形式是 EOF，此时需要关闭套接字</li>
-<li>21-22 行，需要读取的字符数减少，缓存指针往下移动</li>
-<li>24 行是在读取 EOF 跳出循环后，返回实际读取的字符数</li>
-</ul>
-<p>​    </p>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>缓冲区如此重要，<strong>可不可以无限增大缓冲区</strong>，这样不就可以提高应用程序的吞吐量了么？</p>
-<p>不行，write函数发送数据只是将数据发送到内核缓冲区，而什么时候发送由内核决定。内核缓冲区总是充满数据时会产生粘包问题，同时网络的传输大小MTU也会限制每次发送的大小，最后由于数据堵塞需要消耗大量内存资源，资源使用效率不高。</p>
+<p><strong>可不可以无限增大缓冲区</strong>，这样不就可以提高应用程序的吞吐量了么？</p>
+<p>不行，write 函数发送数据只是将数据发送到内核缓冲区，而什么时候发送由内核决定，内核缓冲区总是充满数据时会产生<strong>粘包</strong>问题，同时网络的传输大小 MTU 也会限制每次发送的大小，最后由于数据堵塞需要消耗大量内存资源，资源使用效率不高</p>
 </blockquote>
 <blockquote>
 <p>一段数据流从应用程序发送端，一直到应用程序接收端，总共经过了多少次拷贝？</p>
-<p>用户缓冲区 -&gt; 内核缓冲区 -&gt; 网卡 -&gt; 对端网卡 -&gt; 内核缓冲区 -&gt; 用户缓冲区</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220506-copy.png"></p>
 </blockquote>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<p><strong>实验</strong>：</p>
-<p><em>tcp_server.c</em></p>
+<h4 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h4><ul>
+<li><p>一个客户端 - 服务器的例子，其中客户端不断地发送数据，服务器端每读取一段数据之后进行休眠</p>
+</li>
+<li><p><em>tcp_server.c</em>：服务器端读取数据程序</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"lib/common.h"</span></span>
 
 <span class="token keyword">void</span> <span class="token function">read_data</span><span class="token punctuation">(</span><span class="token keyword">int</span> sockfd<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -951,6 +1100,7 @@ ssize_t <span class="token function">readn</span><span class="token punctuation"
     <span class="token keyword">int</span> time <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">,</span> <span class="token string">"block in read\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 每次读取 1K 数据之后休眠 1 秒</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>n <span class="token operator">=</span> <span class="token function">readn</span><span class="token punctuation">(</span>sockfd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
             <span class="token keyword">return</span><span class="token punctuation">;</span>
 
@@ -959,8 +1109,6 @@ ssize_t <span class="token function">readn</span><span class="token punctuation"
         <span class="token function">usleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-
-
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> listenfd<span class="token punctuation">,</span> connfd<span class="token punctuation">;</span>
     socklen_t clilen<span class="token punctuation">;</span>
@@ -981,24 +1129,19 @@ ssize_t <span class="token function">readn</span><span class="token punctuation"
     <span class="token comment" spellcheck="true">/* 循环处理用户请求 */</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         clilen <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>cliaddr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connfd <span class="token operator">=</span> <span class="token function">accept</span><span class="token punctuation">(</span>listenfd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockaddr <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>cliaddr<span class="token punctuation">,</span> <span class="token operator">&amp;</span>clilen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connfd <span class="token operator">=</span> <span class="token function">accept</span><span class="token punctuation">(</span>listenfd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockaddr <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>cliaddr<span class="token punctuation">,</span> <span class="token operator">&amp;</span>clilen<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">/* 获取实际的连接 */</span>
         <span class="token function">read_data</span><span class="token punctuation">(</span>connfd<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">/* 读取数据 */</span>
         <span class="token function">close</span><span class="token punctuation">(</span>connfd<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">/* 关闭连接套接字，注意不是监听套接字*/</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>解释：</p>
-<ul>
-<li>6-17 行先后创建了 socket 套接字，bind 到对应地址和端口，并开始调用 listen 接口监听</li>
-<li>20-25 行循环等待连接，通过 accept 获取实际的连接，并开始读取数据</li>
-<li>28-42 行实际每次读取 1K 数据，之后休眠 1 秒，用来模拟服务器端处理时延</li>
-</ul>
-<p>​    </p>
-<p><em>tcp_client.c</em></p>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><em>tcp_client.c</em>：</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"lib/common.h"</span></span>
 
 <span class="token macro property"># <span class="token directive keyword">define</span> MESSAGE_SIZE 102400</span>
 
 <span class="token keyword">void</span> <span class="token function">send_data</span><span class="token punctuation">(</span><span class="token keyword">int</span> sockfd<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 初始化一个长度为 MESSAGE_SIZE 的字符串流</span>
     <span class="token keyword">char</span> <span class="token operator">*</span>query<span class="token punctuation">;</span>
     query <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span>MESSAGE_SIZE <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> MESSAGE_SIZE<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -1019,10 +1162,8 @@ ssize_t <span class="token function">readn</span><span class="token punctuation"
         remaining <span class="token operator">-</span><span class="token operator">=</span> n_written<span class="token punctuation">;</span>
         cp <span class="token operator">+</span><span class="token operator">=</span> n_written<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-
     <span class="token keyword">return</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> sockfd<span class="token punctuation">;</span>
     <span class="token keyword">struct</span> sockaddr_in servaddr<span class="token punctuation">;</span>
@@ -1036,69 +1177,98 @@ ssize_t <span class="token function">readn</span><span class="token punctuation"
     servaddr<span class="token punctuation">.</span>sin_family <span class="token operator">=</span> AF_INET<span class="token punctuation">;</span>
     servaddr<span class="token punctuation">.</span>sin_port <span class="token operator">=</span> <span class="token function">htons</span><span class="token punctuation">(</span><span class="token number">12345</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">inet_pton</span><span class="token punctuation">(</span>AF_INET<span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>servaddr<span class="token punctuation">.</span>sin_addr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> connect_rt <span class="token operator">=</span> <span class="token function">connect</span><span class="token punctuation">(</span>sockfd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockaddr <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>servaddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> connect_rt <span class="token operator">=</span> <span class="token function">connect</span><span class="token punctuation">(</span>sockfd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockaddr <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>servaddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 向服务器端发起连接请求</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>connect_rt <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"connect failed "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-    <span class="token function">send_data</span><span class="token punctuation">(</span>sockfd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">send_data</span><span class="token punctuation">(</span>sockfd<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//调用 send_data 发送数据</span>
     <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>解释：</p>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>编译运行：</p>
+<p><img src="20210225-194139734.png" alt="client"></p>
+<p><img src="20210225-194214472.png" alt="server"></p>
 <ul>
-<li>9-15 行先后创建了 socket 套接字，调用 connect 向对应服务器端发起连接请求</li>
-<li>16 行在连接建立成功后，调用 send_data 发送数据</li>
-<li>23-28 行初始化了一个长度为 MESSAGE_SIZE 的字符串流</li>
-<li>33-42 行调用 send 函数将 MESSAGE_SIZE 长度的字符串流发送出去</li>
+<li><p>程序运行后，服务端不断地在屏幕上打印出读取字节流的过程</p>
+</li>
+<li><p>客户端直到最后所有的字节流发送完毕才打印出“send into buffer”，说明在此之前 send 函数一直都是阻塞的，也就是说阻塞式套接字最终发送返回的实际写入字节数和请求字节数是相等的</p>
+</li>
+<li><p>如果把服务端的休眠时间稍微调大，客户端打印完后服务端还在屏幕上不断打印读取数据的进度，说明发送成功仅仅表示的是数据被拷贝到了发送缓冲区中，并不意味着连接对端已经收到所有的数据</p>
+</li>
+</ul>
+</li>
 </ul>
 <p>​    </p>
-<p>编译运行：</p>
-<p>客户端程序发送了一个很大的字节流，程序运行起来之后，我们会看到服务端不断地在屏幕上打印出读取字节流的过程</p>
-<p>而客户端直到最后所有的字节流发送完毕才打印出下面的一句话，说明在此之前 send 函数一直都是阻塞的，也就是说<strong>阻塞式套接字最终发送返回的实际写入字节数和请求字节数是相等的</strong></p>
-<p><strong>注意：发送成功仅仅表示的是数据被拷贝到了发送缓冲区中，并不意味着连接对端已经收到所有的数据</strong></p>
-<p><img src="image-20210225194139734.png" alt="客户端"></p>
-<p><img src="image-20210225194214472.png" alt="服务端"></p>
+<p>​    </p>
+<h3 id="1-6-UDP-编程"><a href="#1-6-UDP-编程" class="headerlink" title="1.6 UDP 编程"></a>1.6 UDP 编程</h3><ul>
+<li><p>TCP和UDP相比有什么差异呢？</p>
+<ul>
+<li><p>UDP 是一种<strong>数据报</strong>协议，而 TCP 是一种面向连接的<strong>数据流</strong>协议</p>
+</li>
+<li><p>TCP 在 IP 报文的基础上，增加了诸如<strong>重传、确认、有序传输、拥塞控制</strong>等能力，通信的双方是在一个确定的上下文中工作的，而 UDP 没有这样一个确定的上下文，是一个不可靠的通信协议，没有重传、确认、有序控制、拥塞控制，也不保证报文的有效传递和有序</p>
+</li>
+</ul>
+</li>
+<li><p>UDP 程序设计时的主要过程</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210225-udp.png"></p>
+<ul>
+<li>服务器端创建 UDP 套接字之后，绑定到本地端口，调用 <code>recvfrom</code> 函数等待客户端的报文发送</li>
+<li>客户端创建套接字之后，调用 <code>sendto</code> 函数往目标地址和端口发送 UDP 报文，然后客户端和服务器端进入互相应答过程</li>
+</ul>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<h3 id="1-6-UDP编程"><a href="#1-6-UDP编程" class="headerlink" title="1.6 UDP编程"></a>1.6 UDP编程</h3><blockquote>
-<p>TCP和UDP相比有什么差异呢？</p>
-</blockquote>
-<p>UDP 是一种<strong>数据报</strong>协议，而 TCP 是一种面向连接的<strong>数据流</strong>协议。</p>
-<p>TCP 是一个面向连接的协议，TCP 在 IP 报文的基础上，增加了诸如<strong>重传、确认、有序传输、拥塞控制</strong>等能力，通信的双方是在一个<strong>确定的上下文中</strong>工作的。</p>
-<p>而 UDP 则不同，UDP 没有这样一个确定的上下文，它是一个不可靠的通信协议，没有重传和确认，没有有序控制，也没有拥塞控制。UDP 不保证报文的有效传递，不保证报文的有序，也就是说使用 UDP 的时候，我们需要做好丢包、重传、报文组装等工作。</p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="UDP-建立连接"><a href="#UDP-建立连接" class="headerlink" title="UDP 建立连接"></a>UDP 建立连接</h4><p><img src="image-20210225212429860.png"></p>
-<p>服务器端创建 UDP 套接字之后，绑定到本地端口，调用 <code>recvfrom</code> 函数等待客户端的报文发送；客户端创建套接字之后，调用 <code>sendto</code> 函数往目标地址和端口发送 UDP 报文，然后客户端和服务器端进入互相应答过程。</p>
-<p><code>recvfrom</code> 和 <code>sendto</code> 是 UDP 用来接收和发送报文的两个主要函数：</p>
+<h4 id="主要函数"><a href="#主要函数" class="headerlink" title="主要函数"></a>主要函数</h4><h5 id="recvfrom"><a href="#recvfrom" class="headerlink" title="recvfrom"></a>recvfrom</h5><ul>
+<li><p>函数原型</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/socket.h></span></span>
 
 ssize_t <span class="token function">recvfrom</span><span class="token punctuation">(</span><span class="token keyword">int</span> sockfd<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>buff<span class="token punctuation">,</span> size_t nbytes<span class="token punctuation">,</span> <span class="token keyword">int</span> flags<span class="token punctuation">,</span> 
-　　　　　　　　　　<span class="token keyword">struct</span> sockaddr <span class="token operator">*</span>from<span class="token punctuation">,</span> socklen_t <span class="token operator">*</span>addrlen<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+　　　　　　　　　　<span class="token keyword">struct</span> sockaddr <span class="token operator">*</span>from<span class="token punctuation">,</span> socklen_t <span class="token operator">*</span>addrlen<span class="token punctuation">)</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><p><code>sockfd</code> 是本地创建的套接字描述符</p>
+</li>
+<li><p><code>buff</code> 指向本地的缓存</p>
+</li>
+<li><p><code>nbytes</code> 表示最大接收数据字节</p>
+</li>
+<li><p><code>flags</code> 是和 I/O 相关的参数</p>
+</li>
+<li><p><code>from</code> 和 <code>addrlen</code>，实际上是返回对端发送方的地址和端口等信息</p>
+</li>
+<li><p>函数返回值告诉我们实际接收的字节数</p>
+</li>
+</ul>
+<blockquote>
+<p>和 TCP 是通过 accept 函数拿到的描述字信息来决定对端的信息不一样，UDP 报文每次接收都会获取对端的信息，报文和报文之间是没有上下文的</p>
+</blockquote>
+</li>
+</ul>
+<p>​    </p>
+<h5 id="sendto"><a href="#sendto" class="headerlink" title="sendto"></a>sendto</h5><ul>
+<li><p>原型</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/socket.h></span></span>
 
 ssize_t <span class="token function">sendto</span><span class="token punctuation">(</span><span class="token keyword">int</span> sockfd<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>buff<span class="token punctuation">,</span> size_t nbytes<span class="token punctuation">,</span> <span class="token keyword">int</span> flags<span class="token punctuation">,</span>
-                <span class="token keyword">const</span> <span class="token keyword">struct</span> sockaddr <span class="token operator">*</span>to<span class="token punctuation">,</span> socklen_t <span class="token operator">*</span>addrlen<span class="token punctuation">)</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>recvfrom 函数</strong>：</p>
-<p><code>sockfd</code> 是本地创建的套接字描述符</p>
-<p><code>buff</code> 指向本地的缓存</p>
-<p><code>nbytes</code> 表示最大接收数据字节</p>
-<p><code>flags</code> 是和 I/O 相关的参数，这里我们还用不到，设置为 0</p>
-<p>后面两个参数 <code>from</code> 和 <code>addrlen</code>，实际上是返回对端发送方的地址和端口等信息</p>
-<blockquote>
-<p>这和 TCP 非常不一样，TCP 是通过 accept 函数拿到的描述字信息来决定对端的信息。而UDP 报文每次接收都会获取对端的信息，报文和报文之间是没有上下文的。</p>
-</blockquote>
-<p>函数返回值告诉我们实际接收的字节数。</p>
-<p>​    </p>
-<p><strong>sendto 函数</strong>：</p>
-<p><code>sockfd</code> 是本地创建的套接字描述符</p>
-<p><code>buff</code> 指向发送的缓存</p>
-<p><code>nbytes</code> 表示发送字节数</p>
-<p><code>flags</code> 依旧设置为 0</p>
-<p><code>to</code> 和 <code>addrlen</code>表示发送的对端地址和端口等信息。</p>
-<p>函数的返回值告诉我们实际接收的字节数。</p>
+                <span class="token keyword">const</span> <span class="token keyword">struct</span> sockaddr <span class="token operator">*</span>to<span class="token punctuation">,</span> socklen_t <span class="token operator">*</span>addrlen<span class="token punctuation">)</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><p><code>sockfd</code> 是本地创建的套接字描述符</p>
+</li>
+<li><p><code>buff</code> 指向发送的缓存</p>
+</li>
+<li><p><code>nbytes</code> 表示发送字节数</p>
+</li>
+<li><p><code>to</code> 和 <code>addrlen</code>表示发送的对端地址和端口等信息</p>
+</li>
+<li><p>函数的返回值告诉实际接收的字节数</p>
+</li>
+</ul>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<p><strong>实验</strong>：</p>
-<p><em>udp_server.c</em></p>
+<h4 id="实验-1"><a href="#实验-1" class="headerlink" title="实验"></a>实验</h4><ul>
+<li><p><em>udp_server.c</em>：</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"lib/common.h"</span></span>
 
 <span class="token keyword">static</span> <span class="token keyword">int</span> count<span class="token punctuation">;</span>
@@ -1107,8 +1277,6 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\nreceived %d datagrams\n"</span><span class="token punctuation">,</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-
-
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> socket_fd<span class="token punctuation">;</span>
     socket_fd <span class="token operator">=</span> <span class="token function">socket</span><span class="token punctuation">(</span>AF_INET<span class="token punctuation">,</span> SOCK_DGRAM<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1125,11 +1293,12 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
     <span class="token keyword">char</span> message<span class="token punctuation">[</span>MAXLINE<span class="token punctuation">]</span><span class="token punctuation">;</span>
     count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
-    <span class="token function">signal</span><span class="token punctuation">(</span>SIGINT<span class="token punctuation">,</span> recvfrom_int<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">signal</span><span class="token punctuation">(</span>SIGINT<span class="token punctuation">,</span> recvfrom_int<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 信号处理响应“Ctrl+C”退出时打印出收到的报文总数</span>
 
     <span class="token keyword">struct</span> sockaddr_in client_addr<span class="token punctuation">;</span>
     client_len <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>client_addr<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 获取客户端发送的报文，加上“Hi”前缀发送给客户端</span>
         <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token function">recvfrom</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">,</span> message<span class="token punctuation">,</span> MAXLINE<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockaddr <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>client_addr<span class="token punctuation">,</span> <span class="token operator">&amp;</span>client_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
         message<span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"received %d bytes: %s\n"</span><span class="token punctuation">,</span> n<span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1141,22 +1310,12 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 
         count<span class="token operator">++</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>解释：</p>
-<ul>
-<li><p>12～13 行，首先创建一个套接字，注意这里的套接字类型是<code>SOCK_DGRAM</code>，表示的是 UDP 数据报。</p>
-</li>
-<li><p>15～21 行和 TCP 服务器端类似，绑定数据报套接字到本地的一个端口上。</p>
-</li>
-<li><p>27 行为该服务器创建了一个信号处理函数，以便在响应“Ctrl+C”退出时，打印出收到的报文总数。</p>
-</li>
-<li><p>31～42 行是该服务器端的主体，通过调用 recvfrom 函数获取客户端发送的报文，之后我们对收到的报文进行重新改造，加上“Hi”的前缀，再通过 sendto 函数发送给客户端对端。</p>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
 <p>​    </p>
-<p><em>udp_client.c</em></p>
-<p>在这个例子中，从标准输入中读取输入的字符串后，发送给服务端，并且把服务端经过处理的报文打印到标准输出上。</p>
+<ul>
+<li><p><em>udp_client.c</em>：从标准输入中读取输入的字符串后，发送给服务端，并且把服务端经过处理的报文打印到标准输出上</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"lib/common.h"</span></span>
 
 <span class="token macro property"># <span class="token directive keyword">define</span>    MAXLINE     4096</span>
@@ -1208,62 +1367,61 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 
     <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>解释：</p>
-<ul>
-<li><p>10～11 行创建一个类型为“SOCK_DGRAM”的套接字。</p>
-</li>
-<li><p>13～17 行，初始化目标服务器的地址和端口。</p>
-</li>
-<li><p>28～51 行为程序主体，从标准输入中读取的字符进行处理后，调用 sendto 函数发送给目标服务器端，然后再次调用 recvfrom 函数接收目标服务器发送过来的新报文，并将其打印到标准输出上。</p>
 </li>
 </ul>
-<p>​    </p>
-<p>运行：</p>
-<p><strong>场景一：只运行客户端</strong></p>
-<p><img src="image-20210329101753391.png"></p>
+<ul>
+<li><p>运行</p>
+<ul>
+<li><p>场景一：只运行客户端</p>
+<p><img src="20210329-101753391.png"></p>
 <p>只运行客户端，程序会一直阻塞在 <code>recvfrom</code> 上</p>
-<p>如果不开启服务端，TCP 客户端的 <code>connect</code> 函数会直接返回Connection refused报错信息。而在 UDP 程序里，则会一直阻塞在这里。</p>
-<p>​    </p>
-<p><strong>场景二：先开启服务端，再开启客户端</strong></p>
-<p>先开启服务端在端口侦听，然后再开启客户端：</p>
-<p><img src="image-20210329105644830.png"></p>
-<p>在客户端一次输入 g1、g2，服务器端在屏幕上打印出收到的字符，并且可以看到，客户端也收到了服务端的回应：“Hi, g1”和“Hi,g2”</p>
-<p>​    </p>
-<p><strong>场景三: 开启服务端，再一次开启两个客户端</strong></p>
-<p>在服务端开启之后，依次开启两个客户端，并发送报文：</p>
-<p><img src="image-20210329200937835.png" alt="服务端"></p>
-<p><img src="image-20210329201010812.png" alt="客户端"></p>
-<p>两个客户端发送的报文，依次都被服务端收到，并且客户端也可以收到服务端处理之后的报文。如果此时把服务器端进程杀死，就可以看到信号函数在进程退出之前，打印出服务器端接收到的报文个数。</p>
-<p>之后<strong>再重启服务器端进程</strong>，并使用客户端 1 和客户端 2 继续发送新的报文，服务器端可以继续收到客户端的报文。（这在 TCP 里是不可以的，TCP 断联之后必须重新连接才可以发送报文信息）但是 UDP 报文的无连接的特点，<strong>可以在 UDP 服务器重启之后，继续进行报文的发送，这就是 UDP 报文“无上下文”的最好说明。</strong></p>
-<p>​    </p>
-<p>​    </p>
+</li>
+<li><p>场景二：先开启服务端，再开启客户端</p>
+<p><img src="20210329-105644830.png"></p>
+</li>
+<li><p>场景三: 开启服务端，再一次开启两个客户端</p>
+<p><img src="20210329-200937835.png" alt="server"></p>
+<p><img src="20210329-201010812.png" alt="client"></p>
+<p>两个客户端发送的报文依次被服务端收到，客户端也可以收到服务端处理之后的报文，如果此时把服务器端进程杀死，可以看到打印出服务器端接收到的报文个数</p>
+<p>之后再重启服务器端进程，并使用客户端 1 和客户端 2 继续发送新的报文，服务器端可以继续收到客户端的报文（说明 UDP 报文无上下文）</p>
+</li>
+</ul>
 <blockquote>
 <p>在第一个场景中 <code>recvfrom</code> 一直处于阻塞状态中，这是非常不合理的，这种情形应该怎么处理呢？</p>
-<p>一直阻塞会导致程序无法正常退出，可以使用接收超时、IO多路复用的<strong>超时机制</strong>。</p>
+<p>一直阻塞会导致程序无法正常退出，可以使用接收超时、IO多路复用的<strong>超时机制</strong></p>
 </blockquote>
 <blockquote>
 <p>UDP 是请求 - 应答模式的，那么请求中的 <strong>UDP 报文最大</strong>可以是多大呢？</p>
 <p>IP和UDP头中都有16bit的长度字段，最长65535字节，去掉头部长度得到UDP数据净荷长度：65535-20-8=65507字节</p>
 </blockquote>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
+<h3 id="1-7-本地套接字"><a href="#1-7-本地套接字" class="headerlink" title="1.7 本地套接字"></a>1.7 本地套接字</h3><p>​    </p>
 <p>​    </p>
-<h3 id="1-7-本地套接字"><a href="#1-7-本地套接字" class="headerlink" title="1.7 本地套接字"></a>1.7 本地套接字</h3><p>实际上本地套接字是 IPC，也就是<strong>本地进程间通信的一种实现方式</strong>。除了本地套接字以外，其它技术，诸如管道、共享消息队列等也是进程间通信的常用方法，但因为本地套接字开发便捷，接受度高，所以普遍适用于在同一台主机上进程间通信的各种场景。</p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="1-7-0-例子"><a href="#1-7-0-例子" class="headerlink" title="1.7.0 例子"></a>1.7.0 例子</h4><p>在 Kubernetes 和 Docker 的技术体系中，有很多优秀的设计，比如 Kubernetes 的 <strong>CRI</strong> <code>Container Runtime Interface</code>，其思想是将 Kubernetes 的<strong>主要逻辑和 Container Runtime 的实现解耦</strong>。</p>
-<p>我们可以通过 netstat 命令查看 Linux 系统内的本地套接字状况，下面这张图列出了路径为 <em>/var/run/dockershim.socket</em> 的 stream 类型的本地套接字，可以清楚地看到开启这个套接字的进程为 kubelet。kubelet 是 Kubernetes 的一个组件，这个组件负责将控制器和调度器的命令转化为单机上的容器实例。为了实现和容器运行时的解耦，kubelet 设计了基于本地套接字的客户端 - 服务器 GRPC 调用。</p>
-<p><img src="image-20210330202855980.png"></p>
-<p>列表里还有 docker-containerd.sock 等其他本地套接字，Docker 其实也是大量使用了本地套接字技术来构建。如果我们在 <em>/var/run</em> 目录下将会看到 docker 使用的本地套接字描述符:</p>
-<p><img src="image-20210330203059492.png"></p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="1-7-1-本地套接字概述"><a href="#1-7-1-本地套接字概述" class="headerlink" title="1.7.1 本地套接字概述"></a>1.7.1 本地套接字概述</h4><p>本地套接字一般也叫做 UNIX 域套接字，最新的规范已经改叫本地套接字。</p>
-<p>本地套接字是一种特殊类型的套接字，和 TCP/UDP 套接字不同。TCP/UDP 即使在本地地址通信，也要走系统网络协议栈，而本地套接字，严格意义上说提供了一种<strong>单主机跨进程间调用的手段</strong>，减少了协议栈实现的复杂度，效率比 TCP/UDP 套接字都要高许多。类似的 IPC 机制还有 <strong>UNIX 管道、共享内存和 RPC 调用</strong>等。</p>
-<p>比如 X Window 实现，如果发现是本地连接，就会走本地套接字，工作效率非常高。</p>
+<h4 id="1-7-0-示例"><a href="#1-7-0-示例" class="headerlink" title="1.7.0 示例"></a>1.7.0 示例</h4><ul>
+<li><p>实际上本地套接字是 IPC 的一种实现方式，因为本地套接字开发便捷，接受度高，普遍适用于在同一台主机上进程间通信的各种场景</p>
+</li>
+<li><p>比如 Kubernetes 的 <strong>CRI</strong> <code>Container Runtime Interface</code>，其思想是将 Kubernetes 的主要逻辑和 Container Runtime 的实现解耦</p>
+</li>
+<li><p>kubelet 是 Kubernetes 的一个组件，负责将控制器和调度器的命令转化为单机上的容器实例，为了实现和容器运行时的解耦，kubelet 设计了基于本地套接字的客户端 - 服务器 GRPC 调用，在路径为 <em>/var/run/dockershim.socket</em> 的 stream 类型的本地套接字上可以看到开启这个套接字的进程为 kubelet（还有 docker-containerd.sock 等其他本地套接字）</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210330-kubelet.png"></p>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<h4 id="1-7-2-本地字节流套接字"><a href="#1-7-2-本地字节流套接字" class="headerlink" title="1.7.2 本地字节流套接字"></a>1.7.2 本地字节流套接字</h4><p>服务器端：在这个例子中，服务器程序打开本地套接字后，接收客户端发送来的字节流，并往客户端回送了新的字节流。</p>
+<h4 id="1-7-1-本地套接字概述"><a href="#1-7-1-本地套接字概述" class="headerlink" title="1.7.1 本地套接字概述"></a>1.7.1 本地套接字概述</h4><ul>
+<li>本地套接字也叫做 UNIX 域套接字，是一种特殊类型的套接字，本地套接字提供了一种<strong>单主机跨进程间调用的手段</strong>，减少了协议栈实现的复杂度，效率更高</li>
+<li>类似的 IPC 机制还有 UNIX 管道、共享内存和 RPC 调用等</li>
+<li>本地套接字的编程接口和 IPv4、IPv6 套接字编程接口是一致的，可以支持字节流和数据报两种协议</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="1-7-2-本地字节流套接字"><a href="#1-7-2-本地字节流套接字" class="headerlink" title="1.7.2 本地字节流套接字"></a>1.7.2 本地字节流套接字</h4><ul>
+<li><p>示例：服务器程序打开本地套接字后，接收客户端发送来的字节流，并往客户端回送了新的字节流</p>
+</li>
+<li><p>服务端</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span>  <span class="token string">"lib/common.h"</span></span>
 
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -1275,16 +1433,17 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
     socklen_t clilen<span class="token punctuation">;</span>
     <span class="token keyword">struct</span> sockaddr_un cliaddr<span class="token punctuation">,</span> servaddr<span class="token punctuation">;</span>
 
-    listenfd <span class="token operator">=</span> <span class="token function">socket</span><span class="token punctuation">(</span>AF_LOCAL<span class="token punctuation">,</span> SOCK_STREAM<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    listenfd <span class="token operator">=</span> <span class="token function">socket</span><span class="token punctuation">(</span>AF_LOCAL<span class="token punctuation">,</span> SOCK_STREAM<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>listenfd <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"socket create failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
+    <span class="token comment" spellcheck="true">// 创建一个本地地址</span>
     <span class="token keyword">char</span> <span class="token operator">*</span>local_path <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token function">unlink</span><span class="token punctuation">(</span>local_path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">unlink</span><span class="token punctuation">(</span>local_path<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// unlink 把存在的文件删除以保持幂等性</span>
     <span class="token function">bzero</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>servaddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     servaddr<span class="token punctuation">.</span>sun_family <span class="token operator">=</span> AF_LOCAL<span class="token punctuation">;</span>
-    <span class="token function">strcpy</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">.</span>sun_path<span class="token punctuation">,</span> local_path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">strcpy</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">.</span>sun_path<span class="token punctuation">,</span> local_path<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 设置本地文件路径</span>
 
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">bind</span><span class="token punctuation">(</span>listenfd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockaddr <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>servaddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"bind failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1305,6 +1464,7 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
     <span class="token keyword">char</span> buf<span class="token punctuation">[</span>BUFFER_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
     <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 使用 read 和 write 从套接字中按照字节流的方式读取和发送数据</span>
         <span class="token function">bzero</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">read</span><span class="token punctuation">(</span>connfd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> BUFFER_SIZE<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"client quit"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1326,21 +1486,16 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 
     <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>解释：</p>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>第 12～15 行非常关键，<strong>这里创建的套接字类型，注意是 AF_LOCAL，并且使用字节流格式</strong>。</li>
-<li>第 17～21 行创建了一个本地地址，这里的本地地址和 IPv4、IPv6 地址可以对应，数据类型为 sockaddr_un，这个数据类型中的 sun_family 需要填写为 AF_LOCAL，最为关键的是需要对 sun_path 设置一个本地文件路径。我们这里还做了一个 unlink 操作，以便把存在的文件删除掉，这样可以保持幂等性。</li>
-<li>第 23～29 行，分别执行 bind 和 listen 操作，这样就监听在一个本地文件路径标识的套接字上，这和普通的 TCP 服务端程序没什么区别。</li>
-<li>第 41～56 行，使用 read 和 write 函数从套接字中按照字节流的方式读取和发送数据。</li>
+<li>本地字节流套接字识别服务器不再通过 IP 地址和端口，而是通过本地文件</li>
+<li>本地文件路径应该是绝对路径，这样的话编写好的程序可以在任何目录里被启动和管理，如果是相对路径，这个程序的启动路径就必须固定，对程序的管理反而是一个很大的负担</li>
+<li>如果文件不存在，bind 时会自动创建这个文件</li>
 </ul>
-<p>​    </p>
-<p>​    </p>
-<p>关于本地文件路径，需要明确一点，它必须是<strong>绝对路径</strong>，这样的话，编写好的程序可以在任何目录里被启动和管理。如果是相对路径，为了保持同样的目的，这个程序的启动路径就必须固定，这样一来，对程序的管理反而是一个很大的负担。</p>
-<p>本地文件，必须是一个<strong>文件</strong>，不能是一个目录。如果文件不存在，后面 <strong>bind 操作时会自动创建这个文件</strong>。</p>
-<p>在 Linux 下，任何文件操作都有权限的概念，应用程序启动时也有应用属主。</p>
-<p>​    </p>
-<p>客户端程序</p>
+</li>
+</ul>
+<ul>
+<li><p>客户端</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"lib/common.h"</span></span>
 
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -1358,12 +1513,14 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 
     <span class="token function">bzero</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>servaddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     servaddr<span class="token punctuation">.</span>sun_family <span class="token operator">=</span> AF_LOCAL<span class="token punctuation">;</span>
-    <span class="token function">strcpy</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">.</span>sun_path<span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">strcpy</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">.</span>sun_path<span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// sun_path 初始化，表示目标文件路径</span>
 
+    <span class="token comment" spellcheck="true">// 发起对目标套接字的 connect 调用</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">connect</span><span class="token punctuation">(</span>sockfd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockaddr <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>servaddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"connect failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
+    <span class="token comment" spellcheck="true">// 从标准输入中读取字符串</span>
     <span class="token keyword">char</span> send_line<span class="token punctuation">[</span>MAXLINE<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token function">bzero</span><span class="token punctuation">(</span>send_line<span class="token punctuation">,</span> MAXLINE<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">char</span> recv_line<span class="token punctuation">[</span>MAXLINE<span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -1371,6 +1528,7 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
     <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">fgets</span><span class="token punctuation">(</span>send_line<span class="token punctuation">,</span> MAXLINE<span class="token punctuation">,</span> <span class="token constant">stdin</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
         <span class="token keyword">int</span> nbytes <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>send_line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 向服务器端发送</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">write</span><span class="token punctuation">(</span>sockfd<span class="token punctuation">,</span> send_line<span class="token punctuation">,</span> nbytes<span class="token punctuation">)</span> <span class="token operator">!=</span> nbytes<span class="token punctuation">)</span>
             <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"write error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -1381,96 +1539,679 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
     <span class="token punctuation">}</span>
 
     <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>解释：</p>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>运行</p>
 <ul>
-<li><p>11～14 行创建了一个本地套接字，和前面服务器端程序一样，用的也是字节流类型 SOCK_STREAM。</p>
+<li><p>只启动客户端</p>
+<ul>
+<li>客户端直接报错，提示没有文件存在</li>
+</ul>
 </li>
-<li><p>16～18 行初始化目标服务器端的地址。我们知道在 TCP 编程中，使用的是服务器的 IP 地址和端口作为目标，在本地套接字中则使用文件路径作为目标标识，sun_path 这个字段标识的是目标文件路径，所以这里需要对 sun_path 进行初始化。</p>
+<li><p>服务器端监听在无权限的文件路径上</p>
+<ul>
+<li>启动服务器端程序的用户，必须对本地监听路径有权限</li>
+</ul>
 </li>
-<li><p>20 行和 TCP 客户端一样，发起对目标套接字的 connect 调用，不过由于是本地套接字，并不会有三次握手。</p>
-</li>
-<li><p>28～38 行从标准输入中读取字符串，向服务器端发送，之后将服务器端传输过来的字符打印到标准输出上。</p>
+<li><p>服务器和客户端正常启动</p>
+<p><img src="20220505-201747616.png"></p>
 </li>
 </ul>
-<p>总体上，我们可以看到，本地字节流套接字和 TCP 服务器端、客户端编程最大的差异就是套接字类型的不同。本地字节流套接字识别服务器不再通过 IP 地址和端口，而是通过本地文件。</p>
-<p>​    </p>
-<p>​    </p>
-<h2 id="2-网络编程实战"><a href="#2-网络编程实战" class="headerlink" title="2. 网络编程实战"></a>2. 网络编程实战</h2><h3 id="2-1-工具使用"><a href="#2-1-工具使用" class="headerlink" title="2.1 工具使用"></a>2.1 工具使用</h3><h4 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h4><p>ping这个命名来自于声呐探测，在网络上用来完成对网络连通性的探测。ping 基于 <a href="https://night-candle.github.io/2021/02/04/cs-network-protocol/#toc-heading-22"><strong>ICMP协议</strong></a> 开发。</p>
-<p><img src="image-20210401202058453.png"></p>
-<p>在上面的例子中使用 ping 命令探测了和新浪网的网络连通性。可以看到，每次显示是按照 sequence 序列号排序显示的，一并显示的，也包括 <strong>TTL</strong>，反映了两个 IP 地址之间传输的时间。最后还显示了 ping 命令的统计信息，如最小时间、平均时间等。</p>
-<p>​    </p>
-<p>​    </p>
-<h4 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h4><p>用来显示当前系统中的所有网络设备（网卡列表）</p>
-<p><img src="image-20210401202008556.png"></p>
-<hr>
-<p>第一行：**&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;：网络设备的状态标识** </p>
-<ul>
-<li><code>UP</code> ：网卡开启状态 </li>
-<li><code>BROADCAST</code> ：网卡有广播地址，可发送广播</li>
-<li><code>RUNNING</code>：网线处于连接状态</li>
-<li><code>MULTICAST</code> ：表示网卡可以发送多播包</li>
+</li>
 </ul>
-<p><strong>mtu 1500</strong>：最大传输单元 <code>MTU</code> 为 1500，表示的是链路层包的大小，这是以太网的默认值，规定连 MAC 头带正文合起来，不允许超过 1500 个<strong>字节</strong>。<strong>如果放不下就需要分片来传输。</strong></p>
-<hr>
-<p>第二行：<strong>inet 192.168.121.143  netmask 255.255.255.0  broadcast 192.168.121.255</strong></p>
-<p>网卡的IP地址、子网掩码、广播地址</p>
-<hr>
-<p>第三行：IPV6配置信息</p>
-<p>第四行：**ether 52:00:74:f8:9f:56  txqueuelen 0  (Ethernet)**：网卡的MAC地址</p>
-<ul>
-<li><code>ether</code>：连接类型为以太网</li>
-<li><code>txqueuelen</code>：传输队列的长度</li>
+<h4 id="1-7-3-本地数据报套接字"><a href="#1-7-3-本地数据报套接字" class="headerlink" title="1.7.3 本地数据报套接字"></a>1.7.3 本地数据报套接字</h4><ul>
+<li><p>服务端</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span>  <span class="token string">"lib/common.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"usage: unixdataserver &lt;local_path>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">int</span> socket_fd<span class="token punctuation">;</span>
+    socket_fd <span class="token operator">=</span> <span class="token function">socket</span><span class="token punctuation">(</span>AF_LOCAL<span class="token punctuation">,</span> SOCK_DGRAM<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>socket_fd <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"socket create failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">struct</span> sockaddr_un servaddr<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>local_path <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">unlink</span><span class="token punctuation">(</span>local_path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">bzero</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>servaddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    servaddr<span class="token punctuation">.</span>sun_family <span class="token operator">=</span> AF_LOCAL<span class="token punctuation">;</span>
+    <span class="token function">strcpy</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">.</span>sun_path<span class="token punctuation">,</span> local_path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">bind</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockaddr <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>servaddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"bind failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span>BUFFER_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> sockaddr_un client_addr<span class="token punctuation">;</span>
+    socklen_t client_len <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>client_addr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 使用 recvfrom 和 sendto 来进行数据报的收发</span>
+        <span class="token function">bzero</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">recvfrom</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> BUFFER_SIZE<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockadd <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>client_addr<span class="token punctuation">,</span> <span class="token operator">&amp;</span>client_len<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"client quit"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Receive: %s \n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">char</span> send_line<span class="token punctuation">[</span>MAXLINE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">bzero</span><span class="token punctuation">(</span>send_line<span class="token punctuation">,</span> MAXLINE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">sprintf</span><span class="token punctuation">(</span>send_line<span class="token punctuation">,</span> <span class="token string">"Hi, %s"</span><span class="token punctuation">,</span> buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        size_t nbytes <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>send_line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"now sending: %s \n"</span><span class="token punctuation">,</span> send_line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">sendto</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">,</span> send_line<span class="token punctuation">,</span> nbytes<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockadd <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>client_addr<span class="token punctuation">,</span> client_len<span class="token punctuation">)</span> <span class="token operator">!=</span> nbytes<span class="token punctuation">)</span>
+            <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"sendto error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">close</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>客户端</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span>  <span class="token string">"lib/common.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"usage: unixdataserver &lt;local_path>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">int</span> socket_fd<span class="token punctuation">;</span>
+    socket_fd <span class="token operator">=</span> <span class="token function">socket</span><span class="token punctuation">(</span>AF_LOCAL<span class="token punctuation">,</span> SOCK_DGRAM<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>socket_fd <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"socket create failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">struct</span> sockaddr_un servaddr<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>local_path <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">unlink</span><span class="token punctuation">(</span>local_path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">bzero</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>servaddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    servaddr<span class="token punctuation">.</span>sun_family <span class="token operator">=</span> AF_LOCAL<span class="token punctuation">;</span>
+    <span class="token function">strcpy</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">.</span>sun_path<span class="token punctuation">,</span> local_path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 指定一个本地路径，以便在服务器端回包时可以正确地找到地址</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">bind</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockaddr <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>servaddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>servaddr<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"bind failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span>BUFFER_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> sockaddr_un client_addr<span class="token punctuation">;</span>
+    socklen_t client_len <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>client_addr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">bzero</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">recvfrom</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> BUFFER_SIZE<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockadd <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>client_addr<span class="token punctuation">,</span> <span class="token operator">&amp;</span>client_len<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"client quit"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Receive: %s \n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">char</span> send_line<span class="token punctuation">[</span>MAXLINE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">bzero</span><span class="token punctuation">(</span>send_line<span class="token punctuation">,</span> MAXLINE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">sprintf</span><span class="token punctuation">(</span>send_line<span class="token punctuation">,</span> <span class="token string">"Hi, %s"</span><span class="token punctuation">,</span> buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        size_t nbytes <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>send_line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"now sending: %s \n"</span><span class="token punctuation">,</span> send_line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">sendto</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">,</span> send_line<span class="token punctuation">,</span> nbytes<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> sockadd <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>client_addr<span class="token punctuation">,</span> client_len<span class="token punctuation">)</span> <span class="token operator">!=</span> nbytes<span class="token punctuation">)</span>
+            <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"sendto error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">close</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>运行</p>
+<p><img src="20220505-202723787.png"></p>
+</li>
 </ul>
-<p>第五六行：网卡接受数据包的统计信息和接受错误的统计信息</p>
-<p>第七八行：网卡发送数据包的统计信息和发送错误的统计信息</p>
+<h3 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h3><h4 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h4><ul>
+<li><p>ping 命名来自于声呐探测，在网络上用来完成对网连通性的探测</p>
+</li>
+<li><p>ping 基于<a href="">ICMP协议</a>（网际控制协议）开发</p>
+</li>
+<li><p>例：使用 ping 探测和新浪网的网络连通性</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210401-ping.png"></p>
+<ul>
+<li>每次显示是按照 sequence 序列号排序</li>
+<li>显示了 <strong>TTL</strong>，反映两个 IP 地址之间传输的时间</li>
+<li>还显示了 ping 命令的统计信息，如最小时间、平均时间等</li>
+</ul>
+</li>
+</ul>
 <p>​    </p>
-<p><a href="https://night-candle.github.io/2021/02/04/cs-network-protocol/#toc-heading-16">ip addr命令</a></p>
+<p>​    </p>
+<h4 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h4><ul>
+<li><p>用来显示当前系统中的所有网络设备（网卡列表）</p>
+</li>
+<li><p>示例</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210401-ifconfig.png"></p>
+<ul>
+<li><p>第一行：<code>&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;</code>：网络设备的状态标识</p>
+<ul>
+<li>UP：网卡开启状态</li>
+<li>BROADCAST：网卡有广播地址，可发送广播</li>
+<li>RUNNING：网线处于连接状态</li>
+<li>MULTICAST：表示网卡可以发送多播包</li>
+</ul>
+<p><code>mtu 1500</code>：最大传输单元 MTU 为 1500，表示的是链路层包的大小，这是以太网的默认值，规定连 MAC 头带正文合起来，不允许超过 1500 个字节，<strong>如果放不下就需要分片来传输</strong></p>
+</li>
+<li><p>第二行：<code>inet 192.168.121.143  netmask 255.255.255.0  broadcast 192.168.121.255</code>：网卡的IP地址、子网掩码、广播地址</p>
+</li>
+<li><p>第三行：IPV6配置信息</p>
+</li>
+<li><p>第四行：<code>ether 52:00:74:f8:9f:56  txqueuelen 0  (Ethernet)</code>：网卡的MAC地址</p>
+<ul>
+<li><p><code>ether</code>：连接类型为以太网</p>
+</li>
+<li><p><code>txqueuelen</code>：传输队列的长度</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>第五六行：网卡接受数据包的统计信息和接受错误的统计信息</p>
+</li>
+<li><p>第七八行：网卡发送数据包的统计信息和发送错误的统计信息</p>
+</li>
+</ul>
+<ul>
+<li><a href="https://night-candle.github.io/2021/02/04/cs-network-protocol/#toc-heading-36">ip addr命令</a></li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<h4 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h4><p>netstat 可以帮助我们了解当前的网络连接状况，比如想知道当前所有的连接详情，就可以使用下面这行命令：</p>
-<pre><code>netstat -alepn</code></pre>
-<p>可能的结果为：</p>
-<p><img src="image-20210401204813435.png"></p>
-<p>netstat 会把所有 IPv4 形态的 TCP，IPV6 形态的 TCP、UDP 以及 UNIX 域的套接字都显示出来。</p>
-<p>对于 TCP 类型来说，最大的好处是<strong>可以清楚地看到一条 TCP 连接的四元组</strong>（源地址、源端口、目的地地址和目的端口）。</p>
-<p>例如这里的一条信息：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">tcp        0      0 127.0.0.1:2379          127.0.0.1:52464         ESTABLISHED 0          27710       3496/etcd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>表达的意思是本地 127.0.0.1 的端口 52464 连上本地 127.0.0.1 的端口 2379，状态为 ESTABLISHED，本地进程为 etcd，进程为 3496。</p>
-<blockquote>
-<p>可以很方便地知道，在某个时候是不是有很多 TIME_WAIT 的 TCP 连接，导致端口号被占用光，以致新的连接分配不了。</p>
+<h4 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h4><ul>
+<li><p>netstat（network statistics）是在内核中访问网络连接状态及其相关信息的命令行程序，可以显示路由表、实际的网络连接和网络接口设备的状态信息，以及与 IP、TCP、UDP、ICMP 协议相关的统计数据，一般用于检验本机各端口的网络服务运行状况</p>
+</li>
+<li><p>命令选项</p>
+<ul>
+<li><em>-a</em>：列出 TCP、UDP 和 Unix 协议下所有套接字的所有连接</li>
+<li><em>-t</em>：列出 TCP 协议的连接，可和 <em>-a</em>选项配合使用</li>
+<li><em>-u</em>：列出 UDP 协议的连接</li>
+<li><em>-n</em>：禁用反向域名解析，加快查询速度，用户 ID 和端口号也优先使用数字显示</li>
+<li><em>-l</em>：只列出正在监听的连接（不能和 <em>-a</em> 选项同时使用）</li>
+<li><em>-p</em>：查看进程信息<ul>
+<li><em>-pe</em>：同时查看进程名和进程所属的用户名</li>
+</ul>
+</li>
+<li><em>-s</em>：输出针对不同网络协议的统计信息</li>
+</ul>
+</li>
+<li><p>当前所有的连接详情</p>
+<pre class="line-numbers language-c"><code class="language-c">netstat <span class="token operator">-</span>apen<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h4><ul>
+<li><p>常见用途之一是找出在指定的 IP 地址或者端口上打开套接字的进程</p>
+</li>
+<li><p>Isof 和 netstst 可以结合使用</p>
+</li>
+<li><p>lsof 可以找出正在使用该端口的进程，从而帮助定位问题</p>
+<pre class="line-numbers language-c"><code class="language-c">lsof <span class="token operator">-</span>i <span class="token punctuation">:</span><span class="token number">8080</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h4><ul>
+<li><p>抓包工具，具有非常强大的过滤和匹配功能</p>
+</li>
+<li><p>在开启抓包时 tcpdump 会自动创建一个类型为 AF_PACKET 的网络套接口，并向系统内核注册，当网卡接收到一个网络报文之后，会遍历系统中所有已经被注册的网络协议，内核接下来就会将网卡收到的报文发送给该协议的回调函数进行处理，回调函数可以把接收到的报文复制一份交给 tcpdump 程序，进行各种条件的过滤和判断后对报文进行解析输出</p>
+</li>
+<li><p>命令选项</p>
+<ul>
+<li><em>-D</em>：列出可用于抓包的接口</li>
+<li><em>-i</em>：指定监听的网卡，<code>-i any</code> 显示所有网卡</li>
+<li><em>-c</em>：指定要抓取的包数量</li>
+<li><em>-nn</em>：不做主机名解析，且端口显示为数值</li>
+<li><em>-w</em>：将抓包数据输出到文件中而不是标准输出，可以同时配合*-G time*选项使得输出文件每 time 秒就自动切换到另一个文件（保存成 cap 格式配合 wireshark）</li>
+<li><em>-r</em>：从给定数据包文件中读取数据，使用<code>-</code>表示从标准输入中读取</li>
+</ul>
+</li>
+<li><p>tcpdump 表达式：用于筛选输出</p>
+<ul>
+<li><p>表达式由一个或多个单元组成，每个单元一般包含 ID 的修饰符和一个 ID（数字或名称）</p>
+</li>
+<li><p>有三种修饰符</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220506-tcpdump-filter.jpg" style="zoom: 50%;" />
+
+<ul>
+<li><p>proto：可选有 ip、arp、rarp、tcp、udp、icmp、ether 等，默认是所有协议的包</p>
+</li>
+<li><p>dir：可选有 src、dst、src or dst、src and dst，默认为 src or dst</p>
+</li>
+<li><p>type：可选有 host、net、port、portrange，默认为 host</p>
+</li>
+</ul>
+</li>
+<li><p>表达式单元之间可以使用操作符 <code>and / &amp;&amp; / or / || / not / !</code> 进行连接，从而组成复杂的条件表达式</p>
+</li>
+<li><p>在表达式中出现的 shell 元字符建议使用单引号包围</p>
+</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<ul>
+<li><p>查看 TCP，且端口是 80，来自 IP 地址为 192.168.1.25 的包</p>
+<pre class="line-numbers language-bash"><code class="language-bash">tcpdump <span class="token string">'tcp and port 80 and src host 192.168.1.25'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>查看 TCP，设置了 SYN 分节的且端口是 80 的包</p>
+<pre class="line-numbers language-c"><code class="language-c">tcpdump <span class="token string">'tcp and port 80 and tcp[13:1]&amp;2 != 0'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li><code>tcp[13:1]</code> 表示的是 TCP 头部开始处偏移为 13 的字节，如果这个值为 2，说明设置了 SYN 分节</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>输出格式</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210401-tcpdump-output.jpg"></p>
+<ul>
+<li><p><code>Flags [ ]</code> 是包的标志，比较常见的包格式如下：</p>
+<ul>
+<li><code>[S]</code>：SYN，表示开始连接</li>
+<li><code>[.]</code>：没有标记，一般是确认</li>
+<li><code>[P]</code>：PSH，表示数据推送</li>
+<li><code>[F]</code>：FIN，表示结束连接</li>
+<li><code>[R]</code>：RST，表示重启连接</li>
+</ul>
+</li>
+<li><p>seq：包序号，就是 TCP 的确认分组</p>
+</li>
+<li><p>cksum：校验码</p>
+</li>
+<li><p>win：滑动窗口大小</p>
+</li>
+<li><p>length：载荷的长度</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h2 id="02-网络编程进阶"><a href="#02-网络编程进阶" class="headerlink" title="02 | 网络编程进阶"></a>02 | 网络编程进阶</h2><h3 id="2-1-TIME-WAIT"><a href="#2-1-TIME-WAIT" class="headerlink" title="2.1 TIME_WAIT"></a>2.1 TIME_WAIT</h3><ul>
+<li>场景引入：应用服务需要通过发起 TCP 连接对外提供服务，在高并发情况下，TIME_WAIT 状态的连接过多，把本机可用的端口耗尽，应用服务对外表现为不能正常工作，一段时间后处于 TIME_WAIT 的连接被系统回收并关闭后，释放出本地端口，应用服务对外表现为可以正常工作</li>
+</ul>
+<h4 id="TCP-四次挥手"><a href="#TCP-四次挥手" class="headerlink" title="TCP 四次挥手"></a>TCP 四次挥手</h4><ul>
+<li><p>TCP 四次挥手过程</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220506-four-time-wave.png"></p>
+<ul>
+<li>主动关闭方 TCP 发送 FIN 包，表示需要关闭连接，之后主动关闭方进入 FIN_WAIT_1 状态</li>
+<li>收到 FIN 包的对端执行被动关闭，进入 <code>CLOSE_WAIT</code> 状态，并发送一个 ACK 应答<ul>
+<li>TCP 协议栈为 FIN 包插入一个文件结束符 EOF 到接收缓冲区中，应用程序可以通过 read 调用来感知这个 FIN 包</li>
+</ul>
+</li>
+<li>read 调用获得 EOF，并将此结果通知应用程序调用 close 关闭它的套接字，也发送一个 FIN 包，被动关闭方将进入 <code>LAST_ACK</code> 状态</li>
+<li>主动关闭方接收到对方的 FIN 包，并确认这个 FIN 包，主动关闭方进入 <code>TIME_WAIT</code> 状态，而接收到 ACK 的被动关闭方则进入 <code>CLOSED</code> 状态</li>
+<li>经过 2MSL 时间之后，主动关闭方也进入 <code>CLOSED</code> 状态</li>
+<li>注意：<ul>
+<li><strong>只有发起连接终止的一方会进入 TIME_WAIT 状态</strong></li>
+<li>中间使用 <a href="#shutdown">shutdown</a>，执行一端到另一端的半关闭也是可以的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>大多数真实情况是客户端执行主动关闭，HTTP/1.0 却是由服务器发起主动关闭的</p>
+</li>
+<li><p>主机在 TIME_WAIT 停留持续时间是固定的，是最长分节生命期 MSL（maximum segment lifetime）的两倍，一般称之为 2MSL，时间是从主机 1 接收到 FIN 后发送 ACK 开始计时的，如果在 TIME_WAIT 时间内又接收到了主机 2 重发的 FIN 报文，那么 2MSL 时间将重新计时（目的是为了让旧连接的所有报文都能自然消亡）</p>
+</li>
+<li><p>Linux 里有一个硬编码的字段 <code>TCP_TIMEWAIT_LEN</code> 值为 60 秒，Linux 停留在 TIME_WAIT 的时间为固定的 60 秒</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> TCP_TIMEWAIT_LEN (60*HZ) </span><span class="token comment" spellcheck="true">/* how long to wait to destroy TIME-        WAIT state, about 60 seconds    */</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="TIME-WAIT-的作用"><a href="#TIME-WAIT-的作用" class="headerlink" title="TIME_WAIT 的作用"></a>TIME_WAIT 的作用</h4><ul>
+<li><p><strong>为了确保最后的 ACK 能让被动关闭方接收从而帮助其正常关闭</strong></p>
+<ul>
+<li>比如主机 1 的 ACK 报文没有传输成功，那么主机 2 就会重新发送 FIN 报文，处于 TIME_WAIT 状态的主机 1 可以在接收到 FIN 报文之后，重新发出一个 ACK 报文</li>
+<li>如果没有维护 TIME_WAIT 状态，而直接进入 CLOSED 状态，它就失去了当前状态的上下文，只能回复一个 RST 操作，从而导致被动关闭方出现错误</li>
+</ul>
+</li>
+<li><p><strong>为了让旧连接的重复分节在网络中自然消失</strong></p>
+<ul>
+<li>如果迷走报文到达时，发现 TCP 连接四元组所代表的连接不存在，报文自然丢弃，但在原连接中断后，可能又重新创建了一个和原连接四元组完全相同的“化身”，到达的迷走报文会被误认为是连接“化身”的一个 TCP 分节，就会对 TCP 通信产生影响</li>
+<li>经过 2MSL 时间足以让两个方向上的分组都被丢弃，使得原来连接的分组在网络中都自然消失，再出现的分组都是新化身所产生的</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="TIME-WAIT-的危害"><a href="#TIME-WAIT-的危害" class="headerlink" title="TIME_WAIT 的危害"></a>TIME_WAIT 的危害</h4><ul>
+<li><p>内存资源占用，但不是太严重，基本可以忽略</p>
+</li>
+<li><p>端口资源占用，一个 TCP 连接至少消耗一个本地端口，一般可以开启的端口为 32768～61000 ，也可通过 <code>net.ipv4.ip_local_port_range</code> 指定，如果 TIME_WAIT 状态过多，会导致无法创建新连接</p>
+</li>
+</ul>
+<h4 id="如何优化-TIME-WAIT"><a href="#如何优化-TIME-WAIT" class="headerlink" title="如何优化 TIME_WAIT"></a>如何优化 TIME_WAIT</h4><ul>
+<li><p>net.ipv4.tcp_max_tw_buckets（不推荐使用）</p>
+<ul>
+<li>值默认为 18000</li>
+<li>通过 sysctl 命令将系统值调小，当系统中处于 TIME_WAIT 的连接一旦超过这个值时，系统就会将所有的 TIME_WAIT 连接状态重置，并且只打印出警告信息，但是这个方法暴力且治标不治本</li>
+</ul>
+</li>
+<li><p>调低 <code>TCP_TIMEWAIT_LEN</code>，重新编译系统</p>
+</li>
+<li><p><code>SO_LINGER</code> 设置（危险行为，不提倡）</p>
+<ul>
+<li><p>通过设置套接字选项，来设置调用 close 或者 shutdown 关闭连接时的行为</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">setsockopt</span><span class="token punctuation">(</span><span class="token keyword">int</span> sockfd<span class="token punctuation">,</span> <span class="token keyword">int</span> level<span class="token punctuation">,</span> <span class="token keyword">int</span> optname<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>optval<span class="token punctuation">,</span> socklen_t optlen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token operator">--</span><span class="token operator">-</span>
+
+<span class="token keyword">struct</span> linger <span class="token punctuation">{</span>
+　<span class="token keyword">int</span>　 l_onoff<span class="token punctuation">;</span>　　　　<span class="token comment" spellcheck="true">/* 0=off, nonzero=on */</span>
+　<span class="token keyword">int</span>　 l_linger<span class="token punctuation">;</span>　　　　<span class="token comment" spellcheck="true">/* linger time, POSIX specifies units as seconds */</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>如果<code>l_onoff</code>为 0，那么关闭本选项，<code>l_linger</code>的值被忽略</p>
+<ul>
+<li>对应了默认行为，close 或 shutdown 立即返回</li>
+<li>如果在套接字发送缓冲区中有数据残留，系统会将试着把这些数据发送出去</li>
+</ul>
+</li>
+<li><p>如果<code>l_onoff</code>不为 0， 且<code>l_linger</code>值也为 0</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> linger so_linger<span class="token punctuation">;</span>
+so_linger<span class="token punctuation">.</span>l_onoff <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+so_linger<span class="token punctuation">.</span>l_linger <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token function">setsockopt</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span>SOL_SOCKET<span class="token punctuation">,</span>SO_LINGER<span class="token punctuation">,</span> <span class="token operator">&amp;</span>so_linger<span class="token punctuation">,</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>so_linger<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><p>调用 close 后，会立该发送一个 RST 给对端，该 TCP 连接将<strong>跳过四次挥手</strong>直接关闭，这种关闭的方式称为强行关闭</p>
+</li>
+<li><p>在这种情况下，排队数据不会被发送，被动关闭方也不知道对端已经彻底断开，只有当被动关闭方接受到 RST 时，会得到一个 connet reset by peer 异常</p>
+</li>
+</ul>
+</li>
+<li><p>如果<code>l_onoff</code>不为 0， 且<code>l_linger</code>的值也不为 0，那么调用 close 后，调用 close 的线程就将阻塞，直到数据被发送出去，或者设置的<code>l_linger</code>计时时间到</p>
+</li>
+</ul>
+</li>
+<li><p><code>net.ipv4.tcp_tw_reuse</code>：更安全的设置</p>
+<ul>
+<li><p><strong>从协议角度理解如果是安全可控的</strong>，可以<strong>复用</strong>处于 TIME_WAIT 的套接字为新的连接所用</p>
+</li>
+<li><p>从协议角度理解的安全可控：</p>
+<ul>
+<li>只适用于连接发起方（C/S 模型中的客户端）</li>
+<li>对应的 TIME_WAIT 状态的连接创建时间超过 1 秒才可以被复用</li>
+</ul>
+</li>
+<li><p>前提：需要打开对 TCP 时间戳的支持，即 <code>net.ipv4.tcp_timestamps=1</code>（默认即为 1）</p>
+<ul>
+<li>RFC 1323 中实现了 TCP 拓展规范，以便保证 TCP 的高可用，并引入了新的 TCP 选项，两个 4 字节的时间戳字段，用于记录 TCP 发送方的当前时间戳和从对端接收到的最新时间戳</li>
+<li>由于引入了时间戳，重复数据包会因为时间戳过期被自然丢弃</li>
+</ul>
+</li>
+<li><p>注意：要慎用，因为打开了时间戳的支持，当客户端与服务端主机时间不同步时，客户端的发送的消息会被直接拒绝</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<p>​        </p>
+<h3 id="2-2-优雅关闭连接"><a href="#2-2-优雅关闭连接" class="headerlink" title="2.2 优雅关闭连接"></a>2.2 优雅关闭连接</h3><ul>
+<li>服务器端优雅地关闭连接：绝大数情况下，TCP 连接都是先关闭一个方向，此时另一个方向还可以正常进行数据传输，服务端完成一些操作并将结果通过套接字写给客户端后，才有条不紊地关闭剩下的半个连接</li>
+<li>如果服务器端处理不好，就会导致最后的关闭过程是粗暴的，可能服务器端处理完的信息没办法正常传送给客户端，破坏了用户侧的使用场景</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="close"><a href="#close" class="headerlink" title="close"></a>close</h4><ul>
+<li><p>函数原型：</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token keyword">int</span> sockfd<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>若成功则为 0，若出错则为 -1</li>
+<li>函数会对<strong>套接字引用计数</strong> -1，一旦发现套接字引用计数到 0，就会对套接字进行彻底释放，并且会关闭<strong>TCP 两个方向的数据流</strong><ul>
+<li>套接字引用计数：因为套接字可以被多个进程共享，如果通过 fork 的方式产生子进程，计数 +1， 如果调用一次 close 函数，计数 -1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>close 函数是如何关闭两个方向的数据流呢？</p>
+<ul>
+<li>在输入方向，系统内核会将该套接字设置为不可读，任何读操作都会返回异常</li>
+<li>在输出方向，系统内核尝试将发送缓冲区的数据发送给对端，并最后向对端发送一个 FIN 报文，接下来如果再对该套接字进行写操作会返回异常</li>
+<li>如果对端没有检测到套接字已关闭，还继续发送报文，就会收到一个 RST 报文</li>
+</ul>
+</li>
+<li><p>close 函数并不能关闭连接的一个方向</p>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="shutdown"><a href="#shutdown" class="headerlink" title="shutdown"></a>shutdown</h4><ul>
+<li><p>函数原型：</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token keyword">int</span> sockfd<span class="token punctuation">,</span> <span class="token keyword">int</span> howto<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li><p>若成功则为 0，若出错则为 -1</p>
+</li>
+<li><p><code>howto</code> 的设置有三个主要选项：</p>
+<ul>
+<li><p><code>SHUT_RD(0)</code>：关闭连接的读方向，对该套接字进行读操作直接返回 EOF，从数据角度来看，套接字上接收缓冲区已有的数据将被丢弃，如果再有新的数据流到达，会对数据进行 ACK，然后悄悄地丢弃</p>
+</li>
+<li><p><code>SHUT_WR(1)</code>：关闭连接的写方向（不管套接字引用计数的值是多少），这就是常被称为<strong>半关闭</strong>的连接，套接字上发送缓冲区已有的数据将被立即发送出去，并发送一个 FIN 报文给对端，应用程序如果对该套接字进行写操作会报错</p>
+</li>
+<li><p><code>SHUT_RDWR(2)</code>：相当于 SHUT_RD 和 SHUT_WR 操作各一次，关闭套接字的读和写两个方向</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>使用 <code>SHUT_RDWR</code> 来调用 shutdown 和 close 的差别</p>
+<ul>
+<li><p>close 会关闭连接，并释放所有连接对应的资源，而 shutdown 并不会释放掉套接字和所有的资源</p>
+</li>
+<li><p>close 存在引用计数的概念，并不一定导致该套接字不可用；shutdown 则不管引用计数，直接使得该套接字不可用，如果有别的进程企图使用该套接字，将会受到影响</p>
+</li>
+<li><p>close 的引用计数导致不一定会发出 FIN 结束报文，而 shutdown 则总是会发出 FIN 结束报文</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<h4 id="实验-2"><a href="#实验-2" class="headerlink" title="实验"></a>实验</h4><ul>
+<li><p>客户端程序，从标准输入不断接收用户输入，把输入的字符串通过套接字发送给服务器端，同时将服务器端的应答显示到标准输出上</p>
+<p>如果用户输入了 close，则会调用 close 函数关闭连接，休眠一段时间，等待服务器端处理后退出；如果用户输入了 shutdown，调用 shutdown 函数关闭连接的写方向，并继续等待服务器端的应答，直到服务器端完成自己的操作，在另一个方向上完成关闭</p>
+</li>
+<li><p>服务端打印出接收的字节，并重新格式化后，发送给客户端</p>
+</li>
+<li><p>运行</p>
+<ul>
+<li><p>close</p>
+<p><img src="20220508-171352582.png"></p>
+<ul>
+<li><p>客户端依次发送了 data1 和 data2，服务器端也正常接收到 data1 和 data2，在客户端 close 掉整个连接之后，服务器端接收到 SIGPIPE 信号，直接退出，客户端没有收到服务端的应答数据</p>
+</li>
+<li><p>在 RST 的套接字进行写操作，会直接触发 SIGPIPE 信号</p>
+</li>
+<li><p>可以注册一个信号处理函数对 SIGPIPE 信号进行处理，避免程序莫名退出</p>
+</li>
+</ul>
+<p><img src="20220508-170216734.png"></p>
+</li>
+<li><p>shutdown</p>
+<p><img src="20220508-172244925.png"></p>
+<ul>
+<li><p>客户端和服务器端各自完成了自己的工作后，正常退出</p>
+</li>
+<li><p>客户端调用 shutdown 函数只是关闭连接的一个方向，服务器端到客户端的这个方向还可以继续进行数据的发送和接收</p>
+</li>
+<li><p>当服务器端读到 EOF 时，立即向客户端发送了 FIN 报文，客户端在 read 函数中感知了 EOF，也进行了正常退出</p>
+</li>
+</ul>
+</li>
+<li><p>时序图</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220508-close-and-shutdown.png"></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<h3 id="2-3-检测连接状态"><a href="#2-3-检测连接状态" class="headerlink" title="2.3 检测连接状态"></a>2.3 检测连接状态</h3><h4 id="TCP-Keep-Alive"><a href="#TCP-Keep-Alive" class="headerlink" title="TCP Keep-Alive"></a>TCP Keep-Alive</h4><ul>
+<li><p>客户端突然崩溃，服务器端可能在几天内都维护着一个无用的 TCP 连接</p>
+</li>
+<li><p>TCP 有一个保持活跃的机制 <strong>Keep-Alive</strong></p>
+<ul>
+<li><p>原理：定义一个时间段，在这个时间段内如果没有任何连接相关的活动，TCP 保活机制就会每隔一个时间间隔，发送一个探测报文，如果连续几个探测报文都没有得到响应，则认为当前的 TCP 连接已经死亡，系统内核将错误信息通知给上层应用程序</p>
+</li>
+<li><p>上述可定义变量分别被称为<strong>保活时间、保活时间间隔和保活探测次数</strong></p>
+</li>
+<li><p>在 Linux 中这些变量分别对应 sysctl 变量 <code>net.ipv4.tcp_keepalive_time</code>、<code>net.ipv4.tcp_keepalive_intvl</code>、<code>net.ipv4.tcp_keepalve_probes</code></p>
+<ul>
+<li>默认设置是 7200 秒（2 小时）、75 秒和 9 次探测</li>
+<li>最少需要经过 2 小时 11 分 15 秒才可以发现一个已死亡的连接，对很多对时延要求敏感的系统中，这个时间间隔是不可接受的</li>
+</ul>
+</li>
+<li><p>TCP Keep-Alive 机制默认是关闭的，可以分别在连接的两个方向上开启，也可以单独在一个方向上开启</p>
+<ul>
+<li>如果开启服务器端到客户端的检测，就可以在客户端非正常断连的情况下清除在服务器端保留的“脏数据”；</li>
+<li>开启客户端到服务器端的检测，就可以在服务器无响应的情况下，重新发起连接</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如果开启了 TCP Keep-Alive，需要考虑以下情况：</p>
+<ul>
+<li>对端程序是正常工作的：当 TCP 保活的探测报文发送给对端，对端会正常响应，这样 TCP 保活时间会被重置，等待下一个 TCP 保活时间的到来</li>
+<li>对端程序崩溃并重启：当 TCP 保活的探测报文发送给对端后，对端是可以响应的，但由于没有该连接的有效信息，会产生一个 RST 报文，这样很快就会发现 TCP 连接已经被重置</li>
+<li>对端程序崩溃，或对端由于其他原因导致报文不可达：当 TCP 保活的探测报文发送给对端后，没有响应，连续几次，达到保活探测次数后，TCP 会报告该 TCP 连接已经死亡</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h4 id="应用层探活"><a href="#应用层探活" class="headerlink" title="应用层探活"></a>应用层探活</h4><ul>
+<li>可以在应用程序中<strong>模拟</strong> TCP Keep-Alive 机制来完成在应用层的连接探活</li>
+<li>可以设计一个 PING-PONG 的机制，需要保活的一方在保活时间达到后，发起对连接的 PING 操作，如果服务器端对 PING 操作有回应，则重新设置保活时间，否则对探测次数进行计数，如果最终探测次数达到了保活探测次数预先设置的值之后，则认为连接已经无效</li>
+</ul>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><blockquote>
+<p>完成一个这样的设计，关键：</p>
+<ol>
+<li>需要使用定时器，可以通过使用 I/O 复用自身的机制实现</li>
+<li>需要设计一个 PING-PONG 的协议</li>
+</ol>
 </blockquote>
+<ul>
+<li><p>消息格式设计</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    u_int32_t type<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> data<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> messageObject<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 四种消息类型</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> MSG_PING          1</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> MSG_PONG          2</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> MSG_TYPE1        11</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> MSG_TYPE2        21</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>客户端程序设计：在保活时间达到后，探活次数增加 1，同时向服务器端发送 PING 格式的消息，此后以预设的保活时间间隔，不断地向服务器端发送 PING 格式的消息，如果能收到服务器端的应答，则结束保活，将保活时间置为 0</p>
+</li>
+<li><p>服务器端程序设计：接收客户端发送来的各种消息后，进行处理，其中如果发现是 PING 类型的消息，在休眠一段时间后回复一个 PONG 消息</p>
+</li>
+</ul>
+<h5 id="实验-3"><a href="#实验-3" class="headerlink" title="实验"></a>实验</h5><ul>
+<li><p>服务器端休眠时间为 60 秒：客户端在发送了三次心跳检测报文 PING 报文后，判断出连接无效，直接退出</p>
+<p><img src="20220511-001036.png"></p>
+</li>
+<li><p>服务器端休眠时间为 5 秒</p>
+<p><img src="20220511-001221.png"></p>
+</li>
+</ul>
+<h3 id="2-4-TCP-动态数据传输"><a href="#2-4-TCP-动态数据传输" class="headerlink" title="2.4 TCP 动态数据传输"></a>2.4 TCP 动态数据传输</h3><ul>
+<li>在任何一个时刻里，TCP 发送缓冲区的数据是否能真正发送出去，决定的因素有发送窗口大小、拥塞窗口大小等</li>
+</ul>
 <p>​    </p>
-<p>也可以只对 UNIX 套接字进行筛查：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">netstat Socket -x -alepn<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre><code>unix  3      [ ]         STREAM     CONNECTED     23209    1400/dockerd        /var/run/docker.sock</code></pre>
-<p>这是 Docker 在本地套接字的监听路径。*/var/run/docker.sock* 是本地套接字监听地址，dockerd 是进程名称，1400 是进程号。</p>
+<p>​    </p>
+<h4 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h4><ul>
+<li><p>TCP 为应用程序提供了流量控制服务（flow control service）以消除发送方使接收方缓存溢岀的可能性，流量控制因此是一个速度匹配服务，即发送方的发送速率与接收方应用程序的读取速率相匹配</p>
+</li>
+<li><p><strong>发送窗口用来控制发送和接收端的流量</strong></p>
+</li>
+<li><p>发送窗口和接收窗口的本质：TCP 的生产者 - 消费者”模型，发送窗口和接收窗口是 TCP 连接的双方，一个作为生产者，一个作为消费者，为了达到一致协同的生产 - 消费速率、而产生的算法模型实现</p>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<h4 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h4><p>lsof 的常见用途之一是找出在指定的 IP 地址或者端口上打开套接字的进程，而 netstat 则告诉我们 IP 地址和端口使用的情况，以及各个 TCP 连接的状态。Isof 和 netstst 可以结合起来一起使用。</p>
-<p>可以通过 lsof 查看是谁打开了这个文件：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">lsof /var/run/docker.sock<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>下面这张图显示了是 dockerd 打开了这个本地文件套接字：</p>
-<p><img src="image-20210401205450477.png"></p>
-<p>使用 lsof 找出正在使用该端口的进程，从而帮助定位问题。</p>
-<pre class="line-numbers language-shell"><code class="language-shell">lsof -i :8080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h4><ul>
+<li><p>流量控制只是在考虑单个连接的数据传递，但是 TCP 数据包需要经过网卡、交换机、核心路由器等一系列网络设备，设备本身的能力也是有限的，当多个连接的数据包同时在网络上传送时，势必会发生带宽争抢、数据丢失等，TCP 必须考虑<strong>多个连接共享在有限的带宽上，兼顾效率和公平性的控制</strong>，这就是拥塞控制的本质</p>
+</li>
+<li><p>在 TCP 协议中，拥塞控制是通过拥塞窗口来完成的，拥塞窗口的大小会随着网络状况实时调整</p>
+</li>
+<li><p>拥塞控制常用的算法有<strong>慢启动</strong>，通过一定的规则慢慢地将网络发送数据的速率增加到一个阈值，超过阈值后，进入<strong>拥塞避免</strong>阶段，这个阶段 TCP 会不断地探测网络状况，并随之不断调整拥塞窗口的大小</p>
+</li>
+<li><p>发送窗口反应了作为单 TCP 连接、点对点之间的流量控制模型，它是需要和接收端一起共同协调来调整大小的；而拥塞窗口则是反应了作为多个 TCP 连接共享带宽的拥塞控制模型，它是发送端独立地根据网络状况来动态调整的</p>
+</li>
+</ul>
 <p>​    </p>
 <p>​    </p>
-<h4 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h4><p>抓包工具，具有非常强大的过滤和匹配功能。</p>
-<p>指定网卡：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">tcpdump -i eth0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>指定来源：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">tcpdump src host hostname<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>我们再来一个复杂一点的例子。这里抓的包是 TCP，且端口是 80，包来自 IP 地址为 192.168.1.25 的主机地址。</p>
-<pre><code>tcpdump &#39;tcp and port 80 and src host 192.168.1.25&#39; </code></pre>
-<p>如果我们对 TCP 协议非常熟悉，还可以写出这样的 tcpdump 命令：</p>
-<pre><code>tcpdump &#39;tcp and port 80 and tcp[13:1]&amp;2 != 0&#39;</code></pre>
-<p>这里 tcp[13:1] 表示的是 TCP 头部开始处偏移为 13 的字节，如果这个值为 2，说明设置了 SYN 分节，当然，我们也可以设置成其他值来获取希望类型的分节。</p>
-<p>tcpdump 在开启抓包的时候，会自动创建一个类型为 AF_PACKET 的网络套接口，并向系统内核注册。当网卡接收到一个网络报文之后，它会遍历系统中所有已经被注册的网络协议，包括其中已经注册了的 AF_PACKET 网络协议。系统内核接下来就会将网卡收到的报文发送给该协议的回调函数进行一次处理，回调函数可以把接收到的报文完完整整地复制一份，假装是自己接收到的报文，然后交给 tcpdump 程序，进行各种条件的过滤和判断，再对报文进行解析输出。</p>
-<p>下面这张图显示的是 tcpdump 的输出格式：</p>
-<blockquote>
+<h4 id="其他因素"><a href="#其他因素" class="headerlink" title="其他因素"></a>其他因素</h4><h5 id="糊涂窗口综合症"><a href="#糊涂窗口综合症" class="headerlink" title="糊涂窗口综合症"></a>糊涂窗口综合症</h5><ul>
+<li>场景：接收端处理得急不可待，如刚读入 100 个字节就告诉发送端继续发送</li>
+<li>在接收端进行优化，接收端不能在接收缓冲区空出一个很小的部分之后，就向发送端发送窗口更新通知，而是需要在自己的缓冲区大到一个合理的值之后，再向发送端发送窗口更新通知</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h5 id="Nagle-算法"><a href="#Nagle-算法" class="headerlink" title="Nagle 算法"></a>Nagle 算法</h5><ul>
+<li>场景：使用 SSH 和远程的服务器交互，在屏幕上敲打了一个命令，等待服务器返回结果，这个过程需要不断和服务器端进行数据传输，但每次传输的数据可能都非常小（这就好比每次叫了一辆大货车只送了一个小水壶）</li>
+<li>在发送端进行优化，优化的算法叫做 <code>Nagle</code> 算法</li>
+<li><code>Nagle</code> 算法的本质其实就是<strong>限制大批量的小数据包同时发送</strong>，在任何一个时刻，未被确认的小数据包（长度小于最大报文段长度 MSS 的 TCP 分组）不能超过一个，这样发送端就可以把接下来连续的几个小数据包存储起来，等待接收到前一个小数据包的 ACK 分组之后，再将数据一次性发送出去</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h5 id="延时-ACK"><a href="#延时-ACK" class="headerlink" title="延时 ACK"></a>延时 ACK</h5><ul>
+<li>场景：接收端需要对每个接收到的 TCP 分组进行确认，但是 ACK 报文本身是不带数据的分段，如果一直发送大量的 ACK 报文，就会消耗大量的带宽</li>
+<li>在接收端进行优化，这个优化的算法叫做<strong>延时 ACK</strong>，在收到数据后并不马上回复，而是累计需要发送的 ACK 报文，等到有数据需要发送给对端时，将累计的 ACK 一并发送</li>
+<li>延时 ACK 机制不能无限地延时下去，否则发送端误认为数据包没有发送成功，引起重传，反而会占用额外的网络带宽</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h5 id="禁用-Nagle-算法"><a href="#禁用-Nagle-算法" class="headerlink" title="禁用 Nagle 算法"></a>禁用 Nagle 算法</h5><ul>
+<li><p>Nagle 算法和延时 ACK 的组合，会增大处理时延，两个优化彼此在阻止对方，在有些情况下 Nagle 算法并不适用， 比如对时延敏感的应用</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220511-delayack-nagle.png" style="zoom: 67%;" />
+</li>
+<li><p>可以通过对套接字的修改来关闭 Nagle 算法</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> on <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> 
+<span class="token function">setsockopt</span><span class="token punctuation">(</span>sock<span class="token punctuation">,</span> IPPROTO_TCP<span class="token punctuation">,</span> TCP_NODELAY<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>on<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>on<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><strong>注意</strong>：除非有十足的把握，否则不要轻易改变默认的 TCP Nagle 算法，因为在现代操作系统中，针对 Nagle 算法和延时 ACK 的优化已经非常成熟了，有可能在禁用 Nagle 算法之后，性能问题反而更加严重</p>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h5 id="将写操作合并"><a href="#将写操作合并" class="headerlink" title="将写操作合并"></a>将写操作合并</h5><ul>
+<li><p>如果能将一个请求一次性发送过去，而不是分开两部分独立发送，结果会好很多，可以在写数据之前，将数据合并到缓冲区再批量发送</p>
+</li>
+<li><p>可使用如下方法进行数据读写操作，从而避免 Nagle 算法引发的副作用</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> iovec <span class="token punctuation">{</span>
+<span class="token keyword">void</span> <span class="token operator">*</span>iov_base<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* starting address of buffer */</span>
+size_t　iov_len<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* size of buffer */</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+ssize_t <span class="token function">writev</span><span class="token punctuation">(</span><span class="token keyword">int</span> filedes<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> iovec <span class="token operator">*</span>iov<span class="token punctuation">,</span> <span class="token keyword">int</span> iovcnt<span class="token punctuation">)</span>
+ssize_t <span class="token function">readv</span><span class="token punctuation">(</span><span class="token keyword">int</span> filedes<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> iovec <span class="token operator">*</span>iov<span class="token punctuation">,</span> <span class="token keyword">int</span> iovcnt<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>实验</p>
+<p><img src="20220515-003659.png"></p>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<h3 id="2-5-UDP-Connect"><a href="#2-5-UDP-Connect" class="headerlink" title="2.5 UDP Connect"></a>2.5 UDP Connect</h3><h3 id="2-6-快速重启"><a href="#2-6-快速重启" class="headerlink" title="2.6 快速重启"></a>2.6 快速重启</h3><p>服务器端程序重启时，地址被占用的原因和解决方法</p>
+<h3 id="2-7-如何理解-TCP-流"><a href="#2-7-如何理解-TCP-流" class="headerlink" title="2.7 如何理解 TCP 流"></a>2.7 如何理解 TCP 流</h3><p>​    </p>
+<h2 id="03-网络编程实战"><a href="#03-网络编程实战" class="headerlink" title="03 | 网络编程实战"></a>03 | 网络编程实战</h2><blockquote>
 <p>未完待续</p>
+<p>最后一次更新：2022.05.05</p>
 </blockquote>
+<p>编程语言的I/O模型是通过抽象和设计，总结出的一套规范。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-hans/%E4%BF%9D%E7%95%99IP%E5%9C%B0%E5%9D%80">保留IP地址</a></li>
+<li><a target="_blank" rel="noopener" href="https://shuangxunian.github.io/2021/06/13/TCPInterviewQuestions/">TCP面试题</a></li>
+<li><a target="_blank" rel="noopener" href="https://jaminzhang.github.io/dns/The-Reason-of-There-Is-Only-13-DNS-Root-Servers/">只有 13 台 DNS 根域名服务器原因</a></li>
+</ul>
 
             </div>
             <hr />
@@ -1551,11 +2292,11 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/11/19/linuxkernel/">
+                <a href="/2021/11/19/linux-kernel/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="Linux 内核开发">
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="Linux 内核开发">
                         
                         <span class="card-title">Linux 内核开发</span>
                     </div>
@@ -1611,7 +2352,7 @@ export ARCH=x86
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/31.jpg" class="responsive-img" alt="网络协议基础入门">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="网络协议基础入门">
                         
                         <span class="card-title">网络协议基础入门</span>
                     </div>
@@ -1641,10 +2382,6 @@ export ARCH=x86
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%AE%B9%E5%99%A8/" target="_blank">
-                        <span class="chip bg-color">容器</span>
-                    </a>
-                    
                     <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" target="_blank">
                         <span class="chip bg-color">计算机网络</span>
                     </a>
@@ -1659,6 +2396,10 @@ export ARCH=x86
                     
                     <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" target="_blank">
                         <span class="chip bg-color">微服务</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AE%B9%E5%99%A8/" target="_blank">
+                        <span class="chip bg-color">容器</span>
                     </a>
                     
                 </div>
@@ -1832,7 +2573,7 @@ export ARCH=x86
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">111.3k</span>
+            <span class="white-color">95.4k</span>
             
 
             <br>
