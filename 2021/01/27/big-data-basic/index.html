@@ -5,13 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="大数据入门, CS 宵烛 xiaozhu NightCandle 计算机 网络安全">
-    <!-- <meta name="baidu-site-verification" content="fmlEuI34ir" /> -->
-    <!-- <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" /> -->
-    <!-- <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" /> -->
-    <meta name="description" content="0. 前言大数据技术发展史
-论文奠定技术发展基石业务催生技术不断突破效率倒逼技术迭代更新
-
-&amp;emsp;&amp;emsp;今天常说的大数据技术起源于 Google 在 2004 年前后发表的三篇论文，也就是我们经常听到的“三驾马车”，分别是分布式">
+    <meta name="description" content="对框架、平台以及相关的算法构成的大数据的技术体系进行介绍，能够对大数据技术原理和应用算法构建起完整的知识体系">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,46 +13,31 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    
+
     <title>大数据入门 | 宵烛 Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
     <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
-    <style type="text/css">
-        
-    </style>
 
-    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-    <script>
-        var _hmt = _hmt || [];
-        (function () {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-    
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
-    <script>
-        (function(){
-        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
-        document.write('<script src="' + src + '" id="sozz"><\/script>');
-        })();
-    </script>
-
-<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
-
     <header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
@@ -72,78 +51,93 @@
             </div>
             
 
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
-<ul class="right">
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
     
-    <li class="hide-on-med-and-down">
-        <a href="/" class="waves-effect waves-light">
-            
-            <i class="fa fa-home"></i>
-            
-            <span>首页</span>
-        </a>
-    </li>
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
     
-    <li class="hide-on-med-and-down">
-        <a href="/tags" class="waves-effect waves-light">
-            
-            <i class="fa fa-tags"></i>
-            
-            <span>标签</span>
-        </a>
-    </li>
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
     
-    <li class="hide-on-med-and-down">
-        <a href="/categories" class="waves-effect waves-light">
-            
-            <i class="fa fa-bookmark"></i>
-            
-            <span>分类</span>
-        </a>
-    </li>
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
     
-    <li class="hide-on-med-and-down">
-        <a href="/archives" class="waves-effect waves-light">
-            
-            <i class="fa fa-archive"></i>
-            
-            <span>归档</span>
-        </a>
-    </li>
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
     
-    <li class="hide-on-med-and-down">
-        <a href="/about" class="waves-effect waves-light">
-            
-            <i class="fa fa-user-circle-o"></i>
-            
-            <span>关于</span>
-        </a>
-    </li>
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
     
-    <li class="hide-on-med-and-down">
-        <a href="/friends" class="waves-effect waves-light">
-            
-            <i class="fa fa-address-book"></i>
-            
-            <span>友情链接</span>
-        </a>
-    </li>
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
     
-    <li class="hide-on-med-and-down">
-        <a href="/contact" class="waves-effect waves-light">
-            
-            <i class="fa fa-comments"></i>
-            
-            <span>留言板</span>
-        </a>
-    </li>
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
     
-    <li>
-        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
-        </a>
-    </li>
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
+
 
 <div id="mobile-nav" class="side-nav sidenav">
 
@@ -159,76 +153,89 @@
         </div>
     </div>
 
-    
-
     <ul class="menu-list mobile-menu-list">
         
-        <li>
-            <a href="/" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-home"></i>
-                
-                首页
-            </a>
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
         </li>
         
-        <li>
-            <a href="/tags" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-tags"></i>
-                
-                标签
-            </a>
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
         </li>
         
-        <li>
-            <a href="/categories" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-bookmark"></i>
-                
-                分类
-            </a>
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
         </li>
         
-        <li>
-            <a href="/archives" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-archive"></i>
-                
-                归档
-            </a>
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
         </li>
         
-        <li>
-            <a href="/about" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-user-circle-o"></i>
-                
-                关于
-            </a>
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
         </li>
         
-        <li>
-            <a href="/friends" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-address-book"></i>
-                
-                友情链接
-            </a>
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
         </li>
         
-        <li>
-            <a href="/contact" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-comments"></i>
-                
-                留言板
-            </a>
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
         </li>
         
         
     </ul>
 </div>
+
 
         </div>
 
@@ -255,18 +262,17 @@
 
 
 <div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
-    <div class="container">
+    <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <div class="description center-align post-title">
-                        大数据入门
-                    </div>
+                    <h1 class="description center-align post-title">大数据入门</h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 
@@ -298,12 +304,12 @@
     }
 
     .toc-widget {
+        width: 345px;
         padding-left: 20px;
     }
 
     .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
+        padding: 35px 0 15px 17px;
         font-size: 1.5rem;
         font-weight: bold;
         line-height: 1.5rem;
@@ -312,6 +318,11 @@
     .toc-widget ol {
         padding: 0;
         list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
     }
 
     #toc-content ol {
@@ -331,19 +342,19 @@
     #toc-content .toc-link::before {
         background-color: transparent;
         max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
     }
 
     #toc-content .is-active-link {
         color: #42b983;
     }
 
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
     #floating-toc-btn {
         position: fixed;
-        right: 20px;
+        right: 15px;
         bottom: 76px;
         padding-top: 15px;
         margin-bottom: 0;
@@ -371,9 +382,9 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" target="_blank">
-                            <span class="chip bg-color">大数据</span>
-                        </a>
+                            <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                                <span class="chip bg-color">大数据</span>
+                            </a>
                         
                     </div>
                     
@@ -381,11 +392,11 @@
                 <div class="col s5 right-align">
                     
                     <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
-                            计科
-                        </a>
+                            <a href="/categories/%E8%AE%A1%E7%A7%91/" class="post-category">
+                                计科
+                            </a>
                         
                     </div>
                     
@@ -393,160 +404,161 @@
             </div>
 
             <div class="post-info">
+                
                 <div class="post-date info-break-policy">
-                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
                     2021-01-27
                 </div>
-
-                <div class="post-author info-break-policy">
-                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
-                    
-                    宵烛
-                    
-                </div>
+                
 
                 
-                
-                <div class="info-break-policy">
-                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.4k
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-05-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
-                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    25 分
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    7.3k
                 </div>
                 
+
                 
 
                 
             </div>
         </div>
         <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h2><h3 id="大数据技术发展史"><a href="#大数据技术发展史" class="headerlink" title="大数据技术发展史"></a>大数据技术发展史</h3><blockquote>
-<p>论文奠定技术发展基石<br>业务催生技术不断突破<br>效率倒逼技术迭代更新</p>
+                <h2 id="0-前言-2">0. 前言</h2>
+<h3 id="大数据技术发展史">大数据技术发展史</h3>
+<blockquote>
+<p>论文奠定技术发展基石<br>
+业务催生技术不断突破<br>
+效率倒逼技术迭代更新</p>
 </blockquote>
-<p>&emsp;&emsp;今天常说的大数据技术起源于 <em>Google</em> 在 2004 年前后发表的三篇论文，也就是我们经常听到的“三驾马车”，分别是<strong>分布式文件系统</strong> <code>GFS</code>、<strong>大数据分布式计算框架</strong> <code>MapReduce</code> 和 <strong>NoSQL 数据库系统</strong> <code>BigTable</code></p>
-<p>&emsp;&emsp;搜索引擎主要做网页抓取和索引构建两件事，在这个过程中有大量数据需要存储和计算。这“三驾马车”其实就是用来解决这个问题的。那时大多数公司的关注点还聚焦在单机上，在思考如何提升单机的性能，寻找更贵更好的服务器。而 <em>Google</em> 的思路是部署一个大规模的服务器集群，通过分布式的方式将海量数据存储在这个集群上，然后利用集群上的所有机器进行数据计算。 </p>
-<p>&emsp;&emsp;当时的天才程序员，也是 Lucene 开源项目的创始人 <em>Doug Cutting</em> 正在开发开源搜索引擎 Nutch，他阅读了论文后根据论文原理初步实现了类似的功能。</p>
+<p>  今天常说的大数据技术起源于 <em>Google</em> 在 2004 年前后发表的三篇论文，也就是我们经常听到的“三驾马车”，分别是<strong>分布式文件系统</strong> <code>GFS</code>、<strong>大数据分布式计算框架</strong> <code>MapReduce</code> 和 <strong>NoSQL 数据库系统</strong> <code>BigTable</code></p>
+<p>  搜索引擎主要做网页抓取和索引构建两件事，在这个过程中有大量数据需要存储和计算。这“三驾马车”其实就是用来解决这个问题的。那时大多数公司的关注点还聚焦在单机上，在思考如何提升单机的性能，寻找更贵更好的服务器。而 <em>Google</em> 的思路是部署一个大规模的服务器集群，通过分布式的方式将海量数据存储在这个集群上，然后利用集群上的所有机器进行数据计算。</p>
+<p>  当时的天才程序员，也是 Lucene 开源项目的创始人 <em>Doug Cutting</em> 正在开发开源搜索引擎 Nutch，他阅读了论文后根据论文原理初步实现了类似的功能。</p>
 <br>
-
-<p>&emsp;&emsp;2006 年，<em>Doug Cutting</em> 将这些大数据相关的功能从 Nutch 中分离了出来，然后启动了一个独立的项目专门开发维护大数据技术，这就是后来的<code>Hadoop</code>，主要包括 Hadoop 分布式文件系统 HDFS 和大数据计算引擎 MapReduce 。Hadoop 发布之后，<em>Yahoo</em> 很快就用了起来。</p>
-<p>&emsp;&emsp;2008 年，Hadoop 正式成为 Apache 的顶级项目，后来 <em>Doug Cutting</em> 本人也成为了 Apache 基金会的主席。自此，Hadoop 作为软件开发领域的一颗明星冉冉升起。同年，商业公司 <em>Cloudera</em> 成立，Hadoop 得到进一步的商业支持。</p>
-<p>&emsp;&emsp;这时 Yahoo 的一些人觉得用 MapReduce 进行大数据编程太麻烦，于是便开发了脚本语言 Pig 。Pig 使用类 SQL 的语法，开发者可以用 Pig 脚本描述要对大数据集上进行的操作，编译后生成 MapReduce 程序，然后在 Hadoop 上运行。编写 Pig 脚本虽然比直接 MapReduce 编程容易，但是依然需要学习新的脚本语法。于是 <em>Facebook</em> 又发布了 <code>Hive</code>。<strong>Hive 支持使用 SQL 语法来进行大数据计算</strong>，Hive 会把 SQL 语句转化成 MapReduce 的计算程序。Hive 出现后极大程度地降低了 Hadoop 的使用难度，迅速得到开发者和企业的追捧。</p>
-<p>&emsp;&emsp;随后众多 Hadoop 周边产品开始出现，<strong>大数据生态体系</strong>逐渐形成，其中包括：专门将关系数据库中的数据导入导出到 Hadoop 平台的 <code>Sqoop</code>；针对大规模日志进行分布式收集、聚合和传输的 <code>Flume</code>；MapReduce 工作流调度引擎 <code>Oozie</code> 等。</p>
+<p>  2006 年，<em>Doug Cutting</em> 将这些大数据相关的功能从 Nutch 中分离了出来，然后启动了一个独立的项目专门开发维护大数据技术，这就是后来的<code>Hadoop</code>，主要包括 Hadoop 分布式文件系统 HDFS 和大数据计算引擎 MapReduce 。Hadoop 发布之后，<em>Yahoo</em> 很快就用了起来。</p>
+<p>  2008 年，Hadoop 正式成为 Apache 的顶级项目，后来 <em>Doug Cutting</em> 本人也成为了 Apache 基金会的主席。自此，Hadoop 作为软件开发领域的一颗明星冉冉升起。同年，商业公司 <em>Cloudera</em> 成立，Hadoop 得到进一步的商业支持。</p>
+<p>  这时 Yahoo 的一些人觉得用 MapReduce 进行大数据编程太麻烦，于是便开发了脚本语言 Pig 。Pig 使用类 SQL 的语法，开发者可以用 Pig 脚本描述要对大数据集上进行的操作，编译后生成 MapReduce 程序，然后在 Hadoop 上运行。编写 Pig 脚本虽然比直接 MapReduce 编程容易，但是依然需要学习新的脚本语法。于是 <em>Facebook</em> 又发布了 <code>Hive</code>。<strong>Hive 支持使用 SQL 语法来进行大数据计算</strong>，Hive 会把 SQL 语句转化成 MapReduce 的计算程序。Hive 出现后极大程度地降低了 Hadoop 的使用难度，迅速得到开发者和企业的追捧。</p>
+<p>  随后众多 Hadoop 周边产品开始出现，<strong>大数据生态体系</strong>逐渐形成，其中包括：专门将关系数据库中的数据导入导出到 Hadoop 平台的 <code>Sqoop</code>；针对大规模日志进行分布式收集、聚合和传输的 <code>Flume</code>；MapReduce 工作流调度引擎 <code>Oozie</code> 等。</p>
 <br>
-
-<p>&emsp;&emsp;在 Hadoop 早期，MapReduce 既是一个执行引擎，又是一个资源调度框架，服务器集群的资源调度管理由 MapReduce 自己完成。但是这样不利于资源复用，也使其非常臃肿。于是一个新项目启动了，将 MapReduce 执行引擎和资源调度分离开来，这就是 <code>Yarn</code>。2012 年，Yarn 成为一个独立的项目开始运营，随后被各类大数据产品支持，成为大数据平台上最主流的资源调度系统。</p>
-<p>&emsp;&emsp;同样是在 2012 年，UC 伯克利 AMP 实验室开发的 <code>Spark</code> 开始崭露头角。当时 AMP 实验室的马铁博士发现使用 MapReduce 进行机器学习计算的时候性能非常差。（因为机器学习算法通常需要进行很多次的迭代计算，而 MapReduce 每执行一次 Map 和 Reduce 计算都需要重新启动一次作业，带来大量的无谓消耗，且 MapReduce 主要使用磁盘作为存储介质）Spark 一经推出，立即受到业界的追捧，并逐步替代 MapReduce 在企业应用中的地位。</p>
+<p>  在 Hadoop 早期，MapReduce 既是一个执行引擎，又是一个资源调度框架，服务器集群的资源调度管理由 MapReduce 自己完成。但是这样不利于资源复用，也使其非常臃肿。于是一个新项目启动了，将 MapReduce 执行引擎和资源调度分离开来，这就是 <code>Yarn</code>。2012 年，Yarn 成为一个独立的项目开始运营，随后被各类大数据产品支持，成为大数据平台上最主流的资源调度系统。</p>
+<p>  同样是在 2012 年，UC 伯克利 AMP 实验室开发的 <code>Spark</code> 开始崭露头角。当时 AMP 实验室的马铁博士发现使用 MapReduce 进行机器学习计算的时候性能非常差。（因为机器学习算法通常需要进行很多次的迭代计算，而 MapReduce 每执行一次 Map 和 Reduce 计算都需要重新启动一次作业，带来大量的无谓消耗，且 MapReduce 主要使用磁盘作为存储介质）Spark 一经推出，立即受到业界的追捧，并逐步替代 MapReduce 在企业应用中的地位。</p>
 <br>
-
-<p>&emsp;&emsp;一般说来 MapReduce、Spark 这类计算框架处理的业务场景都被称作<strong>批处理计算</strong>，因为它们通常针对以“天”为单位产生的数据进行一次计算，然后得到需要的结果，这中间计算需要花费的时间大概是几十分钟甚至更长的时间。因为计算的数据是非在线得到的实时数据，而是历史数据，所以这类计算也被称为<strong>大数据离线计算</strong>。</p>
-<p>&emsp;&emsp;而在大数据领域，还有另外一类应用场景，它们需要对实时产生的大量数据进行即时计算，比如对于遍布城市的监控摄像头进行人脸识别和嫌犯追踪。这类计算称为<strong>大数据流计算</strong>，相应地，有 <code>Storm、Flink、Spark Streaming</code> 等流计算框架来满足此类大数据应用的场景。 流式计算要处理的数据是实时在线产生的数据，所以这类计算也被称为<strong>大数据实时计算</strong>。</p>
-<p>&emsp;&emsp;在典型的大数据的业务场景下，数据业务最通用的做法是采用批处理的技术处理历史全量数据，采用流式计算处理实时新增数据。 Flink 这样的计算引擎可以同时支持流式计算和批处理计算。</p>
+<p>  一般说来 MapReduce、Spark 这类计算框架处理的业务场景都被称作<strong>批处理计算</strong>，因为它们通常针对以“天”为单位产生的数据进行一次计算，然后得到需要的结果，这中间计算需要花费的时间大概是几十分钟甚至更长的时间。因为计算的数据是非在线得到的实时数据，而是历史数据，所以这类计算也被称为<strong>大数据离线计算</strong>。</p>
+<p>  而在大数据领域，还有另外一类应用场景，它们需要对实时产生的大量数据进行即时计算，比如对于遍布城市的监控摄像头进行人脸识别和嫌犯追踪。这类计算称为<strong>大数据流计算</strong>，相应地，有 <code>Storm、Flink、Spark Streaming</code> 等流计算框架来满足此类大数据应用的场景。 流式计算要处理的数据是实时在线产生的数据，所以这类计算也被称为<strong>大数据实时计算</strong>。</p>
+<p>  在典型的大数据的业务场景下，数据业务最通用的做法是采用批处理的技术处理历史全量数据，采用流式计算处理实时新增数据。 Flink 这样的计算引擎可以同时支持流式计算和批处理计算。</p>
 <br>
-
-<p>&emsp;&emsp;除了大数据批处理和流处理，NoSQL 系统处理的主要也是大规模海量数据的存储与访问，所以也被归为大数据技术。 NoSQL 曾经在 2011 年左右非常火爆，涌现出 <code>HBase</code>、<code>Cassandra</code> 等许多优秀的产品，其中 <code>HBase</code> 是从 Hadoop 中分离出来的、<strong>基于 HDFS 的 NoSQL 系统</strong>。</p>
+<p>  除了大数据批处理和流处理，NoSQL 系统处理的主要也是大规模海量数据的存储与访问，所以也被归为大数据技术。 NoSQL 曾经在 2011 年左右非常火爆，涌现出 <code>HBase</code>、<code>Cassandra</code> 等许多优秀的产品，其中 <code>HBase</code> 是从 Hadoop 中分离出来的、<strong>基于 HDFS 的 NoSQL 系统</strong>。</p>
 <br>
-
-<p>&emsp;&emsp;<strong>大数据处理的主要应用场景包括数据分析、数据挖掘与机器学习</strong>。数据分析主要使用 <code>Hive</code>、<code>Spark SQL</code> 等 SQL 引擎完成；数据挖掘与机器学习则有专门的机器学习框架 <code>TensorFlow</code>、<code>Mahout</code>  等，内置了主要的机器学习和数据挖掘算法。此外，大数据要存入分布式文件系统要有序调度 <code>MapReduce</code> 和 <code>Spark</code> 作业执行，并能把执行结果写入到各个应用系统的数据库中，还需要有一个<strong>大数据平台</strong>整合所有这些大数据组件和企业应用系统。下图中的所有这些框架、平台以及相关的算法共同构成了<strong>大数据的技术体系</strong>。</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/technology-system-of-bd.png"></p>
-<p>​    </p>
-<h3 id="大数据应用发展史"><a href="#大数据应用发展史" class="headerlink" title="大数据应用发展史"></a>大数据应用发展史</h3><p>&emsp;&emsp;从最开始的 Google 在搜索引擎中开始使用大数据技术，到现在无处不在的各种人工智能应用，伴随着大数据技术的发展，大数据应用也从曲高和寡走到了今天的遍地开花。</p>
+<p>  <strong>大数据处理的主要应用场景包括数据分析、数据挖掘与机器学习</strong>。数据分析主要使用 <code>Hive</code>、<code>Spark SQL</code> 等 SQL 引擎完成；数据挖掘与机器学习则有专门的机器学习框架 <code>TensorFlow</code>、<code>Mahout</code>  等，内置了主要的机器学习和数据挖掘算法。此外，大数据要存入分布式文件系统要有序调度 <code>MapReduce</code> 和 <code>Spark</code> 作业执行，并能把执行结果写入到各个应用系统的数据库中，还需要有一个<strong>大数据平台</strong>整合所有这些大数据组件和企业应用系统。下图中的所有这些框架、平台以及相关的算法共同构成了<strong>大数据的技术体系</strong>。</p>
+<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/technology-system-of-bd.png" alt=""></p>
+<p>​</p>
+<h3 id="大数据应用发展史">大数据应用发展史</h3>
+<p>  从最开始的 Google 在搜索引擎中开始使用大数据技术，到现在无处不在的各种人工智能应用，伴随着大数据技术的发展，大数据应用也从曲高和寡走到了今天的遍地开花。</p>
 <br>
-
-<h4 id="大数据应用的搜索引擎时代"><a href="#大数据应用的搜索引擎时代" class="headerlink" title="大数据应用的搜索引擎时代"></a>大数据应用的搜索引擎时代</h4><p>&emsp;&emsp;作为全球最大的搜索引擎公司，<em>Google</em> 也是公认的大数据鼻祖，它存储着全世界几乎所有可访问的网页，数目可能超过万亿规模，全部存储起来大约需要数万块磁盘。为了将这些文件存储起来，<em>Google</em> 开发了 GFS，<strong>将数千台服务器上的数万块磁盘统一管理起来，然后当作一个文件系统，统一存储所有这些网页文件</strong>。<em>Google</em> 要构建搜索引擎，需要对所有文件中的单词进行词频统计，然后根据 PageRank 算法计算网页排名。这中间，<em>Google</em> 需要对这数万块磁盘上的文件进行计算处理，也正是基于这些需求 <em>Google</em> 又开发了 MapReduce 大数据计算框架。</p>
-<p>&emsp;&emsp;<em>Google</em> 一路走来，从搜索引擎、Gmail、地图、Android、无人驾驶，每一步都将人类的技术边界推向更高的高度。而差一点的公司即使也曾经获得过显赫的地位，但是一旦失去做事的美感和节奏感，在这个快速变革的时代，陨落得比流星还快。</p>
+<h4 id="大数据应用的搜索引擎时代">大数据应用的搜索引擎时代</h4>
+<p>  作为全球最大的搜索引擎公司，<em>Google</em> 也是公认的大数据鼻祖，它存储着全世界几乎所有可访问的网页，数目可能超过万亿规模，全部存储起来大约需要数万块磁盘。为了将这些文件存储起来，<em>Google</em> 开发了 GFS，<strong>将数千台服务器上的数万块磁盘统一管理起来，然后当作一个文件系统，统一存储所有这些网页文件</strong>。<em>Google</em> 要构建搜索引擎，需要对所有文件中的单词进行词频统计，然后根据 PageRank 算法计算网页排名。这中间，<em>Google</em> 需要对这数万块磁盘上的文件进行计算处理，也正是基于这些需求 <em>Google</em> 又开发了 MapReduce 大数据计算框架。</p>
+<p>  <em>Google</em> 一路走来，从搜索引擎、Gmail、地图、Android、无人驾驶，每一步都将人类的技术边界推向更高的高度。而差一点的公司即使也曾经获得过显赫的地位，但是一旦失去做事的美感和节奏感，在这个快速变革的时代，陨落得比流星还快。</p>
 <br>
-
-<h4 id="大数据应用的数据仓库时代"><a href="#大数据应用的数据仓库时代" class="headerlink" title="大数据应用的数据仓库时代"></a>大数据应用的数据仓库时代</h4><p>&emsp;&emsp;论文刚发表时，吸引的是 <em>Yahoo</em> 这样的搜索引擎公司和 <em>Doug Cutting</em> 这样的开源搜索引擎开发者。但是当 <em>Facebook</em> 推出 Hive 的时候，科技公司都不淡定了，他们开始意识到大数据的时代真正开启了。</p>
-<p>&emsp;&emsp;曾经我们在进行数据分析与统计时，仅仅局限于数据库，在数据库的计算环境中对数据库中的数据表进行统计分析。并且受数据量和计算能力的限制，我们只能对最重要的数据进行统计和分析。</p>
-<p>&emsp;&emsp;而 Hive 可以在 Hadoop 上进行 SQL 操作，实现数据统计与分析。<strong>我们可以用更低廉的价格获得比以往多得多的数据存储与计算能力</strong>。我们可以把运行日志、应用采集数据、数据库数据放到一起进行计算分析，获得以前无法得到的数据结果，企业的数据仓库也随之呈指数级膨胀。</p>
-<p>&emsp;&emsp;在数据仓库时代，只要有数据，几乎就一定要进行统计分析，如果数据规模比较大，我们就会想到要用 Hadoop 大数据技术。技术的发展同时又促进了技术应用，这也为接下来大数据应用走进数据挖掘时代埋下伏笔。</p>
+<h4 id="大数据应用的数据仓库时代">大数据应用的数据仓库时代</h4>
+<p>  论文刚发表时，吸引的是 <em>Yahoo</em> 这样的搜索引擎公司和 <em>Doug Cutting</em> 这样的开源搜索引擎开发者。但是当 <em>Facebook</em> 推出 Hive 的时候，科技公司都不淡定了，他们开始意识到大数据的时代真正开启了。</p>
+<p>  曾经我们在进行数据分析与统计时，仅仅局限于数据库，在数据库的计算环境中对数据库中的数据表进行统计分析。并且受数据量和计算能力的限制，我们只能对最重要的数据进行统计和分析。</p>
+<p>  而 Hive 可以在 Hadoop 上进行 SQL 操作，实现数据统计与分析。<strong>我们可以用更低廉的价格获得比以往多得多的数据存储与计算能力</strong>。我们可以把运行日志、应用采集数据、数据库数据放到一起进行计算分析，获得以前无法得到的数据结果，企业的数据仓库也随之呈指数级膨胀。</p>
+<p>  在数据仓库时代，只要有数据，几乎就一定要进行统计分析，如果数据规模比较大，我们就会想到要用 Hadoop 大数据技术。技术的发展同时又促进了技术应用，这也为接下来大数据应用走进数据挖掘时代埋下伏笔。</p>
 <br>
-
-<h4 id="大数据应用的数据挖掘时代"><a href="#大数据应用的数据挖掘时代" class="headerlink" title="大数据应用的数据挖掘时代"></a>大数据应用的数据挖掘时代</h4><p>&emsp;&emsp;大数据一旦进入更多的企业，我们就会对大数据提出更多期望，除了数据统计，我们还希望发掘出更多数据的价值，大数据随之进入数据挖掘时代。</p>
-<p>&emsp;&emsp;在商业环境中，如何解读商品间的关系并不重要，重要的是它们之间只要存在关联，就可以进行<strong>关联分析</strong>，最终目的是让用户尽可能看到想购买的商品。除了商品和商品有关系，还可以利用人和人之间的关系推荐商品。如果两个人购买的商品有很多都是类似甚至相同的，不管这两个人相隔多远他们一定有某种关系，比如可能有差不多的教育背景、经济收入、兴趣爱好。根据这种关系，可以进行关联推荐，让他们看到自己感兴趣的商品。</p>
-<p>&emsp;&emsp;更进一步，大数据还可以将每个人身上的不同特性挖掘出来，打上各种各样的标签，这些标签组成了用户画像，并且只要这样的标签足够多，就可以完整描绘出一个人，甚至比你最亲近的人对你的描述还要完整、准确。</p>
-<p>&emsp;&emsp;除了商品销售，数据挖掘还可以用于人际关系挖掘。基于六度分隔理论，<em>Facebook</em> 研究了十几亿用户的数据，试图找到关联两个陌生人之间的数字，答案是惊人的 3.57。你可以看到，各种各样的社交软件记录着我们的好友关系，通过关系图谱挖掘，几乎可以把世界上所有的人际关系网都描绘出来。</p>
-<p>&emsp;&emsp;现代生活几乎离不开互联网，各种各样的应用无时不刻不在收集数据，这些数据在后台的大数据集群中一刻不停地在被进行各种分析与挖掘。</p>
+<h4 id="大数据应用的数据挖掘时代">大数据应用的数据挖掘时代</h4>
+<p>  大数据一旦进入更多的企业，我们就会对大数据提出更多期望，除了数据统计，我们还希望发掘出更多数据的价值，大数据随之进入数据挖掘时代。</p>
+<p>  在商业环境中，如何解读商品间的关系并不重要，重要的是它们之间只要存在关联，就可以进行<strong>关联分析</strong>，最终目的是让用户尽可能看到想购买的商品。除了商品和商品有关系，还可以利用人和人之间的关系推荐商品。如果两个人购买的商品有很多都是类似甚至相同的，不管这两个人相隔多远他们一定有某种关系，比如可能有差不多的教育背景、经济收入、兴趣爱好。根据这种关系，可以进行关联推荐，让他们看到自己感兴趣的商品。</p>
+<p>  更进一步，大数据还可以将每个人身上的不同特性挖掘出来，打上各种各样的标签，这些标签组成了用户画像，并且只要这样的标签足够多，就可以完整描绘出一个人，甚至比你最亲近的人对你的描述还要完整、准确。</p>
+<p>  除了商品销售，数据挖掘还可以用于人际关系挖掘。基于六度分隔理论，<em>Facebook</em> 研究了十几亿用户的数据，试图找到关联两个陌生人之间的数字，答案是惊人的 3.57。你可以看到，各种各样的社交软件记录着我们的好友关系，通过关系图谱挖掘，几乎可以把世界上所有的人际关系网都描绘出来。</p>
+<p>  现代生活几乎离不开互联网，各种各样的应用无时不刻不在收集数据，这些数据在后台的大数据集群中一刻不停地在被进行各种分析与挖掘。</p>
 <br>
-
-<h4 id="大数据应用的机器学习时代"><a href="#大数据应用的机器学习时代" class="headerlink" title="大数据应用的机器学习时代"></a>大数据应用的机器学习时代</h4><p>&emsp;&emsp;我们很早就发现，数据中蕴藏着规律，这个规律是所有数据都遵循的，过去发生的事情遵循这个规律，将来要发生的事情也遵循这个规律。一旦找到了这个规律，对于正在发生的事情就可以按照规律进行预测。</p>
-<p>&emsp;&emsp;在过去，我们受数据采集、存储、计算能力的限制，只能通过抽样的方式获取小部分数据，无法得到完整的、全局的、细节的规律。<strong>而现在有了大数据，可以把全部的历史数据都收集起来，统计其规律，进而预测正在发生的事情——这就是机器学习</strong>。</p>
-<p>&emsp;&emsp;把历史上人类围棋对弈的棋谱数据都存储起来，针对每一种盘面记录如何落子可以得到更高的赢面。得到这个统计规律以后，就可以利用这个规律用机器和人下棋，每一步都计算落在何处将得到更大的赢面，于是我们就得到了一个会下棋的机器人，这就是前两年轰动一时的 AlphaGo，以压倒性优势下赢了人类的顶尖棋手。</p>
-<p>&emsp;&emsp;将人类活动产生的数据，通过机器学习得到统计规律，进而可以模拟人的行为，使机器表现出人类特有的智能，这就是人工智能 AI。</p>
+<h4 id="大数据应用的机器学习时代">大数据应用的机器学习时代</h4>
+<p>  我们很早就发现，数据中蕴藏着规律，这个规律是所有数据都遵循的，过去发生的事情遵循这个规律，将来要发生的事情也遵循这个规律。一旦找到了这个规律，对于正在发生的事情就可以按照规律进行预测。</p>
+<p>  在过去，我们受数据采集、存储、计算能力的限制，只能通过抽样的方式获取小部分数据，无法得到完整的、全局的、细节的规律。<strong>而现在有了大数据，可以把全部的历史数据都收集起来，统计其规律，进而预测正在发生的事情——这就是机器学习</strong>。</p>
+<p>  把历史上人类围棋对弈的棋谱数据都存储起来，针对每一种盘面记录如何落子可以得到更高的赢面。得到这个统计规律以后，就可以利用这个规律用机器和人下棋，每一步都计算落在何处将得到更大的赢面，于是我们就得到了一个会下棋的机器人，这就是前两年轰动一时的 AlphaGo，以压倒性优势下赢了人类的顶尖棋手。</p>
+<p>  将人类活动产生的数据，通过机器学习得到统计规律，进而可以模拟人的行为，使机器表现出人类特有的智能，这就是人工智能 AI。</p>
 <hr>
-<p>&emsp;&emsp;<strong>大数据从搜索引擎到机器学习，发展思路其实是一脉相承的，就是想发现数据中的规律并为我们所用</strong>。所以很多人把数据称作金矿，大数据应用就是从这座蕴含知识宝藏的金矿中发掘中有商业价值的真金白银出来。</p>
-<p>&emsp;&emsp;数据中蕴藏着价值已经是众所周知的事情了，那么如何从这些庞大的数据中发掘出我们想要的知识价值，这正是大数据技术目前正在解决的事情，包括大数据存储与计算，也包括大数据分析、挖掘、机器学习等应用。</p>
-<p>​    </p>
-<p>​    </p>
-<h3 id="大数据应用领域"><a href="#大数据应用领域" class="headerlink" title="大数据应用领域"></a>大数据应用领域</h3><blockquote>
+<p>  <strong>大数据从搜索引擎到机器学习，发展思路其实是一脉相承的，就是想发现数据中的规律并为我们所用</strong>。所以很多人把数据称作金矿，大数据应用就是从这座蕴含知识宝藏的金矿中发掘中有商业价值的真金白银出来。</p>
+<p>  数据中蕴藏着价值已经是众所周知的事情了，那么如何从这些庞大的数据中发掘出我们想要的知识价值，这正是大数据技术目前正在解决的事情，包括大数据存储与计算，也包括大数据分析、挖掘、机器学习等应用。</p>
+<p>​</p>
+<p>​</p>
+<h3 id="大数据应用领域">大数据应用领域</h3>
+<blockquote>
 <p><strong>数据驱动一切</strong></p>
 </blockquote>
-<p>&emsp;&emsp;大数据出现的时间只有十几年，被人们广泛接受并应用只有几年的时间，但就是这短短几年的时间，大数据呈现出爆炸式增长的态势。在各个领域，大数据的身影几乎无处不在。</p>
-<p>&emsp;&emsp;利用大数据和机器学习，发掘数据中的规律，进而对当前的事情做出预测和判断，使机器表现出智能的特性，正变得越来越普及。</p>
+<p>  大数据出现的时间只有十几年，被人们广泛接受并应用只有几年的时间，但就是这短短几年的时间，大数据呈现出爆炸式增长的态势。在各个领域，大数据的身影几乎无处不在。</p>
+<p>  利用大数据和机器学习，发掘数据中的规律，进而对当前的事情做出预测和判断，使机器表现出智能的特性，正变得越来越普及。</p>
 <br>
-
-<h4 id="医疗健康领域的应用"><a href="#医疗健康领域的应用" class="headerlink" title="医疗健康领域的应用"></a>医疗健康领域的应用</h4><p>&emsp;&emsp;健康医疗领域是最近几年获得最多创业者和投资人青睐的大数据领域。</p>
-<p>&emsp;&emsp;医疗健康领域会产生大量的数据；其次，医疗健康领域有一个万亿级的市场规模；最关键的是，<strong>医疗健康领域里很多工作依赖人的经验，而这正是机器学习的强项</strong>。</p>
+<h4 id="医疗健康领域的应用">医疗健康领域的应用</h4>
+<p>  健康医疗领域是最近几年获得最多创业者和投资人青睐的大数据领域。</p>
+<p>  医疗健康领域会产生大量的数据；其次，医疗健康领域有一个万亿级的市场规模；最关键的是，<strong>医疗健康领域里很多工作依赖人的经验，而这正是机器学习的强项</strong>。</p>
 <br>
-
 <p><strong>1. 医学影像智能识别</strong></p>
-<p>&emsp;&emsp;图像识别是机器学习获得的重大突破之一，使用大量的图片数据进行深度机器学习训练，机器可以识别出特定的图像元素，当然也可以识别出病理特征，比如 X 光片里的异常病灶位置。</p>
-<p>&emsp;&emsp;虽然在临床实践方面应用有限，但是医疗影像 AI 还是在一些领域取得一定的进展。医学影像智能识别，一方面可以帮助医生进行辅助诊疗，另一方面对于皮肤病等有外部表现的病症，病人可以自己拍照然后使用 AI 智能识别做一个初步诊断。</p>
+<p>  图像识别是机器学习获得的重大突破之一，使用大量的图片数据进行深度机器学习训练，机器可以识别出特定的图像元素，当然也可以识别出病理特征，比如 X 光片里的异常病灶位置。</p>
+<p>  虽然在临床实践方面应用有限，但是医疗影像 AI 还是在一些领域取得一定的进展。医学影像智能识别，一方面可以帮助医生进行辅助诊疗，另一方面对于皮肤病等有外部表现的病症，病人可以自己拍照然后使用 AI 智能识别做一个初步诊断。</p>
 <br>
-
 <p><strong>2. 病历大数据智能诊疗</strong></p>
-<p>&emsp;&emsp;病历，特别是专家写的病历，本身就是一笔巨大的知识财富，利用大数据技术将这些知识进行处理、分析、统计、 挖掘，可以构成一个病历知识库，可以分享给更多人，即构成一个智能辅助诊疗系统。 </p>
+<p>  病历，特别是专家写的病历，本身就是一笔巨大的知识财富，利用大数据技术将这些知识进行处理、分析、统计、 挖掘，可以构成一个病历知识库，可以分享给更多人，即构成一个智能辅助诊疗系统。</p>
 <p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/framework-for-paramedical-care-system.png" alt="一个医疗辅助诊疗系统架构"></p>
-<p>&emsp;&emsp;针对同类疾病和其他上下文信息（化验结果、病史、年龄性别、病人回访信息等）可以挖掘出针对同样的疾病情况，哪种治疗手段可以用更低的治疗成本、更少的病人痛苦，获得更好的治疗效果。从上面的架构图你能看到，将这些病历知识和循证医学知识、科研文献知识、用药知识共同构成一个辅助诊疗知识库， 通过知识匹配搜索引擎可以对外提供服务。</p>
-<p>​    </p>
+<p>  针对同类疾病和其他上下文信息（化验结果、病史、年龄性别、病人回访信息等）可以挖掘出针对同样的疾病情况，哪种治疗手段可以用更低的治疗成本、更少的病人痛苦，获得更好的治疗效果。从上面的架构图你能看到，将这些病历知识和循证医学知识、科研文献知识、用药知识共同构成一个辅助诊疗知识库， 通过知识匹配搜索引擎可以对外提供服务。</p>
+<p>​</p>
 <br>
-
-<h4 id="教育领域的应用"><a href="#教育领域的应用" class="headerlink" title="教育领域的应用"></a>教育领域的应用</h4><p>&emsp;在传统教育过程中要做到因人施教，需要老师本身能力很强才能把握好。但是大数据在线教育利用大数据技术进行分析统计，完全可以做到根据学生能力和学习节奏，及时调整学习大纲和学习进度，提供个性化和自适应的学习体验。</p>
+<h4 id="教育领域的应用">教育领域的应用</h4>
+<p> 在传统教育过程中要做到因人施教，需要老师本身能力很强才能把握好。但是大数据在线教育利用大数据技术进行分析统计，完全可以做到根据学生能力和学习节奏，及时调整学习大纲和学习进度，提供个性化和自适应的学习体验。</p>
 <br>
-
 <p><strong>1. AI 外语老师</strong></p>
-<p>&emsp;&emsp;得益于语音识别和语音合成技术的成熟，一些在线教育网站尝试用人工智能外语老师进行外语教学。这里面的原理其实并不复杂，聊天机器人技术已经普遍应用，只要将学习的知识点设计进聊天的过程中，就可以实现一个简单的 AI 外语老师了。</p>
+<p>  得益于语音识别和语音合成技术的成熟，一些在线教育网站尝试用人工智能外语老师进行外语教学。这里面的原理其实并不复杂，聊天机器人技术已经普遍应用，只要将学习的知识点设计进聊天的过程中，就可以实现一个简单的 AI 外语老师了。</p>
 <br>
-
 <p><strong>2. 智能解题</strong></p>
-<p>&emsp;&emsp;比较简单的智能解题系统其实是利用搜索引擎技术，在收集大量的试题以及答案的基础上，进行试题匹配，将匹配成功的答案返回。这个过程看起来就像智能做题一样，表面看给个题目就能解出答案，而实际上只是找到答案。</p>
-<p>&emsp;&emsp;进阶一点的智能解题系统，通过图像识别与自然语言处理进行相似性匹配。更改试题的部分数字、文字表述，但是不影响实质性解答思路，依然可以解答。</p>
-<p>&emsp;&emsp;高阶的智能解题系统，利用神经网络机器学习技术，将试题的自然语言描述转化成形式语言，然后分析知识点和解题策略，进行自动推导，从而完成实质性的解题。</p>
-<p>​    </p>
+<p>  比较简单的智能解题系统其实是利用搜索引擎技术，在收集大量的试题以及答案的基础上，进行试题匹配，将匹配成功的答案返回。这个过程看起来就像智能做题一样，表面看给个题目就能解出答案，而实际上只是找到答案。</p>
+<p>  进阶一点的智能解题系统，通过图像识别与自然语言处理进行相似性匹配。更改试题的部分数字、文字表述，但是不影响实质性解答思路，依然可以解答。</p>
+<p>  高阶的智能解题系统，利用神经网络机器学习技术，将试题的自然语言描述转化成形式语言，然后分析知识点和解题策略，进行自动推导，从而完成实质性的解题。</p>
+<p>​</p>
 <br>
-
-<h4 id="社交媒体领域的应用"><a href="#社交媒体领域的应用" class="headerlink" title="社交媒体领域的应用"></a>社交媒体领域的应用</h4><p>&emsp;&emsp;大数据有一个重要的、和我们大多数人密切相关，但是又不太引人注目的一个应用领域是<strong>舆情监控与分析</strong>。我们日常在各种互联网应用和社交媒体上发表各种言论，这些言论事实上反映了最准确的民情舆论。一个个体的言论基本没有意义，但是大量的、全国乃至全球的言论数据表现出的统计特性，就有了非常重要的意义。</p>
-<p>&emsp;&emsp;编写数据爬虫，实时爬取各个社交新媒体上的各种用户内容和媒体信息，然后通过自然语言处理，就可以进行情感分析、热点事件追踪等。舆情实时监控可用于商业领域，引导智能广告投放；可用于金融领域，辅助执行自动化股票、期权、数字货币交易；可用于社会管理，及时发现可能引发社会问题的舆论倾向。</p>
-<p>​    </p>
+<h4 id="社交媒体领域的应用">社交媒体领域的应用</h4>
+<p>  大数据有一个重要的、和我们大多数人密切相关，但是又不太引人注目的一个应用领域是<strong>舆情监控与分析</strong>。我们日常在各种互联网应用和社交媒体上发表各种言论，这些言论事实上反映了最准确的民情舆论。一个个体的言论基本没有意义，但是大量的、全国乃至全球的言论数据表现出的统计特性，就有了非常重要的意义。</p>
+<p>  编写数据爬虫，实时爬取各个社交新媒体上的各种用户内容和媒体信息，然后通过自然语言处理，就可以进行情感分析、热点事件追踪等。舆情实时监控可用于商业领域，引导智能广告投放；可用于金融领域，辅助执行自动化股票、期权、数字货币交易；可用于社会管理，及时发现可能引发社会问题的舆论倾向。</p>
+<p>​</p>
 <br>
-
-<h4 id="金融领域的应用"><a href="#金融领域的应用" class="headerlink" title="金融领域的应用"></a>金融领域的应用</h4><p>&emsp;&emsp;大数据在金融领域应用比较成熟的是<strong>大数据风控</strong>。在金融借贷中，如何识别出高风险用户，要求其提供更多抵押、支付更高利息、调整更低的额度，甚至拒绝贷款，从而降低金融机构的风险？事实上，金融行业已经沉淀了大量的历史数据，利用这些数据进行计算，可以得到用户特征和风险指数的曲线（即风控模型）。当新用户申请贷款的时候，将该用户特征带入曲线进行计算，就可以得到该用户的风险指数，进而自动给出该用户的贷款策略。</p>
-<p>&emsp;&emsp;利用股票、外汇等历史交易记录，分析交易规律，结合当前的新闻热点、舆论倾向、财经数据构建交易模型，进行自动化交易，这就是金融领域的量化交易。这些数据量特别巨大，交易涉及金额也同样巨大。</p>
-<p>​    </p>
+<h4 id="金融领域的应用">金融领域的应用</h4>
+<p>  大数据在金融领域应用比较成熟的是<strong>大数据风控</strong>。在金融借贷中，如何识别出高风险用户，要求其提供更多抵押、支付更高利息、调整更低的额度，甚至拒绝贷款，从而降低金融机构的风险？事实上，金融行业已经沉淀了大量的历史数据，利用这些数据进行计算，可以得到用户特征和风险指数的曲线（即风控模型）。当新用户申请贷款的时候，将该用户特征带入曲线进行计算，就可以得到该用户的风险指数，进而自动给出该用户的贷款策略。</p>
+<p>  利用股票、外汇等历史交易记录，分析交易规律，结合当前的新闻热点、舆论倾向、财经数据构建交易模型，进行自动化交易，这就是金融领域的量化交易。这些数据量特别巨大，交易涉及金额也同样巨大。</p>
+<p>​</p>
 <br>
-
-<h4 id="新零售领域的应用"><a href="#新零售领域的应用" class="headerlink" title="新零售领域的应用"></a>新零售领域的应用</h4><p>&emsp;&emsp;区别于传统零售，新零售使用大数据进行全链路管理。从生产、物流、购物体验，使用大数据进行分析和预判，实现精准生产、零库存、全新的购物体验。</p>
-<p>&emsp;&emsp;亚马逊 Go 无人店使用大量的摄像头，实时捕捉用户行为，判断用户取出还是放回商品、取了何种商品等。这实际上是大数据流计算与机器学习的结合，最终实现的购物效果是，无需排队买单，进去就拿东西，拿好了就走。</p>
-<p>&emsp;&emsp;虽然无人店看起来噱头的意味更多一点，但是利用大数据技术提升购物体验、节省商家人力成本一定是正确的方向。</p>
-<p>​    </p>
+<h4 id="新零售领域的应用">新零售领域的应用</h4>
+<p>  区别于传统零售，新零售使用大数据进行全链路管理。从生产、物流、购物体验，使用大数据进行分析和预判，实现精准生产、零库存、全新的购物体验。</p>
+<p>  亚马逊 Go 无人店使用大量的摄像头，实时捕捉用户行为，判断用户取出还是放回商品、取了何种商品等。这实际上是大数据流计算与机器学习的结合，最终实现的购物效果是，无需排队买单，进去就拿东西，拿好了就走。</p>
+<p>  虽然无人店看起来噱头的意味更多一点，但是利用大数据技术提升购物体验、节省商家人力成本一定是正确的方向。</p>
+<p>​</p>
 <br>
-
-<h4 id="交通领域的应用"><a href="#交通领域的应用" class="headerlink" title="交通领域的应用"></a>交通领域的应用</h4><p>&emsp;&emsp;交通也是一个对大数据实时采集与处理应用比较广的领域。现在几乎所有的城市路段、交通要点都有不止一个监控摄像头在实时监控，一线城市大约有百万计的摄像头在不停地采集数据。</p>
-<p>&emsp;&emsp;此外，各种导航软件也在不停采集数据，通过分析用户当前位置和移动速度，判断道路拥堵状态，并实时修改推荐的导航路径。</p>
-<p>&emsp;&emsp;还有无人驾驶技术，无人驾驶就是在人的驾驶过程中实时采集车辆周边数据和驾驶控制信息，然后通过机器学习，获得周边信息与驾驶方式的对应关系（自动驾驶模型）。然后将这个模型应用到无人驾驶汽车上，传感器获得车辆周边数据后，就可以通过自动驾驶模型计算出车辆控制信息。</p>
-<p>​    </p>
-<p>​    </p>
-<h2 id="1-Hadoop原理与架构"><a href="#1-Hadoop原理与架构" class="headerlink" title="1. Hadoop原理与架构"></a>1. Hadoop原理与架构</h2><p>大数据技术和传统的软件开发技术在架构思路上有很大不同，大数据技术更为关注数据，所以相关的架构设计也围绕数据展开，如何<strong>存储、计算、传输</strong>大规模的数据是要考虑的核心要素。</p>
+<h4 id="交通领域的应用">交通领域的应用</h4>
+<p>  交通也是一个对大数据实时采集与处理应用比较广的领域。现在几乎所有的城市路段、交通要点都有不止一个监控摄像头在实时监控，一线城市大约有百万计的摄像头在不停地采集数据。</p>
+<p>  此外，各种导航软件也在不停采集数据，通过分析用户当前位置和移动速度，判断道路拥堵状态，并实时修改推荐的导航路径。</p>
+<p>  还有无人驾驶技术，无人驾驶就是在人的驾驶过程中实时采集车辆周边数据和驾驶控制信息，然后通过机器学习，获得周边信息与驾驶方式的对应关系（自动驾驶模型）。然后将这个模型应用到无人驾驶汽车上，传感器获得车辆周边数据后，就可以通过自动驾驶模型计算出车辆控制信息。</p>
+<p>​</p>
+<p>​</p>
+<h2 id="1-Hadoop原理与架构">1. Hadoop原理与架构</h2>
+<p>大数据技术和传统的软件开发技术在架构思路上有很大不同，大数据技术更为关注数据，所以相关的架构设计也围绕数据展开，如何<strong>存储、计算、传输</strong>大规模的数据是要考虑的核心要素。</p>
 <br>
-
-<h3 id="数据的计算"><a href="#数据的计算" class="headerlink" title="数据的计算"></a>数据的计算</h3><blockquote>
+<h3 id="数据的计算">数据的计算</h3>
+<blockquote>
 <p>如何解决 PB 级数据进行计算的问题呢？</p>
 </blockquote>
 <p>大型网站的分布式架构思路：</p>
@@ -566,64 +578,70 @@
 <p>\4. 用 Hadoop 或者 Spark 的启动命令执行这个应用程序的 JAR 包，首先执行引擎会解析程序要处理的数据输入路径，根据输入数据量的大小，将数据分成若干片（Split），每一个数据片都分配给一个任务执行进程去处理。</p>
 <p>\5. 任务执行进程收到分配的任务后，检查自己是否有任务对应的程序包，如果没有就去下载程序包，下载以后通过反射的方式加载程序。走到这里，最重要的一步，也就是移动计算就完成了。</p>
 <p>\6. 加载程序后，任务执行进程根据分配的数据片的文件地址和数据在文件内的偏移量读取数据，并把数据输入给应用程序相应的方法去执行，从而实现在分布式服务器集群中移动计算程序，对大规模数据进行并行处理的计算目标。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>移动程序到数据所在的地方去执行，这种技术方案其实我们并不陌生。从事 Java 开发的同学可能有过用反射的方式热加载代码执行的经验，如果这个代码是从网络其他地方传输过来的，那就是在移动计算。</p>
+<h2 id="小结-2">小结</h2>
+<p>移动程序到数据所在的地方去执行，这种技术方案其实我们并不陌生。从事 Java 开发的同学可能有过用反射的方式热加载代码执行的经验，如果这个代码是从网络其他地方传输过来的，那就是在移动计算。</p>
 <p>大数据技术将移动计算这一编程技巧上升到编程模型的高度，并开发了相应的编程框架，使得开发人员只需要关注大数据的算法实现，而不必关注如何将这个算法在分布式的环境中执行，这极大地简化了大数据的开发难度，并统一了大数据的开发方式，从而使大数据从原来的高高在上，变成了今天的人人参与。</p>
 <blockquote>
 <p>互联网应用系统架构中有一种重要架构原则是尽量使用无状态的服务，不同服务实例之间不共享状态，也就是不持有数据，用户请求交给任何一个服务实例计算，处理的结果都是一样的，为什么要这样设计？这种架构有什么好处？</p>
 </blockquote>
-<h3 id="数据的存储"><a href="#数据的存储" class="headerlink" title="数据的存储"></a>数据的存储</h3><h3 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h3><p>​    </p>
-<h2 id="2-大数据生态体系产品原理与架构"><a href="#2-大数据生态体系产品原理与架构" class="headerlink" title="2. 大数据生态体系产品原理与架构"></a>2. 大数据生态体系产品原理与架构</h2><p>​    </p>
-<p>​    </p>
-<h2 id="4-大数据平台与系统集成"><a href="#4-大数据平台与系统集成" class="headerlink" title="4. 大数据平台与系统集成"></a>4. 大数据平台与系统集成</h2><p>​    </p>
-<p>​    </p>
-<h2 id="6-大数据算法"><a href="#6-大数据算法" class="headerlink" title="6. 大数据算法"></a>6. 大数据算法</h2><p>​    </p>
-<p>​    </p>
+<h3 id="数据的存储">数据的存储</h3>
+<h3 id="HDFS">HDFS</h3>
+<p>​</p>
+<h2 id="2-大数据生态体系产品原理与架构">2. 大数据生态体系产品原理与架构</h2>
+<p>​</p>
+<p>​</p>
+<h2 id="4-大数据平台与系统集成">4. 大数据平台与系统集成</h2>
+<p>​</p>
+<p>​</p>
+<h2 id="6-大数据算法">6. 大数据算法</h2>
+<p>​</p>
+<p>​</p>
 <blockquote>
-<p>未完待续……</p>
+<p>未完待续…</p>
 </blockquote>
 
+                
             </div>
-            <hr />
-
-            
-
-            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-
-<!-- <div id="article-share">
-    
-    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
-    
-</div> -->
-
-<script src="/libs/share/js/social-share.min.js"></script>
+            <hr/>
 
             
 
     <div class="reprint" id="reprint-statement">
-        <p class="reprint-tip">
-            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
-            <span>转载规则</span>
-        </p>
         
-            <div class="center-align">
-                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
-                    <img alt=""
-                         style="border-width:0"
-                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
-                </a>
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">宵烛</a>
+                </span>
             </div>
-            <br/>
-            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
-                  property="dct:title" rel="dct:type">
-                    《大数据入门》
-                </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/01/27/big-data-basic/" property="cc:attributionName"
-               rel="cc:attributionURL">
-                宵烛
-            </a> 采用
-            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
-                知识共享署名 4.0 国际许可协议
-            </a>进行许可。
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://night-candle.github.io/2021/01/27/big-data-basic/">http://night-candle.github.io/2021/01/27/big-data-basic/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">宵烛</a>
+                    !
+                </span>
+            </div>
         
     </div>
 
@@ -639,8 +657,45 @@
     </script>
 
 
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                                    <span class="chip bg-color">大数据</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="google,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
         </div>
     </div>
+
+    
+
+    
+
+    
+
+    
 
     
 
@@ -659,7 +714,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/2021/01/28/cs-my-os/">
                     <div class="card-image">
@@ -678,13 +733,13 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-28
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-28
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
+                            <a href="/categories/%E8%AE%A1%E7%A7%91/" class="post-category">
                                     计科
                                 </a>
                             
@@ -695,7 +750,7 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" target="_blank">
+                    <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
                         <span class="chip bg-color">操作系统</span>
                     </a>
                     
@@ -707,7 +762,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2021/01/27/game-program-design/">
@@ -727,13 +782,13 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-27
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%A1%E7%A7%91/" class="post-category" target="_blank">
+                            <a href="/categories/%E8%AE%A1%E7%A7%91/" class="post-category">
                                     计科
                                 </a>
                             
@@ -744,7 +799,7 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B8%B8%E6%88%8F/" target="_blank">
+                    <a href="/tags/%E6%B8%B8%E6%88%8F/">
                         <span class="chip bg-color">游戏</span>
                     </a>
                     
@@ -755,6 +810,7 @@
         
     </div>
 </article>
+
 </div>
 
 
@@ -779,26 +835,45 @@
 
         // we need a <pre> tag workaround.
         // otherwise the text inside "pre" loses all the line breaks!
-        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
             newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
         }
 
         var url = document.location.href;
         newdiv.innerHTML += '<br />'
             + '来源: 宵烛 Blog<br />'
-            + '作者: 宵烛<br />'
-            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '文章作者: 宵烛<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
             + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
 
         selection.selectAllChildren(newdiv);
-        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
     });
 </script>
 
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
     </div>
     <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
             <div id="toc-content"></div>
         </div>
     </div>
@@ -808,7 +883,7 @@
 
 <div id="floating-toc-btn" class="hide-on-med-and-down">
     <a class="btn-floating btn-large bg-color">
-        <i class="fa fa-list"></i>
+        <i class="fas fa-list-ul"></i>
     </a>
 </div>
 
@@ -820,21 +895,8 @@
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
-            // headingsOffset: -205,
+            collapseDepth: Number('0'),
             headingSelector: 'h1, h2, h3, h4, h5'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
-            $(this).attr('id', tocHeading + (++i));
         });
 
         // Set scroll toc fixed.
@@ -877,10 +939,10 @@
         let $mainContent = $('#main-content');
         $('#floating-toc-btn .btn-floating').click(function () {
             if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).slideUp(500);
+                $tocAside.removeClass(expandedClass).hide();
                 $mainContent.removeClass('l9');
             } else {
-                $tocAside.addClass(expandedClass).slideDown(500);
+                $tocAside.addClass(expandedClass).show();
                 $mainContent.addClass('l9');
             }
             fixPostCardWidth('artDetail', 'prenext-posts');
@@ -888,6 +950,7 @@
         
     });
 </script>
+
     
 
 </main>
@@ -896,96 +959,90 @@
 <script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
     MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
     });
 </script>
 
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-<!-- 代码语言 -->
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-<!-- 代码块复制 -->
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
-<!-- 代码块收缩 -->
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
-<!-- 代码块折行 -->
-<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
 
 
     <footer class="page-footer bg-color">
-    <div class="container row center-align">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
         <div class="col s12 m8 l8 copy-right">
-            &copy; 2020-2021 NightCandle 宵烛. 版权所有
-
+            Copyright&nbsp;&copy;
             
-            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">95.4k</span>
+                <span id="year">2019-2022</span>
             
-
+            <a href="/about" target="_blank">宵烛</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
-            <span id="sitetime"></span>
-
             
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">95.4k</span>
+            
+            
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
             
         </div>
         <div class="col s12 m4 l4 social-link ">
     <a href="https://github.com/night-candle" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fa fa-github"></i>
+        <i class="fab fa-github"></i>
     </a>
 
 
 
     <a href="mailto:1219303301@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fa fa-envelope-open"></i>
+        <i class="fas fa-envelope-open"></i>
     </a>
 
 
 
 
 
-    <a href="http://wpa.qq.com/msgrd?v=3&uin=1219303301&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
-        <i class="fa fa-qq"></i>
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1219303301" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1219303301" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
     </a>
 
 
-<!--  -->
 
 
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fa fa-rss"></i>
-    </a>
+
+
+
 </div>
     </div>
 </footer>
 
 <div class="progress-bar"></div>
 
-<!-- 不蒜子计数初始值纠正 -->
-<!-- <script>
-    $(document).ready(function () {
-
-        var int = setInterval(fixCount, 50);
-        var pvcountOffset = 2000;
-        var uvcountOffset = 1000;
-
-        function fixCount() {
-            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
-                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
-                clearInterval(int);
-            }
-            if ($("#busuanzi_container_site_pv").css("display") != "none") {
-                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
-                clearInterval(int);
-            }
-        }
-    });
-</script> -->
 
     <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">
     <div class="modal-content">
         <div class="search-header">
-            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
             <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
                    class="search-input">
         </div>
@@ -993,16 +1050,102 @@
     </div>
 </div>
 
-<script src="/js/search.js"></script>
 <script type="text/javascript">
 $(function () {
-    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
 });
 </script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fa fa-angle-up"></i>
+        <i class="fas fa-arrow-up"></i>
     </a>
 </div>
 
@@ -1014,18 +1157,47 @@ $(function () {
     <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
     <script src="/js/matery.js"></script>
 
-    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
-    </script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
-
-
+    
+        <!-- <script src='https://unpkg.com/mermaid@latest/dist/mermaid.min.js'></script> -->
+        <script src='/libs/mermaid/mermaid.min.js'></script>
+        <script>
+          if (window.mermaid) {
+            mermaid.initialize({theme: 'forest'});
+          }
+        </script>
     
 
     
 
     <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
 </body>

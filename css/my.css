@@ -11,3 +11,85 @@
     background-color: #6b91a6d2 !important;
 }
 
+.bg-color {
+    background-image: linear-gradient(to right, #26a69a  0%, #3b4c8b 100%);
+    opacity: 0.8;
+}
+
+blockquote {
+    border-left: 5px solid #42b983;
+    padding: 1rem 0.8rem 0.2rem 0.8rem;
+    color: #666;
+    background-color: rgba(66, 185, 131, .1);
+}
+
+.text-color {
+    color: #69a6a9 !important;
+}
+
+.progress-bar {
+    height: 4px;
+    position: fixed;
+    bottom: 0;
+    z-index: 300;
+    background: linear-gradient(to right, #7288a1 0%, #414f81 100%);
+    opacity: 0.7;
+}
+
+#cd-timeline::before {
+    /* this is the vertical line */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 18px;
+    height: 100%;
+    width: 4px;
+    background: #76a99e;
+}
+
+.post-statis .statis .count a {
+    color: #69a6a9;
+}
+
+#aboutme .social-link a {
+    display: inline-block;
+    width: 2.3rem;
+    height: 2.3rem;
+    line-height: 2.2rem;
+    margin: 0 0.5rem;
+    padding: 0;
+    color: #fff;
+    border: 1px solid #525f7f;
+    background: radial-gradient(#4d7392,#525f7f);;
+    font-size: 0.9rem;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .21), 0 2px 3px rgba(0, 0, 0, .1);
+}
+
+.other-skills .chip:hover {
+    color: #fff;
+    background: linear-gradient(to right, #4d7392 0%, #525f7f 100%);;
+    border: 1px solid #76a99e;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, .25)
+}
+
+.search-result-list .search-result-title {
+    font-size: 1.4rem;
+    color: #76a99e;
+}
+
+.search-result-list .search-keyword {
+    margin: 0 2px;
+    padding: 1px 5px 1px 4px;
+    border-radius: 2px;
+    background-color: #f2f2f2;
+    color: #4d7392;
+    font-size: .9rem;
+    white-space: pre-wrap;
+}
+
+.top-scroll .btn-floating {
+    background: linear-gradient(to bottom right, #7288a1bd 0%, #414f81 100%);
+    width: 48px;
+    height: 48px;
+}

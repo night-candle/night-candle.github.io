@@ -29,7 +29,9 @@
       
         
         
-          &lt;h2 id=&quot;01-编译Linux4-9内核并运行&quot;&gt;&lt;a href=&quot;#01-编译Linux4-9内核并运行&quot; class=&quot;headerlink&quot; title=&quot;01 编译Linux4.9内核并运行&quot;&gt;&lt;/a&gt;01 编译Linux4.9内核并运行&lt;/h2&gt;&lt;p&gt;&lt;a
+          &lt;h2 id=&quot;01-编译Linux4-9内核并运行&quot;&gt;01 编译Linux4.9内核并运行&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://mirrors.edge.kernel.org/pub/linux/kernel&quot;&gt;Linux 源码下载&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a
         
       
     
@@ -47,7 +49,7 @@
     <link href="http://night-candle.github.io/2021/02/04/cs-network-socket/"/>
     <id>http://night-candle.github.io/2021/02/04/cs-network-socket/</id>
     <published>2021-02-04T14:32:24.000Z</published>
-    <updated>2022-05-14T16:59:27.807Z</updated>
+    <updated>2022-05-04T16:00:00.000Z</updated>
     
     <summary type="html">
     
@@ -55,8 +57,8 @@
       
         
         
-          &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/night-candle/figurebed/main/img/cover-watermelon.jpg&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;00-前言&quot;&gt;&lt;a href=&quot;#00-前言&quot;
+          &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/night-candle/figurebed/main/img/cover-watermelon.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;00-前言-3&quot;&gt;00 |
         
       
     
@@ -80,7 +82,7 @@
     <link href="http://night-candle.github.io/2021/02/04/cs-network-protocol/"/>
     <id>http://night-candle.github.io/2021/02/04/cs-network-protocol/</id>
     <published>2021-02-04T13:05:42.000Z</published>
-    <updated>2022-05-14T07:16:07.509Z</updated>
+    <updated>2022-05-14T17:07:24.102Z</updated>
     
     <summary type="html">
     
@@ -88,9 +90,12 @@
       
         
         
-          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;看似最枯燥、最基础的东西往往具有最长久的生命力&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;​    &lt;/p&gt;
-&lt;p&gt;​   
+          &lt;h1&gt;前言&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;看似最枯燥、最基础的东西往往具有最长久的生命力&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​&lt;/p&gt;
+&lt;p&gt;​&lt;/p&gt;
+&lt;h2 id=&quot;协议三要素&quot;&gt;协议三要素&lt;/h2&gt;
+&lt;pre class=&quot;line-numbers
         
       
     
@@ -124,7 +129,10 @@
       
         
         
-          &lt;h2 id=&quot;01-环境的配置与搭建&quot;&gt;&lt;a href=&quot;#01-环境的配置与搭建&quot; class=&quot;headerlink&quot; title=&quot;01 | 环境的配置与搭建&quot;&gt;&lt;/a&gt;01 |
+          &lt;h2 id=&quot;01-环境的配置与搭建&quot;&gt;01 | 环境的配置与搭建&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;工具：&lt;code&gt;VirtualBox&lt;/code&gt;、&lt;code&gt;Nasm&lt;/code&gt;
         
       
     
@@ -150,7 +158,8 @@
       
         
         
-          &lt;h2 id=&quot;0-前言&quot;&gt;&lt;a href=&quot;#0-前言&quot; class=&quot;headerlink&quot; title=&quot;0. 前言&quot;&gt;&lt;/a&gt;0. 前言&lt;/h2&gt;&lt;h3 id=&quot;大数据技术发展史&quot;&gt;&lt;a href=&quot;#大数据技术发展史&quot; class=&quot;headerlink&quot;
+          &lt;h2 id=&quot;0-前言-2&quot;&gt;0. 前言&lt;/h2&gt;
+&lt;h3
         
       
     
@@ -176,7 +185,9 @@
       
         
         
-          &lt;h2 id=&quot;1-游戏开发导论&quot;&gt;&lt;a href=&quot;#1-游戏开发导论&quot; class=&quot;headerlink&quot; title=&quot;1. 游戏开发导论&quot;&gt;&lt;/a&gt;1.
+          &lt;h2 id=&quot;1-游戏开发导论&quot;&gt;1. 游戏开发导论&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;什么是游戏&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;电子游戏&lt;/strong&gt;&lt;code&gt;Electronic
         
       
     
@@ -202,7 +213,9 @@
       
         
         
-          &lt;h2 id=&quot;Web安全基础&quot;&gt;&lt;a href=&quot;#Web安全基础&quot; class=&quot;headerlink&quot; title=&quot;Web安全基础&quot;&gt;&lt;/a&gt;Web安全基础&lt;/h2&gt;&lt;h3 id=&quot;1-前端基础&quot;&gt;&lt;a href=&quot;#1-前端基础&quot; class=&quot;headerlink&quot;
+          &lt;h2 id=&quot;Web安全基础&quot;&gt;Web安全基础&lt;/h2&gt;
+&lt;h3 id=&quot;1-前端基础&quot;&gt;1. 前端基础&lt;/h3&gt;
+&lt;h4 id=&quot;1-1-前端开发&quot;&gt;1.1
         
       
     
@@ -232,7 +245,10 @@
       
         
         
-          &lt;h1 id=&quot;深度学习&quot;&gt;&lt;a href=&quot;#深度学习&quot; class=&quot;headerlink&quot; title=&quot;深度学习&quot;&gt;&lt;/a&gt;深度学习&lt;/h1&gt;&lt;h2 id=&quot;1-1-深度学习和神经网络&quot;&gt;&lt;a href=&quot;#1-1-深度学习和神经网络&quot;
+          &lt;h1&gt;深度学习&lt;/h1&gt;
+&lt;h2 id=&quot;1-1-深度学习和神经网络&quot;&gt;1.1 深度学习和神经网络&lt;/h2&gt;
+&lt;h3 id=&quot;1-1-1-深度学习简介&quot;&gt;1.1.1 深度学习简介&lt;/h3&gt;
+&lt;h4
         
       
     
@@ -262,7 +278,11 @@
       
         
         
-          &lt;h1 id=&quot;HTTP协议原理和实践&quot;&gt;&lt;a href=&quot;#HTTP协议原理和实践&quot; class=&quot;headerlink&quot; title=&quot;HTTP协议原理和实践&quot;&gt;&lt;/a&gt;HTTP协议原理和实践&lt;/h1&gt;&lt;img src=&quot;http.png&quot;
+          &lt;h1&gt;HTTP协议原理和实践&lt;/h1&gt;
+&lt;img src=&quot;http.png&quot; alt=&quot;浏览器输入URL后HTTP请求返回的过程&quot; style=&quot;zoom:120%;&quot;&gt;
+&lt;p&gt;​&lt;/p&gt;
+&lt;h2 id=&quot;1-HTTP协议基础&quot;&gt;1. HTTP协议基础&lt;/h2&gt;
+&lt;h3
         
       
     
@@ -290,9 +310,11 @@
       
         
         
-          &lt;h2 id=&quot;0-前言&quot;&gt;&lt;a href=&quot;#0-前言&quot; class=&quot;headerlink&quot; title=&quot;0.前言&quot;&gt;&lt;/a&gt;0.前言&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Github Pages&lt;/strong&gt;&lt;/p&gt;
+          &lt;h2 id=&quot;0-前言&quot;&gt;0.前言&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Github Pages&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Github
+&lt;li&gt;
+&lt;p&gt;Github
         
       
     
