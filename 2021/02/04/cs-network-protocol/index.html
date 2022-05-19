@@ -430,14 +430,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-15
+                    2022-05-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    18.1k
+                    18k
                 </div>
                 
 
@@ -462,12 +462,6 @@
 <p>​</p>
 <p>​</p>
 <h2 id="协议三要素">协议三要素</h2>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello World!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>  这是程序员向计算机世界说你好的方式。这段文字也是一种协议，是人类和计算机沟通的协议，<strong>只有通过这种协议，计算机才知道想让它做什么</strong>。会了计算机语言，就能够教给一台计算机完成工作了。计算机语言作为程序员控制一台计算机工作的协议，具备了协议的三要素。</p>
 <ul>
 <li><strong>语法</strong>：就是这一段内容要符合一定的规则和格式（如括号要成对，结束要使用分号等）</li>
 <li><strong>语义</strong>：就是这一段内容要代表某种意义。（如数字减去数字是有意义的，数字减去文本一般来说没有意义）</li>
@@ -505,7 +499,7 @@
 <p>传输层是<strong>IPv4</strong>或<strong>IPv6</strong>、链路层是否仍使用1500字节的<strong>MTU</strong>对应用层没有影响</p>
 </blockquote>
 <blockquote>
-<p><strong>Intel DPDK</strong>无网络协议栈，提供了更好的网络性能，但一些调试工具也因此无法使用</p>
+<p><a target="_blank" rel="noopener" href="https://www.dpdk.org/">Intel DPDK</a> 绕过了内核网络协议栈，提供了更好的网络性能，但一些调试工具也因此无法使用</p>
 </blockquote>
 <p>​</p>
 <p>​</p>
@@ -528,10 +522,10 @@
 <h2 id="HTTP-1-1-2">HTTP/1.1</h2>
 <p>HTTP 协议（<code>Hypertext Transfer Protocol</code> ）</p>
 <p>  <em>a stateless application-level request/response protocol that uses extensible semantics and self-descriptive message payloads for flexible interaction with network-based hypertext information systems</em>（RFC7230 2014.6）</p>
-<p>  一种<strong>无状态</strong>的、应用层的、以<strong>请求/应答方式</strong>运行的协议，它使用<strong>可扩展的语义和自描述消息格式</strong>，与基于网络的<strong>超文本</strong>信息系统灵活的互动。</p>
+<p>  一种<strong>无状态</strong>的、应用层的、以<strong>请求/应答方式</strong>运行的协议，它使用<strong>可扩展的语义和自描述消息格式</strong>，与基于网络的<strong>超文本</strong>信息系统灵活的互动</p>
 <p>​</p>
 <h3 id="消息格式">消息格式</h3>
-<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210522-message-format.jpg" style="zoom:70%;">
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-message-format.jpg" style="zoom:70%;">
 <p>基于<strong>ABNF</strong>语义定义的HTTP消息格式：</p>
 <p><strong>HTTP-message =<code>start-line</code> * (<code>header-field</code>CRLF ) CRLF [<code>message-body</code>]</strong></p>
 <ul>
@@ -564,7 +558,7 @@
 <p><strong><code>message-body</code></strong> = * OCTET</p>
 </li>
 </ul>
-<p>​	<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210522-message-instance.png" alt="报文实例"></p>
+<p>​	<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-message-instance.png" alt="报文实例"></p>
 <blockquote>
 <p><code>ABNF</code> <strong>扩充巴科斯 - 瑙尔范式</strong>：定义语法的元语言</p>
 </blockquote>
@@ -1190,7 +1184,43 @@ e.g. http, https, ftp, mailto, rtsp, file, telnet</p>
 <h4 id="风格演化">风格演化</h4>
 <img src="image-20210522191814125.png" style="zoom:90%;">
 <p>​</p>
-<h3 id="协议的通用规则">协议的通用规则</h3>
+<h3 id="协议通用规则">协议通用规则</h3>
+<h4 id="协议格式">协议格式</h4>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-message-format.jpg" style="zoom:70%;">
+<p>基于<strong>ABNF</strong>语义定义的HTTP消息格式：</p>
+<p><strong>HTTP-message =<code>start-line</code> * (<code>header-field</code>CRLF ) CRLF [<code>message-body</code>]</strong></p>
+<ul>
+<li>
+<p><strong><code>start-line</code></strong> = request-line / status-line</p>
+<ul>
+<li>
+<p><strong>request-line</strong> = method SP request-target SP HTTP-version CRLF</p>
+</li>
+<li>
+<p><strong>status-line</strong> = HTTP-version SP status-code SP reason-phrase CRLF</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>header-field</code></strong> = field-name “:” OWS field-value OWS</p>
+<ul>
+<li>
+<p>OWS = * (SP / HTAB）</p>
+</li>
+<li>
+<p>field-name = token</p>
+</li>
+<li>
+<p>field-value =  * (field-content /obs-fold）</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>message-body</code></strong> = * OCTET</p>
+</li>
+</ul>
+<h4 id="URI-2">URI</h4>
+<p>方法与响应码</p>
 <h3 id="连接与消息的路由">连接与消息的路由</h3>
 <h3 id="内容协商与传输">内容协商与传输</h3>
 <p>每个 URI 指向的资源可以是任何事物，可以有多种不同的表述，例如一份文档可以有不同语言的翻译、不同的媒体格式、可以针对不同的浏览器提供不同的压缩编码等。</p>
@@ -1685,6 +1715,8 @@ $ <span class="token function">sudo</span> <span class="token function">ip</span
 <h1>参考</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://notebyte.top/net_communication/net_protocol.html#%E5%9F%BA%E7%A1%80%E7%BD%91%E7%BB%9C">网络协议</a></li>
+<li>Web协议详解与抓包实战</li>
+<li></li>
 </ul>
 
                 
@@ -2088,7 +2120,7 @@ $ <span class="token function">sudo</span> <span class="token function">ip</span
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">95.4k</span>
+                        class="white-color">96.9k</span>
             
             
             
