@@ -414,14 +414,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-04-17
+                    2022-07-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.4k
                 </div>
                 
 
@@ -434,7 +434,7 @@
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.css">
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
         
 
         
@@ -461,6 +461,26 @@
 </li>
 <li>
 <p>编写汇编代码</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">org 07c00h ; 指定下面的指令从7c00h处开始
+
+mov ax,cs
+mov ds,ax  ; 使数据段与代码段在同一个段
+mov es,ax  ; 使附加段与代码段在同一个段
+
+call Disp  ; 调用子程序显示字符串信息
+jmp $      ; 死循环
+Disp:
+	mov ax,BootMsg
+	mov bp,ax
+	mov cx,16
+	; ah=13h 10号中断13h号功能：在Teletype模式下显示字符串
+	mov ax,01301h
+	mov bx,000ch
+	mov dl,0
+	int 10h ; 调用10号中断
+BootMsg: db "Hello, OS World!"
+times 510 - ($-$$)	db 0 ; 填充0 
+dw 0xaa55  ; 魔数，硬盘主引导分区可引导标识<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210219-203710096.png" alt=""></p>
 <blockquote>
 <p>此代码段是存于磁盘引导扇区的系统引导程序</p>
@@ -482,172 +502,115 @@
 </ol>
 <p>​</p>
 <h2 id="02-操作系统基础">02 | 操作系统基础</h2>
-<ol>
-<li>CPU组成</li>
-</ol>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-cpu.png" alt=""></p>
-<ol start="2">
+<ul>
 <li>
-<p>寄存器是CPU内部的信息存储单元，Intel 8086CPU有14个寄存器</p>
-<blockquote>
-<p>IBM 兼容机一般用于指80486及之前的PC机，之后渐渐代之以“标准PC”的说法<br>
-Intel 8086是由Intel于1978年设计的16位微处理器芯片，是x86架构的鼻祖。它以8080和8085的设计为基础，地址总线扩充为20位，可直接寻址1MB的存储空间，且取指令和执行是同步的</p>
-</blockquote>
-<p><strong>通用寄存器</strong>：</p>
-<p>AX，<code>accumulate register</code>：累加器<br>
-BX，<code>based register</code>：基地址寄存器<br>
-CX，<code>count register</code>：计数器<br>
-DX，<code>data registered</code>：数据寄存器<br>
-​<br>
-<strong>段寄存器</strong>：</p>
-<p>CS，<code>code segment</code>：代码段<br>
-DS，<code>data segment</code>：数据段<br>
-SS，<code>stack segment</code>：栈段寄存器<br>
-ES，<code>extra segment</code>：附加段寄存器<br>
-​<br>
-<strong>指令指针寄存器</strong>：</p>
-<p>IP，<code>instructor  point</code><br>
-​<br>
-<strong>指针寄存器</strong>：</p>
-<p>SP，<code>stack point</code>：堆栈指针寄存器<br>
-BP，<code>base point</code>：基础指针<br>
-​<br>
-<strong>变址寄存器</strong>：</p>
-<p>SI，<code>source index</code>：源变址寄存器<br>
-DI，<code>destination index</code>：目的变址寄存器<br>
-​<br>
-<strong>标志寄存器</strong>：</p>
-<p>PSW，<code>program state word</code>：程序状态字</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">PSW的常用标志</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">OF，<code>overflow flag</code></td>
-<td>溢出标志位</td>
-</tr>
-<tr>
-<td style="text-align:left">DF，<code>direction flag</code></td>
-<td>方向标志位</td>
-</tr>
-<tr>
-<td style="text-align:left">IF，<code>interrupt flag</code></td>
-<td>中断标志位</td>
-</tr>
-<tr>
-<td style="text-align:left">TF，<code>trap flag</code></td>
-<td>陷阱标志位</td>
-</tr>
-<tr>
-<td style="text-align:left">SF，<code>sign flag</code></td>
-<td>负号标志位</td>
-</tr>
-<tr>
-<td style="text-align:left">ZF，<code>zero flag</code></td>
-<td>零值标志位</td>
-</tr>
-<tr>
-<td style="text-align:left">AF，<code>auxiliary carray flag</code></td>
-<td>辅助进位标志位</td>
-</tr>
-<tr>
-<td style="text-align:left">PF，<code>parity flag</code></td>
-<td>奇偶标志位</td>
-</tr>
-<tr>
-<td style="text-align:left">CF，<code>carry flag</code></td>
-<td>进位标志位</td>
-</tr>
-</tbody>
-</table>
+<p>CPU 组成</p>
+<ul>
+<li>寄存器是 CPU 内部的信息存储单元，Intel 8086 CPU 有14个寄存器</li>
+</ul>
 </li>
 <li>
 <p>代码段和数据段（逻辑概念，在内存中）</p>
 </li>
 <li>
-<p>8086的分段表示</p>
-</li>
-<li>
 <p>分段机制：通过改变CS寄存器的数字去改变想要推进的程序，程序的加载可以通过一个管理程序进行调度</p>
 </li>
 <li>
-<p>操作系统OS要做什么？</p>
-<p>1）需要让机器做事情</p>
-<p>2）开机后接管CPU的控制权</p>
-<p>3）需要接收和发送消息给硬件</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-os1.png" alt=""></p>
-<p>4）需要管理和调度应用</p>
-<p>5）需要让用户可以参与管理</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-os-user.png" alt=""></p>
+<p>操作系统要做什么？</p>
+<ul>
+<li>
+<p>需要让机器做事情</p>
+</li>
+<li>
+<p>开机后接管CPU的控制权</p>
+</li>
+<li>
+<p>需要接收和发送消息给硬件</p>
+</li>
+<li>
+<p>需要管理和调度应用</p>
+</li>
+<li>
+<p>需要让用户可以参与管理</p>
+</li>
+</ul>
 <blockquote>
 <p><em>A group of program that controls the execution of application programs. Acts as an interface between applications and hardware</em></p>
 </blockquote>
 </li>
-<li>
-<p>计算机启动过程</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-os-start.jpg" alt=""></p>
-<p>开机后OS需要接管CPU的控制权，但在OS运行之前是BIOS在管理计算机，之后由OS接管</p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-memory-distribution.png" alt=""></p>
-<p><strong>BIOS 初始化</strong></p>
-<ul>
-<li><strong>加电自检</strong> POST，<code>power on self test</code> ：固化在主板的BIOS，检查硬件的好坏，内存地址为 <code>0fff:0000</code><br>
-打开电源，BIOS开始自检，然后出发19号中断，在处理19号中断时，BIOS检测电脑是否具有软盘、硬盘或是固定磁盘，如果有任何可以使用的磁盘，就把磁盘的第一个扇区（512B）加载到内存</li>
 </ul>
+<h3 id="计算机启动过程">计算机启动过程</h3>
+<ul>
+<li>
+<p>开机后OS需要接管CPU的控制权，但在OS运行之前是BIOS在管理计算机</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-os-start.jpg" alt=""></p>
+</li>
+<li>
+<p>实模式：CPU复位或加电的时候以实模式启动，处理器以实模式工作</p>
+<ul>
+<li>在实模式下，内存寻址方式和8086相同，由基地址加上偏移地址形成20位的物理地址，最大寻址空间1MB，最大分段64KB</li>
+<li>在实模式下，所有的段都是可以读、写和可执行的</li>
+</ul>
+</li>
+<li>
+<p><strong>BIOS 初始化</strong></p>
+</li>
+<li>
+<p><strong>加电自检</strong>（POST，<code>power on self test</code>）：固化在主板的BIOS，检查硬件的好坏，打开电源，BIOS开始自检，然后出发19号中断，在处理19号中断时，BIOS检测电脑是否具有软盘、硬盘或是固定磁盘，如果有任何可以使用的磁盘，就把磁盘的第一个扇区（512B）加载到内存</p>
+</li>
+<li>
 <p><strong>BIOS加载OS</strong></p>
 <ul>
-<li>MBR将自己复制到内存地址 <code>0000:0600</code> 处，然后开始执行<br>
-MBR（主引导扇区）位于硬盘的 0 磁道 0 柱面第1扇）区，该磁道均为隐含扇区，普通的磁盘访问命令无法访问，一共512个字节</li>
+<li>MBR 将自己复制到内存地址 <code>0000:0600</code> 处，然后开始执行</li>
+<li>MBR 位于硬盘的 0 磁道 0 柱面第1扇区，该磁道均为隐含扇区，普通的磁盘访问命令无法访问，一共512个字节</li>
 <li>在主分区表中搜索标志为活动的分区，如果发现没有活动分区或有不止一个活动分区，则转停止</li>
 <li>将活动分区的第一个扇区读入内存地址 <code>0000:7c00</code> 处</li>
 <li>检查 (WORD) <code>0000:7dfe</code> 是否等于 <code>0xaa55</code>，若不等于则显示 <em>“Missing Operating System”</em> 然后停止</li>
 <li>跳转到 <code>0000:7c00</code> 处继续执行特定系统的启动程序</li>
 </ul>
 </li>
-</ol>
-<blockquote>
-<p><strong>实模式</strong>：CPU复位或加电的时候以实模式启动，处理器以实模式工作。在实模式下，内存寻址方式和8086相同，由基地址加上偏移地址形成20位的物理地址，最大寻址空间1MB，最大分段64KB。在实模式下，所有的段都是可以读、写和可执行的。</p>
-</blockquote>
+</ul>
 <p>​</p>
-<p>​</p>
-<h2 id="3-操作显存数据">3. 操作显存数据</h2>
-<blockquote>
-<p>实模式下用汇编显示文字</p>
-</blockquote>
-<p>​</p>
-<p>  <strong>显示的原理</strong>：屏幕上的内容=显存中的数据。</p>
-<p>  显卡控制的最小单位是像素，一个像素对应屏幕上一个点。专门用来显示字符的工作方式称为<strong>文本模式</strong>，<strong>文本模式和图形模式是显卡的基本模式</strong>（PC在加电自检后系统会初始化为80 × 25的文本模式）</p>
-<p>  显存的地址空间 <code>A0000h-BFFFFh</code> 共128K空间。其中 <code>B8000h-BFFFFh</code> 共32K的空间是80 × 25彩色字符模式显示缓冲区。80×25彩色字符模式显示缓冲区的结构：</p>
+<h2 id="03-控制计算机屏幕">03 | 控制计算机屏幕</h2>
+<ul>
+<li><strong>显示的原理</strong>：屏幕上的内容=显存中的数据，显卡控制的最小单位是像素，一个像素对应屏幕上一个点</li>
+<li>现在显卡几乎都支持 VESA 制定的 VBE 标准，这种标准下有两种工作模式：文本模式和图形模式</li>
+</ul>
+<h3 id="文本模式">文本模式</h3>
 <ul>
 <li>
-<p>向这个地址空间写入数据，写入的内容将立即出现在显示器上</p>
+<p>专门用来显示字符的工作方式</p>
 </li>
 <li>
-<p>在80×25彩色字符模式下，显示器可以显示25行，每行80个字符，每个字符可以有256种属性（背景色、前景色、闪烁、高亮等组合信息）</p>
+<p>PC 在加电自检后系统会初始化为 80 × 25 的文本模式</p>
 </li>
 <li>
-<p><strong>一个字符在显示缓冲区中要占两个字节</strong>，分别存放字符的ASCII码和属性，显示缓冲区分为8页，每页4KB，显示器可以显示任意一页的内容。通常情况下B8000H - B8F9F中的4000个字节的内容将出现在显示器上</p>
+<p>显存的地址空间 <code>A0000h-BFFFFh</code> 共128K空间，其中 <code>B8000h-BFFFFh</code> 共32K的空间是 80 × 25 彩色字符模式显示缓冲区，显示缓冲区分为8页，显示器可以显示任意一页的内容，通常情况下 B8000H-B8F9F 中的内容将出现在显示器上</p>
+</li>
+<li>
+<p>显示器可以显示25行，每行80个字符，每两个字节对应一个字符，其中一个字节是字符的 ASCII 码，另一个字节为字符的属性字节，每个字符可以有256种属性（背景色、前景色、闪烁、高亮等组合信息）</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-rgb.png" style="zoom: 67%;">
 </li>
 </ul>
-<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-rgb.png" style="zoom:70%;">
-<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-memory.png" style="zoom:75%;">
-<blockquote>
-<p>BIOS有自动寻找硬件功能，且BIOS在实际的物理内存中是有布局的</p>
-</blockquote>
-<p>实验：</p>
-<p>​</p>
+<h3 id="实验">实验</h3>
 <ol>
-<li>编写汇编代码</li>
-</ol>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-il.png" alt=""></p>
+<li>
+<p>编写汇编代码</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">mov ax,0xb800 ;指向文本模式的显示缓冲区
+mov es,ax
+
+mov byte [es:0x00],'I'  ;显示内容 byte [es:]用于寻址
+mov byte [es:0x01],0x07 ;字符属性
+mov byte [es:0x02],'L'
+mov byte [es:0x03],0x06
+
+times 510 - ($-$$)	db 0
+dw 0xaa55<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p><code>$</code>当前位置</p>
 <p><code>$$</code>程序起始位置</p>
 </blockquote>
-<ol start="2">
+</li>
 <li>
 <p>编译</p>
 </li>
@@ -655,7 +618,7 @@ MBR（主引导扇区）位于硬盘的 0 磁道 0 柱面第1扇）区，该磁�
 <p>写入磁盘</p>
 </li>
 </ol>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210219-dd.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210219-dd.png" alt=""></p>
 <ol start="4">
 <li>在虚拟机中运行</li>
 </ol>
@@ -817,6 +780,16 @@ MBR（主引导扇区）位于硬盘的 0 磁道 0 柱面第1扇）区，该磁�
 <blockquote>
 <p>未完待续</p>
 </blockquote>
+<h2 id="参考">参考</h2>
+<ul>
+<li>
+<p>内存布局</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-memory-distribution.png" style="zoom: 67%;">
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://437436999.github.io/2020/03/15/%E6%98%BE%E5%8D%A1%E6%96%87%E6%9C%AC%E6%A8%A1%E5%BC%8F/">显卡文本模式</a></p>
+</li>
+</ul>
 
                 
             </div>
@@ -843,7 +816,7 @@ MBR（主引导扇区）位于硬盘的 0 磁道 0 柱面第1扇）区，该磁�
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://night-candle.github.io/2021/01/28/cs-my-os/">http://night-candle.github.io/2021/01/28/cs-my-os/</a>
+                    <a href="http://night-candle.github.io/2021/01/28/hello-os/">http://night-candle.github.io/2021/01/28/hello-os/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1089,6 +1062,11 @@ MBR（主引导扇区）位于硬盘的 0 磁道 0 柱面第1扇）区，该磁�
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
@@ -1102,6 +1080,7 @@ MBR（主引导扇区）位于硬盘的 0 磁道 0 柱面第1扇）区，该磁�
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -1215,7 +1194,7 @@ MBR（主引导扇区）位于硬盘的 0 磁道 0 柱面第1扇）区，该磁�
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">96.9k</span>
+                        class="white-color">100.5k</span>
             
             
             

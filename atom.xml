@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://night-candle.github.io/"/>
-  <updated>2022-05-01T06:08:08.936Z</updated>
+  <updated>2022-06-27T13:13:25.862Z</updated>
   <id>http://night-candle.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://night-candle.github.io/2021/11/19/linux-kernel/"/>
     <id>http://night-candle.github.io/2021/11/19/linux-kernel/</id>
     <published>2021-11-19T01:19:30.000Z</published>
-    <updated>2022-05-01T06:08:08.936Z</updated>
+    <updated>2022-06-27T13:13:25.862Z</updated>
     
     <summary type="html">
     
@@ -57,8 +57,9 @@
       
         
         
-          &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/night-candle/figurebed/main/img/cover-watermelon.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;00-前言-3&quot;&gt;00 |
+          &lt;h2 id=&quot;00-前言-3&quot;&gt;00 | 前言&lt;/h2&gt;
+&lt;p&gt;  在计算机领域中，网络是信息传输、接收、共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，可以进行数据传递，从而实现资源的共享&lt;/p&gt;
+&lt;p&gt;  网络编程从大方面说就是对信息的发送到接受，通过操作相应
         
       
     
@@ -82,7 +83,7 @@
     <link href="http://night-candle.github.io/2021/02/04/cs-network-protocol/"/>
     <id>http://night-candle.github.io/2021/02/04/cs-network-protocol/</id>
     <published>2021-02-04T13:05:42.000Z</published>
-    <updated>2022-05-19T05:02:40.450Z</updated>
+    <updated>2022-06-10T02:04:37.359Z</updated>
     
     <summary type="html">
     
@@ -94,7 +95,10 @@
 &lt;p&gt;&lt;strong&gt;看似最枯燥、最基础的东西往往具有最长久的生命力&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;​&lt;/p&gt;
 &lt;p&gt;​&lt;/p&gt;
-&lt;h2
+&lt;h2 id=&quot;网络协议&quot;&gt;网络协议&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;网络协议（Network
         
       
     
@@ -117,10 +121,10 @@
   
   <entry>
     <title>从零开发操作系统实验</title>
-    <link href="http://night-candle.github.io/2021/01/28/cs-my-os/"/>
-    <id>http://night-candle.github.io/2021/01/28/cs-my-os/</id>
+    <link href="http://night-candle.github.io/2021/01/28/hello-os/"/>
+    <id>http://night-candle.github.io/2021/01/28/hello-os/</id>
     <published>2021-01-28T03:26:19.000Z</published>
-    <updated>2022-04-17T10:45:00.450Z</updated>
+    <updated>2022-07-01T06:08:02.821Z</updated>
     
     <summary type="html">
     
@@ -223,9 +227,9 @@
       <category term="安全" scheme="http://night-candle.github.io/categories/%E5%AE%89%E5%85%A8/"/>
     
     
-      <category term="web安全" scheme="http://night-candle.github.io/tags/web%E5%AE%89%E5%85%A8/"/>
-    
       <category term="前端" scheme="http://night-candle.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="web安全" scheme="http://night-candle.github.io/tags/web%E5%AE%89%E5%85%A8/"/>
     
       <category term="后端" scheme="http://night-candle.github.io/tags/%E5%90%8E%E7%AB%AF/"/>
     

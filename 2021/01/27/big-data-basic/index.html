@@ -434,7 +434,7 @@
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.css">
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
         
 
         
@@ -578,7 +578,7 @@
 <p>\4. 用 Hadoop 或者 Spark 的启动命令执行这个应用程序的 JAR 包，首先执行引擎会解析程序要处理的数据输入路径，根据输入数据量的大小，将数据分成若干片（Split），每一个数据片都分配给一个任务执行进程去处理。</p>
 <p>\5. 任务执行进程收到分配的任务后，检查自己是否有任务对应的程序包，如果没有就去下载程序包，下载以后通过反射的方式加载程序。走到这里，最重要的一步，也就是移动计算就完成了。</p>
 <p>\6. 加载程序后，任务执行进程根据分配的数据片的文件地址和数据在文件内的偏移量读取数据，并把数据输入给应用程序相应的方法去执行，从而实现在分布式服务器集群中移动计算程序，对大规模数据进行并行处理的计算目标。</p>
-<h2 id="小结-2">小结</h2>
+<h2 id="小结">小结</h2>
 <p>移动程序到数据所在的地方去执行，这种技术方案其实我们并不陌生。从事 Java 开发的同学可能有过用反射的方式热加载代码执行的经验，如果这个代码是从网络其他地方传输过来的，那就是在移动计算。</p>
 <p>大数据技术将移动计算这一编程技巧上升到编程模型的高度，并开发了相应的编程框架，使得开发人员只需要关注大数据的算法实现，而不必关注如何将这个算法在分布式的环境中执行，这极大地简化了大数据的开发难度，并统一了大数据的开发方式，从而使大数据从原来的高高在上，变成了今天的人人参与。</p>
 <blockquote>
@@ -716,7 +716,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/01/28/cs-my-os/">
+                <a href="/2021/01/28/hello-os/">
                     <div class="card-image">
                         
                         
@@ -855,6 +855,11 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
@@ -868,6 +873,7 @@
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -981,7 +987,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">96.9k</span>
+                        class="white-color">100.5k</span>
             
             
             

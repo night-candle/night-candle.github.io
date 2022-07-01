@@ -433,7 +433,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    19.7k
+                    22.9k
                 </div>
                 
 
@@ -446,15 +446,14 @@
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.css">
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
         
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/cover-watermelon.jpg" alt=""></p>
-<h2 id="00-前言-3">00 | 前言</h2>
+                <h2 id="00-前言-3">00 | 前言</h2>
 <p>  在计算机领域中，网络是信息传输、接收、共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，可以进行数据传递，从而实现资源的共享</p>
 <p>  网络编程从大方面说就是对信息的发送到接受，通过操作相应 API 调度计算机硬件资源，并利用传输管道（网线）进行数据交换的过程</p>
 <p>  一些关于网络编程方面的问题看似简单，但想做到完全理解却并不容易，学习高性能网络编程，需要掌握两个核心要点：<strong>第一就是理解网络协议，并在这个基础上和操作系统内核配合，感知各种网络 I/O 事件；第二就是学会使用线程处理并发</strong></p>
@@ -1047,8 +1046,25 @@ name<span class="token punctuation">.</span>sin_addr<span class="token punctuati
 <p><code>listen</code> 函数原型：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">listen</span> <span class="token punctuation">(</span><span class="token keyword">int</span> socketfd<span class="token punctuation">,</span> <span class="token keyword">int</span> backlog<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
-<li><code>socketfd</code> 为套接字描述符</li>
-<li><code>backlog</code>为未完成连接队列的大小，这个参数的大小决定了可以接收的并发数目（这个参数越大，并发数目理论上也会越大，但是参数过大也会占用过多的系统资源，一些系统如 Linux 不允许修改这个参数）</li>
+<li>
+<p><code>socketfd</code> 为套接字描述符</p>
+</li>
+<li>
+<p><code>backlog</code>为未完成连接队列的大小，这个参数的大小决定了可以接收的并发数目（这个参数越大，并发数目理论上也会越大，但是参数过大也会占用过多的系统资源）</p>
+<blockquote>
+<ul>
+<li>
+<p>原先 Linux 实现中 backlog 参数定义了该套接字对应的未完成连接队列的最大长度（pending connections），如果一个连接到达时，队列已满，客户端将会接收一个 ECONNREFUSED 错误信息，如果支持重传，该请求可能会被忽略，之后会进行一次重传</p>
+</li>
+<li>
+<p>从 Linux 2.2 开始，backlog 参数定义的是<strong>已完成连接队列的最大长度</strong>，表示的是已建立的连接（established connection），正在等待被接收（accept 调用返回），如果声明的 backlog 参数比 <code>/proc/sys/net/core/somaxconn</code> 的参数要大，那么就会使用声明的值</p>
+</li>
+<li>
+<p>未完成队列的最大长度值可以通过 <code>/proc/sys/net/ipv4/tcp_max_syn_backlog</code> 完成修改，默认值为 128</p>
+</li>
+</ul>
+</blockquote>
+</li>
 </ul>
 </li>
 </ul>
@@ -1265,7 +1281,7 @@ ssize_t <span class="token function">readn</span><span class="token punctuation"
 </ul>
 <p>​</p>
 <p>​</p>
-<h4 id="实验">实验</h4>
+<h4 id="实验-2">实验</h4>
 <ul>
 <li>
 <p>一个客户端 - 服务器的例子，其中客户端不断地发送数据，服务器端每读取一段数据之后进行休眠</p>
@@ -1474,7 +1490,7 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 </ul>
 <p>​</p>
 <p>​</p>
-<h4 id="实验-2">实验</h4>
+<h4 id="实验-3">实验</h4>
 <ul>
 <li>
 <p><em>udp_server.c</em>：</p>
@@ -2107,7 +2123,7 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 </ul>
 <p>​</p>
 <p>​</p>
-<h2 id="02-网络编程">02 | 网络编程</h2>
+<h2 id="02-网络编程进阶">02 | 网络编程进阶</h2>
 <h3 id="TIME-WAIT">TIME_WAIT</h3>
 <ul>
 <li>场景引入：应用服务需要通过发起 TCP 连接对外提供服务，在高并发情况下，TIME_WAIT 状态的连接过多，把本机可用的端口耗尽，应用服务对外表现为不能正常工作，一段时间后处于 TIME_WAIT 的连接被系统回收并关闭后，释放出本地端口，应用服务对外表现为可以正常工作</li>
@@ -2333,7 +2349,7 @@ so_linger<span class="token punctuation">.</span>l_linger <span class="token ope
 </li>
 </ul>
 <p>​</p>
-<h4 id="实验-3">实验</h4>
+<h4 id="实验-4">实验</h4>
 <ul>
 <li>
 <p>客户端程序，从标准输入不断接收用户输入，把输入的字符串通过套接字发送给服务器端，同时将服务器端的应答显示到标准输出上</p>
@@ -2460,7 +2476,7 @@ so_linger<span class="token punctuation">.</span>l_linger <span class="token ope
 <p>服务器端程序设计：接收客户端发送来的各种消息后，进行处理，其中如果发现是 PING 类型的消息，在休眠一段时间后回复一个 PONG 消息</p>
 </li>
 </ul>
-<h5 id="实验-4">实验</h5>
+<h5 id="实验-5">实验</h5>
 <ul>
 <li>
 <p>服务器端休眠时间为 60 秒：客户端在发送了三次心跳检测报文 PING 报文后，判断出连接无效，直接退出</p>
@@ -2491,7 +2507,7 @@ so_linger<span class="token punctuation">.</span>l_linger <span class="token ope
 </ul>
 <p>​</p>
 <p>​</p>
-<h4 id="拥塞控制">拥塞控制</h4>
+<h4 id="拥塞控制-2">拥塞控制</h4>
 <ul>
 <li>
 <p>流量控制只是在考虑单个连接的数据传递，但是 TCP 数据包需要经过网卡、交换机、核心路由器等一系列网络设备，设备本身的能力也是有限的，当多个连接的数据包同时在网络上传送时，势必会发生带宽争抢、数据丢失等，TCP 必须考虑<strong>多个连接共享在有限的带宽上，兼顾效率和公平性的控制</strong>，这就是拥塞控制的本质</p>
@@ -2639,7 +2655,47 @@ ssize_t <span class="token function">readv</span><span class="token punctuation"
 <p>​</p>
 <p>​</p>
 <h3 id="如何理解-TCP-流">如何理解 TCP 流</h3>
+<ul>
+<li>TCP 是一种流式协议，<strong>字节流本身是没有边界的</strong></li>
+<li>数据什么时候真正被发送取决于发送窗口、拥塞窗口以及当前发送缓冲区的大小等条件，不能假设每次 send 调用发送的数据，都会作为一个整体完整地被发送出去</li>
+<li>接收端缓冲区保留了没有被取走的数据，随着应用程序不断从接收端缓冲区读出数据，接收端缓冲区就可以容纳更多新的数据</li>
+</ul>
+<p>​</p>
+<p>​</p>
 <h4 id="网络字节排序">网络字节排序</h4>
+<ul>
+<li>
+<p>高字节存放在起始地址叫做<strong>大端字节序</strong>（Big-Endian），低字节存放在起始地址叫做<strong>小端字节序</strong>（Little-Endian）</p>
+</li>
+<li>
+<p>为保证网络字节序一致，POSIX 标准提供了转换函数在主机和网络的格式之间灵活转换</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">uint16_t <span class="token function">htons</span> <span class="token punctuation">(</span>uint16_t hostshort<span class="token punctuation">)</span>
+uint16_t <span class="token function">ntohs</span> <span class="token punctuation">(</span>uint16_t netshort<span class="token punctuation">)</span>
+uint32_t <span class="token function">htonl</span> <span class="token punctuation">(</span>uint32_t hostlong<span class="token punctuation">)</span>
+uint32_t <span class="token function">ntohl</span> <span class="token punctuation">(</span>uint32_t netlong<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>s 表示 short，l 表示 long，分别表示 16 位和 32 位的整数</li>
+<li>如果系统和网络字节序一样，那么使用上述所有的函数进行转换的时候，结果都仅仅是一个空实现，直接返回</li>
+</ul>
+</li>
+</ul>
+<p>​</p>
+<p>​</p>
+<h4 id="报文读取和解析">报文读取和解析</h4>
+<ul>
+<li>
+<p>报文格式实际上定义了字节的组织形式，发送端和接收端都按照统一的报文格式进行数据传输和解析，常见的报文格式有两种方法：一种是发送端把报文长度预先通过报文告知给接收端；另一种是通过一些特殊的字符来进行边界的划分</p>
+</li>
+<li>
+<p>显式编码报文长度</p>
+</li>
+<li>
+<p>特殊字符作为边界：以 HTTP 为例，通过设置回车符、换行符做为 HTTP 报文协议的边界</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220521-http-message.png" alt=""></p>
+</li>
+</ul>
+<p>​</p>
+<p>​</p>
 <h3 id="UDP-Connect">UDP Connect</h3>
 <h4 id="引例">引例</h4>
 <ul>
@@ -2713,8 +2769,15 @@ ssize_t <span class="token function">readv</span><span class="token punctuation"
 <h4 id="UDP-Connect-作用">UDP Connect 作用</h4>
 <ul>
 <li>对 UDP 套接字进行 connect 操作主要是为了让应用程序能够接收<strong>异步错误</strong>的信息</li>
+<li>UDP 连接套接字不是发起连接请求的过程，而是记录<strong>目的地址和端口</strong>到套接字的<strong>映射关系</strong>，断开套接字则相反，将删除原来记录的映射关系</li>
 <li>在服务器端不开启的情况下，不调用 connect 的客户端程序，是不会报错的，程序只会阻塞在 recvfrom 上，等待返回（或者超时）</li>
 <li>如果调用 connect 将套接字建立了“上下文”，内核建立了 UDP 套接字 - 目的地址/端口之间的映射关系，当收到一个 ICMP 不可达报文时，内核可以从映射表中找出拥有该目的地址和端口的 UDP 套接字，当该套接字上再次调用 recvfrom 或 recv 时就可收到操作系统内核返回的 <code>Connection Refused</code> 信息</li>
+<li>UDP 套接字允许多次 connect 操作
+<ul>
+<li>可以重新指定新的 IP 地址和端口号</li>
+<li>可以断开一个已连接的套接字，为了断开一个已连接的 UDP 套接字，第二次调用 connect 时，调用方需要把套接字地址结构的地址族成员设置为 <code>AF_UNSPEC</code></li>
+</ul>
+</li>
 </ul>
 <p>​</p>
 <p>​</p>
@@ -2754,20 +2817,250 @@ ssize_t <span class="token function">readv</span><span class="token punctuation"
 <p>如果不使用 connect 方式，每次发送报文的过程：连接套接字→发送报文→断开套接字→连接套接字→发送报文→断开套接字 →………</p>
 </li>
 <li>
-<p>如果使用 connect 方式，每次发送报文的过程：连接套接字→发送报文→发送报文→……→最后断开套接字</p>
+<p>如果使用 connect 方式，每次发送报文的过程：连接套接字→发送报文→发送报文→……→断开套接字</p>
 </li>
 </ul>
 </li>
 </ul>
 <p>​</p>
 <p>​</p>
-<h3 id="IO-多路复用">IO 多路复用 !!!</h3>
-<h2 id="04-网络编程实战">04 | 网络编程实战</h2>
+<h3 id="TCP-Failure-Modes">TCP Failure Modes</h3>
+<ul>
+<li>
+<p>TCP 协议<strong>反映链路异常的能力偏弱</strong>，发送端并无法获取对应数据流的 ACK 情况，接收端也没有办法保证 ACK 过的数据部分可以被应用程序处理</p>
+</li>
+<li>
+<p>TCP 连接建立之后，能感知 TCP 链路的方式是有限的，一种是以 read 为核心的读操作，另一种是以 write 为核心的写操作</p>
+</li>
+<li>
+<p>故障模式总结</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220521-breakdown.png" alt=""></p>
+<ul>
+<li>对端无 FIN 包，需要通过巡检或超时来发现</li>
+<li>对端有 FIN 包，需要通过增强 read 或 write 操作的异常处理</li>
+</ul>
+</li>
+</ul>
+<h4 id="对端无-FIN-包">对端无 FIN 包</h4>
+<ul>
+<li>
+<p><strong>网络中断</strong>造成的对端无 FIN 包</p>
+<ul>
+<li>
+<p>网络中断情况下 TCP 程序并不能及时感知到异常信息，除非网络中的其他设备，如路由器发出 ICMP 报文说明目的网络或主机不可达，如果程序是阻塞在 read 调用上则无法从异常中恢复</p>
+<ul>
+<li>
+<p>可以通过给 read 操作设置超时来解决</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">timeval</span> tv<span class="token punctuation">;</span>
+tv<span class="token punctuation">.</span>tv_sec <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token comment">// 设置套接字的读操作超时</span>
+<span class="token function">setsockopt</span><span class="token punctuation">(</span>connfd<span class="token punctuation">,</span> SOL_SOCKET<span class="token punctuation">,</span> SO_RCVTIMEO<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>tv<span class="token punctuation">,</span> <span class="token keyword">sizeof</span> tv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> nBytes <span class="token operator">=</span> <span class="token function">recv</span><span class="token punctuation">(</span>connfd<span class="token punctuation">,</span> buffer<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buffer<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>nBytes <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>errno <span class="token operator">==</span> EAGAIN <span class="token operator">||</span> errno <span class="token operator">==</span> EWOULDBLOCK<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"read timeout\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">onClientTimeout</span><span class="token punctuation">(</span>connfd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"error read message"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>nBytes <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"client closed \n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>可以添加对连接是否正常的<a href="#%E6%A3%80%E6%B5%8B%E8%BF%9E%E6%8E%A5%E7%8A%B6%E6%80%81">检测</a>，如果连接不正常就从当前 read 阻塞中返回并处理</p>
+</li>
+<li>
+<p>利用多路复用技术自带的超时来完成对套接字 I/O 的检查，如果超过了预设的时间就进入异常处理</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">timeval</span> tv<span class="token punctuation">;</span>
+tv<span class="token punctuation">.</span>tv_sec <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+ 
+<span class="token function">FD_ZERO</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>allreads<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">FD_SET</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>allreads<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    readmask <span class="token operator">=</span> allreads<span class="token punctuation">;</span>
+    <span class="token comment">// 对套接字进行 I/O 事件的轮询</span>
+    <span class="token keyword">int</span> rc <span class="token operator">=</span> <span class="token function">select</span><span class="token punctuation">(</span>socket_fd <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>readmask<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>tv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>rc <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"select failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>rc <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 超时后的处理逻辑</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"read timeout\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">onClientTimeout</span><span class="token punctuation">(</span>socket_fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+ <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>   
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>如果先调用 write 发送数据流再阻塞在 read 调用上，Linux 系统的 TCP 协议栈会不断尝试将发送缓冲区的数据发送出去，大概在重传 12 次后协议栈会标识该连接异常，这时，阻塞的 read 调用会返回一条 <code>TIMEOUT</code> 的错误信息</p>
+<ul>
+<li>如果此时程序还往连接写数据，写操作会立即失败，返回一个 SIGPIPE 信号给程序</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>系统崩溃</strong>造成的对端无 FIN 包</p>
+<ul>
+<li>
+<p>当系统突然崩溃（如断电），网络连接上来不及发出任何东西，在没有 ICMP 报文的情况下，TCP 程序只能通过 read 和 write 调用得到网络连接异常的信息，超时错误是一个常见的结果</p>
+</li>
+<li>
+<p>系统在崩溃后又重启，当重传的 TCP 分组到达重启后的系统，由于系统中没有该 TCP 分组对应的连接数据，系统会返回一个 RST 重置分节，TCP 程序通过 read 或 write 调用可以分别对 RST 进行错误处理</p>
+<ul>
+<li>
+<p>如果是阻塞的 read 调用，会立即返回一个错误，错误信息为连接重置 <code>Connection Resest</code></p>
+</li>
+<li>
+<p>如果是 write 操作，也会立即失败，应用程序会被返回一个 SIGPIPE 信号</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>​</p>
+<p>​</p>
+<h4 id="对端有-FIN-包">对端有 FIN 包</h4>
+<ul>
+<li>
+<p>对端如果有 FIN 包发出，可能的场景是对端调用了 close 或 shutdown 显式地关闭了连接，也可能是对端应用程序崩溃，操作系统内核代为清理所发出的</p>
+</li>
+<li>
+<p><strong>read 直接感知 FIN 包</strong></p>
+<ul>
+<li>
+<p>read 操作在完成正常接收的数据读取之后，FIN 包会通过返回一个 EOF 来完成通知，此时 read 调用返回值为 0</p>
+</li>
+<li>
+<p>收到 FIN 包之后 read 操作不会立即返回</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> nBytes <span class="token operator">=</span> <span class="token function">recv</span><span class="token punctuation">(</span>connfd<span class="token punctuation">,</span> buffer<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buffer<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>nBytes <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> errno<span class="token punctuation">,</span> <span class="token string">"error read message"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>nBytes <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">error</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"client closed \n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>通过 write 产生 RST，read 调用感知 RST</strong></p>
+<ul>
+<li>
+<p>客户端正确显示了服务端的回应之后，再杀死服务器程序，客户端再次输入后出现 <code>peer connection closed</code></p>
+</li>
+<li>
+<p>收到 FIN 包的客户端继续合法地向服务器端发送数据，服务器端在无法定位该 TCP 连接信息的情况下，发送了 RST 信息，当程序调用 read 操作时，内核会将 RST 错误信息通知给应用程序</p>
+</li>
+<li>
+<p>在 Linux 4.4 内核上结果是内核正常将 EOF 信息通知给应用程序，而不是 RST 错误信息；Max OS 10.13.6 上 read 操作可以返回 RST 异常信息</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220526-failure-modes-fin.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>向一个已关闭连接连续写导致 SIGPIPE</strong></p>
+<ul>
+<li>
+<p>客户端在收到 FIN 包之后，没有 read 操作，还是会继续往这个套接字写入数据，当数据到达服务器端时，操作系统内核发现这是一个指向关闭的套接字，发送一个 RST 包给客户端</p>
+<ul>
+<li>因为根据 TCP 协议，连接是双向的，收到对方的 FIN 包只意味着<strong>对方不会再发送任何消息</strong>，在一个双方正常关闭的流程中，收到 FIN 包的一端将剩余数据发送给对面，然后关闭套接字</li>
+</ul>
+</li>
+<li>
+<p>Linux 4.4 内核上，客户端如果再执行 write 操作，会返回一个 RST 错误信息；Max OS 10.13.6 上客户端第二次操作时，应用程序会收到一个 SIGPIPE 信号，如果不捕捉这个信号，应用程序会在毫无征兆的情况下直接退出</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220526-failure-modes-fin-write.png" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="IO-多路复用（重点）">IO 多路复用（重点）</h3>
+<ul>
+<li>可以把标准输入、套接字等都看做 I/O 的一路，多路复用就是在任何一路 I/O 有事件发生的情况下，通知应用程序去处理相应的 I/O 事件，在同一时刻仿佛可以处理多个 I/O 事件</li>
+</ul>
+<h4 id="select">select</h4>
+<ul>
+<li>
+<p>一种常见的 I/O 多路复用技术，使用 select 函数通知内核挂起进程，当一个或多个 I/O 事件发生后，控制权返还给应用程序，由应用程序进行 I/O 事件的处理</p>
+</li>
+<li>
+<p>函数原型</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">select</span><span class="token punctuation">(</span><span class="token keyword">int</span> maxfd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>readset<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>writeset<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>exceptset<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token operator">*</span>timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token punctuation">{</span>
+  <span class="token keyword">long</span>   tv_sec<span class="token punctuation">;</span> <span class="token comment">/* seconds */</span>
+  <span class="token keyword">long</span>   tv_usec<span class="token punctuation">;</span> <span class="token comment">/* microseconds */</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><code>maxfd</code> 表示待测试的描述符基数，值是待测试的最大描述符 +1</li>
+<li>读描述符集合 <code>readset</code>、写描述符集合 <code>writeset</code> 和异常描述符集合 <code>exceptset</code>，这三个描述符集合分别通知内核，在哪些描述符上检测数据可以读，可以写和有异常发生
+<ul>
+<li>每一个都可以设置成空，表示不需要内核进行相关的检测</li>
+</ul>
+</li>
+<li><code>timeval</code> 结构体时间
+<ul>
+<li>设置成空 (NULL)，表示如果没有 I/O 事件发生，则 select 一直等待</li>
+<li>设置一个非零的值，表示等待固定的一段时间后从 select 阻塞调用中返回</li>
+<li><code>tv_sec</code> 和 <code>tv_usec</code> 都设置成 0，表示不等待，检测完毕立即返回（使用较少）</li>
+</ul>
+</li>
+<li>返回：若有就绪描述符则为其数目，若超时则为 0，若出错则为 -1</li>
+</ul>
+</li>
+<li>
+<p>设置描述符集合</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">FD_ZERO</span><span class="token punctuation">(</span>fd_set <span class="token operator">*</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span>　　　　　　
+<span class="token keyword">void</span> <span class="token function">FD_SET</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span>　　
+<span class="token keyword">void</span> <span class="token function">FD_CLR</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span>　　　
+<span class="token keyword">int</span>  <span class="token function">FD_ISSET</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><code>FD_ZERO</code> 用来将描述符集合所有元素都设置成 0（0 代表不需要处理，1 代表需要处理）</li>
+<li><code>FD_SET</code> 用来把对应套接字 fd 的元素 a[fd] 设置成 1</li>
+<li><code>FD_CLR</code> 用来把对应套接字 fd 的元素 a[fd] 设置成 0</li>
+<li><code>FD_ISSET</code> 对向量进行检测，判断出对应套接字元素 a[fd] 的值</li>
+</ul>
+</li>
+<li>
+<p>套接字描述符就绪条件</p>
+<p>当我们说 select 测试返回，某个套接字准备好可读，表示什么样的事件发生呢？</p>
+<p>第一种情况是套接字接收缓冲区有数据可以读，如果我们使用 read 函数去执行读操作，肯定不会被阻塞，而是会直接读到这部分数据。</p>
+<p>第二种情况是对方发送了 FIN，使用 read 函数执行读操作，不会被阻塞，直接返回 0。</p>
+<p>第三种情况是针对一个监听套接字而言的，有已经完成的连接建立，此时使用 accept 函数去执行不会阻塞，直接返回已经完成的连接。</p>
+<p>第四种情况是套接字有错误待处理，使用 read 函数去执行读操作，不阻塞，且返回 -1。</p>
+<p>总结成一句话就是，内核通知我们套接字有数据可以读了，使用 read 函数不会阻塞。</p>
+<p>不知道你是不是和我一样，刚开始理解某个套接字可写的时候，会有一个错觉，总是从应用程序角度出发去理解套接字可写，我开始是这样想的，当应用程序完成相应的计算，有数据准备发送给对端了，可以往套接字写，对应的就是套接字可写。</p>
+<p>其实这个理解是非常不正确的，select 检测套接字可写，<strong>完全是基于套接字本身的特性来说</strong>的，具体来说有以下几种情况。</p>
+<p>第一种是套接字发送缓冲区足够大，如果我们使用非阻塞套接字进行 write 操作，将不会被阻塞，直接返回。</p>
+<p>第二种是连接的写半边已经关闭，如果继续进行写操作将会产生 SIGPIPE 信号。</p>
+<p>第三种是套接字上有错误待处理，使用 write 函数去执行读操作，不阻塞，且返回 -1。</p>
+<p>总结成一句话就是，内核通知我们套接字可以往里写了，使用 write 函数就不会阻塞。</p>
+</li>
+</ul>
+<h4 id="poll">poll</h4>
+<ul>
+<li>
+<p>函数原型</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">poll</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token operator">*</span>fds<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> nfds<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ul>
+<h3 id="非阻塞-I-O">非阻塞 I/O</h3>
+<ul>
+<li>编程语言的 I/O 模型是通过抽象和设计，总结出的一套规范</li>
+</ul>
 <blockquote>
 <p>未完待续</p>
 </blockquote>
-<p>编程语言的I/O模型是通过抽象和设计，总结出的一套规范。</p>
-<h2 id="参考-2">参考</h2>
+<h2 id="参考-3">参考</h2>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-hans/%E4%BF%9D%E7%95%99IP%E5%9C%B0%E5%9D%80">保留IP地址</a></li>
 <li><a target="_blank" rel="noopener" href="https://shuangxunian.github.io/2021/06/13/TCPInterviewQuestions/">TCP面试题</a></li>
@@ -3059,6 +3352,11 @@ ssize_t <span class="token function">readv</span><span class="token punctuation"
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
@@ -3072,6 +3370,7 @@ ssize_t <span class="token function">readv</span><span class="token punctuation"
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -3185,7 +3484,7 @@ ssize_t <span class="token function">readv</span><span class="token punctuation"
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">96.9k</span>
+                        class="white-color">100.5k</span>
             
             
             

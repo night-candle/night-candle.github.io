@@ -430,14 +430,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-19
+                    2022-06-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    18k
+                    18.7k
                 </div>
                 
 
@@ -450,7 +450,7 @@
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.css">
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
         
 
         
@@ -461,144 +461,524 @@
 <p><strong>看似最枯燥、最基础的东西往往具有最长久的生命力</strong></p>
 <p>​</p>
 <p>​</p>
-<h2 id="协议三要素">协议三要素</h2>
+<h2 id="网络协议">网络协议</h2>
 <ul>
-<li><strong>语法</strong>：就是这一段内容要符合一定的规则和格式（如括号要成对，结束要使用分号等）</li>
-<li><strong>语义</strong>：就是这一段内容要代表某种意义。（如数字减去数字是有意义的，数字减去文本一般来说没有意义）</li>
-<li><strong>顺序</strong>：就是先做什么，后做什么（如可以先加上某个数值然后再减去某个数值）</li>
+<li>
+<p>网络协议（Network Protocol），简称为协议，是为进行网络中的数据交换而建立的规则、标准或约定</p>
+</li>
+<li>
+<p>Internet 中涉及两个或多个通信远程实体的所有活动都由协议管理，协议规范了网络中所有信息发送和接收过程</p>
+</li>
+<li>
+<p>协议规定了通信实体之间所交换消息的<strong>格式、意义、顺序</strong>以及针对收到信息或发生的事件所采取的<strong>动作</strong></p>
+<blockquote>
+<p><em>A protocol defines the format and the order of messages exchanged between two or more communicating entities, as well as the actions taken on the transmission and/or receipt of a message or other event.</em></p>
+</blockquote>
+</li>
 </ul>
-<p>  但是要想学会教给一大片机器做什么，这就需要网络协议。<strong>只有通过网络协议，才能使一大片机器互相协作、共同完成一件事。</strong></p>
+<h3 id="协议三要素">协议三要素</h3>
+<ul>
+<li>语法（<strong>Syntax</strong>）
+<ul>
+<li>数据与控制信息的结构或格式</li>
+<li>信号电平</li>
+</ul>
+</li>
+<li>语义（<strong>Semantics</strong>）
+<ul>
+<li>需要发出何种控制信息</li>
+<li>完成何种动作以及做出何种响应</li>
+</ul>
+</li>
+<li>时序（<strong>Timing</strong>）
+<ul>
+<li>事件顺序</li>
+<li>速度匹配</li>
+</ul>
+</li>
+</ul>
 <p>​</p>
 <p>​</p>
 <h2 id="网络分层">网络分层</h2>
 <ul>
-<li>
-<p><a href="https://night-candle.github.io/2021/02/04/cs-network-socket/#toc-heading-20">OSI 概念模型</a></p>
-</li>
-<li>
-<p>OSI与TCP/IP模型对照</p>
-</li>
+<li><a href="https://night-candle.github.io/2021/02/04/cs-network-socket/#OSI-%E7%BD%91%E7%BB%9C%E5%88%86%E5%B1%82%E6%A8%A1%E5%9E%8B">OSI 概念模型</a></li>
+<li>OSI 与 TCP/IP 模型对照</li>
 </ul>
 <img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-network-model.png" style="zoom: 80%;">
 <ul>
-<li>网络分层的优点：
+<li>
+<p>网络分层的优点：</p>
 <ul>
 <li>
-<p>各层之间是独立的。<strong>某一层并不需要知道它下一层是如何实现的，而仅仅需要知道该层通过层间的接口所提供的服务</strong></p>
+<p>各层之间是独立的，某一层并不需要知道它下一层是如何实现的，而仅仅需要知道该层通过层间的接口所提供的服务</p>
 </li>
 <li>
-<p>灵活性好。当任何一层发生变化时，只要<strong>层间接口关系保持不变，则在这层以上或以下各层均不受影响</strong></p>
+<p>灵活性好，当任何一层发生变化时，只要<strong>层间接口关系保持不变，则在这层以上或以下各层均不受影响</strong></p>
+<blockquote>
+<p>传输层是 IPv4 或 IPv6，链路层是否仍使用1500字节的 MTU 对应用层没有影响</p>
+<p><a target="_blank" rel="noopener" href="https://www.dpdk.org/">Intel DPDK</a> 绕过了内核网络协议栈，提供了更好的网络性能，但一些调试工具也因此无法使用</p>
+</blockquote>
 </li>
 <li>
 <p>结构上可分割开、易于实现和维护、能促进标准化工作</p>
 </li>
 </ul>
 </li>
+<li>
+<p>层与层的关系：<strong>只要是在网络上的包都是完整的，可以有下层没上层，但不可有上层没下层</strong>，无论这个包经过哪些设备，它都是完整的，所谓二层设备、三层设备，都是这些设备上跑的程序不同而已，一个 HTTP 协议的包经过一个二层设备，二层设备收进去的是整个网络包</p>
+</li>
 </ul>
-<blockquote>
-<p>传输层是<strong>IPv4</strong>或<strong>IPv6</strong>、链路层是否仍使用1500字节的<strong>MTU</strong>对应用层没有影响</p>
-</blockquote>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.dpdk.org/">Intel DPDK</a> 绕过了内核网络协议栈，提供了更好的网络性能，但一些调试工具也因此无法使用</p>
-</blockquote>
-<p>​</p>
-<p>​</p>
+<h2 id="架构设计">架构设计</h2>
+<h3 id="设计原则">设计原则</h3>
+<h4 id="关键架构属性">关键架构属性</h4>
+<ul>
+<li>性能 Performance：影响高可用的关键因素</li>
+<li>可伸缩性 Scalability：支持部署可以互相交互的大量组件</li>
+<li>简单性 Simplicity：易理解、易实现、易验证</li>
+<li>可见性 Visiable：对两个组件间的交互进行监视或者仲裁的能力。如缓存、分层设计等</li>
+<li>可移植性 Portability：在不同的环境下运行的能力</li>
+<li>可靠性 Reliability：出现部分故障时，对整体影响的程度</li>
+<li>可修改性 Modifiability：对系统作出修改的难易程度，由可进化性、可定制性、可扩展性、可配置性、可重用性构成</li>
+</ul>
+<h4 id="架构属性：性能">架构属性：性能</h4>
 <ul>
 <li>
-<p><strong>层与层的关系</strong></p>
+<p>网络性能 <code>Network Performance</code></p>
 <ul>
 <li>
-<p>**只要是在网络上跑的包都是完整的。可以有下层没上层，绝对不可能有上层没下层。**所以，**对 TCP 协议来说，三次握手也好，重试也好，只要想发出去包，就要有 IP 层和 MAC 层，不然是发不出去的。**无论这个包经过哪些设备，它都是完整的。</p>
+<p><code>Throughput</code> 吞吐量：小于等于带宽 bandwidth</p>
 </li>
 <li>
-<p>所谓二层设备、三层设备，都是这些设备上跑的程序不同而已。一个 HTTP 协议的包经过一个二层设备，二层设备收进去的是整个网络包。这里面 HTTP、TCP、 IP、 MAC 都有。二层设备就是只把 MAC 头摘下来，看看是丢弃、转发，还是自己留着。三层设备就是把 MAC 头摘下来之后，再把 IP 头摘下来，看看是丢弃、转发，还是自己留着。</p>
+<p><code>Overhead</code> 开销：首次开销，每次开销</p>
 </li>
+</ul>
+</li>
+<li>
+<p>用户感知到的性能 <code>User-perceived Performance</code></p>
+<ul>
+<li>
+<p><code>Latency</code> 延迟：发起请求到接收到响应的时间</p>
+</li>
+<li>
+<p><code>Completion</code> 完成时间：完成一个应用动作所花费的时间</p>
+</li>
+</ul>
+</li>
+<li>
+<p>网络效率 <code>Network Efficiency</code></p>
+<ul>
+<li>重用缓存、减少交互次数、数据传输距离更近、COD</li>
 </ul>
 </li>
 </ul>
 <p>​</p>
+<h4 id="架构属性：可修改性">架构属性：可修改性</h4>
+<ul>
+<li>
+<p>可进化性 Evolvability：一个组件独立升级而不影响其他组件</p>
+</li>
+<li>
+<p>可扩展性 Extensibility ：向系统添加功能，而不会影响到系统的其他部分</p>
+</li>
+<li>
+<p>可定制性 Customizability ：临时性、定制性地更改某一要素来提供服务，不对常规客户产生影响</p>
+</li>
+<li>
+<p>可配置性 Configurability ：应用部署后可通过修改配置提供新的功能</p>
+</li>
+<li>
+<p>可重用性 Reusabilit ：组件可以不做修改在其他应用在使用</p>
+</li>
+</ul>
 <p>​</p>
+<h3 id="架构风格">架构风格</h3>
+<h4 id="数据流风格">数据流风格</h4>
+<ul>
+<li>
+<p>数据流风格 <code>Data-flow Styles</code></p>
+</li>
+<li>
+<p>优点：简单性、可进化性、可扩展性、可配置性、可重用性</p>
+</li>
+<li>
+<p>管道与过滤器（Pipe And Filter，PF）</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220606-pf.png" alt=""></p>
+<ul>
+<li>每个 Filter 都有输入端和输出端，只能从输入端读取数据，处理后再从输出端产生数据</li>
+</ul>
+</li>
+<li>
+<p>统一接口的管道与过滤器（Uniform Pipe And Filter，UPF）</p>
+<ul>
+<li>在 PF 上增加了统一接口的约束，所有 Filter 过滤器必须具备同样的接口</li>
+</ul>
+</li>
+<li>
+<p>两种架构对架构属性的影响</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220606-pf-and-upf.png" alt=""></p>
+</li>
+<li>
+<p>例如：协议分层</p>
+</li>
+</ul>
+<h4 id="复制风格">复制风格</h4>
+<ul>
+<li>
+<p>复制风格 <code>Replication Styles</code></p>
+</li>
+<li>
+<p>优点：用户可察觉的性能、可伸缩性，网络效率、可靠性也可以提到提升</p>
+</li>
+<li>
+<p>复制仓库（Replicated Repository, RR）</p>
+<ul>
+<li>多个进程提供相同的服务，通过反向代理对外提供集中服务</li>
+<li>例如：MySQL 冷热备份</li>
+</ul>
+</li>
+<li>
+<p>缓存 $</p>
+<ul>
+<li>RR 的变体，通过复制请求的结果，为后续请求复用</li>
+</ul>
+</li>
+<li>
+<p>两种架构对架构属性的影响</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220606-rr-and-cache.png" alt=""></p>
+</li>
+</ul>
+<h4 id="分层风格">分层风格</h4>
+<ul>
+<li>
+<p>分层风格 <code>Hierarchical Styles</code></p>
+</li>
+<li>
+<p>优点：简单性、可进化性、可伸缩性</p>
+</li>
+<li>
+<p>客户端服务器（Client-Server，CS）</p>
+<ul>
+<li>由 Client 触发请求，Server 监听到请求后产生响应，Client 一直等待收到响应后，会话结束</li>
+<li>分离关注点隐藏细节，良好的简单性、可伸缩性、可进化性</li>
+<li>示例：<a href="https://night-candle.github.io/2021/02/04/cs-network-socket/#1-1-1-%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B">客户端 - 服务器网络模型</a></li>
+</ul>
+</li>
+<li>
+<p>分层系统（Layered System，LS）</p>
+<ul>
+<li>每一层为其之上的层服务，并使用在其之下的层所提供的服务</li>
+<li>例如 TCP/IP</li>
+</ul>
+</li>
+<li>
+<p>分层客户端服务器（Layered Client-Server，LCS）</p>
+<ul>
+<li>LS+CS</li>
+<li>例如正向代理和反向代理，从空间上分为外部层与内部层</li>
+</ul>
+</li>
+<li>
+<p>无状态、客户端服务器（Client-Stateless-Server，CSS）</p>
+<ul>
+<li>
+<p>基于 CS，服务器上不允许有session state会话状态</p>
+</li>
+<li>
+<p>提升了可见性、可伸缩性、可靠性，但重复数据导致降低网络性能</p>
+</li>
+</ul>
+</li>
+<li>
+<p>缓存、无状态、客户端服务器（Client-Cache-Stateless-Server，C$SS）</p>
+<ul>
+<li>提升性能</li>
+</ul>
+</li>
+<li>
+<p>分层、缓存、无状态、客户端服务器（Layered-Client-Cache-Stateless-Server，LC$SS）</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220606-LC%24SS.png" alt=""></p>
+</li>
+<li>
+<p>远程会话（<strong>Remote Session</strong>，RS）</p>
+<ul>
+<li>CS 变体，服务器保存 Application state 应用状态</li>
+<li>可伸缩性、可见性差</li>
+<li>例如：FTP</li>
+</ul>
+</li>
+<li>
+<p>远程数据访问（<strong>Remote Data Access</strong>，RDA）</p>
+<ul>
+<li>
+<p>CS 变体， Application state 应用状态同时分布在客户端与服务器</p>
+</li>
+<li>
+<p>巨大的数据集有可能通过迭代而减少</p>
+</li>
+<li>
+<p>简单性、可伸缩性差</p>
+</li>
+<li>
+<p>例如：SQL 访问数据库</p>
+</li>
+</ul>
+</li>
+<li>
+<p>对架构属性的影响</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220606-hierarchical-styles.png" alt=""></p>
+</li>
+</ul>
+<h4 id="移动代码风格">移动代码风格</h4>
+<ul>
+<li>
+<p>移动代码风格 <code>Mobile Code Styles</code>，执行的代码可移动</p>
+</li>
+<li>
+<p>优点：可移植性、可扩展性、网络效率</p>
+</li>
+<li>
+<p>虚拟机（Virtual Machine，VM）</p>
+<ul>
+<li>分离指令与实现</li>
+</ul>
+</li>
+<li>
+<p>远程求值（Remote Evaluation，REV）</p>
+<ul>
+<li>基于 CS 的 VM，将代码发送至服务器执行</li>
+<li>例如：JS</li>
+</ul>
+</li>
+<li>
+<p>按需代码（Code on Demand，COD）</p>
+<ul>
+<li>
+<p>服务器在响应中发回处理代码，在客户端执行</p>
+</li>
+<li>
+<p>优秀的可扩展性和可配置性，提升用户可察觉性能和网络效率</p>
+</li>
+</ul>
+</li>
+<li>
+<p>分层、按需代码、缓存、无状态、客户端服务器</p>
+<p>（Layered-Code-on-Demand-Client-Cache-Stateless-Server，LCODC$SS）</p>
+<ul>
+<li>LC$SS+COD</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220606-LC%24SS%2BCOD.png" alt="统一接口的 LC$SS+COD"></p>
+</li>
+<li>
+<p>移动代理（Mobile Agent，MA）</p>
+<ul>
+<li>相当于 REV+COD</li>
+</ul>
+</li>
+<li>
+<p>对架构属性的影响</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220606-mobile-code-styles.png" alt=""></p>
+</li>
+</ul>
+<h4 id="点对点风格">点对点风格</h4>
+<ul>
+<li>
+<p>点对点风格 <code>Peer-to-Peer Styles</code></p>
+</li>
+<li>
+<p>优点：可进化性、可重用性、可扩展性、可配置性</p>
+</li>
+<li>
+<p>Event-based Integration，EBI：</p>
+<ul>
+<li>
+<p>基于事件集成系统，如由类似 Kafka 这样的消息系统 + 分发订阅来消除耦合</p>
+</li>
+<li>
+<p>优秀的可重用性、可扩展性、可进化性</p>
+</li>
+<li>
+<p>缺乏可理解性，收到一条消息不知道是哪个订阅产生的</p>
+</li>
+<li>
+<p>由于消息广播等因素造成的消息风暴，可伸缩性差</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Chiron-2，C2</p>
+<ul>
+<li>参见论文《A Component- and Message-Based Architectural Style for GUI Software》</li>
+<li>相当于 EBI+LCS，控制了消息的方向</li>
+</ul>
+</li>
+<li>
+<p>Distributed Objects，DO</p>
+<ul>
+<li>组件结对交互</li>
+</ul>
+</li>
+<li>
+<p>Brokered Distributed Objects，BDO</p>
+<ul>
+<li>引入名字解析组件来简化 DO，例如 CORBA</li>
+</ul>
+</li>
+<li>
+<p>对架构属性的影响</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220606-peer-to-peer-styles.png" alt=""></p>
+</li>
+</ul>
 <h1>应用层</h1>
-<h2 id="HTTP-1-1-2">HTTP/1.1</h2>
+<h2 id="HTTP">HTTP</h2>
 <p>HTTP 协议（<code>Hypertext Transfer Protocol</code> ）</p>
 <p>  <em>a stateless application-level request/response protocol that uses extensible semantics and self-descriptive message payloads for flexible interaction with network-based hypertext information systems</em>（RFC7230 2014.6）</p>
 <p>  一种<strong>无状态</strong>的、应用层的、以<strong>请求/应答方式</strong>运行的协议，它使用<strong>可扩展的语义和自描述消息格式</strong>，与基于网络的<strong>超文本</strong>信息系统灵活的互动</p>
 <p>​</p>
-<h3 id="消息格式">消息格式</h3>
-<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-message-format.jpg" style="zoom:70%;">
-<p>基于<strong>ABNF</strong>语义定义的HTTP消息格式：</p>
-<p><strong>HTTP-message =<code>start-line</code> * (<code>header-field</code>CRLF ) CRLF [<code>message-body</code>]</strong></p>
+<h3 id="HTTP-1-的设计">HTTP/1 的设计</h3>
+<h4 id="HTTP-解决了什么问题？">HTTP 解决了什么问题？</h4>
+<blockquote>
+<p><em>Web’s major goal was to be a shared information space through which people and machines could communicate.</em> ——Tim Berners Lee</p>
+</blockquote>
 <ul>
 <li>
-<p><strong><code>start-line</code></strong> = request-line / status-line</p>
+<p><strong>Form Follows Function</strong>：HTTP 协议为什么是现在这个样子？</p>
+</li>
+<li>
+<p>解决 WWW 信息交互必须面对的需求：</p>
 <ul>
 <li>
-<p><strong>request-line</strong> = method SP request-target SP HTTP-version CRLF</p>
+<p>低门槛</p>
 </li>
 <li>
-<p><strong>status-line</strong> = HTTP-version SP status-code SP reason-phrase CRLF</p>
+<p>可扩展性：巨大的用户群体，超长的寿命</p>
 </li>
+<li>
+<p>分布式系统下的 Hypermedia：大粒度数据的网络传输</p>
+</li>
+<li>
+<p>Internet 规模</p>
+<ul>
+<li>无法控制的 scalability：不可预测的负载、非法格式的数据、恶意消息和客户端不能保持所有服务器信息、服务器不能保持多个请求间的状态信息</li>
 </ul>
 </li>
 <li>
-<p><strong><code>header-field</code></strong> = field-name “:” OWS field-value OWS</p>
+<p>独立的组件部署：新老组件并存</p>
+</li>
+<li>
+<p>向前兼容：自 1993 年起 HTTP0.9\1.0（1996）已经被广泛使用</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="REST-架构">REST 架构</h4>
 <ul>
 <li>
-<p>OWS = * (SP / HTAB）</p>
+<p><em>Roy Thomas Fielding</em> 在 2000 年发布指导 HTTP/1.1 规范制订的论文</p>
+<ul>
+<li>《Architectural Style and the Design of Network-based Software Architectures》</li>
+<li>即常说的 Representational State Transfer（REST）架构</li>
+</ul>
+</li>
+<li>
+<p>风格演化</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-evolution.png" alt="推导 REST 架构"></p>
+</li>
+<li>
+<p>REST 架构下 Web</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-rest.png" alt=""></p>
+</li>
+</ul>
+<h3 id="协议通用规则">协议通用规则</h3>
+<h4 id="消息格式">消息格式</h4>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-message-format.jpg" style="zoom:60%;">
+<p>基于<strong>ABNF</strong>语义定义的HTTP消息格式：</p>
+<p><strong>HTTP-message = <font color="#ff8378">start-line</font> *( <font color="#2abfb0">header-field</font> CRLF ) CRLF [ <font color="#83b2cc">message-body</font> ]</strong></p>
+<ul>
+<li><font color="#ff8378"><strong>start-line</strong></font> = request-line / status-line
+<ul>
+<li><strong>request-line</strong> = method SP request-target SP HTTP-version CRLF</li>
+<li><strong>status-line</strong> = HTTP-version SP status-code SP reason-phrase CRLF</li>
+</ul>
+</li>
+<li><font color="#2abfb0"><strong>header-field</strong></font> = field-name “:” OWS field-value OWS
+<ul>
+<li>
+<p>OWS = *(SP / HTAB）</p>
 </li>
 <li>
 <p>field-name = token</p>
 </li>
 <li>
-<p>field-value =  * (field-content /obs-fold）</p>
+<p>field-value =  *(field-content /obs-fold）</p>
+</li>
+</ul>
+</li>
+<li><font color="#83b2cc"><strong>message-body</strong></font> = *OCTET</li>
+</ul>
+<blockquote>
+<p><code>ABNF</code> <strong>扩充巴科斯 - 瑙尔范式</strong>：定义语法的元语言</p>
+<ul>
+<li>
+<p>操作符</p>
+<ul>
+<li>空白字符：用来分隔定义中的各个元素
+<ul>
+<li>e.g.method SP request-target SP HTTP-version CRLF</li>
+</ul>
+</li>
+<li>选择 <strong>/</strong>：表示多个规则都是可供选择的规则
+<ul>
+<li>e.g.start-line = request-line / status-line</li>
+</ul>
+</li>
+<li>值范围 <strong>%c##-##</strong>
+<ul>
+<li>e.g.OCTAL = “0” / “1” / “2” / “3” / “4” / “5” / “6” / “7” 与 OCTAL = %x30-37 等价</li>
+</ul>
+</li>
+<li>序列组合 <strong>()</strong>：将规则组合起来，视为单个元素</li>
+<li>不定量重复 <strong>m*n</strong>
+<ul>
+<li>e.g.*元素表示零个或更多元素： *( header-field CRLF )</li>
+<li>e.g.1* 元素表示一个或更多元素，2*4 元素表示两个至四个元素</li>
+</ul>
+</li>
+<li>可选序列 <strong>[]</strong>：
+<ul>
+<li>e.g.[ message-body ]</li>
+</ul>
 </li>
 </ul>
 </li>
 <li>
-<p><strong><code>message-body</code></strong> = * OCTET</p>
+<p>核心规则</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-core-rules.png" alt=""></p>
 </li>
 </ul>
-<p>​	<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-message-instance.png" alt="报文实例"></p>
-<blockquote>
-<p><code>ABNF</code> <strong>扩充巴科斯 - 瑙尔范式</strong>：定义语法的元语言</p>
 </blockquote>
-<blockquote>
 <ul>
-<li>操作符</li>
+<li>
+<p>报文示例</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210526-request-line.png" style="zoom:80%;">
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210526-status-line.png" alt="" style="zoom:80%;">
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-message-instance.png" alt=""></p>
+</li>
 </ul>
-<p>**空白字符：**用来分隔定义中的各个元素</p>
-<p>e.g.method SP request-target SP HTTP-version CRLF</p>
-<p>**选择 /：**表示多个规则都是可供选择的规则</p>
-<p>e.g.start-line = request-line / status-line</p>
-<p><strong>值范围</strong> <strong>%c##-##</strong></p>
-<p>e.g.OCTAL = “0” / “1” / “2” / “3” / “4” / “5” / “6” / “7” 与 OCTAL = %x30-37 等价</p>
-<p>**序列组合()：**将规则组合起来，视为单个元素</p>
-<p><strong>不定量重复m*n</strong></p>
-<p>e.g.*元素表示零个或更多元素： *（header-field CRLF）</p>
-<p>e.g.1* 元素表示一个或更多元素，2*4 元素表示两个至四个元素</p>
-<p><strong>可选序列 []：</strong></p>
-<p>e.g.[ message-body ]</p>
-</blockquote>
-<blockquote>
+<h4 id="URI">URI</h4>
+<h5 id="什么是URI-？">什么是URI ？</h5>
 <ul>
-<li>核心规则</li>
+<li>
+<p>URL：<code>Uniform Resource Locator</code>，表示资源的位置， 期望提供查找资源的方法  （RFC1738 1994.12）</p>
+</li>
+<li>
+<p>URN：<code>Uniform Resource Name</code>，期望为资源提供持久的、位置无关的标识方式，并允许简单地将多个命名空间映射到单个URN命名空间 （RFC2141 1997.5）</p>
+<ul>
+<li>e.g. <strong>磁力链接</strong> magnet:?xt=urn:sha1:YNCKHTQC5C</li>
 </ul>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210522-core-rules.png" alt=""></p>
-</blockquote>
-<p>​</p>
-<p>​</p>
-<h4 id="请求行">请求行</h4>
-<p><strong>request-line = method SP <code>request-target</code> SP HTTP-version CRLF</strong></p>
-<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210526-request-line.png" alt="" style="zoom:80%;">
-<p>​</p>
-<h5 id="URI">URI</h5>
-<p>​</p>
-<p><strong>什么是URI ？</strong></p>
-<p><strong>URL</strong>：<code>Uniform Resource Locator</code>，表示资源的位置， 期望提供查找资源的方法  （RFC1738 1994.12）</p>
-<p><strong>URN</strong>：<code>Uniform Resource Name</code>，期望为资源提供持久的、位置无关的标识方式，并允许简单地将多个命名空间映射到单个URN命名空间 （RFC2141 1997.5）</p>
-<p>​	e.g. <strong>磁力链接</strong> magnet:?xt=urn:sha1:YNCKHTQC5C</p>
+</li>
+<li>
 <p><strong>URI</strong>：<code>Uniform Resource Identifier</code>，用以区分资源，<strong>是 URL 和 URN 的超集</strong>，用以取代 URL 和 URN 概念 （RFC1630 1994.6）（RFC3986 2005.1 取代 RFC2396 和 RFC2732）</p>
-<ul>
+</li>
 <li>
 <p>Resource 资源</p>
 <ul>
@@ -625,9 +1005,9 @@
 <p>​</p>
 <p>​</p>
 <p><strong>URI 组成：schema, user information, host, port, path, query, fragment</strong></p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210526-URI.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210526-URI.png" alt=""></p>
 <p>​</p>
-<p><strong>URI 的格式</strong></p>
+<h5 id="URI-的格式">URI 的格式</h5>
 <p><strong>URI = <code>scheme</code> “:” <code>hier-part</code> [ “?” <code>query</code> ] [ “#” <code>fragment</code> ]</strong></p>
 <ul>
 <li>
@@ -675,7 +1055,7 @@ e.g. http, https, ftp, mailto, rtsp, file, telnet</p>
 <h5 id="URI-编码">URI 编码</h5>
 <p>​</p>
 <p>​</p>
-<h5 id="方法">方法</h5>
+<h4 id="方法">方法</h4>
 <p><strong>常见方法（RFC7231）</strong></p>
 <ul>
 <li>
@@ -740,12 +1120,11 @@ e.g. http, https, ftp, mailto, rtsp, file, telnet</p>
 <p><strong><code>reason-phrase</code></strong> = *( HTAB / SP / VCHAR / obs-text )</p>
 </li>
 </ul>
-<img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20210526-status-line.png" alt="" style="zoom:80%;">
 <p>​</p>
-<p>​</p>
-<h5 id="响应码">响应码</h5>
-<p>​</p>
-<p>响应码规范：（RFC6585 2012.4）（RFC7231 2014.6）</p>
+<h4 id="响应码">响应码</h4>
+<ul>
+<li>响应码规范：（RFC6585 2012.4）（RFC7231 2014.6）</li>
+</ul>
 <p><code>1xx</code>：信息性状态码，请求已接收到，需要进一步处理才能完成，HTTP1.0 不支持</p>
 <ul>
 <li>
@@ -1037,190 +1416,6 @@ e.g. http, https, ftp, mailto, rtsp, file, telnet</p>
 </table>
 <p><img src="D:%5CGit-repo%5Chexo%5Csource_posts%5Ccs-network-protocol%5Cimage-20210529212151372.png" alt="image-20210529212151372"></p>
 <p><img src="D:%5CGit-repo%5Chexo%5Csource_posts%5Ccs-network-protocol%5Cimage-20210529212200529.png" alt="image-20210529212200529"></p>
-<h3 id="REST-架构">REST 架构</h3>
-<blockquote>
-<p><strong>Form Follows Function</strong>：HTTP 协议为什么是现在这个样子？</p>
-</blockquote>
-<p>​</p>
-<h4 id="HTTP-解决了什么问题？">HTTP 解决了什么问题？</h4>
-<p><em>Web’s major goal was to be a shared information space through which people and machines could communicate. ——Tim Berners Lee</em></p>
-<p>​</p>
-<p><strong>解决 WWW 信息交互必须面对的需求：</strong></p>
-<ul>
-<li>
-<p>低门槛</p>
-</li>
-<li>
-<p>可扩展性：巨大的用户群体，超长的寿命</p>
-</li>
-<li>
-<p>分布式系统下的 Hypermedia：大粒度数据的网络传输</p>
-</li>
-<li>
-<p>Internet 规模</p>
-<ul>
-<li>
-<p>无法控制的 scalability</p>
-<p>不可预测的负载、非法格式的数据、恶意消息</p>
-<p>客户端不能保持所有服务器信息，服务器不能保持多个请求间的状态信息</p>
-</li>
-<li>
-<p>独立的组件部署：新老组件并存</p>
-</li>
-</ul>
-</li>
-<li>
-<p>向前兼容：自 1993 年起 HTTP0.9\1.0（1996）已经被广泛使用</p>
-</li>
-</ul>
-<p>​</p>
-<h4 id="架构设计原则">架构设计原则</h4>
-<p>​</p>
-<ul>
-<li>
-<p>评估 Web 架构的关键属性（<strong>HTTP 协议应当在以下属性中取得可接受的均衡</strong> ）</p>
-<p>**1. 性能 Performance：**影响高可用的关键因素</p>
-<p>**2. 可伸缩性 Scalability：**支持部署可以互相交互的大量组件</p>
-<p>**3. 简单性 Simplicity：**易理解、易实现、易验证</p>
-<p>**4. 可见性 Visiable：**对两个组件间的交互进行监视或者仲裁的能力。如缓存、分层设计等</p>
-<p>**5. 可移植性 Portability：**在不同的环境下运行的能力</p>
-<p>**6. 可靠性 Reliability：**出现部分故障时，对整体影响的程度</p>
-<p>**7. 可修改性 Modifiability：**对系统作出修改的难易程度，由可进化性、可定制性、可扩展</p>
-<p>性、可配置性、可重用性构成</p>
-</li>
-</ul>
-<p>​</p>
-<ul>
-<li>
-<p>架构属性：<strong>性能</strong></p>
-<ul>
-<li>
-<p>网络性能 <code>Network Performance</code></p>
-<p><strong><code>Throughput</code> 吞吐量</strong>：小于等于带宽 bandwidth</p>
-<p><strong><code>Overhead</code> 开销</strong>：首次开销，每次开销</p>
-</li>
-<li>
-<p>用户感知到的性能 <code>User-perceived Performance</code></p>
-<p><code>Latency</code> 延迟：发起请求到接收到响应的时间</p>
-<p><code>Completion</code> 完成时间：完成一个应用动作所花费的时间</p>
-</li>
-<li>
-<p>网络效率 <code>Network Efficiency</code></p>
-<p>重用缓存、减少交互次数、数据传输距离更近、COD</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>​</p>
-<ul>
-<li>架构属性：<strong>可修改性</strong>
-<ul>
-<li>
-<p>**可进化性 Evolvability：**一个组件独立升级而不影响其他组件</p>
-</li>
-<li>
-<p>**可扩展性 Extensibility ：**向系统添加功能，而不会影响到系统的其他部分</p>
-</li>
-<li>
-<p>**可定制性 Customizability ：**临时性、定制性地更改某一要素来提供服务，不对常规客户产生影响</p>
-</li>
-<li>
-<p>**可配置性 Configurability ：**应用部署后可通过修改配置提供新的功能</p>
-</li>
-<li>
-<p>**可重用性 Reusabilit ：**组件可以不做修改在其他应用在使用</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>​</p>
-<img src="image-20210522184657315.png" alt="REST架构下的Web" style="zoom:70%;">
-<h4 id="架构风格">架构风格</h4>
-<blockquote>
-<p>从5种架构风格推导出HTTP的REST架构</p>
-</blockquote>
-<ul>
-<li>
-<p>5种架构风格</p>
-<ul>
-<li>
-<p><strong>数据流风格 <code>Data-flow Styles</code></strong></p>
-<p>优点：简单性、可进化性、可扩展性、可配置性、可重用性</p>
-</li>
-<li>
-<p><strong>复制风格 <code>Replication Styles</code></strong></p>
-<p>优点：用户可察觉的性能、可伸缩性，网络效率、可靠性也可以提到提升</p>
-</li>
-<li>
-<p><strong>分层风格 <code>Hierarchical Styles</code></strong></p>
-<p>优点：简单性、可进化性、可伸缩性</p>
-</li>
-<li>
-<p><strong>移动代码风格 <code>Mobile Code Styles</code></strong></p>
-<p>优点：可移植性、可扩展性、网络效率</p>
-</li>
-<li>
-<p><strong>点对点风格 <code>Peer-to-Peer Styles</code></strong></p>
-<p>优点：可进化性、可重用性、可扩展性、可配置性</p>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>数据流风格</strong></p>
-</li>
-<li>
-<p><strong>复制风格</strong></p>
-</li>
-<li>
-<p><strong>分层风格</strong></p>
-</li>
-<li>
-<p><strong>移动代码风格</strong></p>
-</li>
-<li>
-<p><strong>点对点风格</strong></p>
-</li>
-</ul>
-<h4 id="风格演化">风格演化</h4>
-<img src="image-20210522191814125.png" style="zoom:90%;">
-<p>​</p>
-<h3 id="协议通用规则">协议通用规则</h3>
-<h4 id="协议格式">协议格式</h4>
-<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210522-message-format.jpg" style="zoom:70%;">
-<p>基于<strong>ABNF</strong>语义定义的HTTP消息格式：</p>
-<p><strong>HTTP-message =<code>start-line</code> * (<code>header-field</code>CRLF ) CRLF [<code>message-body</code>]</strong></p>
-<ul>
-<li>
-<p><strong><code>start-line</code></strong> = request-line / status-line</p>
-<ul>
-<li>
-<p><strong>request-line</strong> = method SP request-target SP HTTP-version CRLF</p>
-</li>
-<li>
-<p><strong>status-line</strong> = HTTP-version SP status-code SP reason-phrase CRLF</p>
-</li>
-</ul>
-</li>
-<li>
-<p><strong><code>header-field</code></strong> = field-name “:” OWS field-value OWS</p>
-<ul>
-<li>
-<p>OWS = * (SP / HTAB）</p>
-</li>
-<li>
-<p>field-name = token</p>
-</li>
-<li>
-<p>field-value =  * (field-content /obs-fold）</p>
-</li>
-</ul>
-</li>
-<li>
-<p><strong><code>message-body</code></strong> = * OCTET</p>
-</li>
-</ul>
-<h4 id="URI-2">URI</h4>
-<p>方法与响应码</p>
 <h3 id="连接与消息的路由">连接与消息的路由</h3>
 <h3 id="内容协商与传输">内容协商与传输</h3>
 <p>每个 URI 指向的资源可以是任何事物，可以有多种不同的表述，例如一份文档可以有不同语言的翻译、不同的媒体格式、可以针对不同的浏览器提供不同的压缩编码等。</p>
@@ -1261,12 +1456,12 @@ e.g. http, https, ftp, mailto, rtsp, file, telnet</p>
 <p>​</p>
 <h1>传输层</h1>
 <h2 id="TCP">TCP</h2>
-<p>传输层的 TCP 协议<br>
-• 建立连接<br>
-• 传输数据<br>
-• 拥塞控制<br>
-• 关闭连接</p>
-<p><img src="image-20210127183621073.png" alt="发展历史"></p>
+<h3 id="概述-6">概述</h3>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210127-tcp-development-history.png" alt="发展历史"></p>
+<h3 id="建立连接">建立连接</h3>
+<h3 id="传输数据">传输数据</h3>
+<h3 id="拥塞控制">拥塞控制</h3>
+<h3 id="关闭连接">关闭连接</h3>
 <h2 id="UDP">UDP</h2>
 <p>​</p>
 <p>​</p>
@@ -1416,6 +1611,8 @@ $ <span class="token function">sudo</span> <span class="token function">ip</span
 <p>​</p>
 <p>​</p>
 <h2 id="路由协议">路由协议</h2>
+<h2 id="ARP">ARP</h2>
+<h2 id="RARP">RARP</h2>
 <p>​</p>
 <p>​</p>
 <h1>链路层</h1>
@@ -1435,7 +1632,7 @@ $ <span class="token function">sudo</span> <span class="token function">ip</span
 <p>  如果源机器不知道目标机器的地址，就会用到<strong>ARP 协议</strong></p>
 <p>​</p>
 <p>​</p>
-<h2 id="ARP">ARP</h2>
+<h2 id="ARP-2">ARP</h2>
 <blockquote>
 <p>已知 IP 地址，求 MAC 地址的协议</p>
 </blockquote>
@@ -1601,7 +1798,7 @@ $ <span class="token function">sudo</span> <span class="token function">ip</span
 <p>除 RPC 之外，常见的多系统数据交互方案还有分布式消息队列、HTTP 请求调用、数据库和分布式缓存等</p>
 <p>早期 ONC RPC 框架</p>
 <p>服务之间的互相调用，该怎么实现呢？</p>
-<h3 id="概述-6">概述</h3>
+<h3 id="概述-7">概述</h3>
 <p><a href="zotero://open-pdf/library/items/LH2Q89FF">Implementing remote procedure calls</a></p>
 <p>定义了 RPC 的调用标准</p>
 <p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220318-rpc.jpg" alt=""></p>
@@ -1716,7 +1913,7 @@ $ <span class="token function">sudo</span> <span class="token function">ip</span
 <ul>
 <li><a target="_blank" rel="noopener" href="https://notebyte.top/net_communication/net_protocol.html#%E5%9F%BA%E7%A1%80%E7%BD%91%E7%BB%9C">网络协议</a></li>
 <li>Web协议详解与抓包实战</li>
-<li></li>
+<li><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2011/09/restful.html">理解 RESTful 架构</a></li>
 </ul>
 
                 
@@ -1911,7 +2108,7 @@ $ <span class="token function">sudo</span> <span class="token function">ip</span
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/01/28/cs-my-os/">
+                <a href="/2021/01/28/hello-os/">
                     <div class="card-image">
                         
                         
@@ -2001,6 +2198,11 @@ $ <span class="token function">sudo</span> <span class="token function">ip</span
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
@@ -2014,6 +2216,7 @@ $ <span class="token function">sudo</span> <span class="token function">ip</span
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -2120,7 +2323,7 @@ $ <span class="token function">sudo</span> <span class="token function">ip</span
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">96.9k</span>
+                        class="white-color">100.5k</span>
             
             
             

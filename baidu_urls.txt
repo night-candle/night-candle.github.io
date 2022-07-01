@@ -1,7 +1,7 @@
 http://night-candle.github.io/2021/11/19/linux-kernel/
 http://night-candle.github.io/2021/02/04/cs-network-socket/
 http://night-candle.github.io/2021/02/04/cs-network-protocol/
-http://night-candle.github.io/2021/01/28/cs-my-os/
+http://night-candle.github.io/2021/01/28/hello-os/
 http://night-candle.github.io/2021/01/27/big-data-basic/
 http://night-candle.github.io/2021/01/27/game-program-design/
 http://night-candle.github.io/2021/01/27/web-sec-basic/
