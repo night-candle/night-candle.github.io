@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://night-candle.github.io/"/>
-  <updated>2022-06-27T13:13:25.862Z</updated>
+  <updated>2022-07-14T12:23:30.161Z</updated>
   <id>http://night-candle.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://night-candle.github.io/2021/11/19/linux-kernel/"/>
     <id>http://night-candle.github.io/2021/11/19/linux-kernel/</id>
     <published>2021-11-19T01:19:30.000Z</published>
-    <updated>2022-06-27T13:13:25.862Z</updated>
+    <updated>2022-07-14T12:23:30.161Z</updated>
     
     <summary type="html">
     
@@ -124,7 +124,7 @@
     <link href="http://night-candle.github.io/2021/01/28/hello-os/"/>
     <id>http://night-candle.github.io/2021/01/28/hello-os/</id>
     <published>2021-01-28T03:26:19.000Z</published>
-    <updated>2022-07-01T06:08:02.821Z</updated>
+    <updated>2022-07-14T12:23:05.193Z</updated>
     
     <summary type="html">
     
@@ -132,7 +132,7 @@
       
         
         
-          &lt;h2 id=&quot;01-环境的配置与搭建&quot;&gt;01 | 环境的配置与搭建&lt;/h2&gt;
+          &lt;h2 id=&quot;01-Hello-OS&quot;&gt;01 | Hello OS&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;工具：&lt;code&gt;VirtualBox&lt;/code&gt;、&lt;code&gt;Nasm&lt;/code&gt;

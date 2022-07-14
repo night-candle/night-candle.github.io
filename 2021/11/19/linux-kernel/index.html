@@ -425,14 +425,14 @@ export ARCH=x86
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-06-27
+                    2022-07-14
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    9.8k
+                    9.6k
                 </div>
                 
 
@@ -1715,7 +1715,7 @@ typedef struct {
 </ul>
 </li>
 </ol>
-<h3 id="MMU地址转换">MMU地址转换</h3>
+<h3 id="MMU-地址转换">MMU 地址转换</h3>
 <p>MMU 是一种硬件电路，它包含两个部件，一个是分段部件，一个是分页部件</p>
 <ul>
 <li>
@@ -1723,47 +1723,21 @@ typedef struct {
 </li>
 <li>
 <p>分页机制把一个线性地址转换为物理地址</p>
-<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220118-mmu.png" alt=""></p>
 </li>
 </ul>
 <h3 id="x86段页式内存管理">x86段页式内存管理</h3>
 <ol>
 <li>
-<p>逻辑地址到物理地址的转换（32）</p>
+<p>逻辑地址到物理地址的转换（32位）</p>
 <p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211120-x86cpu-mm.png" alt="x86 cpu 段页式内存管理机制"></p>
 </li>
 <li>
 <p>分段 <code>Segmentation</code></p>
-<p>在 Intel 平台下，逻辑地址是 [selector:offset] 形式，selector 是 CS 寄存器的值，offset 是 EIP 寄存器的值，如果用 selector 去 GDT( 全局描述符表 ) 里拿到 segment base address（段基址） 然后加上 offset（段内偏移），这就得到了 linear address</p>
+<p>逻辑地址是 [selector:offset] 形式，selector 是 CS 寄存器的值，offset 是 EIP 寄存器的值，如果用 selector 去 GDT( 全局描述符表 ) 里拿到 segment base address（段基址） 然后加上 offset（段内偏移），这就得到了 linear address</p>
 <p>逻辑地址转换为线性地址的过程：</p>
 <p>（1）先从段选择符（selector）中得到段描述符</p>
 <p>（2）从段描述符中得到段基地址</p>
 <p>（3）线性地址=段基地址+段内偏移（即虚拟地址）</p>
-</li>
-<li>
-<p>段选择符</p>
-<p>为了方便快速检索段选择符，处理器提供了 6 个分段寄存器来缓存段选择符：cs ss ds es fs gs</p>
-<ul>
-<li>段的基地址（Base Address）：在线性地址空间中段的起始地址</li>
-<li>段的界限（Limit）：在虚拟地址空间中，段内可以使用的最大偏移量</li>
-</ul>
-<p>段选择符的组成</p>
-<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20211128-segment-selector.png" alt="selector"></p>
-<ul>
-<li>
-<p>Index 是13位的索引号</p>
-</li>
-<li>
-<p>T1 字段表示使用的是 GDT 还是使用 LDT，GDT、LDT 里的内容就是段描述符</p>
-<ul>
-<li>一些全局的段描述符，就放在<strong>全局段描述符表</strong>（GDT）中</li>
-<li>一些局部的，例如每个进程自己的，就放在<strong>局部段描述符表</strong>（LDT）中</li>
-</ul>
-</li>
-<li>
-<p>段描述符的 Base 字段描述了一个段的的基地址，然后再加上段内偏移offset，就得到了最终的线性地址</p>
-</li>
-</ul>
 </li>
 <li>
 <p>分页 <code>Paging</code></p>
@@ -2170,7 +2144,7 @@ typedef struct {
 <div id="article-share">
 
     
-    <div class="social-share" data-sites="google,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <div class="social-share" data-sites="qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
     <script src="/libs/share/js/social-share.min.js"></script>
     
 
@@ -2365,7 +2339,7 @@ typedef struct {
 
 
   <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+  <script type="text/javascript" src="/libs/prism/prism.js"></script>
 
 
 <!-- 代码语言 -->
@@ -2495,7 +2469,7 @@ typedef struct {
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">100.5k</span>
+                        class="white-color">107.1k</span>
             
             
             

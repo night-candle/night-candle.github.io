@@ -414,14 +414,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-07-01
+                    2022-07-14
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    9.2k
                 </div>
                 
 
@@ -441,7 +441,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="01-环境的配置与搭建">01 | 环境的配置与搭建</h2>
+                <h2 id="01-Hello-OS">01 | Hello OS</h2>
 <ul>
 <li>
 <p>工具：<code>VirtualBox</code>、<code>Nasm</code> （汇编）</p>
@@ -460,7 +460,7 @@
 <p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210918-diskpart.png" alt="执行diskpart命令得到vhd"></p>
 </li>
 <li>
-<p>编写汇编代码</p>
+<p>编写汇编代码<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
 <pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">org 07c00h ; 指定下面的指令从7c00h处开始
 
 mov ax,cs
@@ -473,15 +473,14 @@ Disp:
 	mov ax,BootMsg
 	mov bp,ax
 	mov cx,16
-	; ah=13h 10号中断13h号功能：在Teletype模式下显示字符串
+	; ah=13h 10h中断13h号功能：在Teletype模式下显示字符串
 	mov ax,01301h
 	mov bx,000ch
 	mov dl,0
-	int 10h ; 调用10号中断
+	int 10h ; 调用10h中断
 BootMsg: db "Hello, OS World!"
-times 510 - ($-$$)	db 0 ; 填充0 
+times 510 - ($-$$)	db 0 ; 填充0（$ 当前位置 $$ 程序起始位置）
 dw 0xaa55  ; 魔数，硬盘主引导分区可引导标识<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210219-203710096.png" alt=""></p>
 <blockquote>
 <p>此代码段是存于磁盘引导扇区的系统引导程序</p>
 <p>若存于硬盘第一个扇区，则这段代码称为硬盘主引导记录</p>
@@ -504,41 +503,637 @@ dw 0xaa55  ; 魔数，硬盘主引导分区可引导标识<span aria-hidden="tru
 <h2 id="02-操作系统基础">02 | 操作系统基础</h2>
 <ul>
 <li>
-<p>CPU 组成</p>
+<p>内核是计算机资源的管理者，计算机中资源大致可以分为两类，硬件资源和软件资源</p>
 <ul>
-<li>寄存器是 CPU 内部的信息存储单元，Intel 8086 CPU 有14个寄存器</li>
+<li>计算机中的软件资源则可表示为计算机中的各种形式的数据，如各种文件、软件程序等</li>
+<li>计算机中的硬件资源有总线（负责连接各种其它设备）、CPU、内存、硬盘、网卡、显卡、各种I/O设备</li>
 </ul>
 </li>
 <li>
-<p>代码段和数据段（逻辑概念，在内存中）</p>
-</li>
-<li>
-<p>分段机制：通过改变CS寄存器的数字去改变想要推进的程序，程序的加载可以通过一个管理程序进行调度</p>
-</li>
-<li>
-<p>操作系统要做什么？</p>
+<p>内核的内部组成在逻辑上大致如下：</p>
 <ul>
-<li>
-<p>需要让机器做事情</p>
+<li>管理CPU，内核把运行时的程序抽象成进程，所以又称为<strong>进程管理</strong></li>
+<li><strong>管理内存</strong>，内存是宝贵的资源，所以内核要非常小心地分配、释放内存</li>
+<li>管理硬盘，内核把用户数据抽象成文件，文件需要合理地组织，方便用户查找和读写，所以形成了<strong>文件系统</strong></li>
+<li>管理显卡，现在操作系统都支持GUI，形成了内核中的<strong>图形系统</strong></li>
+<li>管理网卡，网络通信需要各种通信协议，在内核中就形成了网络协议栈，又称<strong>网络组件</strong></li>
+<li>管理各种I/O设备，在内核中抽象成<strong>I/O管理器</strong></li>
+<li>内核除了这些必要组件之外，根据功能不同还有安全组件等</li>
+</ul>
 </li>
 <li>
-<p>开机后接管CPU的控制权</p>
+<p>内核结构：宏内核、微内核</p>
 </li>
 <li>
-<p>需要接收和发送消息给硬件</p>
-</li>
-<li>
-<p>需要管理和调度应用</p>
-</li>
-<li>
-<p>需要让用户可以参与管理</p>
+<p>分离硬件相关性</p>
 </li>
 </ul>
+<br>
+<h3 id="CPU-工作模式">CPU 工作模式</h3>
+<ul>
+<li>按照 CPU 功能升级迭代的顺序，CPU 的工作模式有实模式、保护模式、长模式</li>
+</ul>
+<h4 id="实模式">实模式</h4>
+<ul>
+<li>
+<p>实模式又称实地址模式，实分为两个方面，一个方面是<strong>运行真实的指令</strong>，对指令的动作不作区分直接执行，另一方面是<strong>发往内存的地址是真实的</strong>，对任何地址不加限制</p>
+</li>
+<li>
+<p>CPU复位或加电的时候以实模式启动，处理器以实模式工作</p>
+</li>
+</ul>
+<h5 id="实模式下访问内存">实模式下访问内存</h5>
+<ul>
+<li>
+<p>内存寻址方式和8086相同（分段内存管理模型），由基地址加上偏移地址形成20位的物理地址，最大寻址空间<strong>1MB</strong><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>，最大分段64KB（$2^{16}$）</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220703-access-memory.jpg" alt=""></p>
+</li>
+</ul>
+<h5 id="实模式中断">实模式中断</h5>
+<ul>
+<li>
+<p>实现过程是先保存 CS 和 IP 寄存器，然后装载新的 CS 和 IP 寄存器</p>
+</li>
+<li>
+<p>实模式下的中断有硬件中断与软件中断，都是CPU响应外部事件的一种方式</p>
+<ul>
+<li>硬件中断：中断控制器给CPU发送一个电子信号，CPU会对这个信号作出应答，随后中断控制器会将中断号发送给CPU</li>
+<li>软件中断：CPU执行了<strong>INT指令</strong>，这个指令后面会跟随一个常数，即软中断号</li>
+</ul>
+</li>
+<li>
+<p>为了实现中断，就需要在内存中放一个<strong>中断向量表</strong>，这个表的地址和长度由CPU的特定寄存器IDTR指向</p>
+</li>
+<li>
+<p>实模式下，表中的一个条目由<strong>代码段地址</strong>和<strong>段内偏移</strong>组成</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220703-interrupt.jpg" alt=""></p>
+</li>
+<li>
+<p>有了中断号，CPU就能根据IDTR寄存器中的信息，计算出中断向量中的条目，进而装载CS、IP寄存器，最终响应中断</p>
+</li>
+</ul>
+<h4 id="保护模式">保护模式</h4>
+<ul>
+<li>
+<p>在80286以前 CPU 只有实模式</p>
+<ul>
+<li>
+<p>最多能够访问1M的内存空间</p>
+</li>
+<li>
+<p>可以任意访问内存，操作系统和用户程序实际上做不到内存的隔离</p>
+</li>
+<li>
+<p>用户程序访问的逻辑地址实际上就是物理地址</p>
+</li>
+<li>
+<p>用户程序可以随意修改段基址</p>
+</li>
+</ul>
+</li>
+<li>
+<p>随着CPU的发展，CPU的地址线变为32根，至少可以访问到4G的内存空间，引入了保护模式，实现更大空间的，更灵活也<strong>更安全</strong>的内存访问</p>
+<ul>
+<li>
+<p>为了保证向下兼容，80286及以后的CPU首先进入实模式，然后通过切换机制再进入到保护模式</p>
+</li>
+<li>
+<p>保护模式下把关于内存段的限制信息放在<strong>全局描述符表（GDT）<strong>中，全局描述符表中的表项称为</strong>段描述符</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>段+偏移的编程寻址结构</p>
+<p><strong>寻址问题</strong>，</p>
+<p>CPU的寄存器和运算单元扩展成32位</p>
+<p>不过，虽然扩展CPU内部器件的位数解决了计算和寻址问题，但仍然没有解决前面那个实模式场景下的问题，导致前面场景出问题的原因有两点。第一，CPU对任何指令不加区分地执行；第二，CPU对访问内存的地址不加限制。</p>
+<h5 id="保护模式寄存器">保护模式寄存器</h5>
+<ul>
+<li>
+<p>保护模式相比于实模式，增加了一些控制寄存器和段寄存器，扩展通用寄存器的位宽，所有的通用寄存器都是32位</p>
+</li>
+<li>
+<p>可以单独使用低16位，这个低16位又可以拆分成两个8位寄存器</p>
+</li>
+<li>
+<p>CR0/CR1/CR2/CR3 是32位CPU控制寄存器，控制CPU的功能控制特性，如开启保护模式等</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-32-os.png" alt=""></p>
+</li>
+</ul>
+<h5 id="保护模式特权级">保护模式特权级</h5>
+<ul>
+<li>
+<p>为了计算机的安全，区分哪些指令和资源可以被访问，CPU将程序拥有的权力划分为了4个特权级（运行级别）</p>
+<ul>
+<li>在任何给定的时间，CPU都以特定的特权级别运行</li>
+<li>3个受保护的主要资源：内存、I/O端口和执行某些机器指令的能力</li>
+</ul>
+</li>
+<li>
+<p>特权级分为4级（R0~R3），每个特权级执行指令的数量不同，R0可以执行所有指令，R1、R2、R3依次递减，它们只能执行上一级指令数量的子集</p>
+</li>
+<li>
+<p>在保护模式下，CPU利用CPL/RPL/DPL对程序的访问操作进行特权级检查，数据段和代码段的特权级检查规则有所不同<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup></p>
+<ul>
+<li>CPL（Current Privilege Level）是当前进程的权限级别，是当前正在执行的代码所在的段的特权级，存在于CS寄存器的低两位</li>
+<li>RPL（Request Privilege Level）是进程对段访问的请求权限，存放在段选择子中，RPL可能会削弱CPL的作用，例如当前CPL=0的进程要访问一个数据段，它把段选择符中的RPL设为3，这样虽然它对该段仍然只有特权为3的访问权限。</li>
+<li>DPL（Descriptor Privilege Level），存放在段描述符中，规定访问该段的权限级别</li>
+</ul>
+</li>
+<li>
+<p>段描述符和特权级相互配合实现内存的访问<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup></p>
+</li>
+</ul>
+<h5 id="保护模式段描述符">保护模式段描述符</h5>
+<ul>
+<li>
+<p>描述一个段的信息封装成特定格式的<strong>段描述符</strong></p>
+</li>
+<li>
+<p>一个段描述符有64位8字节数据，里面包含了段基地址、段长度、段权限、段类型、段是否可读写，可执行等</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220703-segment-descriptor.jpg" alt=""></p>
+</li>
+<li>
+<p>段描述符的 Base 字段描述了一个段的的基地址，再加上段内偏移offset，就得到了线性地址</p>
+</li>
+<li>
+<p>多个段描述符在内存中形成<strong>全局段描述符表</strong>（<code>GDT</code>），该表的基地址和长度由CPU和<strong>GDTR</strong>寄存器（48bit）指示，访问一个内存地址时，段寄存器中的索引首先会结合GDTR寄存器找到内存中的段描述符，再根据其中的段信息判断能不能访问成功</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220703-gdt.jpg" alt=""></p>
+</li>
+</ul>
+<h5 id="保护模式段选择符">保护模式段选择符</h5>
+<ul>
+<li>
+<p>段寄存器中不再存放段基地址，而是<strong>段选择符</strong>，由段描述符索引、描述符表索引、权限级别组成的</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220703-segment-selector.jpg" alt=""></p>
+</li>
+<li>
+<p>为了方便快速检索段选择符，处理器提供了 6 个分段寄存器来缓存段选择符</p>
+</li>
+<li>
+<p><strong>影子寄存器</strong>是硬件为了减少性</p>
+</li>
+<li>
+<p>能损耗而设计的一个段描述符的高速缓存，对系统程序员不可见，影子寄存器是64位，里面存放了8字节段描述符数据</p>
+</li>
+<li>
+<p>段描述符索引（Index）是13位的索引号</p>
+</li>
+<li>
+<p>TI 表示使用的是 GDT 还是 LDT</p>
+<ul>
+<li>一些全局的段描述符，就放在全局段描述符表（GDT）中</li>
+<li>一些局部的，例如每个进程自己的，就放在局部段描述符表（LDT）中</li>
+</ul>
+</li>
+</ul>
+<h5 id="Memory-Management-Models">Memory Management Models</h5>
+<ul>
+<li>
+<p>Segmented memory model</p>
+</li>
+<li>
+<p>Real-address mode memory model</p>
+</li>
+<li>
+<p>Flat memory model（<strong>平坦模型</strong>）</p>
+<ul>
+<li>
+<p>分段模型有很多缺陷，现代操作系统都会使用分页模型，但是x86 CPU并不能直接使用分页模型，而是要在分段模型的前提下，根据需要决定是否要开启分页，但是我们可以简化设计，来使分段成为一种“虚设”</p>
+</li>
+<li>
+<p>CPU 32位寄存器最多只能产生4GB大小的地址，在32位环境下用一个段就能够访问到硬件所支持的所有内存，所以把所有段的基地址设为0，段的长度设为0xFFFFF，段长度的粒度设为4KB，这样所有的段都指向同一个地址空间</p>
+</li>
+</ul>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">GDT_START:
+knull_dsc: dq 0
+;第一个段描述符CPU硬件规定必须为0
+kcode_dsc: dq 0x00cf9e000000ffff
+;段基地址=0，段长度=0xfffff
+;G=1,D/B=1,L=0,AVL=0 
+;P=1,DPL=0,S=1
+;T=1,C=1,R=1,A=0
+kdata_dsc: dq 0x00cf92000000ffff
+;段基地址=0，段长度=0xfffff
+;G=1,D/B=1,L=0,AVL=0 
+;P=1,DPL=0,S=1
+;T=0,C=0,R=1,A=0
+GDT_END:
+
+GDT_PTR:
+GDTLEN	dw GDT_END-GDT_START-1
+GDTBASE	dd GDT_START<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h5 id="保护模式中断">保护模式中断</h5>
+<ul>
+<li>
+<p>保护模式下的中断要权限检查，还有特权级的切换，所以就需要扩展中断向量表的信息，即每个中断用一个<strong>中断门描述符</strong>（Interrupt Gate Descriptor）来表示，也可简称中断门</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220704-interrupt-gate.jpg" alt=""></p>
+</li>
+<li>
+<p>在内存中有一个中断向量表，同样是由IDTR寄存器指向，中断向量表中的条目变成了中断门描述符</p>
+</li>
+<li>
+<p>产生中断后，CPU首先会检查中断号是否大于<strong>最后一个中断门描述符</strong>，x86 CPU最大支持256个中断源（中断号：0~255），然后检查描述符类型（是否是中断门或者陷阱门）、是否为系统描述符，是否在内存中，接着检查中断门描述符中的段选择子指向的<strong>段描述符</strong>，最后做<strong>权限检查</strong>，做完一系列检查之后，CPU才会加载中断门描述符中目标代码段选择子到CS寄存器中，把目标代码段偏移加载到EIP寄存器中</p>
+</li>
+<li>
+<p>权限检查：如果CPL$\le$中断门的DPL且$\ge$中断门中的段选择子RPL，就指向段描述符的DPL，进一步的，CPL$=$段描述符的DPL，则为同级权限不进行栈切换，否则进行栈切换，如果进行栈切换，还需要从TSS中加载具体权限的SS、ESP，也要对SS中段选择子指向的段描述符进行检查</p>
+</li>
+</ul>
+<h5 id="进入保护模式">进入保护模式</h5>
+<ol>
+<li>
+<p>准备全局段描述符表（最少包含三个描述符：空描述符、代码段描述符及数据段描述符）</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">GDT_START:
+knull_dsc: dq 0
+kcode_dsc: dq 0x00cf9e000000ffff
+kdata_dsc: dq 0x00cf92000000ffff
+GDT_END:
+GDT_PTR:
+GDTLEN	dw GDT_END-GDT_START-1
+GDTBASE	dd GDT_START<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>加载设置GDTR寄存器，使之指向全局段描述符表</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">lgdt [GDT_PTR]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li>
+<p>设置CR0寄存器，开启保护模式</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">;开启 PE
+mov eax, cr0
+bts eax, 0                      ; CR0.PE =1
+mov cr0, eax         <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>进行长跳转，加载CS段寄存器</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">jmp dword 0x8 :_32bits_mode ;_32bits_mode为32位代码标号即段偏移<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ol>
+<h4 id="长模式">长模式</h4>
+<ul>
+<li>长模式又名AMD64，因为这个标准是AMD公司最早定义的，它使CPU在现有的基础上有了64位的处理能力，既能完成64位的数据运算，也能寻址64位的地址空间</li>
+</ul>
+<h5 id="长模式寄存器">长模式寄存器</h5>
+<ul>
+<li>
+<p>长模式相比于保护模式增加了一些通用寄存器，并扩展通用寄存器的位宽，所有的通用寄存器都是64位，还可以单独使用低32位</p>
+</li>
+<li>
+<p>低32位可以拆分成一个低16位寄存器，低16位又可以拆分成两个8位寄存器</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220704-long-mode-register.jpg" alt=""></p>
+</li>
+</ul>
+<h5 id="长模式段描述符">长模式段描述符</h5>
+<ul>
+<li>
+<p>长模式下段描述的格式</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220704-long-mode-segment-descriptor.jpg" alt=""></p>
+</li>
+<li>
+<p>在长模式下，CPU<strong>不再对段基址和段长度进行检查</strong>，只对DPL进行相关的检查，检查流程和保护模式下一样</p>
+</li>
+<li>
+<p>多个段描述在内存中形成一个全局段描述符表，同样由CPU的GDTR寄存器指向</p>
+</li>
+<li>
+<p>长模式下的段描述符表，段长度和段基址都是无效的填充为0，CPU不做检查，段描述符的DPL=0，说明需要最高权限即CPL=0才能访问，当描述符中的L=1，D/B=0时，是64位代码段，若是数据段的话，G、D/B、L位都无效</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">ex64_GDT:
+null_dsc:	dq 0
+;第一个段描述符CPU硬件规定必须为0
+c64_dsc:dq 0x0020980000000000  ;64位代码段
+;无效位填0
+;D/B=0,L=1,AVL=0 
+;P=1,DPL=0,S=1
+;T=1,C=0,R=0,A=0
+d64_dsc:dq 0x0000920000000000  ;64位数据段
+;无效位填0
+;P=1,DPL=0,S=1
+;T=0,C/E=0,R/W=1,A=0
+eGdtLen	 equ $ - null_dsc	;GDT长度
+eGdtPtr:dw eGdtLen - 1	;GDT界限
+		 dq ex64_GDT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h5 id="长模式中断">长模式中断</h5>
+<ul>
+<li>
+<p>保护模式下为了实现对中断进行权限检查，实现了中断门描述符，在中断门描述符中存放了对应的段选择子和其段内偏移，还有DPL权限，如果权限检查通过，则用对应的段选择子和其段内偏移装载CS:EIP寄存器</p>
+</li>
+<li>
+<p>长模式支持64位内存寻址，需要对中断门描述符进行修改和扩展</p>
+<ul>
+<li>在原有基础上<strong>增加8字节</strong>用于存放目标段偏移的高32位值</li>
+<li>目标代码段选择子对应的代码段描述符必须是64位的代码段</li>
+<li>其中的IST是64位TSS中的IST指针</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220704-long-mode-interrupt-gate.jpg" alt=""></p>
+</li>
+<li>
+<p>长模式在内存中有一个中断门描述符表，表中的条目是16字节大小，最多支持256个中断源，对中断的响应和相关权限的检查和保护模式一样</p>
+</li>
+</ul>
+<h5 id="切换到长模式">切换到长模式</h5>
+<ol>
+<li>
+<p>准备长模式全局段描述符表</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">ex64_GDT:
+null_dsc:	dq 0
+;第一个段描述符CPU硬件规定必须为0
+c64_dsc:dq 0x0020980000000000  ;64位代码段
+d64_dsc:dq 0x0000920000000000  ;64位数据段
+eGdtLen	 equ $ - null_dsc	;GDT长度
+eGdtPtr:dw eGdtLen - 1	;GDT界限
+		 dq ex64_GDT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>准备长模式下的MMU页表，这个是为了开启分页模式，<strong>切换到长模式必须要开启分页</strong>，长模式下内存地址空间的保护交给了MMU</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">mov eax, cr4
+bts eax, 5   ;CR4.PAE = 1
+mov cr4, eax ;开启 PAE
+mov eax, PAGE_TLB_BADR ;页表物理地址
+mov cr3, eax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>加载GDTR寄存器，使之指向全局段描述表</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">lgdt [eGdtPtr]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li>
+<p>开启长模式，要<strong>同时开启保护模式和分页模式</strong>，在实现长模式时定义了MSR寄存器，需要用专用的指令<code>rdmsr</code>、<code>wrmsr</code>进行读写，IA32_EFER寄存器的第8位决定了是否开启长模式</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">;开启 64位长模式
+mov ecx, IA32_EFER
+rdmsr
+bts eax, 8  ;IA32_EFER.LME =1
+wrmsr
+;开启 保护模式和分页模式
+mov eax, cr0
+bts eax, 0    ;CR0.PE =1
+bts eax, 31
+mov cr0, eax <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>进行跳转，加载CS段寄存器，刷新其影子寄存器</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">jmp 08:entry64 ;entry64为程序标号即64位偏移地址<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ol>
+<h4 id="小结-3">小结</h4>
+<ul>
+<li>
+<p>实模式，早期CPU是为了支持单道程序运行而实现的，单道程序能掌控计算机所有的资源，早期的软件规模不大，内存资源也很少，所以实模式极其简单，仅支持16位地址空间，分段的内存模型，<strong>对指令不加限制地运行，对内存没有保护隔离作用</strong></p>
+</li>
+<li>
+<p>保护模式，随着多道程序的出现，就需要操作系统了，内存需求量不断增加，所以CPU实现了保护模式以支持这些需求，保护模式包含<strong>特权级</strong>，对指令及其访问的资源进行控制，对内存段与段之间的访问进行严格检查，对中断的响应也要进行严格的权限检查，扩展了CPU寄存器位宽，使之能够寻址32位的内存地址空间和处理32位的数据，从而CPU的性能大大提高</p>
+</li>
+<li>
+<p>长模式，又名AMD64模式，由于软件对CPU性能需求永无止境，所以长模式在保护模式的基础上，把寄存器扩展到64位同时增加了一些寄存器，使CPU具有了能处理64位数据和寻址64位的内存地址空间的能力，长模式<strong>弱化段模式管理</strong>，只保留了权限级别的检查，忽略了段基址和段长度，而地址的检查则交给了MMU</p>
+</li>
+</ul>
+<br>
+<h3 id="地址转换">地址转换</h3>
+<ul>
+<li>在 intel x86 下，<strong>逻辑地址</strong>（logical address）由一个段标识符加上一个指定段内的相对地址的偏移量组成，表示为 <code>[段标识符：段内偏移量]</code>，例如：<code>[cs:eip]</code></li>
+<li><strong>虚拟地址</strong>（virtual address）是组成逻辑地址的段内偏移 offset，这个地址是虚拟而统一的，由链接器产生
+<ul>
+<li>链接器的主要工作就是把多个代码模块组装在一起，并解决模块之间的引用，即处理程序代码间的地址引用，形成程序运行的静态内存空间视图</li>
+<li>内存需要<strong>隔离和保护</strong>，从而提出了虚拟地址与物理地址分离，让应用程序从实际的物理内存中解耦出来</li>
+</ul>
+</li>
+<li><strong>物理地址</strong>（physical address）是真正的物理内存的地址，这个数据会被地址译码器等电子器件变成电子信号放在地址总线上，地址总线电子信号的各种组合就可以选择到内存的储存单元</li>
+<li><strong>线性地址</strong>（linear address）是由逻辑地址经过一系列转换得到的，具体来讲就是： 线性地址=段描述符所在段的基地址+offset（intel x86 线性地址由逻辑地址经过段页式转换得到）</li>
+</ul>
+<h4 id="MMU">MMU</h4>
+<ul>
+<li>
+<p>MMU即<strong>内存管理单元</strong>，是用硬件电路逻辑实现的一个地址转换器件，它负责接受虚拟地址和地址关系转换表（页表），以及输出物理地址</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220709-mmu.jpg" alt=""></p>
+</li>
+<li>
+<p>根据实现方式的不同，MMU可以是独立的芯片，也可以是集成在其它芯片内部的，比如集成在CPU内部（x86、ARM系列）</p>
+</li>
+<li>
+<p>MMU是分页模型，实现地址关系转换表要把虚拟地址空间和物理地址空间都分成同等大小的块，也称为页，按照虚拟页和物理页进行转换</p>
+</li>
+<li>
+<p>分页模式的<strong>灵活性、通用性、安全性</strong>，是现代操作系统内存管理的基石，更是事实上的标准内存管理模型，现代商用操作系统都必须以此为基础实现虚拟内存功能模块</p>
+</li>
+<li>
+<p>x86 CPU要想开启MMU，就必须先开启保护模式或者长模式，实模式下不能开启MMU，由于保护模式的内存模型是分段模型，它并不适合于MMU的分页模型，所以要使用保护模式的<strong>平坦模式</strong>绕过分段模型，平坦模式和长模式下线性地址和虚拟地址是相等的</p>
+</li>
+<li>
+<p>地址产生的过程：</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220118-mmu.png" alt=""></p>
+</li>
+<li>
+<p>在保护模式下可以关闭MMU，这个线性地址就是物理地址，因为长模式下的分段<strong>弱化了地址空间的隔离</strong>，所以开启MMU是必须的</p>
+</li>
+</ul>
+<h4 id="页表">页表</h4>
+<ul>
+<li>
+<p>页表描述了虚拟地址到物理地址的转换关系，也可以说是虚拟页到物理页的映射关系，所以称为页表，为了增加灵活性和节约物理内存空间，页表中只存放物理页面的地址，MMU以虚拟地址为索引去查表返回物理页面地址</p>
+</li>
+<li>
+<p>页表是分级的，总体分为三个部分：一个顶级页目录，多个中级页目录，最后才是页表</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220710-page-table.jpg" alt=""></p>
+</li>
+<li>
+<p>MMU的工作流程：第一个位段索引顶级页目录中一个项，该项指向一个中级页目录，然后用第二个位段去索引中级页目录中的一个项，该项指向一个页目录，再用第三个位段去索引页目录中的项，该项指向一个物理页地址，最后用第四个位段作该物理页内的偏移去访问物理内存</p>
+</li>
+</ul>
+<h4 id="保护模式下的分页">保护模式下的分页</h4>
 <blockquote>
-<p><em>A group of program that controls the execution of application programs. Acts as an interface between applications and hardware</em></p>
+<p>x86 CPU上的分页模式</p>
+</blockquote>
+<h5 id="4KB页">4KB页</h5>
+<ul>
+<li>
+<p>CR3是CPU的一个32位的寄存器，MMU根据这个寄存器找到页目录</p>
+</li>
+<li>
+<p>32位虚拟地址被分为三个位段：<strong>页目录索引、页表索引、页内偏移</strong><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220710-4k-page.jpg" alt=""></p>
+<ul>
+<li>只有一级页目录，其中包含1024个页目录项 ，每个页目录项4字节，指向一个页表</li>
+<li>每个页表中有1024个页表项，每个页表项4字节，指向一个物理页</li>
+<li>每个物理页4KB</li>
+</ul>
+</li>
+</ul>
+<br>
+<h5 id="4MB页">4MB页</h5>
+<ul>
+<li>
+<p>32位虚拟地址被分为两个位段：<strong>页表索引、页内偏移</strong></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220710-4m-page.jpg" alt=""></p>
+<ul>
+<li>只有一级页目录，其中包含1024个页表项，一个页表项指向一个物理页</li>
+<li>每个物理页4MB</li>
+</ul>
+</li>
+<li>
+<p>CR3不再指向顶级页目录而是指向一个4KB大小的页表，其中包含1024个页表项</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220711-4m-page-format.jpg" alt=""></p>
+<ul>
+<li>页表项为了兼容4MB页表项低8位和4KB页表项一样，只不过第7位变成了PS位，且必须为1，而PAT位移到了12位</li>
+</ul>
+</li>
+</ul>
+<h4 id="长模式下的分页">长模式下的分页</h4>
+<ul>
+<li>开启了长模式则必须同时开启分页模式，因为长模式弱化了分段模型</li>
+<li>长模式扩展了CPU的位宽，使得CPU能使用64位的超大内存地址空间，长模式下的虚拟地址必须等于线性地址且为64位</li>
+</ul>
+<h5 id="4KB页-2">4KB页</h5>
+<ul>
+<li>
+<p>长模式下4KB分页下，由一个顶层目录、二级中间层目录和一层页表组成了64位地址翻译过程</p>
+</li>
+<li>
+<p>CR3变成64位的CPU的寄存器，它指向一个顶级页目录</p>
+</li>
+<li>
+<p>64位虚拟地址被分为6个位段，分别是：保留位段，顶级页目录索引、页目录指针索引、页目录索引、页表索引、页内偏移</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220710-long-mode-4k-page.jpg" alt=""></p>
+</li>
+<li>
+<p>顶级页目录、页目录指针、页目录、页表各占有4KB大小，其中各有512个条目，每个条目8字节64位大小<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup></p>
+<ul>
+<li>XD位可以控制代码页面是否能够运行</li>
+</ul>
+</li>
+<li>
+<p>虚拟地址48到63这6位是根据<strong>第47位</strong>来决定的，47位为1，它们就为1，反之为0，这是因为<strong>x86 CPU并没有实现全64位的地址总线，而是只实现了48位</strong>，这种最高有效位填充的方式，即使后面扩展CPU的地址总线也不会有任何影响</p>
+</li>
+</ul>
+<br>
+<h5 id="2MB页">2MB页</h5>
+<ul>
+<li>
+<p>64位虚拟地址被分为5个位段 ：保留位段、顶级页目录索引、页目录指针索引、页目录索引</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220711-long-mode-2m-page.jpg" alt=""></p>
+</li>
+<li>
+<p>页内偏移，顶级页目录、页目录指针、页目录各占有4KB大小，其中各有512个条目，每个条目8字节64位大小<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup></p>
+</li>
+<li>
+<p>长模式下2MB和4KB分页的区别是，2MB分页下是页目录项直接指向了2MB大小的物理页面，<strong>放弃了页表项</strong>，然后把虚拟地址的低21位作为页内偏移，21位正好索引2MB大小的地址空间</p>
+</li>
+</ul>
+<br>
+<h4 id="开启MMU">开启MMU</h4>
+<ol>
+<li>
+<p>使CPU进入保护模式或者长模式</p>
+</li>
+<li>
+<p>准备好页表数据，包含顶级页目录，中间层页目录，页表</p>
+</li>
+<li>
+<p>把顶级页目录的物理内存地址赋值给CR3寄存器</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">mov eax, PAGE_TLB_BADR ;页表物理地址
+mov cr3, eax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>设置CPU的CR0的PE位为1</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">;开启 保护模式和分页模式
+mov eax, cr0
+bts eax, 0    ;CR0.PE =1
+bts eax, 31   ;CR0.P = 1
+mov cr0, eax <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ol>
+<blockquote>
+<p>MMU地址转换失败</p>
+<ol>
+<li>MMU停止转换地址</li>
+<li>MMU把转换失败的虚拟地址写入CPU的CR2寄存器</li>
+<li>MMU触发CPU的14号中断，使CPU停止执行当前指令</li>
+<li>CPU开始执行14号中断的处理代码，代码会检查原因，处理好页表数据返回</li>
+<li>CPU中断返回继续执行MMU地址转换失败时的指令</li>
+</ol>
+</blockquote>
+<br>
+<h3 id="Cache与内存">Cache与内存</h3>
+<h4 id="Cache">Cache</h4>
+<ul>
+<li>
+<p>CPU到内存的性能瓶颈：用一块小而快的储存器放在CPU和内存之间，利用程序的局部性原理<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>来缓解，即Cache</p>
+</li>
+<li>
+<p>数据一致性问题，主要包括三个方面</p>
+<ul>
+<li>一个CPU核心中指令Cache和数据Cache的一致性问题</li>
+<li>多个CPU核心各自的2级Cache的一致性问题</li>
+<li>CPU的3级Cache与设备内存，如DMA、网卡帧储存，显存之间的一致性问题</li>
+</ul>
+</li>
+<li>
+<p>典型的多核心Cache数据同步协议有<code>MESI</code>和<code>MOESI</code></p>
+<blockquote>
+<p>如何写出提高Cache命中率的代码？</p>
 </blockquote>
 </li>
 </ul>
+<h4 id="MESI协议">MESI协议</h4>
+<ul>
+<li>协议定义了4种基本状态：<code>M</code>、<code>E</code>、<code>S</code>、<code>I</code>，即修改（Modified）、独占（Exclusive）、共享（Shared）和无效（Invalid）</li>
+<li>M（Modified）：当前Cache的内容有效，数据已经被修改而且与内存中的数据不一致，数据只在当前Cache里存在</li>
+<li>E（Exclusive）：当前Cache中的内容有效，数据与内存中的数据一致，数据只在当前Cache里存在</li>
+<li>S（Shared）：当前Cache中的内容有效，Cache中的数据与内存中的数据一致，数据在多个CPU核心中的Cache里面存在</li>
+<li>I（Invalid）：当前Cache无效</li>
+<li>Cache硬件会监控所有CPU上Cache的操作，根据相应的操作使得Cache里的数据行在上面这些状态之间切换</li>
+</ul>
+<h4 id="开启Cache">开启Cache</h4>
+<ul>
+<li>
+<p>x86 CPU上默认关闭Cache，需要在CPU初始化时将其开启</p>
+</li>
+<li>
+<p>开启Cache只需要将CR0寄存器中CD、NW位<strong>同时清0</strong>即可（CD=1时表示Cache关闭，NW=1时CPU不维护内存数据一致性）</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">mov eax, cr0
+;开启 CACHE    
+btr eax,29 ;CR0.NW=0
+btr eax,30	;CR0.CD=0
+mov cr0, eax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h4 id="获取内存视图">获取内存视图</h4>
+<ul>
+<li>
+<p>内存空间只是映射物理地址空间中的一个子集，关键是要<strong>获取物理地址空间上可以读写的内存</strong></p>
+</li>
+<li>
+<p>在x86平台上使用BIOS提供的实模式下中断服务<code>int 15h</code></p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">_getmemmap:
+	xor ebx,ebx ;ebx设为0
+	mov edi,E80MAP_ADR ;edi设为存放输出结果的1MB内的物理内存地址
+loop:
+	mov eax,0e820h ;eax必须为0e820h
+	mov ecx,20 ;输出结果数据项的大小为20字节：8字节内存基地址，8字节内存长度，4字节内存类型
+	mov edx,0534d4150h ;edx必须为0534d4150h
+	int 15h ;执行中断
+	jc error ;如果flags寄存器的C位置1，则表示出错
+	add edi,20;更新下一次输出结果的地址
+	cmp ebx,0 ;如ebx为0，则表示循环迭代结束
+	jne loop  ;还有结果项，继续迭代
+    ret
+error:;出错处理<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>迭代中执行中断，每次中断都输出一个20字节大小数据项，最后会形成一个该数据项（结构体）的数组，可以用C语言结构表示</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token expression">RAM_USABLE <span class="token number">1</span> </span><span class="token comment">//可用内存</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token expression">RAM_RESERV <span class="token number">2</span> </span><span class="token comment">//保留内存不可使用</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token expression">RAM_ACPIREC <span class="token number">3</span> </span><span class="token comment">//ACPI表相关的</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token expression">RAM_ACPINVS <span class="token number">4</span> </span><span class="token comment">//ACPI NVS空间</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token expression">RAM_AREACON <span class="token number">5</span> </span><span class="token comment">//包含坏内存</span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">s_e820</span><span class="token punctuation">{</span>
+    u64_t saddr<span class="token punctuation">;</span>    <span class="token comment">/* 内存开始地址 */</span>
+    u64_t lsize<span class="token punctuation">;</span>    <span class="token comment">/* 内存大小 */</span>
+    u32_t type<span class="token punctuation">;</span>    <span class="token comment">/* 内存类型 */</span>
+<span class="token punctuation">}</span>e820map_t<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<br>
 <h3 id="计算机启动过程">计算机启动过程</h3>
 <ul>
 <li>
@@ -546,27 +1141,32 @@ dw 0xaa55  ; 魔数，硬盘主引导分区可引导标识<span aria-hidden="tru
 <p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-os-start.jpg" alt=""></p>
 </li>
 <li>
-<p>实模式：CPU复位或加电的时候以实模式启动，处理器以实模式工作</p>
+<p>BIOS<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup></p>
 <ul>
-<li>在实模式下，内存寻址方式和8086相同，由基地址加上偏移地址形成20位的物理地址，最大寻址空间1MB，最大分段64KB</li>
-<li>在实模式下，所有的段都是可以读、写和可执行的</li>
+<li>
+<p>BIOS 固件是固化在 PC 机主板上的 ROM 芯片中的</p>
+</li>
+<li>
+<p>芯片组检测到电源已经开始稳定供电，撤去 RESET 信号，CPU 进行重置，开始执行 BIOS 程序</p>
+</li>
+<li>
+<p>POST（<code>power on self test</code>）加电自检，对硬件执行一系列的测试</p>
+</li>
+<li>
+<p>设备的枚举和初始化 …</p>
+</li>
+<li>
+<p>检查启动盘上的 MBR 分区（最后2个字节必须是 magic number）</p>
+</li>
+<li>
+<p>加载 MBR 到内存 <code>0x7C00</code> 处，然后指令跳转到 0x7C00 开始执行</p>
+</li>
 </ul>
 </li>
 <li>
-<p><strong>BIOS 初始化</strong></p>
-</li>
-<li>
-<p><strong>加电自检</strong>（POST，<code>power on self test</code>）：固化在主板的BIOS，检查硬件的好坏，打开电源，BIOS开始自检，然后出发19号中断，在处理19号中断时，BIOS检测电脑是否具有软盘、硬盘或是固定磁盘，如果有任何可以使用的磁盘，就把磁盘的第一个扇区（512B）加载到内存</p>
-</li>
-<li>
-<p><strong>BIOS加载OS</strong></p>
+<p>引导程序</p>
 <ul>
-<li>MBR 将自己复制到内存地址 <code>0000:0600</code> 处，然后开始执行</li>
-<li>MBR 位于硬盘的 0 磁道 0 柱面第1扇区，该磁道均为隐含扇区，普通的磁盘访问命令无法访问，一共512个字节</li>
-<li>在主分区表中搜索标志为活动的分区，如果发现没有活动分区或有不止一个活动分区，则转停止</li>
-<li>将活动分区的第一个扇区读入内存地址 <code>0000:7c00</code> 处</li>
-<li>检查 (WORD) <code>0000:7dfe</code> 是否等于 <code>0xaa55</code>，若不等于则显示 <em>“Missing Operating System”</em> 然后停止</li>
-<li>跳转到 <code>0000:7c00</code> 处继续执行特定系统的启动程序</li>
+<li>GRUB 引导程序</li>
 </ul>
 </li>
 </ul>
@@ -582,7 +1182,7 @@ dw 0xaa55  ; 魔数，硬盘主引导分区可引导标识<span aria-hidden="tru
 <p>专门用来显示字符的工作方式</p>
 </li>
 <li>
-<p>PC 在加电自检后系统会初始化为 80 × 25 的文本模式</p>
+<p>PC 在加电自检后系统会初始化为 80 × 25 的文本模式<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup></p>
 </li>
 <li>
 <p>显存的地址空间 <code>A0000h-BFFFFh</code> 共128K空间，其中 <code>B8000h-BFFFFh</code> 共32K的空间是 80 × 25 彩色字符模式显示缓冲区，显示缓冲区分为8页，显示器可以显示任意一页的内容，通常情况下 B8000H-B8F9F 中的内容将出现在显示器上</p>
@@ -606,21 +1206,18 @@ mov byte [es:0x03],0x06
 
 times 510 - ($-$$)	db 0
 dw 0xaa55<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p><code>$</code>当前位置</p>
-<p><code>$$</code>程序起始位置</p>
-</blockquote>
 </li>
 <li>
 <p>编译</p>
 </li>
 <li>
 <p>写入磁盘</p>
-</li>
-</ol>
 <p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210219-dd.png" alt=""></p>
-<ol start="4">
-<li>在虚拟机中运行</li>
+</li>
+<li>
+<p>在虚拟机中运行</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-display.png" alt=""></p>
+</li>
 </ol>
 <h2 id="04-从硬盘引导">04 | 从硬盘引导</h2>
 <ul>
@@ -650,7 +1247,6 @@ dw 0xaa55<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 <img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-hdd.jpg" style="zoom: 80%;">
 <ul>
 <li>磁道<code>Track</code>：当磁盘旋转时，磁头若保持在一个位置上，则每个磁头都会在磁盘表面划出一个圆形轨迹，这些圆形轨迹就叫做磁道</li>
-<li>半经大小相同的磁道所组成的柱形叫柱面</li>
 <li>柱面<code>Cylinder</code>：由不同盘片的半经大小相同的磁道所组成的圆柱面</li>
 <li>扇区<code>Sector</code>：磁盘上的每个磁道被等分为若干个弧段，这些弧段便是硬盘的扇区
 <ul>
@@ -667,129 +1263,249 @@ dw 0xaa55<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 <li>磁头的好坏在很大程度上决定着硬盘盘片的存储密度</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</li>
 <li>
-<p>盘片：硬盘中承载数据存储的介质</p>
+<p>编址<sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup></p>
 <ul>
-<li>硬盘是由多个盘片叠加在一起，互相之间由垫圈隔开</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>编址</p>
-<ul>
-<li>
-<p>编址时优先考虑磁盘旋转，而后再考虑磁头移动（以柱面优先的形式编址）</p>
-</li>
-<li>
-<p><code>CHS</code></p>
+<li>从存储设备（硬盘）到文件系统的<strong>第一层抽象</strong>，即抽象出块设备的块号（块地址）</li>
+<li>编址时优先考虑磁盘旋转，而后再考虑磁头移动（以柱面优先的形式编址）</li>
+<li><code>CHS</code>
 <ul>
 <li>CHS寻址模式使用柱面号+磁头号+扇区号来编址（C，H，S）</li>
 <li>地址（块号）=<code>C × (nHeads × nSectors) + H × nSectors + S</code></li>
 </ul>
 </li>
-<li>
-<p><code>LBA</code></p>
+<li><code>LBA</code>
 <ul>
-<li>扩大了寻址范围</li>
-<li>LBA：用 28 bit来描述一个扇区</li>
+<li>扩大了寻址范围，对所有扇区统一编址，称为逻辑扇区，提供逻辑扇区号访问</li>
+<li>LBA28，使用 28bit 表示逻辑扇区号，每个扇区 512 B，总共可管理 128 GB 的硬盘</li>
+<li>LBA48，46bit 表示逻辑扇区号，可管理 131072 TB 的硬盘容量</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>
-<p>以上就是从存储设备（硬盘）到文件系统的<strong>第一层抽象</strong>，即抽象出块设备的块号（块地址）</p>
-</li>
-</ul>
-</li>
-<li>
-<p>CPU不会直接和硬盘打交道，而是和IO接口和硬盘控制的主寄存器打交道</p>
+<p>硬盘控制器</p>
 <ul>
-<li>Data寄存器、Error寄存器、Device寄存器（给出硬盘状态）…</li>
+<li><strong>CPU通过 IO 接口与外设进行通信</strong>，对于硬盘来说，其 IO 接口就是硬盘控制器，硬盘和硬盘控制器整合在一起，接口被称作集成设备电路（IDE）</li>
+<li>存储介质与计算机的接口共同遵循着 ATA 标准，主机与硬盘之间的数据传输按程序 I/O 或 DMA 方式进行，硬盘的寻址方式可按 CHS 或 LBA</li>
+<li>ATA 产生了多种分类，主要是串行 ATA（Serial ATA）、并行ATA（Parallel ATA）
+<ul>
+<li>一个 PATA 线可以挂两个硬盘，一个主盘，一个从盘</li>
+</ul>
+</li>
+<li>硬盘控制器端口指硬盘控制器上的寄存器<sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup>（Data 寄存器、Error 寄存器、Device 寄存器 …）</li>
 </ul>
 </li>
 <li>
-<p>读取数据步骤</p>
-<p>1）先选择通道，往该通道上的<code>sector count</code>寄存器写入待操作的扇区数</p>
-<p>2）往该通道的3个LBA寄存器写入扇区的起始地址</p>
-<p>3）往<code>device</code>寄存器写入LBA的24-27位，设为LBA，并设置<code>dev</code>表明是从盘还是主盘</p>
-<p>4）往<code>command</code>寄存器写命令</p>
-<p>5）检查status寄存器</p>
-<p>6）读入数据</p>
+<p>LBA28 访问硬盘</p>
+<ul>
+<li>
+<p>主硬盘控制器有 8 个端口，端口号从 <code>0x01f0</code> 到 <code>0x01f7</code></p>
+</li>
+<li>
+<p>设置要读取的扇区数量</p>
+<ul>
+<li><code>0x01f2</code>，表示读取的扇区数</li>
+</ul>
+</li>
+<li>
+<p>设置起始 LBA 扇区号</p>
+<ul>
+<li><code>0x01f3</code>-<code>0x01f5</code>，表示起始 LBA 扇区号 23~0 位</li>
+<li><code>0x01f6</code>，低 4 位表示起始 LBA 扇区号的 27~24 位，第 4 位指定主从盘，第 6 位设置 LBA/CHS</li>
+</ul>
+</li>
+<li>
+<p>设置命令</p>
+<ul>
+<li><code>0x01f7</code>，既是命令端口，又是状态端口，当端口值为<code>0x20</code>时，表示读</li>
+</ul>
+</li>
+<li>
+<p>等待读写操作完成</p>
+<ul>
+<li>硬盘读写期间 <code>0x01f7</code> 表示硬盘状态</li>
+</ul>
+</li>
+<li>
+<p>连续取出数据</p>
+<ul>
+<li><code>0x01f0</code>，数据端口，这是一个 16 bit 端口</li>
+</ul>
+</li>
+<li>
+<p>错误信息</p>
+<ul>
+<li><code>0x01f1</code>，包含硬盘驱动器最后一次执行命令后的状态，错误原因</li>
+</ul>
 </li>
 </ul>
+</li>
+</ul>
+<h3 id="实验-2">实验</h3>
 <blockquote>
-<p>实验：将第二个扇区里面的内容加载进入内存</p>
+<p>将第二个扇区里面的内容加载进入内存</p>
 </blockquote>
 <ol>
-<li>编写汇编代码</li>
-</ol>
-<p><code>mbr.asm</code></p>
-<p><code>loader.asm</code></p>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-loader.png" alt=""></p>
-<ol start="2">
+<li>
+<p>编写汇编代码</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">; 将第二个扇区里面的内容加载进入内存，放入0x900
+
+LOADER_BASE_ADDR	equ 0x900
+LOADER_START_SECTOR	equ 0x2	; 表示loader在第2块扇区
+
+SECTION MBR vstart=0x7c00
+	mov ax,cs
+	mov ds,ax
+	mov es,ax
+	mov ss,ax
+	mov fs,ax
+	mov sp,0x7c00
+	mov ax,0xb800
+	mov gs,ax
+	
+;利用0x06的功能，调用10号中断，清屏
+	mov ax, 0600h
+	mov bx, 0700h; 上卷行的属性
+	mov cx,0     ; 左上角
+	mov dx,184fh ; 右下角(80,25)
+	int 10h
+	
+;输出当前在MBR
+	mov byte [gs:0x00], '1'
+	mov byte [gs:0x01], 0xA4
+; ...
+	
+	mov eax,LOADER_START_SECTOR ; LBA 读入的扇区
+	mov bx,LOADER_BASE_ADDR		; 写入的地址
+	mov cx,1					; 等待读入的扇区数
+	call rd_disk
+	
+	jmp LOADER_BASE_ADDR		; 跳到实际的物理内存
+
+rd_disk:
+	mov esi,eax	 ; 备份eax
+	mov di,cx	 ; 备份cx
+	
+;读写硬盘
+	mov dx, 0x1f2
+	mov al, cl
+	out dx, al   ; 设置要读取的扇区数量
+	mov eax,esi  ; 恢复
+
+;将LBA的地址存入0x1f3，0x1f6
+	mov dx, 0x1f3
+	out dx,al    ; 7-0位写入0x1f3
+	mov cl,8
+	
+	shr eax,cl
+	mov dx,0x1f4
+	out dx,al    ; 15-8位写入0x1f4
+	
+	shr eax,cl
+	mov dx,0x1f5
+	out dx,al    ; 23-16位写给1f5
+	
+	shr eax,cl
+	and al,0x0f
+	or al,0xe0	 ; 设置7-4位为1110
+	mov dx,0x1f6
+	out dx,al
+	
+	mov dx,0x1f7
+	mov al,0x20
+	out dx,al    ; 向0x1f7写入读命令
+	
+	.not_ready:  ; 检测硬盘状态
+	nop
+	in al,dx
+	and al,0x88  ; 4位为1表示可以传输，7位为1表示硬盘忙
+	cmp al,0x08
+	jnz .not_ready
+	
+	;读数据
+	mov ax,di
+	mov dx, 256
+	mul dx
+	mov cx,ax
+	mov dx,0x1f0
+	
+	.go_on:
+		in ax,dx
+		mov [bx],ax
+		add bx,2
+		loop .go_on
+		ret
+	
+	times 510 - ($-$$)	db 0
+	dw 0xaa55<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li>
 <p>使用<code>Nasm</code>进行编译</p>
 </li>
 <li>
 <p>写入磁盘</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-dd.png" alt=""></p>
 </li>
-</ol>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-dd.png" alt=""></p>
-<ol start="4">
-<li>在虚拟机中运行</li>
-</ol>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-display.png" alt=""></p>
+<li>
+<p>在虚拟机中运行</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-display.png" alt=""></p>
 <blockquote>
 <p>突破了512字节！</p>
 </blockquote>
-<p>​</p>
-<ul>
-<li>参考：
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/335397213/answer/752283935">机械硬盘如何编址</a></li>
-<li></li>
-</ul>
-</li>
-</ul>
-<h2 id="5-保护模式入门">5. 保护模式入门</h2>
-<ol>
-<li>
-<p>在80286以前，CPU只有实模式，最多能够访问1M的内存空间。</p>
-<ul>
-<li>可以任意访问内存，操作系统和用户程序实际上做不到内存的隔离</li>
-<li>用户程序访问的逻辑地址实际上就是物理地址</li>
-<li>用户程序可以随意修改段基址</li>
-</ul>
-</li>
-<li>
-<p>随着CPU的发展，CPU的地址线变为32根，至少可以访问到4G的内存空间。实模式下的内存地址计算方式就已经不再适合了。所以就引入了保护模式，实现更大空间的，更灵活也<strong>更安全</strong>的内存访问。</p>
-<ul>
-<li>为了保证向下兼容，80286及以后的CPU首先进入实模式，然后通过切换机制再进入到保护模式。</li>
-<li>保护模式下把关于内存段的限制信息放在一个叫做<strong>全局描述符表(GDT)<strong>的结构里。全局描述符表中含有一个个表项，每一个表项称为</strong>段描述符。</strong></li>
-</ul>
 </li>
 </ol>
-<p><img src="https://gitee.com/lastlight/MyPictrue/raw/master/img/20220214-32-os.png" alt="保护模式下被扩展成32位寄存器"></p>
-<ol start="3">
-<li><strong>全局描述符表位于内存中</strong>，CPU用专门的寄存器指向它。这个专门的寄存器是<strong>GDTR</strong>（一个48位的寄存器）,专门用来存储 GDT 的内存地址及大小。</li>
-</ol>
-<p>内核：内核是连接操作系统和硬件和软件的桥梁，它掌控着计算机中的一切资源。</p>
-<p>​</p>
-<p>​</p>
+<h2 id="05-保护模式实战">05 | 保护模式实战</h2>
+<ul>
+<li>环境：DOS6.22</li>
+</ul>
+<h3 id="实验-3">实验</h3>
+<ul>
+<li>
+<p>代码</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">  <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ul>
 <blockquote>
-<p>未完待续</p>
+<p>未完待续 …</p>
 </blockquote>
-<h2 id="参考">参考</h2>
-<ul>
-<li>
-<p>内存布局</p>
-<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-memory-distribution.png" style="zoom: 67%;">
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.itzhai.com/assembly-int-10h-description.html">汇编10H中断详细说明</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
 </li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://437436999.github.io/2020/03/15/%E6%98%BE%E5%8D%A1%E6%96%87%E6%9C%AC%E6%A8%A1%E5%BC%8F/">显卡文本模式</a></p>
+<li id="fn2" class="footnote-item"><p>实模式下内存布局<br>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220214-memory-distribution.png" style="zoom: 50%;"> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
 </li>
-</ul>
+<li id="fn3" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/better0332/article/details/3416749">DPL/RPL/CPL 之间的联系和区别</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/flashsun/p/12258829.html">深入浅出特权级 </a> <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>保护模式4KB页CR3、页目录项、页表项的格式<br>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220710-4k-page-format.jpg" style="zoom:50%;"> <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>长模式4KB页的CR3、顶级页目录项、页目录指针项、页目录项、页表项的格式<br>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220711-long-mode-4k-page-format.jpg" style="zoom:50%;"> <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>2MB分页模式下的CR3、顶级页目录项、页目录指针项、页目录项的格式<br>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220711-long-mode-2m-page-format.jpg" style="zoom:50%;"> <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhanyd/article/details/102631248">什么是缓存的局部性原理？</a> <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>更先进的 <a target="_blank" rel="noopener" href="https://uefi.org/">UEFI BIOS</a> 则不同 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://437436999.github.io/2020/03/15/%E6%98%BE%E5%8D%A1%E6%96%87%E6%9C%AC%E6%A8%A1%E5%BC%8F/">显卡文本模式</a> <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/335397213/answer/752283935">机械硬盘如何编址</a> <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p><a target="_blank" rel="noopener" href="http://nodekey.com/mbr-e5-88-b0loader-e7-9a-84-e8-bf-87-e6-b8-a1--e5-9c-a8-e6-b1-87-e7-bc-96-e5-b1-82-e9-9d-a2-e8-af-bb-e5-8f-96-e7-a1-ac-e7-9b-98-e6-95-b0-e6-8d-ae/">在汇编层面读取硬盘数据</a> <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
 
                 
             </div>
@@ -866,7 +1582,7 @@ dw 0xaa55<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 <div id="article-share">
 
     
-    <div class="social-share" data-sites="google,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <div class="social-share" data-sites="qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
     <script src="/libs/share/js/social-share.min.js"></script>
     
 
@@ -1064,7 +1780,7 @@ dw 0xaa55<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 
 
   <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+  <script type="text/javascript" src="/libs/prism/prism.js"></script>
 
 
 <!-- 代码语言 -->
@@ -1194,7 +1910,7 @@ dw 0xaa55<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">100.5k</span>
+                        class="white-color">107.1k</span>
             
             
             

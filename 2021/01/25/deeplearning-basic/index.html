@@ -429,7 +429,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    20.6k
+                    20.5k
                 </div>
                 
 
@@ -1446,7 +1446,7 @@ Out<span class="token punctuation">[</span><span class="token number">32</span><
 <p>回顾之前的课程，我们在逻辑回归中，我们使用sigmoid进行计算对数似然损失，来定义我们的2分类的损失。</p>
 <ul>
 <li>
-<p>在2分类中我们有正类和负类，正类的概率为$P(x) =  \frac{1}{1+e^{-x}} = \frac{e^x}{1+e^x}$,那么负类的概率为$1-P(x)$</p>
+<p>在2分类中我们有正类和负类，正类的概率为$P(x) =  \frac{1}{1+e^{-x}} = \frac{e<sup>x}{1+e</sup>x}$,那么负类的概率为$1-P(x)$</p>
 </li>
 <li>
 <p>将这个结果进行计算对数似然损失$-\sum y log(P(x))$就可以得到最终的损失</p>
@@ -1463,22 +1463,22 @@ Out<span class="token punctuation">[</span><span class="token number">32</span><
 </ul>
 <p>softmax的公式如下：<br>
 $$<br>
-\sigma(z)<em>j = \frac{e^{z_j}}{\sum^K</em>{k=1}e^{z_K}}  ,j=1 \cdots k<br>
+\sigma(z)<em>j = \frac{e<sup>{z_j}}{\sum</sup>K</em>{k=1}e^{z_K}}  ,j=1 \cdots k<br>
 $$</p>
 <p>例如下图：</p>
 <p><img src="D:%5CGit-repo%5Chexo%5Csource_posts%5Cdeeplearning-basic%5Csoftmax.png" alt=""></p>
 <p>假如softmax之前的输出结果是<code>2.3, 4.1, 5.6</code>,那么经过softmax之后的结果是多少呢？<br>
 $$<br>
-Y1 = \frac{e^{2.3}}{e^{2.3}+e^{4.1}+e^{5.6}} \<br>
-Y2 = \frac{e^{4.1}}{e^{2.3}+e^{4.1}+e^{5.6}} \<br>
-Y3 = \frac{e^{5.6}}{e^{2.3}+e^{4.1}+e^{5.6}} \<br>
+Y1 = \frac{e<sup>{2.3}}{e</sup>{2.3}+e<sup>{4.1}+e</sup>{5.6}} \<br>
+Y2 = \frac{e<sup>{4.1}}{e</sup>{2.3}+e<sup>{4.1}+e</sup>{5.6}} \<br>
+Y3 = \frac{e<sup>{5.6}}{e</sup>{2.3}+e<sup>{4.1}+e</sup>{5.6}} \<br>
 $$</p>
 <p>对于这个softmax输出的结果，是在[0,1]区间，我们可以把它当做概率</p>
 <p>和前面2分类的损失一样，多分类的损失只需要再把这个结果进行对数似然损失的计算即可</p>
 <p>即：<br>
 $$<br>
 \begin{align*}<br>
-&amp; J = -\sum Y log§ &amp;, 其中 P = \frac{e^{z_j}}{\sum^K_{k=1}e^{z_K}} ,Y表示真实值<br>
+&amp; J = -\sum Y log§ &amp;, 其中 P = \frac{e<sup>{z_j}}{\sum</sup>K_{k=1}e^{z_K}} ,Y表示真实值<br>
 \end{align*}<br>
 $$<br>
 最后，会计算每个样本的损失，即上式的平均值</p>
@@ -2603,7 +2603,7 @@ idx: 4 Test set: Avg. loss: 0.8696, Accuracy: 4027/5000 (80.54%)<span aria-hidde
 <p>当权重初始过小或使用<code>易饱和神经元(sigmoid,tanh，) sigmoid在y=0,1处梯度接近0，而无法更新参数</code>，时神经网络在反向传播时也会呈现指数倍缩小，产生“消失”现象。</p>
 <h5 id="1-2-梯度爆炸">1.2 梯度爆炸</h5>
 <p>假设$X2=2,w1=w2=w3=2$</p>
-<p>$\nabla w1 = f’{a}<em>2</em>f‘{a}*x2\nabla out = 2^3f’(a)^2 \nabla out $</p>
+<p>$\nabla w1 = f’{a}<em>2</em>f‘{a}*x2\nabla out = 2<sup>3f’(a)</sup>2 \nabla out $</p>
 <p>当权重初始过大时，梯度神经网络在反向传播时也会呈现指数倍放大，产生“爆炸”现象。</p>
 <h5 id="1-3-解决梯度消失或者梯度爆炸的经验">1.3 解决梯度消失或者梯度爆炸的经验</h5>
 <ol>
@@ -2855,7 +2855,7 @@ $$</p>
 <div id="article-share">
 
     
-    <div class="social-share" data-sites="google,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <div class="social-share" data-sites="qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
     <script src="/libs/share/js/social-share.min.js"></script>
     
 
@@ -3049,7 +3049,7 @@ $$</p>
 
 
   <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+  <script type="text/javascript" src="/libs/prism/prism.js"></script>
 
 
 <!-- 代码语言 -->
@@ -3179,7 +3179,7 @@ $$</p>
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">100.5k</span>
+                        class="white-color">107.1k</span>
             
             
             
