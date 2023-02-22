@@ -1,0 +1,1761 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="container-in-action, CS 宵烛 xiaozhu NightCandle 计算机 网络安全">
+    <meta name="description" content="结合 Linux 操作系统的主要模块，把容器知识结构系统串联起来，同时看到 Namespace 和 Cgroups 带来的特殊性">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>container-in-action | 宵烛 Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">宵烛 Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">宵烛 Blog</div>
+        <div class="logo-desc">
+            
+            学生 | 虚假CTF选手 | 计算机菜鸟
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">container-in-action</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%AE%B9%E5%99%A8/">
+                                <span class="chip bg-color">容器</span>
+                            </a>
+                        
+                            <a href="/tags/Linux/">
+                                <span class="chip bg-color">Linux</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                学习笔记
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-04-07
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-09-11
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    24 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="01-认识容器">01 | 认识容器</h2>
+<h3 id="容器是什么？">容器是什么？</h3>
+<ul>
+<li>
+<p>如果问 Linux 上的容器是什么，最简单直接的回答就是 Namesapce 和 Cgroups</p>
+</li>
+<li>
+<p>Namespace 和 Cgroups 可以让程序在一个资源可控的独立（隔离）环境中运行，这个就是容器</p>
+</li>
+<li>
+<p>容器的进程、网络还有文件系统都是独立的</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220417-container-example.png" style="zoom: 20%;">
+</li>
+</ul>
+<h3 id="Namespace">Namespace</h3>
+<ul>
+<li>
+<p>Linux Namespace 是一种 Linux Kernel 提供的<strong>资源隔离</strong>方案</p>
+<blockquote>
+<p><em>Linux namespace provides a lightweight process virtualization</em></p>
+</blockquote>
+<ul>
+<li>系统可以为进程分配不同的 Namespace</li>
+<li>并保证不同的 Namespace 资源独立分配、进程彼此隔离，即不同的 Namespace 下的进程互不干扰</li>
+<li>可以隔离运行在同一个宿主机上的容器，让这些容器之间不能访问彼此的资源</li>
+<li>隔离的作用：可以充分地利用系统的资源并保证了安全性</li>
+</ul>
+</li>
+<li>
+<p>Linux 对Namespace 操作方法</p>
+<ul>
+<li>clone：在创建新进程的系统调用时，可以通过 flags 参数指定需要新建的 Namespace 类型</li>
+<li>setns：该系统调用可以让调用进程加入某个已经存在的 Namespace</li>
+<li>unshare：该系统调用可以将调用进程移动到新的 Namespace</li>
+</ul>
+</li>
+<li>
+<p><em>There are 8 types of namespaces, standing for different types of resources</em></p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220417-8namespaces.png" style="zoom: 20%;">
+<ul>
+<li>
+<p>PID Namespace 负责隔离不同容器的进程</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220421-pid-namespace.jpg" style="zoom: 20%;">
+</li>
+<li>
+<p>Network Namespace 中都有一套独立的网络接口，还有独立的 TCP/IP 的协议栈配置</p>
+</li>
+<li>
+<p>Mount Namespace 保证每个容器都有自己独立的文件目录结构</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Linux 内核代码（4.9.229）中 Namespace 的实现</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">task_struct</span> <span class="token punctuation">{</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token comment">/* namespaces */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">nsproxy</span> <span class="token operator">*</span>nsproxy<span class="token punctuation">;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">nsproxy</span> <span class="token punctuation">{</span>
+	atomic_t count<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">uts_namespace</span> <span class="token operator">*</span>uts_ns<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">ipc_namespace</span> <span class="token operator">*</span>ipc_ns<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">mnt_namespace</span> <span class="token operator">*</span>mnt_ns<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">pid_namespace</span> <span class="token operator">*</span>pid_ns_for_children<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">net</span> 	     <span class="token operator">*</span>net_ns<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">cgroup_namespace</span> <span class="token operator">*</span>cgroup_ns<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h3 id="Cgroups">Cgroups</h3>
+<ul>
+<li>
+<p>Cgroups（Control Groups）是 Linux 下用于对一个或一组进程进行<strong>资源控制和监视</strong>的机制</p>
+<ul>
+<li>
+<p>Cgroups 可以对指定的进程做各种计算机资源（诸如 CPU 使用时间、内存、磁盘I/O 等）的限制</p>
+</li>
+<li>
+<p>不同资源的具体管理工作由相应的 Cgroup 子系统（Subsystem）来实现，针对不同类型的资源限制，只要将限制策略在不同的的子系统上进行关联即可</p>
+</li>
+<li>
+<p>每个子系统限制资源的方式都是类似的：把相关的一组进程分配到一个控制组里，每个控制组都设有自己的资源控制参数</p>
+<ul>
+<li>启动的每个容器都会在 Cgroups 子系统下建立一个目录（控制组）</li>
+<li>容器中所有的进程都会储存在控制组中 <code>cgroup.procs</code> 参数中</li>
+</ul>
+</li>
+<li>
+<p>Cgroups 以<strong>层级树</strong>（Hierarchy）的方式来组织管理控制组</p>
+<ul>
+<li>每个 Cgroup 都可以包含其他的子 Cgroup，因此子 Cgroup 能使用的资源除了受本 Cgroup 配置的资源参数限制，还受到父 Cgroup 设置的资源限制</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Cgroups实现了对资源的配额和度量</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220421-cgroups-subsys.png" style="zoom:90%;">
+<ul>
+<li>CPU 子系统：用来限制一个控制组可使用的最大 CPU</li>
+<li>memory 子系统：用来限制一个控制组最大的内存使用量</li>
+<li>pids 子系统：用来限制一个控制组里最多可以运行多少个进程</li>
+<li>cpuset 子系统：一个控制组里的进程与 CPU 做绑定</li>
+</ul>
+</li>
+<li>
+<p>Cgroups 有两个版本</p>
+<ul>
+<li>Cgroups v1
+<ul>
+<li>各种子系统比较独立，每个进程在各个 Cgroups 子系统中独立配置，可以属于不同的 group</li>
+<li>存在问题：会导致对同一进程的资源协调比较困难（比如 memory Cgroup 与 blkio Cgroup 之间就不能协作）</li>
+</ul>
+</li>
+<li>Cgroups v2
+<ul>
+<li>解决了 v1 的问题，使各个子系统可以协调统一地管理资源</li>
+<li>但该版本很多子系统的实现需要较新版本的 Linux 内核</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Linux 内核代码（4.9.229）中 Cgroups 的实现</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">task_struct</span> <span class="token punctuation">{</span> <span class="token comment">// 进程数据结构</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">CONFIG_CGROUPS</span></span>
+	<span class="token comment">/* Control Group info protected by css_set_lock */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">css_set</span> __rcu <span class="token operator">*</span>cgroups<span class="token punctuation">;</span>
+	<span class="token comment">/* cg_list protected by css_set_lock and tsk-&gt;alloc_lock */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">list_head</span> cg_list<span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// css_set 是 cgroup_subsys_state 对象的集合数据结构</span>
+<span class="token keyword">struct</span> <span class="token class-name">task_struct</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token comment">/*
+	 * Set of subsystem states, one for each subsystem. This array is
+	 * immutable after creation apart from the init_css_set during
+	 * subsystem registration (at boot time).
+	 */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">cgroup_subsys_state</span> <span class="token operator">*</span>subsys<span class="token punctuation">[</span>CGROUP_SUBSYS_COUNT<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h2 id="02-容器进程">02 | 容器进程</h2>
+<h3 id="理解进程">理解进程</h3>
+<h4 id="为什么在容器中不能-kill-1号进程？">为什么在容器中不能 kill 1号进程？</h4>
+<blockquote>
+<p><strong>问题</strong>：怎么让 Kubernetes 节点上的容器从内部触发重启？</p>
+<p>在容器中使用 kill pid 1 的方式让容器退出，Kubernetes 自动地把容器带回来？</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220421-docker-kill-1.png" alt=""></p>
+<p>（错误，因为对于发送给 1 号进程的信号，内核会根据不同的类型、不同的注册状态，采取不同的处理方式）</p>
+</blockquote>
+<h5 id="init-进程">init 进程</h5>
+<ul>
+<li>
+<p>在内核完成了操作系统的各种初始化之后，需要执行的第一个用户态程就是 init 进程，在内核中调用 1 号进程的代码，从内核态切换到用户态，所以 1 号进程是第一个用户态的进程</p>
+</li>
+<li>
+<p>Linux init 进程最<strong>基本功能</strong>都是创建出 Linux 系统中其他所有的进程，并且管理这些进程</p>
+</li>
+<li>
+<p><code>Systemd</code> 是目前最流行的 Linux init 进程，在它之前还有 SysVinit、UpStart 等 Linux init 进程（目前主流的 Linux 发行版都会把 <code>/sbin/init</code> 作为符号链接指向 Systemd ）</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220422-systemd.png" alt=""></p>
+</li>
+<li>
+<p>具体在 kernel 里的代码实现如下：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">int</span> __ref <span class="token function">kernel_init</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>unused<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+	<span class="token comment">/*
+	 * We try each of these until one succeeds.
+	 */</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>execute_command<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		ret <span class="token operator">=</span> <span class="token function">run_init_process</span><span class="token punctuation">(</span>execute_command<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>ret<span class="token punctuation">)</span>
+			<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"Requested init %s failed (error %d)."</span><span class="token punctuation">,</span>
+		      execute_command<span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">try_to_run_init_process</span><span class="token punctuation">(</span><span class="token string">"/sbin/init"</span><span class="token punctuation">)</span> <span class="token operator">||</span>
+	    <span class="token operator">!</span><span class="token function">try_to_run_init_process</span><span class="token punctuation">(</span><span class="token string">"/etc/init"</span><span class="token punctuation">)</span> <span class="token operator">||</span>
+	    <span class="token operator">!</span><span class="token function">try_to_run_init_process</span><span class="token punctuation">(</span><span class="token string">"/bin/init"</span><span class="token punctuation">)</span> <span class="token operator">||</span>
+	    <span class="token operator">!</span><span class="token function">try_to_run_init_process</span><span class="token punctuation">(</span><span class="token string">"/bin/sh"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>一旦容器建立了自己的 Pid Namespace，这个 Namespace 里的进程号是从 1 开始标记的，容器的 init 进程也被称为 1 号进程，由它直接或者间接创建了 Namespace 中的其他进程</p>
+</li>
+</ul>
+<h5 id="Linux-信号">Linux 信号</h5>
+<ul>
+<li>
+<p>信号（Signal）是 Linux 进程收到的一个通知，实际是<strong>软中断</strong></p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220422-signal.png" alt=""></p>
+<ul>
+<li>信号为 Linux 提供了一种处理异步事件的方法</li>
+<li>名字都以"SIG"开头，信号定义在<code>signal.h</code>头文件中，从1开始编号</li>
+<li>新增了 32-64 可靠信号
+<ul>
+<li>不可靠信号：信号可能丢失，进程并不能知道信号已丢失</li>
+<li>可靠信号：即阻塞信号，当发送了一个阻塞信号，并且该信号的动作是系统默认动作或捕捉该信号，信号从发出以后会一直保持未决的状态，直到该进程对此信号解除了阻塞，或将对此信号的动作更改为忽略</li>
+<li>信号的阻塞和未决是通过信号的<strong>状态字</strong>来管理的，状态字按位来管理信号的状态，一个 bit 代表一个信号</li>
+<li>信号阻塞状态字（<code>block</code>），1 代表阻塞，0 代表不阻塞；信号未决状态字（<code>pending</code>），1 代表未决，0 代表信号可以抵达</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>进程对信号的处理</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220422-signal-processing.png" style="zoom: 30%;">
+<ul>
+<li>SIGTERM（15），这个信号是 Linux 命令 kill 缺省发出，SIGTERM 这个信号是可以被捕获的，用户进程可以为这个信号注册自己的 handler</li>
+<li>SIGKILL (9)，是 Linux 里两个<strong>特权信号</strong>之一，进程收到 SIGKILL 就要退出
+<ul>
+<li><strong>特权信号就是 Linux 为 kernel 和超级用户去删除任意进程所保留的，不能被忽略也不能被捕获</strong></li>
+<li>但是 D state (uninterruptible) 进程 还有 Zombie 进程都是不能接受任何信号的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>运行 kill 命令，其实在 Linux 里就是发送一个信号</p>
+</li>
+<li>
+<p>信号处理函数的注册</p>
+<ul>
+<li>
+<p>signal</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h&gt;</span></span>
+
+<span class="token comment">// 真实处理信号函数</span>
+<span class="token comment">// 指向返回值为 void 参数为 int 的函数指针</span>
+<span class="token keyword">typedef</span> <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>sighandler_t<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+<span class="token comment">// 注册函数</span>
+sighandler_t <span class="token function">signal</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> sighandler_t handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// signum:信号的编号 handler:中断函数的指针</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>当一个进程调动了 fork 函数，那么子进程会继承父进程的信号处理方式</li>
+</ul>
+</li>
+<li>
+<p>sigaction：信号传递的过程中携带数据</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h&gt;</span></span>
+<span class="token keyword">int</span> <span class="token function">sigaction</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token operator">*</span>act<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token operator">*</span>oldact<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token punctuation">{</span>
+   <span class="token keyword">void</span>       <span class="token punctuation">(</span><span class="token operator">*</span>sa_handler<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//信号处理程序，不接受额外数据，SIG_IGN 为忽略，SIG_DFL 为默认动作</span>
+   <span class="token keyword">void</span>       <span class="token punctuation">(</span><span class="token operator">*</span>sa_sigaction<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> siginfo_t <span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//信号处理程序，能够接受额外数据和sigqueue配合使用</span>
+   sigset_t   sa_mask<span class="token punctuation">;</span><span class="token comment">//阻塞关键字的信号集，可以再调用捕捉函数之前，把信号添加到信号阻塞字，信号捕捉函数返回之前恢复为原先的值。</span>
+   <span class="token keyword">int</span>        sa_flags<span class="token punctuation">;</span><span class="token comment">//影响信号的行为SA_SIGINFO表示能够接受数据</span>
+ <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment">//回调函数句柄sa_handler、sa_sigaction只能任选其一</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>​</p>
+<p>​</p>
+<h5 id="现象解释">现象解释</h5>
+<ul>
+<li>
+<p>在 Linux 里 kill 命令调用了 <code>kill()</code> 的这个系统调用而进入到了内核函数 <code>sys_kill()</code>，而内核在决定把信号发送给 1 号进程的时候，会调用 <code>sig_task_ignored()</code> 这个函数来做个判断，决定内核在哪些情况下会把发送的这个信号给忽略掉</p>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220422-sig_task_ignored.png" style="zoom:25%;">
+<blockquote>
+<p>内核为什么要忽略信号呢？</p>
+<p>如果1号进程被杀，整个系统处于混乱并且难调试的状态，要尽量的避免这种情况</p>
+</blockquote>
+</li>
+<li>
+<p><code>sig_task_ignored()</code> 内核函数的实现</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">sig_task_ignored</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">task_struct</span> <span class="token operator">*</span>t<span class="token punctuation">,</span> <span class="token keyword">int</span> sig<span class="token punctuation">,</span> bool force<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">void</span> __user <span class="token operator">*</span>handler<span class="token punctuation">;</span>
+
+	handler <span class="token operator">=</span> <span class="token function">sig_handler</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> sig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/* SIGKILL and SIGSTOP may not be sent to the global init */</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span><span class="token function">is_global_init</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">sig_kernel_only</span><span class="token punctuation">(</span>sig<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> true<span class="token punctuation">;</span>
+	
+    <span class="token comment">// 条件满足则不发送信号</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span>t<span class="token operator">-&gt;</span>signal<span class="token operator">-&gt;</span>flags <span class="token operator">&amp;</span> SIGNAL_UNKILLABLE<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+	    handler <span class="token operator">==</span> SIG_DFL <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token punctuation">(</span>force <span class="token operator">&amp;&amp;</span> <span class="token function">sig_kernel_only</span><span class="token punctuation">(</span>sig<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment">// if(unlikely(value)) 等价于 if(value)</span>
+        <span class="token comment">// 进程必须是 SIGNAL_UNKILLABLE</span>
+        <span class="token comment">// SIG_DFL 是缺省的 handler</span>
+		<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/* Only allow kernel generated signals to this kthread */</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span><span class="token punctuation">(</span>t<span class="token operator">-&gt;</span>flags <span class="token operator">&amp;</span> PF_KTHREAD<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+		     <span class="token punctuation">(</span>handler <span class="token operator">==</span> SIG_KTHREAD_KERNEL<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>force<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> true<span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span> <span class="token function">sig_handler_ignored</span><span class="token punctuation">(</span>handler<span class="token punctuation">,</span> sig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>
+<p>force 由发送信号的进程和接受信号进程是否在同一个namespace里决定，force 对于同一个 Namespace 里发出的信号来说，调用值是 0，这个条件总是满足的</p>
+</li>
+<li>
+<p>每个 Namespace 的 init 进程建立的时候就会打上<code>SIGNAL_UNKILLABLE</code>标签，这个条</p>
+<p>件也是满足的</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220422-SIGNALUNKILLABLE-flag.png" alt=""></p>
+</li>
+<li>
+<p>关键点：<code>handler == SIG_DFL</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>内核针对每个 Nnamespace 里的 init 进程，<strong>把只有 default handler 的信号都给忽略了</strong>，如果自己注册了信号的 handler，那么这个信号 handler 就不再是 SIG_DFL，进程可以退出</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220422-init-sig.png" alt=""></p>
+<blockquote>
+<p>如果有一个 init 进程，它没有注册任何信号的 handler，如果我们从 <strong>Host Namespace</strong> 向它发送 SIGTERM 会发生什么情况呢？（不会，因为SIGTERM不是内核信号，只响应kill -9）</p>
+</blockquote>
+</li>
+<li>
+<p>SIGKILL 是一个特例，因为 SIGKILL 是不允许被注册用户 handler 的（还有一个不允许注册用户 handler 的信号是 SIGSTOP），所以 init 进程是不能被 SIGKILL 所杀，但是可以被 SIGTERM 杀死</p>
+</li>
+</ul>
+<h5 id="总结">总结</h5>
+<ol>
+<li>
+<p>内核阻止了容器中 1 号进程对 SIGKILL 和 SIGSTOP 两个特权信号的响应，所以 kill -9 1 在容器中不工作</p>
+</li>
+<li>
+<p>对于其他的信号，如果用户自己注册了 handler，1 号进程可以响应</p>
+</li>
+</ol>
+<h4 id="为什么我的容器里有这么多僵尸进程？">为什么我的容器里有这么多僵尸进程？</h4>
+<blockquote>
+<p><strong>问题</strong>：容器运行久了之后，运行 ps 命令会发现有很多的僵尸进程</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220422-zombie.png" alt=""></p>
+<p>什么是僵尸进程？它们是怎么产生的？僵尸进程太多会导致什么问题？</p>
+</blockquote>
+<h5 id="Linux-进程状态">Linux 进程状态</h5>
+<ul>
+<li>
+<p>无论进程还是线程，在 Linux 内核里其实都是用 <code>task_struct</code> 这个结构来表示，它是 Linux 里基本的调度单位</p>
+</li>
+<li>
+<p>Linux 的进程一共7种状态，定义在<a target="_blank" rel="noopener" href="https://github.com/torvalds/linux/blob/b6da0076bab5a12afb19312ffee41c95490af2a0/fs/proc/array.c">fs/proc/array.c</a></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span> <span class="token keyword">const</span> task_state_array<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+	<span class="token string">"R (running)"</span><span class="token punctuation">,</span>		<span class="token comment">/*   0 */</span>
+	<span class="token string">"S (sleeping)"</span><span class="token punctuation">,</span>		<span class="token comment">/*   1 */</span>
+	<span class="token string">"D (disk sleep)"</span><span class="token punctuation">,</span>	<span class="token comment">/*   2 */</span>
+	<span class="token string">"T (stopped)"</span><span class="token punctuation">,</span>		<span class="token comment">/*   4 */</span>
+	<span class="token string">"t (tracing stop)"</span><span class="token punctuation">,</span>	<span class="token comment">/*   8 */</span>
+	<span class="token string">"X (dead)"</span><span class="token punctuation">,</span>		<span class="token comment">/*  16 */</span>
+	<span class="token string">"Z (zombie)"</span><span class="token punctuation">,</span>		<span class="token comment">/*  32 */</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>Linux 进程状态转化</p>
+</li>
+</ul>
+  <img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220423-process-state.png" style="zoom: 70%;">
+<ul>
+<li>在进程“活着”的时候就只有两个状态：运行态（TASK_RUNNING）和睡眠态（TASK_INTERRUPTIBLE，TASK_UNINTERRUPTIBLE）
+<ul>
+<li>运行态：进程正在运行中或者进程在 run queue 队列里随时可以运行</li>
+<li>睡眠态：进程需要等待某个资源而进入的状态，这个状态的进程会被放入到 wait queue 队列里</li>
+<li>睡眠态具体还包括两个子状态：
+<ul>
+<li>可以被打断的（TASK_INTERRUPTIBLE）</li>
+<li>不可被打断的（TASK_UNINTERRUPTIBLE）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>进程在调用 do_exit() 退出的时候，还有两个状态
+<ul>
+<li>EXIT_DEAD，进程在真正结束退出的那一瞬间的状态</li>
+<li>EXIT_ZOMBIE 状态，这是进程在 EXIT_DEAD 前的一个状态（僵尸进程处于这个状态中），是不可被调度的进程</li>
+<li>Linux 进程退出状态中 task_struct 里的 mm/shm/sem/files 等文件资源都已经释放，只留下一个 stask_struct instance 空壳，且不响应任何的信号了</li>
+</ul>
+</li>
+</ul>
+<h5 id="限制容器中进程数目">限制容器中进程数目</h5>
+<ul>
+<li>
+<p>一台 Linux 机器上的进程总数目是有限制的，最大值可以在 <code>/proc/sys/kernel/pid_max</code> 参数中看到，Linux 内核在初始化系统的时候，会根据机器 CPU 的数目来设置 pid_max 的值</p>
+</li>
+<li>
+<p>对于 Linux 系统而言，<strong>容器就是一组进程的集合</strong>，如果容器中的应用创建过多的进程或者出现 bug，就会产生类似 <code>fork bomb</code> 的行为，容器中的进程数把整个节点的可用进程总数消耗完，会让宿主机本身也无法工作，所以对每个容器都需要限制它的最大进程数（功能由 pids Cgroup 子系统来完成）</p>
+</li>
+<li>
+<p>pids Cgroup 的 Cgroup 文件系统挂载点在<code>/sys/fs/cgroup/pids</code>，可以向控制组中的 <code>pids.max</code> 文件写入数值，而这个值就是这个容器中允许的最大进程数目</p>
+</li>
+</ul>
+<h5 id="解决问题">解决问题</h5>
+<ul>
+<li>
+<p>多个容器运行在同一个宿主机上的时候会配置 pids Cgroup 来限制每个容器的最大进程数目，但残留的僵尸进程在容器里仍然占据着进程号资源，很有可能会导致新的进程不能运转</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220424-zombie-proc.png" alt=""></p>
+</li>
+<li>
+<p>子进程变成僵尸进程的原因：子进程退出的时候会给父进程发送信号，如果父进程不处理这个信号就会变成僵尸进程</p>
+</li>
+<li>
+<p>进程退出后如果进入僵尸状态，父进程（init 进程）调用<code>wait()</code> 系统调用回收僵尸进程的最后系统资源，比如进程号资源</p>
+</li>
+<li>
+<p><code>wait()</code> 系统调用是一个阻塞的调用，如果没有子进程是僵尸进程，整个进程就会被阻塞，Linux 还提供了一个类似的系统调<code>waitpid()</code>，其中有一个参数 WNOHANG：如果在调用的时候没有僵尸进程，那么函数马上返回</p>
+<blockquote>
+<p>如果容器的 init 进程创建了子进程 B，B 又创建了自己的子进程 C，如果 C 运行完之后退出成了僵尸进程，B 进程还在运行，而容器的 init 进程还在不断调用 waitpid()，那 C 这个僵尸进程可以被回收吗？</p>
+<p>不会，<strong>waitpid 仅等待直接 children 的状态变化</strong>，</p>
+</blockquote>
+</li>
+<li>
+<p>比如社区的一个容器 init 项目 <code>tini</code>，它的主进程里就是不断在调用带 WNOHANG 参数的 <code>waitpid()</code> 来清理容器中所有的僵尸进程</p>
+<ul>
+<li>docker 启动容器的时候加 <code>--init</code> 参数，容器强制使用 tini 作为 init 进程</li>
+</ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">reap_zombies</span><span class="token punctuation">(</span><span class="token keyword">const</span> pid_t child_pid<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> child_exitcode_ptr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	pid_t current_pid<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> current_status<span class="token punctuation">;</span>
+
+	<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		current_pid <span class="token operator">=</span> <span class="token function">waitpid</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>current_status<span class="token punctuation">,</span> WNOHANG<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token keyword">switch</span> <span class="token punctuation">(</span>current_pid<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+			<span class="token keyword">case</span> <span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span>
+				<span class="token keyword">if</span> <span class="token punctuation">(</span>errno <span class="token operator">==</span> ECHILD<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+					<span class="token function">PRINT_TRACE</span><span class="token punctuation">(</span><span class="token string">"No child to wait"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+					<span class="token keyword">break</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h4 id="为什么我在容器中的进程被强制杀死了？">为什么我在容器中的进程被强制杀死了？</h4>
+<blockquote>
+<p><strong>问题</strong>：在容器平台上想要停止一个容器最后都会用到 Containerd 这个服务，而 Containerd 在停止容器的时候，就会向容器的 init 进程发送一个 SIGTERM 信号，在 init 进程退出之后，容器内的其他进程也会退出，但是收到的是 SIGKILL 信号，没机会执行清理工作，而一旦进程不能 graceful shutdown，就会增加应用的出错率</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220427-shutdown.png" alt=""></p>
+</blockquote>
+<h5 id="信号的两个系统调用">信号的两个系统调用</h5>
+<ul>
+<li>
+<p>kill() 系统调用</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span> </span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h&gt;</span> </span>
+
+<span class="token keyword">int</span> <span class="token function">kill</span><span class="token punctuation">(</span>pid_t pid<span class="token punctuation">,</span> <span class="token keyword">int</span> sig<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>sig：代表需要发送哪个信号</li>
+<li>pid：信号需要发送给哪个进程</li>
+</ul>
+</li>
+<li>
+<p>signal() 系统调用</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h&gt;</span> </span>
+<span class="token keyword">typedef</span> <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>sighandler_t<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+sighandler_t <span class="token function">signal</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> sighandler_t handler<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>signum：也就是信号</li>
+<li>handler：函数指针参数，用来注册用户的信号 handler</li>
+</ul>
+</li>
+<li>
+<p>进程对信号的<strong>忽略</strong>处理：通过 signal() 系统调用为这个信号注册一个特殊的 handler，也就是 <code>SIG_IGN</code></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> 
+<span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token function">signal</span><span class="token punctuation">(</span>SIGTERM<span class="token punctuation">,</span> SIG_IGN<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> 
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>程序运行的时候，如果收到 SIGTERM 信号，程序会什么反应也没有</p>
+</li>
+<li>
+<p>SIGKILL 和 SIGSTOP 信号是两个<strong>特权信号</strong>，它们不可以被捕获和忽略，这个特点也反映在 signal() 调用上，如果用 signal() 为 SIGKILL 注册 handler，那么就会返回 <code>SIG_ERR</code></p>
+</li>
+</ul>
+<h5 id="解决问题-2">解决问题</h5>
+<ul>
+<li>
+<p>当 Linux 进程收到 SIGTERM 信号并且使进程退出，这时 Linux 内核对处理进程退出的入口点就是 <code>do_exit()</code> 函数，函数会释放进程的相关资源（比如内存，文件句柄，信号量），然后会调用 <code>exit_notify()</code> 函数用来通知和这个进程相关的父子进程等</p>
+</li>
+<li>
+<p>对于容器来说，还要考虑 Pid Namespace 里的其他进程，就会调用 <code>zap_pid_ns_processes()</code> 函数，在这个函数中，如果是处于退出状态的 init 进程，它会向 Namespace 中的其他进程都发送一个 SIGKILL 信号</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220427-docker-kill-init.png" alt=""></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">zap_pid_ns_processes</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pid_namespace</span> <span class="token operator">*</span>pid_ns<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+	<span class="token function">read_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tasklist_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	nr <span class="token operator">=</span> <span class="token function">next_pidmap</span><span class="token punctuation">(</span>pid_ns<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span> <span class="token punctuation">(</span>nr <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">rcu_read_lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		task <span class="token operator">=</span> <span class="token function">pid_task</span><span class="token punctuation">(</span><span class="token function">find_vpid</span><span class="token punctuation">(</span>nr<span class="token punctuation">)</span><span class="token punctuation">,</span> PIDTYPE_PID<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>task <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">__fatal_signal_pending</span><span class="token punctuation">(</span>task<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token function">send_sig_info</span><span class="token punctuation">(</span>SIGKILL<span class="token punctuation">,</span> SEND_SIG_FORCED<span class="token punctuation">,</span> task<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token function">rcu_read_unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		nr <span class="token operator">=</span> <span class="token function">next_pidmap</span><span class="token punctuation">(</span>pid_ns<span class="token punctuation">,</span> nr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token function">read_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tasklist_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>        <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>解决的方法就是在容器的 init 进程中对收到的信号做<strong>转发</strong>，发送到容器中的其他子进程，这样容器中的所有进程在停止时，都会收到 SIGTERM，而不是 SIGKILL 信号了</p>
+</li>
+<li>
+<p>Docker Container 里使用的 tini 作为 init 进程，tini 的代码中就会调用 <code>sigtimedwait()</code> 函数来查看自己收到的信号，然后调用 kill() 把信号发给子进程</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">wait_and_forward_signal</span><span class="token punctuation">(</span>sigset_t <span class="token keyword">const</span><span class="token operator">*</span> <span class="token keyword">const</span> parent_sigset_ptr<span class="token punctuation">,</span> pid_t <span class="token keyword">const</span> child_pid<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	siginfo_t sig<span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">sigtimedwait</span><span class="token punctuation">(</span>parent_sigset_ptr<span class="token punctuation">,</span> <span class="token operator">&amp;</span>sig<span class="token punctuation">,</span> <span class="token operator">&amp;</span>ts<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">switch</span> <span class="token punctuation">(</span>errno<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+		<span class="token comment">/* There is a signal to handle here */</span>
+		<span class="token keyword">switch</span> <span class="token punctuation">(</span>sig<span class="token punctuation">.</span>si_signo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">case</span> SIGCHLD<span class="token operator">:</span>
+				<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token comment">// 除了 SIGCHLD 这个信号外</span>
+			<span class="token keyword">default</span><span class="token operator">:</span> <span class="token comment">// 把其他所有的信号都转发给它的子进程</span>
+				<span class="token function">PRINT_DEBUG</span><span class="token punctuation">(</span><span class="token string">"Passing signal: '%s'"</span><span class="token punctuation">,</span> <span class="token function">strsignal</span><span class="token punctuation">(</span>sig<span class="token punctuation">.</span>si_signo<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token comment">/* Forward anything else */</span>
+				<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">kill</span><span class="token punctuation">(</span>kill_process_group <span class="token operator">?</span> <span class="token operator">-</span>child_pid <span class="token operator">:</span> child_pid<span class="token punctuation">,</span> sig<span class="token punctuation">.</span>si_signo<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+					<span class="token keyword">if</span> <span class="token punctuation">(</span>errno <span class="token operator">==</span> ESRCH<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+						<span class="token function">PRINT_WARNING</span><span class="token punctuation">(</span><span class="token string">"Child was dead when forwarding signal"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+					<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+						<span class="token function">PRINT_FATAL</span><span class="token punctuation">(</span><span class="token string">"Unexpected error when forwarding signal: '%s'"</span><span class="token punctuation">,</span> <span class="token function">strerror</span><span class="token punctuation">(</span>errno<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+						<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+					<span class="token punctuation">}</span>
+				<span class="token punctuation">}</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>为了保证子进程先收到转发的SIGTERM，tini 自己不退出，子进程收到 SIGTERM 退出之后会给父进程发送 <code>SIGCHILD</code>，tini 收到 SIGCHILD 之后主动整个程序退出</p>
+</li>
+</ul>
+<h4 id="小结-2">小结</h4>
+<ul>
+<li>容器里的 init 进程应该具备这些信号处理的能力：
+<ul>
+<li>至少转发 SIGTERM 给容器里其他的关键子进程</li>
+<li>能够接受到外部的 SIGTERM 信号而退出（可以是通过注册 SIGTERM handler，也可以先转发 SIGTERM 给子进程，然后收到 SIGCHILD 后自己主动退出）</li>
+<li>具有回收 zombie 进程的能力</li>
+</ul>
+</li>
+</ul>
+<h3 id="容器-CPU">容器 CPU</h3>
+<h4 id="怎么限制容器的-CPU-使用？">怎么限制容器的 CPU 使用？</h4>
+<blockquote>
+<p>以 Kubernetes 平台为例，在 Pod Spec 中的 <code>Request CPU</code> 和 <code>Limit CPU</code> 的值，会通过 CPU Cgroup 的配置来实现控制容器 CPU 资源的作用，Limit CPU 为容器设置可用 CPU 的上限，Request CPU 是容器可以保证获得需要的 CPU 数目</p>
+</blockquote>
+<h5 id="CPU-使用的分类">CPU 使用的分类</h5>
+<ul>
+<li>
+<p>运行 top 命令，<code>%Cpu(s)</code> 这行显示的就是 cpu usage，是容器宿主机的 CPU 使用率</p>
+<pre class="line-numbers language-none"><code class="language-none">%Cpu(s):  1.2 us,  0.8 sy,  0.0 ni, 97.5 id,  0.5 wa,  0.0 hi,  0.0 si,  0.0 st<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220428-cpu-usage-chart.png" style="zoom: 50%;">
+<ul>
+<li><code>us</code>（user）代表用户态 CPU 使用</li>
+<li><code>sy</code>（system）代表内核态 CPU 使用，程序中调用了系统调用，进程就会切换到内核态，这些代码指令的消耗就属于 sy</li>
+<li><code>wa</code>（iowait）代表等待 I/O 的时间，这里的 I/O 是指 Disk I/O，进程在磁盘 IO 操作时一般会被置为不可中断睡眠态，Linux 会把这段时间标示成 wa</li>
+<li><code>id</code>（idle）代表系统处于空闲状态，用户进程都处于休眠，这时在这个 CPU 上没有需要运行的进程</li>
+<li><code>hi</code>（hardware irq）代表 CPU 处理硬中断的开销</li>
+<li><code>si</code>（softirq）代表 CPU 处理软中断的开销，软中断可以完成这些耗时比较长的工作</li>
+<li><code>ni</code>（nice）如果进程的 nice 值是正值（1-19），代表优先级比较低的进程运行时所占用的 CPU</li>
+<li><code>st</code>（steal）是在虚拟机里用的一个 CPU 使用类型，表示有多少时间是被同一个宿主机上的其他虚拟机抢走的</li>
+</ul>
+</li>
+<li>
+<p>进程 CPU 使用只包含两部分：用户态（us ni）和内核态（sy）</p>
+</li>
+</ul>
+<h5 id="进程和系统-CPU-使用率">进程和系统 CPU 使用率</h5>
+<ul>
+<li>
+<p>每个进程在 top 命令输出中都有对应的一行，%CPU 那一列就是这个进程的实时 CPU 使用率，对于每个进程 top 都会从 proc 文件系统中每个进程对应的 stat 文件（<code> /proc/[pid]/stat</code>）中读取 2 个数值</p>
+<ul>
+<li>stat 文件实时输出了进程的状态信息，比如进程的运行态、父进程 PID、进程优先级、进程使用的内存等（<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man5/proc.5.html">stat 文件内容和格式</a>）</li>
+<li>（14）<code>utime</code> 表示进程的用户态部分在 Linux 调度中获得 CPU 的 ticks（ticks 是 Linux 中的一个时间单位；每次时钟中断都会触发内核做一次进程调度，而这一次中断就是一个 tick）</li>
+<li>（15）<code>stime</code> 表示进程的内核态部分在 Linux 调度中获得 CPU 的 ticks</li>
+</ul>
+</li>
+<li>
+<p>计算<strong>进程 CPU 使用率</strong><br>
+$$<br>
+\frac{((utime_2 – utime_1) + (stime_2 – stime_1))\cdot 100.0}{HZ \cdot et \cdot 1}<br>
+$$</p>
+<blockquote>
+<p>HZ：1 秒钟里 ticks 的次数，这里值是100（USER_HZ）</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220910-HZ.png" alt=""></p>
+<p>et：瞬时的时间，也就是得到 $utime_1$ 和 $utime_2$ 这两个值的时间间隔</p>
+<p>1：1 个 CPU<br>
+$$<br>
+\frac{进程 ticks}{单个 CPU 总 ticks}\times 100.0<br>
+$$</p>
+</blockquote>
+</li>
+<li>
+<p>读取 <code>/proc/stat</code> 文件，其中 cpu 行有 10 列数据，前 8 列数据对应 top 输出中 <code>%Cpu(s)</code>，每一项的数值就是系统自启动开始的 <code>ticks</code>；此文件是整个节点全局的状态文件</p>
+</li>
+<li>
+<p>瞬时各项 CPU 使用率的 ticks 相加得到一个总值，单项值除以总值就是各项 CPU 的使用率</p>
+</li>
+</ul>
+<h5 id="CPU-Cgroup">CPU Cgroup</h5>
+<ul>
+<li>
+<p>CPU Cgroup 是一个 Cgroups 子系统，用来限制进程的 CPU 使用，CPU Cgroup 不会限制 wa、hi、si 这些 I/O 或者中断相关的 CPU 使用</p>
+</li>
+<li>
+<p>Cgroups 子系统都是通过一个虚拟文件系统挂载点的方式，挂到一个缺省的目录下；CPU Cgroup 一般在 Linux 里会放在 <code>/sys/fs/cgroup/cpu</code> 目录下，在这个子系统的目录下，每个控制组（Control Group） 都是一个子目录，各个控制组之间的关系就是一个树状的层级关系</p>
+</li>
+<li>
+<p>CFS 相关的参数</p>
+<ul>
+<li>
+<p><code>cpu.cfs_period_us</code> 是 CFS 算法的一个调度周期</p>
+<ul>
+<li>一般它的值是100000，以 microseconds 为单位，即 100ms</li>
+</ul>
+</li>
+<li>
+<p><code>cpu.cfs_quota_us</code> 表示 CFS 算法中，在一个调度周期里这个控制组被允许的运行时间，如果用这个值去除以调度周期就是这个控制组被允许使用的 CPU 最大配额</p>
+<ul>
+<li>比如这个值为 50000 时，就是 50ms，$50ms/100ms = 0.5$，这个控制组被允许使用的 CPU 最大配额是 0.5 个 CPU</li>
+</ul>
+</li>
+<li>
+<p><code>cpu.shares</code> 是 CPU Cgroup 对于控制组之间的 CPU 分配比例，它的缺省值是 1024，只有当系统上 CPU 完全被占满的时候，这个比例才会在各个控制组间起作用</p>
+</li>
+</ul>
+<blockquote>
+<p>云平台中大部分程序都不是实时调度的进程，而是普通调度（SCHED_NORMAL）类型进程，普通调度的算法在 Linux 中目前是 CFS （Completely Fair Scheduler，完全公平调度器）</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="如何正确地拿到容器-CPU-的开销？">如何正确地拿到容器 CPU 的开销？</h4>
+<ul>
+<li>
+<p>top 只能显示整个节点中各项 CPU 的使用率，不能显示单个容器的各项 CPU 的使用率</p>
+</li>
+<li>
+<p>CPU Cgroup 控制组有一个可读项 <code>cpuacct.stat</code>，其中有两个统计值：这个控制组里所有进程的内核态 ticks 和用户态的 ticks；因此可以用计算进程 CPU 使用率的公式去计算整个容器的 CPU 使用率</p>
+</li>
+<li>
+<p>示例：容器的 CPU 使用率是 $\frac{((48844 - 48647) + (88 - 88)) \times 100.0}{(100 \times 1 \times 1)} = 197%$</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220910-container-cpu-usage.png" alt=""></p>
+</li>
+</ul>
+<h4 id="Load-Average">Load Average</h4>
+<blockquote>
+<p>场景：有时明明容器里所有进程的 CPU 使用率都很低，甚至整个宿主机的 CPU 使用率都很低，而机器的 Load Average 里的值却很高，容器里进程运行得也很慢</p>
+</blockquote>
+<ul>
+<li>
+<p>上世纪 70 年代，早期的 Unix 系统上就已经有了 Load Average，<a target="_blank" rel="noopener" href="https://www.ietf.org/rfc/rfc546.html#ref-1">RFC546</a> 上定义了 Load Average 是一种 <strong>CPU 资源需求的度量</strong></p>
+</li>
+<li>
+<p>不论 CPU 是空闲还是满负载，Load Average 是 Linux 进程调度器中可运行队列（Running Queue）里的一段时间的平均进程数目；CPU 还有空闲的情况下，CPU Usage 可以直接反映到 Load Average；CPU 满负载的情况下，Load Average 就不能和 CPU Usage 等同了</p>
+</li>
+<li>
+<p>对于 Linux 的 Load Average，除了可运行队列中的进程数目，等待队列中的 <code>TASK_UNINTERRUPTIBLE</code> 进程数目也会增加 Load Average（可运行队列进程平均数 + 休眠队列中不可打断的进程平均数）</p>
+<blockquote>
+<p>开发者 <em>Matthias</em> 认为 Load Average 如果只考虑进程运行队列中需要被调度的进程或线程平均数目是不够的，因为对于处于 I/O 资源等待的进程都是处于 TASK_UNINTERRUPTIBLE 状态的；他给内核加一个补丁，把处于不可中断睡眠状态的进程数目也计入了 Load Average（1993）</p>
+</blockquote>
+</li>
+<li>
+<p>无法通过 CPU Cgroup 来控制 Load Average 的平均负载，而没有这个限制就会影响系统资源的合理调度，很可能导致系统变慢，因为 Cgroups 更多的是以进程为单位进行隔离，而 D 状态进程是内核中系统全局资源引入的；可以在容器宿主机的节点对 D 状态进程做监控，定向分析解决</p>
+</li>
+</ul>
+<hr>
+<p>参考资料：</p>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man7/cgroups.7.html">Linux Programmer’s Manual</a> 中 Cgroups 的定义</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/bin_linux96/article/details/100917831">Linux cgroup源码分析</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://moelove.info/2021/11/17/%E4%B8%80%E7%AF%87%E6%90%9E%E6%87%82%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E7%9A%84%E5%9F%BA%E7%9F%B3-cgroup/">一篇搞懂容器技术的基石</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f445bfeea40a">Linux 信号</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/krallin/tini">Tini</a>：A tiny but valid init for containers</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://tobegit3hub1.gitbooks.io/understanding-linux-processes/content/index.html">理解Linux进程</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://plpan.github.io/docker-exec-%E5%A4%B1%E8%B4%A5%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E4%B9%8B%E6%97%85/">docker exec 失败问题排查</a></p>
+</li>
+<li>
+<p>cpu usage 一览表</p>
+</li>
+</ul>
+  <img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220428-cpu-usage.png" style="zoom: 50%;">
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/lxc/lxcfs">lxcfs</a> 可以为每个容器虚拟一些 <code>/proc</code> 下的文件，比如 <code>/proc/stat</code></p>
+</li>
+<li>
+<p>知识点总结</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20220407-container.png" alt=""></p>
+</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">宵烛</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://night-candle.github.io/2022/04/07/container-in-action/">http://night-candle.github.io/2022/04/07/container-in-action/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">宵烛</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%AE%B9%E5%99%A8/">
+                                    <span class="chip bg-color">容器</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/04/07/container-in-action/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="container-in-action">
+                        
+                        <span class="card-title">container-in-action</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            结合 Linux 操作系统的主要模块，把容器知识结构系统串联起来，同时看到 Namespace 和 Cgroups 带来的特殊性
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    学习笔记
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AE%B9%E5%99%A8/">
+                        <span class="chip bg-color">容器</span>
+                    </a>
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/11/19/linux-kernel/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="Linux 内核开发">
+                        
+                        <span class="card-title">Linux 内核开发</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            记录 Linux 内核开发相关知识，包括机制解析和源码解读
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    笔记
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('200')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 宵烛 Blog<br />'
+            + '文章作者: 宵烛<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important; position: absolute;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2023</span>
+            
+            <a href="/about" target="_blank">宵烛</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">94.6k</span>
+            
+            
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "1";
+                        var startDate = "25";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/night-candle" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1219303301@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+    <div id="jsi-flying-fish-container" class="nav-wrapper" style="margin: 0px; padding: 0px;"></div>
+    <script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+        <!-- <script src='https://unpkg.com/mermaid@latest/dist/mermaid.min.js'></script> -->
+        <script src='/libs/mermaid/mermaid.min.js'></script>
+        <script>
+          if (window.mermaid) {
+            mermaid.initialize({theme: 'forest'});
+          }
+        </script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

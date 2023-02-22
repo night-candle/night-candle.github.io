@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://night-candle.github.io/"/>
-  <updated>2022-07-14T12:23:30.161Z</updated>
+  <updated>2022-09-11T15:29:24.106Z</updated>
   <id>http://night-candle.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Linux 内核开发</title>
-    <link href="http://night-candle.github.io/2021/11/19/linux-kernel/"/>
-    <id>http://night-candle.github.io/2021/11/19/linux-kernel/</id>
-    <published>2021-11-19T01:19:30.000Z</published>
-    <updated>2022-07-14T12:23:30.161Z</updated>
+    <title>container-in-action</title>
+    <link href="http://night-candle.github.io/2022/04/07/container-in-action/"/>
+    <id>http://night-candle.github.io/2022/04/07/container-in-action/</id>
+    <published>2022-04-07T10:47:36.000Z</published>
+    <updated>2022-09-11T15:29:24.106Z</updated>
     
     <summary type="html">
     
@@ -29,9 +29,42 @@
       
         
         
-          &lt;h2 id=&quot;01-编译Linux4-9内核并运行&quot;&gt;01 编译Linux4.9内核并运行&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://mirrors.edge.kernel.org/pub/linux/kernel&quot;&gt;Linux 源码下载&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a
+          &lt;h2 id=&quot;01-认识容器&quot;&gt;01 | 认识容器&lt;/h2&gt;
+&lt;h3 id=&quot;容器是什么？&quot;&gt;容器是什么？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;如果问 Linux 上的容器是什么，最简单直接的回答就是 Namesapce 和
+        
+      
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="http://night-candle.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="容器" scheme="http://night-candle.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+      <category term="Linux" scheme="http://night-candle.github.io/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 内核开发</title>
+    <link href="http://night-candle.github.io/2021/11/19/linux-kernel/"/>
+    <id>http://night-candle.github.io/2021/11/19/linux-kernel/</id>
+    <published>2021-11-19T01:19:30.000Z</published>
+    <updated>2022-12-06T17:09:30.423Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;01-编译Linux4-9内核并运行&quot;&gt;01 | 编译Linux4.9内核并运行&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;https://mirrors.edge.kernel.org/pub/linux/kernel&quot;&gt;Linux
         
       
     
@@ -57,9 +90,7 @@
       
         
         
-          &lt;h2 id=&quot;00-前言-3&quot;&gt;00 | 前言&lt;/h2&gt;
-&lt;p&gt;  在计算机领域中，网络是信息传输、接收、共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，可以进行数据传递，从而实现资源的共享&lt;/p&gt;
-&lt;p&gt;  网络编程从大方面说就是对信息的发送到接受，通过操作相应
+          &lt;h2 id=&quot;00-前言-2&quot;&gt;00 |
         
       
     
@@ -83,7 +114,7 @@
     <link href="http://night-candle.github.io/2021/02/04/cs-network-protocol/"/>
     <id>http://night-candle.github.io/2021/02/04/cs-network-protocol/</id>
     <published>2021-02-04T13:05:42.000Z</published>
-    <updated>2022-06-10T02:04:37.359Z</updated>
+    <updated>2022-09-06T07:15:41.601Z</updated>
     
     <summary type="html">
     
@@ -91,11 +122,11 @@
       
         
         
-          &lt;h1&gt;前言&lt;/h1&gt;
+          &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;看似最枯燥、最基础的东西往往具有最长久的生命力&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;​&lt;/p&gt;
 &lt;p&gt;​&lt;/p&gt;
-&lt;h2 id=&quot;网络协议&quot;&gt;网络协议&lt;/h2&gt;
+&lt;h3 id=&quot;网络协议&quot;&gt;网络协议&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;网络协议（Network
@@ -107,6 +138,8 @@
       <category term="计科" scheme="http://night-candle.github.io/categories/%E8%AE%A1%E7%A7%91/"/>
     
     
+      <category term="容器" scheme="http://night-candle.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
+    
       <category term="计算机网络" scheme="http://night-candle.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
       <category term="网络协议" scheme="http://night-candle.github.io/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
@@ -115,16 +148,14 @@
     
       <category term="微服务" scheme="http://night-candle.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
-      <category term="容器" scheme="http://night-candle.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
-    
   </entry>
   
   <entry>
-    <title>从零开发操作系统实验</title>
+    <title>操作系统基础和开发实践</title>
     <link href="http://night-candle.github.io/2021/01/28/hello-os/"/>
     <id>http://night-candle.github.io/2021/01/28/hello-os/</id>
     <published>2021-01-28T03:26:19.000Z</published>
-    <updated>2022-07-14T12:23:05.193Z</updated>
+    <updated>2022-10-24T16:55:09.984Z</updated>
     
     <summary type="html">
     
@@ -145,61 +176,6 @@
     
     
       <category term="操作系统" scheme="http://night-candle.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>大数据入门</title>
-    <link href="http://night-candle.github.io/2021/01/27/big-data-basic/"/>
-    <id>http://night-candle.github.io/2021/01/27/big-data-basic/</id>
-    <published>2021-01-27T11:45:11.000Z</published>
-    <updated>2022-04-30T16:16:02.510Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;0-前言-2&quot;&gt;0. 前言&lt;/h2&gt;
-&lt;h3
-        
-      
-    
-    </summary>
-    
-      <category term="计科" scheme="http://night-candle.github.io/categories/%E8%AE%A1%E7%A7%91/"/>
-    
-    
-      <category term="大数据" scheme="http://night-candle.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>游戏程序设计</title>
-    <link href="http://night-candle.github.io/2021/01/27/game-program-design/"/>
-    <id>http://night-candle.github.io/2021/01/27/game-program-design/</id>
-    <published>2021-01-27T08:40:48.000Z</published>
-    <updated>2022-03-18T06:58:56.749Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;1-游戏开发导论&quot;&gt;1. 游戏开发导论&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;什么是游戏&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;电子游戏&lt;/strong&gt;&lt;code&gt;Electronic
-        
-      
-    
-    </summary>
-    
-      <category term="计科" scheme="http://night-candle.github.io/categories/%E8%AE%A1%E7%A7%91/"/>
-    
-    
-      <category term="游戏" scheme="http://night-candle.github.io/tags/%E6%B8%B8%E6%88%8F/"/>
     
   </entry>
   
@@ -227,44 +203,11 @@
       <category term="安全" scheme="http://night-candle.github.io/categories/%E5%AE%89%E5%85%A8/"/>
     
     
-      <category term="前端" scheme="http://night-candle.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
-    
       <category term="web安全" scheme="http://night-candle.github.io/tags/web%E5%AE%89%E5%85%A8/"/>
     
+      <category term="前端" scheme="http://night-candle.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
       <category term="后端" scheme="http://night-candle.github.io/tags/%E5%90%8E%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深度学习基础</title>
-    <link href="http://night-candle.github.io/2021/01/25/deeplearning-basic/"/>
-    <id>http://night-candle.github.io/2021/01/25/deeplearning-basic/</id>
-    <published>2021-01-25T01:45:06.000Z</published>
-    <updated>2021-09-05T16:37:47.465Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1&gt;深度学习&lt;/h1&gt;
-&lt;h2 id=&quot;1-1-深度学习和神经网络&quot;&gt;1.1 深度学习和神经网络&lt;/h2&gt;
-&lt;h3 id=&quot;1-1-1-深度学习简介&quot;&gt;1.1.1 深度学习简介&lt;/h3&gt;
-&lt;h4
-        
-      
-    
-    </summary>
-    
-      <category term="笔记" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="计科" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%A7%91/"/>
-    
-    
-      <category term="深度学习" scheme="http://night-candle.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="NLP" scheme="http://night-candle.github.io/tags/NLP/"/>
     
   </entry>
   
@@ -305,7 +248,7 @@
     <link href="http://night-candle.github.io/2020/08/28/github-hexo-blog/"/>
     <id>http://night-candle.github.io/2020/08/28/github-hexo-blog/</id>
     <published>2020-08-28T09:24:54.000Z</published>
-    <updated>2022-04-07T10:57:42.361Z</updated>
+    <updated>2022-08-15T08:44:51.559Z</updated>
     
     <summary type="html">
     
@@ -313,7 +256,7 @@
       
         
         
-          &lt;h2 id=&quot;0-前言&quot;&gt;0.前言&lt;/h2&gt;
+          &lt;h2 id=&quot;0-前言-2&quot;&gt;0.前言&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Github Pages&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -329,6 +272,36 @@
       <category term="前端" scheme="http://night-candle.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
     
       <category term="博客" scheme="http://night-candle.github.io/tags/%E5%8D%9A%E5%AE%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>十大经典排序算法整理汇总</title>
+    <link href="http://night-candle.github.io/2020/02/16/sort-algorithms/"/>
+    <id>http://night-candle.github.io/2020/02/16/sort-algorithms/</id>
+    <published>2020-02-16T07:09:23.000Z</published>
+    <updated>2023-02-22T14:11:09.183Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言-2&quot;&gt;前言&lt;/h2&gt;
+&lt;p&gt;本文整理并总结了十大经典的排序算法（冒泡排序、选择排序、插入排序、快速排序、归并排序、希尔排序、计数排序、基数排序、桶排序、堆排序）的时间复杂度、空间复杂度等性质。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;题目练习&lt;/strong&gt;：&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="笔记" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="计科" scheme="http://night-candle.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%A7%91/"/>
+    
+    
+      <category term="算法" scheme="http://night-candle.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   

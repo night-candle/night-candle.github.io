@@ -17,21 +17,39 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>网络编程原理与实践 | 宵烛 Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
 <meta name="generator" content="Hexo 5.1.1">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
@@ -109,31 +127,14 @@
     
   </li>
   
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
     </a>
   </li>
 </ul>
@@ -210,28 +211,6 @@
           
         </li>
         
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
-          
-        </li>
-        
         
     </ul>
 </div>
@@ -279,99 +258,7 @@
 <main class="post-container content">
 
     
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        padding-bottom: 30px;
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
+    <div class="row">
     <div id="main-content" class="col s12 m12 l9">
         <!-- 文章内容详情 -->
 <div id="artDetail">
@@ -433,10 +320,15 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    22.9k
+                    23.2k
                 </div>
                 
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    88 分
+                </div>
                 
 
                 
@@ -450,11 +342,16 @@
         
 
         
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="00-前言-3">00 | 前言</h2>
-<p>  在计算机领域中，网络是信息传输、接收、共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，可以进行数据传递，从而实现资源的共享</p>
+                <h2 id="00-前言-2">00 | 前言</h2>
+<p>  在计算机领域中，网络是信息传输、接收、共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，可以进行<strong>数据通信</strong>，从而实现<strong>资源共享</strong></p>
 <p>  网络编程从大方面说就是对信息的发送到接受，通过操作相应 API 调度计算机硬件资源，并利用传输管道（网线）进行数据交换的过程</p>
 <p>  一些关于网络编程方面的问题看似简单，但想做到完全理解却并不容易，学习高性能网络编程，需要掌握两个核心要点：<strong>第一就是理解网络协议，并在这个基础上和操作系统内核配合，感知各种网络 I/O 事件；第二就是学会使用线程处理并发</strong></p>
 <p>  本文会从实践出发，从问题的角度对知识点进行阐述</p>
@@ -464,24 +361,37 @@
 <h3 id="1-1-基本概念">1.1 基本概念</h3>
 <h4 id="1-1-1-客户端-服务器网络模型">1.1.1 客户端 - 服务器网络模型</h4>
 <p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210127-network-model.png" alt=""></p>
+<ul>
+<li>
+<p>工作流程</p>
 <ol>
 <li>
-<p>当一个客户端需要服务时，它会向服务器端发送一个请求，这个请求是按照双方约定的格式来发送的，以便保证服务器端可以理解</p>
+<p>服务器处于接收请求的状态</p>
 </li>
 <li>
-<p>服务器端收到这个请求后，会根据双方约定的格式解释它，并且以合适的方式进行操作</p>
+<p>客户端向服务器端发送服务请求，并等待接收结果</p>
+</li>
+<li>
+<p>服务器端收到这个请求后，会根据双方约定的格式解释它，进行必要处理</p>
 </li>
 <li>
 <p>服务器端完成处理请求之后，会给客户端发送一个响应，然后等待客户端的下一步操作</p>
 </li>
 <li>
 <p>客户端收到响应并进行处理</p>
-<blockquote>
-<p>区别出客户端和服务器，本质上是因为二者编程模型是不同的，<strong>但无论是客户端，还是服务器端，它们运行的单位都是进程</strong></p>
-</blockquote>
 </li>
 </ol>
-<p>​</p>
+</li>
+<li>
+<p>主要特征</p>
+<ul>
+<li>客户是服务请求方，服务器是服务提供方，区别出客户端和服务器，本质上是因为二者编程模型是不同的，但无论是客户端，还是服务器端，它们<strong>运行的单位都是进程</strong></li>
+<li>网络中各计算机的地位不平等，整个网络的管理工作由服务器担当，因此管理集中方便</li>
+<li>客户机之间不直接通信</li>
+<li>可扩展性不佳</li>
+</ul>
+</li>
+</ul>
 <p>​</p>
 <h4 id="1-1-2-IP-和端口">1.1.2 IP 和端口</h4>
 <ul>
@@ -596,13 +506,12 @@
 <h4 id="1-1-5-域名系统">1.1.5 域名系统</h4>
 <ul>
 <li>
-<p>IP 协议的职责是<strong>网际互连</strong>，它使用 IP 地址把 MAC 编号转换成了四位数字，对物理网卡的 MAC 地址做了一层抽象，只要每个小网络在 IP 地址这个概念上达成一致，不管在 MAC 层有多大的差异，都可以接入 TCP/IP 协议栈，终汇合进整个互联网</p>
+<p>IP 协议的职责是<strong>网际互连</strong>，它对物理网卡的 MAC 地址做了一层抽象，只要每个小网络在 IP 地址这个概念上达成一致，不管在 MAC 层有多大的差异，都可以接入 TCP/IP 协议栈，终汇合进整个互联网</p>
 </li>
 <li>
 <p>但数字形式的地址对于人类来说却既难以记忆又难以输入，于是<strong>域名系统</strong><code>Domain Name System</code>出现了，用有意义的名字来作为 IP 地址的等价替代，在 IP 地址之上再进行一次抽象</p>
 </li>
 </ul>
-<p>​</p>
 <p>​</p>
 <h5 id="域名的形式">域名的形式</h5>
 <ul>
@@ -785,7 +694,8 @@
 <li>
 <p><code>socket</code> 译为<strong>套接字</strong>， 在网络编程中寓意是可以通过插口接入的方式，快速完成网络连接和数据收发，它把 TCP/IP 层复杂的操作抽象为几个简单的接口供应用层调用以实现进程在网络中通信</p>
 <blockquote>
-<p><em>To allow for many processes within a single Host to use TCP communication facilities simultaneously, the TCP provides a set of addresses or ports within each host.  Concatenated with the network and host addresses from the internet communication layer, this forms a socket.  A pair of sockets uniquely identifies each connection.</em>（RFC793）</p>
+<p><em>An address which specifically includes a port identifier, that is, the concatenation of an Internet Address with a TCP port.</em></p>
+<p>To allow for many processes within a single Host to use TCP communication facilities simultaneously, the TCP provides a set of addresses or ports within each host.  <em>Concatenated with the network and host addresses from the internet communication layer, this forms a socket.  A pair of sockets uniquely identifies each connection.</em>（<a target="_blank" rel="noopener" href="https://www.ietf.org/rfc/rfc793.txt">RFC793</a>）</p>
 </blockquote>
 </li>
 <li>
@@ -1281,7 +1191,7 @@ ssize_t <span class="token function">readn</span><span class="token punctuation"
 </ul>
 <p>​</p>
 <p>​</p>
-<h4 id="实验-4">实验</h4>
+<h4 id="实验">实验</h4>
 <ul>
 <li>
 <p>一个客户端 - 服务器的例子，其中客户端不断地发送数据，服务器端每读取一段数据之后进行休眠</p>
@@ -1490,7 +1400,7 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 </ul>
 <p>​</p>
 <p>​</p>
-<h4 id="实验-5">实验</h4>
+<h4 id="实验-2">实验</h4>
 <ul>
 <li>
 <p><em>udp_server.c</em>：</p>
@@ -1921,10 +1831,11 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 <p>ping 命名来自于声呐探测，在网络上用来完成对网连通性的探测</p>
 </li>
 <li>
-<p>ping 基于<a href="">ICMP协议</a>（网际控制协议）开发</p>
+<p>ping 基于 ICMP 协议的查询报文类型，应答数据到达源地址之后，可以通过解析 ICMP 报文，对比序列号，计算时间戳等来完成每个发送 - 应答的显示</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210405-icmp-ping.png" alt=""></p>
 </li>
 <li>
-<p>例：使用 ping 探测和新浪网的网络连通性</p>
+<p>例如：使用 ping 探测和新浪网的网络连通性</p>
 <p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210401-ping.png" alt=""></p>
 <ul>
 <li>每次显示是按照 sequence 序列号排序</li>
@@ -1935,33 +1846,37 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 </ul>
 <p>​</p>
 <p>​</p>
-<h4 id="ifconfig">ifconfig</h4>
+<h4 id="ifconfig-ip-addr">ifconfig/ip addr</h4>
 <ul>
 <li>
 <p>用来显示当前系统中的所有网络设备（网卡列表）</p>
 </li>
 <li>
-<p>示例</p>
+<p>运行 ifconfig</p>
 <p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210401-ifconfig.png" alt=""></p>
-<ul>
+<blockquote>
+<p><strong>lo</strong> 全称 <code>loopback</code> ，又称<strong>环回接口</strong>，往往会被分配到 <strong>127.0.0.1</strong> 这个地址，用于本机通信，经过内核处理后直接返回，不会在任何网络中出现</p>
+</blockquote>
+</li>
+</ul>
+<ol>
 <li>
-<p>第一行：<code>&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;</code>：网络设备的状态标识</p>
+<p>网络设备的状态标识和MTU：<code>&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</code></p>
 <ul>
 <li>UP：网卡开启状态</li>
 <li>BROADCAST：网卡有广播地址，可发送广播</li>
 <li>RUNNING：网线处于连接状态</li>
 <li>MULTICAST：表示网卡可以发送多播包</li>
 </ul>
-<p><code>mtu 1500</code>：最大传输单元 MTU 为 1500，表示的是链路层包的大小，这是以太网的默认值，规定连 MAC 头带正文合起来，不允许超过 1500 个字节，<strong>如果放不下就需要分片来传输</strong></p>
 </li>
 <li>
-<p>第二行：<code>inet 192.168.121.143  netmask 255.255.255.0  broadcast 192.168.121.255</code>：网卡的IP地址、子网掩码、广播地址</p>
+<p>网卡的IP地址、子网掩码、广播地址</p>
 </li>
 <li>
-<p>第三行：IPV6配置信息</p>
+<p>IPV6 配置信息</p>
 </li>
 <li>
-<p>第四行：<code>ether 52:00:74:f8:9f:56  txqueuelen 0  (Ethernet)</code>：网卡的MAC地址</p>
+<p>网卡 MAC 地址：<code>ether 52:00:74:f8:9f:56  txqueuelen 0  (Ethernet)</code></p>
 <ul>
 <li>
 <p><code>ether</code>：连接类型为以太网</p>
@@ -1972,19 +1887,48 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 </ul>
 </li>
 <li>
-<p>第五六行：网卡接受数据包的统计信息和接受错误的统计信息</p>
+<p>网卡接受数据包的统计信息和接受错误的统计信息</p>
 </li>
 <li>
-<p>第七八行：网卡发送数据包的统计信息和发送错误的统计信息</p>
+<p>网卡发送数据包的统计信息和发送错误的统计信息</p>
 </li>
+</ol>
+<ul>
+<li>
+<p>运行 ip addr</p>
+<p><img src="https://raw.githubusercontent.com/night-candle/figurebed/main/img/20210208-ipaddr.png" alt=""></p>
+</li>
+</ul>
+<ol>
+<li>
+<p><strong>scope</strong> 在 IP 地址后面， <code>global</code>说明这张网卡是可以对外的，可以接收来自各个地方的包；<code>host</code> 说明这张网卡仅仅可以供本机相互通信</p>
+</li>
+<li>
+<p><strong>&lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;</strong> 即网络设备的状态标识（net_device flags）</p>
+<ul>
+<li><code>LOWER_UP</code> 表示 L1 是启动的，即插着网线</li>
 </ul>
 </li>
 <li>
-<p><a href="https://night-candle.github.io/2021/02/04/cs-network-protocol/#toc-heading-36">ip addr命令</a></p>
+<p><strong>qdisc</strong> 是排队规则（queueing discipline），内核如果需要通过某个网络接口发送数据包，需要按照接口配置的排队规则把数据包加入队列</p>
+<ul>
+<li><code>pfifo</code> 是最简单的规则，它不对进入的数据包做任何的处理，数据包采用先入先出的方式通过队列</li>
+<li><code>pfifo_fast</code> 的队列包括三个波段（band），在每个波段里面使用先进先出规则，三个波段的优先级也不相同：band 0 优先级最高，band 2 最低，如果 band 0 里有数据包，系统就不会处理 band 1 里面的数据包；数据包是按照<strong>服务类型</strong>（TOS）被分配到三个波段里的（TOS 是 IP 头里面的一个字段）</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>
+<p>配置 IP 地址</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># net-tools</span>
+<span class="token function">sudo</span> <span class="token function">ifconfig</span> eth1 <span class="token number">10.0</span>.0.1/24
+<span class="token function">sudo</span> <span class="token function">ifconfig</span> eth1 up
+
+<span class="token comment">#iproute2</span>
+<span class="token function">sudo</span> <span class="token function">ip</span> addr <span class="token function">add</span> <span class="token number">10.0</span>.0.1/24 dev eth1
+<span class="token function">sudo</span> <span class="token function">ip</span> <span class="token function">link</span> <span class="token builtin class-name">set</span> up eth1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
-<p>​</p>
-<p>​</p>
 <h4 id="netstat">netstat</h4>
 <ul>
 <li>
@@ -2146,7 +2090,7 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 <li>注意：
 <ul>
 <li><strong>只有发起连接终止的一方会进入 TIME_WAIT 状态</strong></li>
-<li>中间使用 <a href="#shutdown">shutdown</a>，执行一端到另一端的半关闭也是可以的</li>
+<li>使用 <a href="#shutdown">shutdown</a>，执行一端到另一端的半关闭也是可以的</li>
 </ul>
 </li>
 </ul>
@@ -2349,7 +2293,7 @@ so_linger<span class="token punctuation">.</span>l_linger <span class="token ope
 </li>
 </ul>
 <p>​</p>
-<h4 id="实验-6">实验</h4>
+<h4 id="实验-3">实验</h4>
 <ul>
 <li>
 <p>客户端程序，从标准输入不断接收用户输入，把输入的字符串通过套接字发送给服务器端，同时将服务器端的应答显示到标准输出上</p>
@@ -2476,7 +2420,7 @@ so_linger<span class="token punctuation">.</span>l_linger <span class="token ope
 <p>服务器端程序设计：接收客户端发送来的各种消息后，进行处理，其中如果发现是 PING 类型的消息，在休眠一段时间后回复一个 PONG 消息</p>
 </li>
 </ul>
-<h5 id="实验-7">实验</h5>
+<h5 id="实验-4">实验</h5>
 <ul>
 <li>
 <p>服务器端休眠时间为 60 秒：客户端在发送了三次心跳检测报文 PING 报文后，判断出连接无效，直接退出</p>
@@ -3188,8 +3132,6 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
 
     
 
-    
-
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -3209,7 +3151,7 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            记录 Linux 内核开发相关知识，包括机制解析和源码解读
                         
                     </div>
                     <div class="publish-info">
@@ -3280,6 +3222,10 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E5%AE%B9%E5%99%A8/">
+                        <span class="chip bg-color">容器</span>
+                    </a>
+                    
                     <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
                         <span class="chip bg-color">计算机网络</span>
                     </a>
@@ -3294,10 +3240,6 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
                     
                     <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
                         <span class="chip bg-color">微服务</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%AE%B9%E5%99%A8/">
-                        <span class="chip bg-color">容器</span>
                     </a>
                     
                 </div>
@@ -3472,11 +3414,11 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
     
 
     <div class="container row center-align"
-         style="margin-bottom: 0px !important;">
+         style="margin-bottom: 15px !important; position: absolute;">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2022</span>
+                <span id="year">2021-2023</span>
             
             <a href="/about" target="_blank">宵烛</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -3484,7 +3426,7 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">107.1k</span>
+                        class="white-color">94.6k</span>
             
             
             
@@ -3503,6 +3445,60 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
             <br>
 
             <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "1";
+                        var startDate = "25";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
             
             <br>
             
@@ -3524,10 +3520,6 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1219303301" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1219303301" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
 
 
 
@@ -3536,6 +3528,8 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
 
 </div>
     </div>
+    <div id="jsi-flying-fish-container" class="nav-wrapper" style="margin: 0px; padding: 0px;"></div>
+    <script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script>
 </footer>
 
 <div class="progress-bar"></div>
@@ -3643,6 +3637,30 @@ $(function () {
 
     searchFunc('/search.xml', 'searchInput', 'searchResult');
 });
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
 </script>
 
     <!-- 回到顶部按钮 -->

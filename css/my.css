@@ -93,3 +93,32 @@ blockquote {
     width: 48px;
     height: 48px;
 }
+
+/* 黑暗模式 */
+body.DarkMode .bg-color {
+    background-image:linear-gradient(to right, #3a404d 0, rgba(16,8,86,0.7) 100%);
+    opacity:.8
+}
+/* 滚动条 */
+::-webkit-scrollbar-thumb {
+    background-color: #7288a1bd;
+    background-image: -webkit-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.4) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0.4) 75%,
+      transparent 75%,
+      transparent
+    );
+    border-radius: 3em;
+  }
+  ::-webkit-scrollbar-track {
+    /* background-color: #ffcacaff; */
+    border-radius: 3em;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 15px;
+  }

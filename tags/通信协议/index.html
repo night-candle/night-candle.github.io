@@ -17,21 +17,39 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>标签: 通信协议 | 宵烛 Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
 <meta name="generator" content="Hexo 5.1.1">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
@@ -109,31 +127,14 @@
     
   </li>
   
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
     </a>
   </li>
 </ul>
@@ -206,28 +207,6 @@
 			    <i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
 		</a>
           
         </li>
@@ -305,37 +284,19 @@
             <div class="tag-chips">
                 
                 
-                <a href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="游戏" style="background-color: #F9EBEA;">游戏
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/%E5%89%8D%E7%AB%AF/" title="前端: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="前端" style="background-color: #F5EEF8;">前端
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/%E5%8D%9A%E5%AE%A2/" title="博客: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="博客" style="background-color: #D5F5E3;">博客
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="web安全" style="background-color: #E8F8F5;">web安全
+                            data-tagname="web安全" style="background-color: #F9EBEA;">web安全
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="算法" style="background-color: #F5EEF8;">算法
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -344,26 +305,26 @@
                 <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="操作系统" style="background-color: #FEF9E7;">操作系统
+                            data-tagname="操作系统" style="background-color: #D5F5E3;">操作系统
                         <span class="tag-length">1</span>
                     </span>
                 </a>
                 
                 
-                <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据: 1">
+                <a href="/tags/%E5%AE%B9%E5%99%A8/" title="容器: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="大数据" style="background-color: #F8F9F9;">大数据
-                        <span class="tag-length">1</span>
+                            data-tagname="容器" style="background-color: #E8F8F5;">容器
+                        <span class="tag-length">2</span>
                     </span>
                 </a>
                 
                 
-                <a href="/tags/%E5%90%8E%E7%AB%AF/" title="后端: 1">
+                <a href="/tags/Linux/" title="Linux: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="后端" style="background-color: #82E0AA;">后端
-                        <span class="tag-length">1</span>
+                            data-tagname="Linux" style="background-color: #FEF9E7;">Linux
+                        <span class="tag-length">2</span>
                     </span>
                 </a>
                 
@@ -371,26 +332,8 @@
                 <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络: 3">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="计算机网络" style="background-color: #D7BDE2;">计算机网络
+                            data-tagname="计算机网络" style="background-color: #F8F9F9;">计算机网络
                         <span class="tag-length">3</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" title="通信协议: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            data-tagname="通信协议" style="background-color: #A3E4D7;">通信协议
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/Linux/" title="Linux: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="Linux" style="background-color: #85C1E9;">Linux
-                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
@@ -398,7 +341,7 @@
                 <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" title="网络协议: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="网络协议" style="background-color: #F8C471;">网络协议
+                            data-tagname="网络协议" style="background-color: #82E0AA;">网络协议
                         <span class="tag-length">2</span>
                     </span>
                 </a>
@@ -407,7 +350,7 @@
                 <a href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="云计算" style="background-color: #F9E79F;">云计算
+                            data-tagname="云计算" style="background-color: #D7BDE2;">云计算
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -416,16 +359,25 @@
                 <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="微服务" style="background-color: #D7BDE2;">微服务
+                            data-tagname="微服务" style="background-color: #A3E4D7;">微服务
                         <span class="tag-length">1</span>
                     </span>
                 </a>
                 
                 
-                <a href="/tags/%E5%AE%B9%E5%99%A8/" title="容器: 1">
+                <a href="/tags/%E5%89%8D%E7%AB%AF/" title="前端: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="容器" style="background-color: #85C1E9;">容器
+                            data-tagname="前端" style="background-color: #85C1E9;">前端
+                        <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/%E5%8D%9A%E5%AE%A2/" title="博客: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="博客" style="background-color: #F8C471;">博客
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -434,7 +386,7 @@
                 <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" title="网络编程: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="网络编程" style="background-color: #82E0AA;">网络编程
+                            data-tagname="网络编程" style="background-color: #F9E79F;">网络编程
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -449,19 +401,19 @@
                 </a>
                 
                 
-                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习: 1">
+                <a href="/tags/%E5%90%8E%E7%AB%AF/" title="后端: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="深度学习" style="background-color: #F8C471;">深度学习
+                            data-tagname="后端" style="background-color: #F9EBEA;">后端
                         <span class="tag-length">1</span>
                     </span>
                 </a>
                 
                 
-                <a href="/tags/NLP/" title="NLP: 1">
+                <a href="/tags/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" title="通信协议: 1">
                     <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="NLP" style="background-color: #F8F9F9;">NLP
+                             chip-active "
+                            data-tagname="通信协议" style="background-color: #F9E79F;">通信协议
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -519,11 +471,11 @@
     
 
     <div class="container row center-align"
-         style="margin-bottom: 0px !important;">
+         style="margin-bottom: 15px !important; position: absolute;">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2022</span>
+                <span id="year">2021-2023</span>
             
             <a href="/about" target="_blank">宵烛</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -531,7 +483,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">107.1k</span>
+                        class="white-color">94.6k</span>
             
             
             
@@ -550,6 +502,60 @@
             <br>
 
             <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "1";
+                        var startDate = "25";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
             
             <br>
             
@@ -571,10 +577,6 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1219303301" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1219303301" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
 
 
 
@@ -583,6 +585,8 @@
 
 </div>
     </div>
+    <div id="jsi-flying-fish-container" class="nav-wrapper" style="margin: 0px; padding: 0px;"></div>
+    <script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script>
 </footer>
 
 <div class="progress-bar"></div>
@@ -690,6 +694,30 @@ $(function () {
 
     searchFunc('/search.xml', 'searchInput', 'searchResult');
 });
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
 </script>
 
     <!-- 回到顶部按钮 -->
