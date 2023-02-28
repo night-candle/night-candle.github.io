@@ -320,14 +320,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    23.2k
+                    23.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    88 分
+                    91 分
                 </div>
                 
 
@@ -350,7 +350,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="00-前言-2">00 | 前言</h2>
+                <h2 id="00-前言">00 | 前言</h2>
 <p>  在计算机领域中，网络是信息传输、接收、共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，可以进行<strong>数据通信</strong>，从而实现<strong>资源共享</strong></p>
 <p>  网络编程从大方面说就是对信息的发送到接受，通过操作相应 API 调度计算机硬件资源，并利用传输管道（网线）进行数据交换的过程</p>
 <p>  一些关于网络编程方面的问题看似简单，但想做到完全理解却并不容易，学习高性能网络编程，需要掌握两个核心要点：<strong>第一就是理解网络协议，并在这个基础上和操作系统内核配合，感知各种网络 I/O 事件；第二就是学会使用线程处理并发</strong></p>
@@ -1920,13 +1920,13 @@ ssize_t <span class="token function">sendto</span><span class="token punctuation
 <ul>
 <li>
 <p>配置 IP 地址</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># net-tools</span>
-<span class="token function">sudo</span> <span class="token function">ifconfig</span> eth1 <span class="token number">10.0</span>.0.1/24
-<span class="token function">sudo</span> <span class="token function">ifconfig</span> eth1 up
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># net-tools
+sudo ifconfig eth1 10.0.0.1/24
+sudo ifconfig eth1 up
 
-<span class="token comment">#iproute2</span>
-<span class="token function">sudo</span> <span class="token function">ip</span> addr <span class="token function">add</span> <span class="token number">10.0</span>.0.1/24 dev eth1
-<span class="token function">sudo</span> <span class="token function">ip</span> <span class="token function">link</span> <span class="token builtin class-name">set</span> up eth1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+#iproute2
+sudo ip addr add 10.0.0.1/24 dev eth1
+sudo ip link set up eth1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
 <h4 id="netstat">netstat</h4>
@@ -2451,7 +2451,7 @@ so_linger<span class="token punctuation">.</span>l_linger <span class="token ope
 </ul>
 <p>​</p>
 <p>​</p>
-<h4 id="拥塞控制-2">拥塞控制</h4>
+<h4 id="拥塞控制">拥塞控制</h4>
 <ul>
 <li>
 <p>流量控制只是在考虑单个连接的数据传递，但是 TCP 数据包需要经过网卡、交换机、核心路由器等一系列网络设备，设备本身的能力也是有限的，当多个连接的数据包同时在网络上传送时，势必会发生带宽争抢、数据丢失等，TCP 必须考虑<strong>多个连接共享在有限的带宽上，兼顾效率和公平性的控制</strong>，这就是拥塞控制的本质</p>
@@ -2945,7 +2945,7 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
   <span class="token keyword">long</span>   tv_usec<span class="token punctuation">;</span> <span class="token comment">/* microseconds */</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li><code>maxfd</code> 表示待测试的描述符基数，值是待测试的最大描述符 +1</li>
+<li><code>maxfd</code> 表示待测试的描述符基数，值是待测试的最大描述符 +1（0开始）</li>
 <li>读描述符集合 <code>readset</code>、写描述符集合 <code>writeset</code> 和异常描述符集合 <code>exceptset</code>，这三个描述符集合分别通知内核，在哪些描述符上检测数据可以读，可以写和有异常发生
 <ul>
 <li>每一个都可以设置成空，表示不需要内核进行相关的检测</li>
@@ -2976,35 +2976,140 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
 </li>
 <li>
 <p>套接字描述符就绪条件</p>
-<p>当我们说 select 测试返回，某个套接字准备好可读，表示什么样的事件发生呢？</p>
-<p>第一种情况是套接字接收缓冲区有数据可以读，如果我们使用 read 函数去执行读操作，肯定不会被阻塞，而是会直接读到这部分数据。</p>
-<p>第二种情况是对方发送了 FIN，使用 read 函数执行读操作，不会被阻塞，直接返回 0。</p>
-<p>第三种情况是针对一个监听套接字而言的，有已经完成的连接建立，此时使用 accept 函数去执行不会阻塞，直接返回已经完成的连接。</p>
-<p>第四种情况是套接字有错误待处理，使用 read 函数去执行读操作，不阻塞，且返回 -1。</p>
-<p>总结成一句话就是，内核通知我们套接字有数据可以读了，使用 read 函数不会阻塞。</p>
-<p>不知道你是不是和我一样，刚开始理解某个套接字可写的时候，会有一个错觉，总是从应用程序角度出发去理解套接字可写，我开始是这样想的，当应用程序完成相应的计算，有数据准备发送给对端了，可以往套接字写，对应的就是套接字可写。</p>
-<p>其实这个理解是非常不正确的，select 检测套接字可写，<strong>完全是基于套接字本身的特性来说</strong>的，具体来说有以下几种情况。</p>
-<p>第一种是套接字发送缓冲区足够大，如果我们使用非阻塞套接字进行 write 操作，将不会被阻塞，直接返回。</p>
-<p>第二种是连接的写半边已经关闭，如果继续进行写操作将会产生 SIGPIPE 信号。</p>
-<p>第三种是套接字上有错误待处理，使用 write 函数去执行读操作，不阻塞，且返回 -1。</p>
-<p>总结成一句话就是，内核通知我们套接字可以往里写了，使用 write 函数就不会阻塞。</p>
+<ul>
+<li>
+<p>当 select 测试返回，某个套接字准备好可读，使用 read 函数不会阻塞</p>
+<ul>
+<li>
+<p>套接字接收缓冲区有数据可以读，如果使用 read 函数去执行读操作，不会被阻塞</p>
+</li>
+<li>
+<p>对方发送了 FIN，使用 read 函数执行读操作，不会被阻塞，直接返回 0</p>
+</li>
+<li>
+<p>对一个监听套接字而言，有已经完成的连接建立，此时使用 accept 函数去执行不会阻塞，直接返回已经完成的连接</p>
+</li>
+<li>
+<p>套接字有错误待处理，使用 read 函数去执行读操作，不阻塞，且返回 -1。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>select 检测套接字可写，完全是基于套接字本身的特性来说的，使用 write 函数就不会阻塞</p>
+<ul>
+<li>
+<p>套接字发送缓冲区足够大，如果使用非阻塞套接字进行 write 操作，将不会被阻塞，直接返回</p>
+</li>
+<li>
+<p>连接的写半边已经关闭，如果继续进行写操作将会产生 SIGPIPE 信号</p>
+</li>
+<li>
+<p>套接字上有错误待处理，使用 write 函数去执行读操作，不阻塞，且返回 -1</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>select 缺点是所支持的文件描述符的个数是有限的（1024）</p>
 </li>
 </ul>
 <h4 id="poll">poll</h4>
 <ul>
 <li>
 <p>函数原型</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">poll</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token operator">*</span>fds<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> nfds<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">poll</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token operator">*</span>fds<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> nfds<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span>    fd<span class="token punctuation">;</span>       <span class="token comment">/* file descriptor */</span>
+    <span class="token keyword">short</span>  events<span class="token punctuation">;</span>   <span class="token comment">/* events to look for */</span>
+    <span class="token keyword">short</span>  revents<span class="token punctuation">;</span>  <span class="token comment">/* events returned */</span>
+ <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>pollfd 的数组，pollfd 由三个部分组成</li>
+<li>nfds 描述的是数组 fds 的大小（向 poll 申请的事件检测的个数）</li>
+<li>timeout 描述了 poll 的行为
+<ul>
+<li>&lt;0 表示在有事件发生之前永远等待；</li>
+<li>=0 表示不阻塞进程，立即返回；</li>
+<li>&gt;0 表示 poll 调用方等待指定的毫秒数后返回</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>events 类型的事件可以分为可读事件和可写事件；poll 每次检测之后的结果不会修改原来的传入值，而是将结果保留在 revents 字段中，这样就不需要每次检测完都得重置待检测的描述字和感兴趣的事件</p>
+</li>
+<li>
+<p>如果不想对某个 pollfd 结构进行事件检测，可以把它对应的 pollfd 结构的 fd 成员设置成一个负值，这样 poll 函数将忽略这样的 events 事件，检测完成以后，所对应的“returned events”的成员值也将设置为 0</p>
+</li>
+<li>
+<p>对比：在 select 里面，文件描述符的个数已经随着 fd_set 的实现而固定，没有办法对此进行配置；而在 poll 函数里，可以控制 pollfd 结构的数组大小，这意味着<strong>突破原来 select 函数最大描述符的限制</strong>，在这种情况下，应用程序调用者需要分配 pollfd 数组并通知 poll 函数该数组的大小</p>
 </li>
 </ul>
 <h3 id="非阻塞-I-O">非阻塞 I/O</h3>
 <ul>
-<li>编程语言的 I/O 模型是通过抽象和设计，总结出的一套规范</li>
+<li>
+<p>读操作</p>
+<ul>
+<li>如果套接字对应的接收缓冲区没有数据可读，在非阻塞情况下 read 调用会立即返回，一般返回 EWOULDBLOCK 或 EAGAIN 出错信息</li>
+</ul>
+</li>
+<li>
+<p>写操作</p>
+<ul>
+<li>
+<p>在非阻塞 I/O 的情况下，如果套接字的发送缓冲区已达到了极限，不能容纳更多的字节，那么操作系统内核会<strong>尽最大可能</strong>从应用程序拷贝数据到发送缓冲区中，并立即从 write 等函数调用中返回</p>
+<ul>
+<li>
+<p>返回值告诉应用程序到底有多少数据被成功拷贝到了发送缓冲区中</p>
+</li>
+<li>
+<p>write 等函数是可以同时作用到阻塞 I/O 和非阻塞 I/O 上的，为了复用一个函数，处理非阻塞和阻塞 I/O 多种情况，设计出了写入返回值，并用这个返回值表示实际写入的数据大小</p>
+</li>
+</ul>
+</li>
+<li>
+<p>在实战中，可以不用区别阻塞和非阻塞 I/O，使用循环的方式来写入数据就好了</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="accept-2">accept</h4>
+<ul>
+<li>一定要将监听套接字设置为非阻塞的</li>
+</ul>
+<h3 id="epoll">epoll</h3>
+<ul>
+<li>
+<p>epoll 的历史</p>
+<ul>
+<li>Linux 在 2002 年引入了 epoll</li>
+</ul>
+</li>
+<li>
+<p>本质上 epoll 还是一种 <strong>I/O 多路复用</strong>技术， epoll 通过监控注册的多个描述字，来进行 I/O 事件的分发处理</p>
+<ul>
+<li>不同于 poll 的是，epoll 不仅提供了默认的 level-triggered（条件触发）机制，还提供了性能更为强劲的 edge-triggered（边缘触发）机制</li>
+</ul>
+</li>
+<li>
+<p>使用 epoll 进行网络程序的编写，需要三个步骤：epoll_create，epoll_ctl 和 epoll_wait</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token keyword">int</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">epoll_create1</span><span class="token punctuation">(</span><span class="token keyword">int</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">epoll_ctl</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">int</span> op<span class="token punctuation">,</span> <span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span>event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">epoll_wait</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span>events<span class="token punctuation">,</span> <span class="token keyword">int</span> maxevents<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>一般认为边缘触发的效率比条件触发的效率要高，<strong>边缘触发</strong>只有第一次满足条件的时候才触发，之后就不会再传递同样的事件了</p>
+</li>
 </ul>
 <blockquote>
 <p>未完待续</p>
 </blockquote>
-<h2 id="参考-2">参考</h2>
+<h2 id="参考">参考</h2>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-hans/%E4%BF%9D%E7%95%99IP%E5%9C%B0%E5%9D%80">保留IP地址</a></li>
 <li><a target="_blank" rel="noopener" href="https://shuangxunian.github.io/2021/06/13/TCPInterviewQuestions/">TCP面试题</a></li>
@@ -3426,7 +3531,7 @@ tv<span class="token punctuation">.</span>tv_usec <span class="token operator">=
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">94.6k</span>
+                        class="white-color">95.2k</span>
             
             
             
